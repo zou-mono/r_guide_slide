@@ -1,0 +1,1132 @@
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
+\documentclass{beamerthemeMono}
+
+% specify some optional logos
+\graphicspath{{figures/}}
+\pgfdeclareimage[height=1.45cm]{mainlogo}{figures/logo}
+\logo{\pgfuseimage{mainlogo}}
+% placed in the lower left/right corner if the \pgfuseimage{minilogo}
+% command is uncommented in the \institute command below.
+\pgfdeclareimage[height=0.3cm]{minilogo}{figures/logo}
+
+\AtBeginSection[] {
+  \begin{frame}
+    \frametitle{目录}
+    {\tableofcontents[%
+      currentsection, % causes all sections but the current to be shown in a semi-transparent way.
+%     currentsubsection, % causes all subsections but the current subsection in the current section to ...
+      hideallsubsections % causes all subsections to be hidden.
+%     hideothersubsections, % causes the subsections of sections other than the current one to be hidden.
+%     part=, % part number causes the table of contents of part part number to be shown
+%     pausesections, % causes a \pause command to be issued before each section. This is useful if you
+%     pausesubsections, %  causes a \pause command to be issued before each subsection.
+%     sections={ overlay specification },
+      ]}
+   \end{frame}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+          % 文档开始
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ \begin{document}
+
+ \title[统计图形和R]% optional, use only with long paper titles
+ {\erhao 统计图形和R\\[2ex]}
+
+ \author[邹海翔] % optional, use only with lots of authors
+ {邹海翔}
+
+ % - Give the names in the same order as they appear in the paper.  -
+ % Use the \inst{?} command only if the authors have different
+ % affiliation. See the beamer manual for an example
+
+
+ \institute[深圳市规划国土发展研究中心] % optional - is placed in the bottom of the sidebar on every slide
+ {%
+   \wuhao 深圳市规划国土发展研究中心
+   % there must be an empty line above this line - otherwise some
+   % unwanted space is added
+   % between the university and the country (I do not know why;( )
+ }
+
+ % \date{\today}
+ \date{2017 年 12 月}
+ \titlegraphic{\pgfuseimage{mainlogo}} %insert a company or department logo
+
+
+ % the titlepage the plain option removes the sidebar and header from
+ % the title page
+ \begin{frame}[plain]
+   \titlepage
+ \end{frame}
+%%%%%%%%%%%%%%%%
+
+ % TOC
+ \begin{frame}{大纲}{}
+   {\tableofcontents[hideallsubsections]}
+ \end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ \section{统计图形}
+%%%%%%%%%%%%%%%%
+ \subsection{线图}
+
+ \begin{frame}[c]{线图(line chart)}{}
+
+\begin{overlayarea}  {\textwidth}{\textheight}
+  \only<1>{
+    \begin{figure}
+      \centering
+      \includegraphics[width=\textwidth]{Priestley_Chart.png}
+      \caption{英国化学家Joseph Priestley于1765年绘制的时间线图
+        是\emphText{历史上最早的统计图形}，这幅图展示了多个历史人物在历
+        史长河中的跨度}
+    \end{figure}} \only<2>{
+    \begin{figure}
+      \centering
+      \includegraphics[width=0.8\textwidth]{Playfair_TimeSeries.png}
+      \caption{苏格兰工程师和政治经济学家William Playfair于1786年在他的
+        书《Commercial and Political Atlas》中绘制的线图，这幅图展示
+        了1700年至1780年间英格兰的进出口时序数据。\emphText{Playfair是
+          历史上第一个系统使用统计图形的人，因此被称为“统计图形奠基
+          人”}}
+    \end{figure}}
+\end{overlayarea}
+ 
+\end{frame}
+
+\subsection{柱状图}
+
+\begin{frame}[c]{柱状图(bar chart)}{}
+
+  \begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth]{Playfair_barchart.jpg}
+    \caption{受到Priestley时间线图的影响，Playfair于1786年同样在
+      《Commercial and Political Atlas》这本书中绘制了\emphText{历史上
+        最早的柱状图}，这幅图展示了不同国家的进出口数据}
+  \end{figure}
+
+\end{frame}
+
+\subsection{饼图}
+
+\begin{frame}[c]{饼图(pie chart)}{}
+
+  \begin{figure}
+    \begin{columns}
+      \begin{column}{.6\textwidth}
+        \includegraphics[width=\textwidth]{Playfair_piechart.jpg}
+      \end{column}
+
+    \begin{column}{.35\textwidth}
+      \centering
+      \caption{Playfair于1801年在《Statistical Breviary》这本书中绘制
+        了\emphText{历史上第一幅饼图}，这幅图展示了土耳其帝国在三大洲的
+        国土面积分布情况}
+    \end{column}
+  \end{columns}
+\end{figure}
+
+\end{frame}
+
+\subsection{主题统计地图}
+\begin{frame}{\subsecname}{法国文盲率分布图}
+
+  \begin{figure}
+    \begin{columns}
+      \begin{column}{.6\textwidth}
+        \includegraphics[width=\columnwidth]{法国文盲分布图.jpg}
+      \end{column}
+
+      \begin{column}{.35\textwidth}
+        \centering
+        \caption{法国文盲分布图(Charles Dupin, 1826). \\
+          Charles Dupin是法国数学家，工程师，经济学家以及政客。1826年，
+          他首次运用区域灰度地图的表现手段来展示法国当时的文盲率分布情
+          况，\emphText{这是第一张现代形式的主题统计地图}}
+      \end{column}
+    \end{columns}
+  \end{figure}
+
+\end{frame}
+
+\begin{frame}{\subsecname}{拿破仑东征图}
+
+  \begin{figure}
+    \centering \includegraphics[width=0.8\columnwidth]{Minard.png}
+    \caption{拿破仑东征图(Charles Joseph Minard, 1861). \\
+      1861年，由法国工程师 Charles Joseph Minard 绘制，描述了1812年拿破
+      仑东征俄罗斯的失败战役。图中同时包含了多个信息，粗细代表军队规模，
+      配合日期标明了军队位置经纬度，棕色进军黑色撤退，下方折线展现气温，
+      另标注了战斗的关键事件等。\\这幅图形在统计图形界内享有至高无上的
+      地位，经常被一些统计、设计课程当作教学案例，被Edward
+      Tufte\footnotemark[1]誉为\emphText{“有史以来最好的统计图形”}}
+  \end{figure}
+  \footnotetext[1]{Tufte是统计图形和信息可视化领域的领军人物,人称“数据
+    达芬奇”}
+
+\end{frame}
+
+\begin{frame}{\subsecname}{汉尼拔远征图}
+
+ \begin{figure}
+   \centering \includegraphics[width=\columnwidth]{汉尼拔远征图.jpg}
+   \caption{汉尼拔远征图(Charles Joseph Minard, 1861)}
+ \end{figure}
+
+\end{frame}
+
+\begin{frame}{\subsecname}{法国各地向巴黎输送牲畜产品的分布情况图}
+
+  \begin{figure}
+    \begin{columns}
+      \begin{column}{.6\textwidth}
+        \includegraphics[width=\columnwidth]{法国各地向巴黎输送牲畜产品的分布情况图.jpg}
+      \end{column}
+
+      \begin{column}{.35\textwidth}
+        \centering
+        \caption{法国各地向巴黎输送牲畜产品的分布情况图(Charles Joseph Minard, 1858)\\
+          此图的作者也是Joseph Minard，\emphText{经典之处在于首次将饼图融合到地图中}\\
+          这位法国工程师，将一生大部分时间都贡献给了水坝，运河和桥梁的
+          工程建造和教育事业,直到1851年退休，已近70岁高龄的他才正式转入
+          了可视化领域，研究数据信息图形的绘制。在他最后的20年
+          里，Minard在可视化领域贡献了许多创新，共绘制了51幅各种形式的
+          可视化图形，是那个可视化黄金时代当之无愧的大师，\emphText{被
+            称为法国的“William Playfair”}}
+      \end{column}
+    \end{columns}
+  \end{figure}
+
+\end{frame}
+
+\begin{frame}{\subsecname}{美国内战对欧洲棉花贸易的影响}
+
+ \begin{figure}
+   \centering \includegraphics[width=\columnwidth]{美国内战对欧洲棉花贸易的影响.jpg}
+   \caption{美国内战对欧洲棉花贸易的影响(Charles Joseph Minard, 1865)}
+ \end{figure}
+
+\end{frame}
+
+\begin{frame}{\subsecname}{法国红酒出口情况}
+
+ \begin{figure}
+   \centering \includegraphics[width=0.8\columnwidth]{法国红酒出口情况.jpg}
+   \caption{美国内战对欧洲棉花贸易的影响法国红酒出口情况(Charles
+     Joseph Minard, 1864)}
+ \end{figure}
+
+\end{frame}
+
+\begin{frame}{\subsecname}{地铁路线图}
+  
+  \begin{figure}\centering
+    \subfloat[1908年版]
+    {\includegraphics[width=0.45\columnwidth]{1908年伦敦地铁路线图.jpg}}\vspace{0.5pt} \subfloat[1933年版]
+    {\includegraphics[width=0.45\columnwidth] {1931年贝克设计的伦敦地铁路线图.jpg}}
+    \caption{道路网络形状更新在最早的地图中都是按照实地比例进行绘制的，
+      比如左图的1908版伦敦地铁线路图。1931年，英国技术制图员Harry
+      Beck在替伦敦地铁的讯号室绘制电路图时受到启发，设计出了经典
+      的1933年版路线图(右图)}
+  \end{figure}
+  
+\end{frame}
+
+\begin{frame}{\subsecname}{变形地图(cartogram)}
+  
+  \begin{figure}\centering
+    \subfloat[普通色块地图表达]
+    {\includegraphics[width=0.45\columnwidth]{cartogram1.png}}\vspace{0.5pt}
+    \subfloat[变形地图表达]
+    {\includegraphics[width=0.45\columnwidth]{cartogram2.png}}
+    \caption{变形地图的历史可以追溯到1868年，\emphText{其作用是用夸张的地图变形来表达真实的数量关系}\\上面左图是2012年
+      美国大选的结果，从普通色块图上看似乎是红色代表的罗姆尼获胜，但其实获胜的是蓝色代表的奥巴马；右图是根据选票
+      数量进行变形处理后的地图，可以很清楚看到蓝色多于红色，这才是真实数量的正确表达！}
+  \end{figure}
+  
+\end{frame}
+
+\subsection{统计图形的应用}
+\begin{frame}{\subsecname}{南丁格尔玫瑰图}
+
+ \begin{figure}
+   \centering
+   \includegraphics[width=0.8\columnwidth]{Nightingale_mortality.jpg}
+   \caption{上图是南丁格尔玫瑰图。两幅图分别表示1854年和1855年军队的伤
+     亡人数，
+     一年12个月在极坐标上被分为12等分，每一个花瓣表示一个月；不同颜色表示死亡原因\\
+     南丁格尔通过这幅图使英国政府意识到真正影响战争伤亡的并非战争本身，
+     而是由于军队缺乏有效的医疗护理。由此，英国政府于1857年开设了专门的
+     军医学校，培养专门的战地医护人员，\emphText{这就是统计图形在近代护
+       理学最早的应用}}
+ \end{figure}
+\end{frame}
+
+\begin{frame}{\subsecname}{霍乱传播之谜}
+
+  \begin{figure}
+    \begin{columns}
+      \begin{column}{.6\textwidth}
+        \includegraphics[width=\columnwidth]{Snow_cholera_map.jpg}
+      \end{column}
+
+      \begin{column}{.35\textwidth}
+        \centering
+        \caption{1854年英国Broad大街大规模爆发霍乱,流行病学家John
+          Snow对此次霍乱进行了大量调研分析，并且发表了霍乱传播理论的论
+          文,左图是其论文的主要依据:图中心东西
+          方向的街道是Broad大街,黑点表示死亡地点\\
+          这幅图形象揭示了一个重要现象,就是死亡地点都在街道中部一处水源
+          （水井）周围,而市内其它水源周围极少发现死者，通过进一步调查他
+          发现这些死者都饮用过这里的井水，从而发现了霍乱传播的源头是水
+          井的把手，\emphText{这就是统计图形在公共卫生领域最早的应用}}
+      \end{column}
+    \end{columns}
+  \end{figure}
+
+\end{frame}
+
+\begin{frame}{\subsecname}{霍乱传播之谜}
+
+  \begin{figure}
+    \begin{columns}
+      \begin{column}{.6\textwidth}
+        \includegraphics[width=\columnwidth]{Robert_Baker.jpg}
+      \end{column}
+
+      \begin{column}{.35\textwidth}
+        \centering
+        \caption{其实，在John Snow之前，有个叫Robert Baker的医生也研究
+          了这个区域的霍乱问题，而且在1833年就绘制了左边这
+          张霍乱的分布图。\\
+          虽然Baker在这幅图中揭示了疾病和居住环境的联系：缺乏清洁用水和
+          排水系统的居民点是疾病的高发区，\emphText{但是并没有显示发病
+            率}。关于疾病起因的认知，他尽管方向正确但是并不完备，最终与
+          伟大
+          的发现擦肩而过\\
+          \emphText{因此，只有充分完备的统计图形才能够真正应用于实践，
+            这是一个漫长的科学过程}}
+      \end{column}
+    \end{columns}
+  \end{figure}
+
+\end{frame}
+
+\begin{frame}{\subsecname}{切尔诺夫脸谱图(Chernoff Faces)}
+
+  \begin{figure}
+    \begin{columns}
+      \begin{column}{.6\textwidth}
+        \includegraphics[width=\columnwidth]{切尔诺夫脸谱图.jpg}
+      \end{column}
+
+      \begin{column}{.35\textwidth}
+        \centering
+        \caption{切尔诺夫脸谱图(Herman Chernoff, 1973)\\
+          这张很喜感的脸谱图其实是一种统计图，叫切尔诺夫脸谱图，是统计
+          学家Herman Chernoff于1973年发明的，其基本思想是把多维数据的特
+          征映射到卡通人脸中。由于人类非常善于识别脸部特征，脸谱化使得
+          多维度数据容易被分析人员消化理解，有助于数据的规律和不规律性
+          的可视化。\emphText{目前这种方法已被广泛应用于多地域经济战略
+            指标数据分析，空间数据可视化等领域}}
+      \end{column}
+    \end{columns}
+  \end{figure}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{统计绘图工具}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{为什么要用绘图工具}
+\begin{frame}{\subsecname}{}
+
+  \begin{columns}
+    \begin{column}{.5\textwidth}
+      \begin{figure}
+        \centering \includegraphics[width=0.9\columnwidth]{屠龙宝刀.jpg}
+      \end{figure}
+    \end{column}
+
+    \begin{column}{.48\textwidth}
+      \begin{ornamentblock}
+        \centering
+        {工欲善其事,必先利其器\\
+          \rightline{\textemdash《论语·卫灵公》}}
+      \end{ornamentblock}
+      % \curlyframe{工欲善其事,必先利其器\\
+      % \rightline{-----《论语·卫灵公》}}
+    \end{column}
+  \end{columns}
+
+\end{frame}
+
+\begin{frame}{\subsecname}{}
+
+  \begin{columns}
+    \begin{column}{.5\textwidth}
+      \begin{figure}
+        \centering \includegraphics[width=0.9\columnwidth]{乾坤大挪移.jpg}
+      \end{figure}
+    \end{column}
+
+    \begin{column}{.48\textwidth}
+      \begin{ornamentblock}
+        \centering
+        {君子性非异也，善假于物也\\
+          \rightline{\textemdash《荀子·劝学》}}
+      \end{ornamentblock}
+      % \curlyframe{工欲善其事,必先利其器\\
+      % \rightline{-----《论语·卫灵公》}}
+    \end{column}
+  \end{columns}
+
+\end{frame}
+
+\begin{frame}[c]{\subsecname}
+  
+  \begin{columns}
+    \begin{column}{.6\textwidth}
+      \begin{figure}
+        \centering \includegraphics[width=\columnwidth]{sankey.png}
+        \caption{看上去复杂但是直观的桑基图(Sankey diagram)}
+      \end{figure}
+    \end{column}
+
+    \begin{column}{.4\textwidth}
+      \begin{block}{直观与简单} \small
+        \begin{itemize}
+        \item[\HandRight] \emphText{统计量是统计图形最关键的构成因素}，
+        因此，优秀的统计图形背后必然隐藏着重要的统计量
+        \item[\HandRight] 图形的首要作用是“直观”展示统计量信息，
+        但是\emphText{能够直观理解的信息未必是“简单”的}
+        \item[\HandRight] 使用合适的工具可以让信息的表达既“直观”又“简单” 
+        \end{itemize}
+      \end{block}
+    \end{column}
+  \end{columns}
+    
+\end{frame}
+
+\subsection{何为利器}
+\begin{frame}[t]{\subsecname}
+  \begin{itemize}
+    \hilite<1> \item 统计计算功能齐全
+    \hilite<2> \item 图形元素易于控制
+    \hilite<3> \item 统计图形类型种类丰富
+  \end{itemize}
+
+\begin{figure}[ht]
+  \centering \includegraphics[width=0.8\textwidth]{stat_tools.png}
+  \caption{常见的一些统计绘图工具}
+\end{figure}
+
+\end{frame}
+
+\subsection{所见即所得工具}
+
+\begin{frame}[t]{\subsecname}{excel}
+  \begin{itemize}
+    \hilite<1> \item 微软公司开发的电子数据表软件，从1985年发布1.0版本
+    至今已经30多年历史，是电子数据表类软件的工业标准\hilite<2> \item 优
+    秀的人机交互设计，所见即所得\hilite<3> \item 能够完成简单的统计功能
+    以及数据绘图，但并不是统计软件
+  \end{itemize}
+
+\begin{overlayarea}  {\textwidth}{\textheight} 
+  \only<1>{
+    \begin{figure}\centering
+      \includegraphics[width=0.65\columnwidth] {excel条形图.png}
+      %{\includegraphics[width=0.45\columnwidth] {excel折线图.png}}
+      \caption{表示绝对数值大小的条形图}
+    \end{figure}}
+
+  \only<2>{
+    \begin{figure}\centering
+      \includegraphics[width=\columnwidth] {excel折线图.png}
+      \caption{表示绝对数值大小的折线图}
+    \end{figure}}
+  
+  \only<3>{
+    \begin{figure}[ht]
+      \centering \includegraphics[width=\columnwidth]{excel饼图.png}
+      \caption{表示比例大小的饼图}
+    \end{figure}}
+
+  \only<4>{
+    \begin{figure}[ht]
+      \centering \includegraphics[width=0.7\columnwidth]{excel散点图.png}
+      \caption{表示二维变量关系的散点图}
+    \end{figure}}
+   
+  \only<5->{
+    \begin{alertblock}{excel作为统计绘图工具的缺点}
+      \begin{itemize} \small
+        \hilite<5> \item[\PencilLeftDown] excel擅长对原始数据的展示，统
+        计分析和建模功能十分有限。因此，著名统计学家Leland
+        Wilkinson\footnote[frame,1]{统计学经典书籍《The Grammar of
+          Graphics》一书的作者，任职SPSS公司十年，而且一直领导其可视化
+          小组}说\emphTextStep{5-}{“给统计刊物投稿时永远不要用Excel作图”}
+        \hilite<6> \item[\PencilLeftDown] 数据量的限制，处理速度慢
+        \hilite<7> \item[\PencilLeftDown] 只能在windows单机上运行，无
+          法开展跨平台和分布式计算，不具备大规模数据管理功能
+        %\hilite<8> \item[\PencilLeftDown] 商业软件，价格不菲
+      \end{itemize}
+    \end{alertblock}}
+\end{overlayarea}  
+\end{frame}
+
+\begin{frame}[t]{\subsecname}{SPSS}
+  \begin{itemize}
+    \hilite<1> \item 易学易用的统计分析软件
+    \hilite<2> \item 功能全面的统计分析软件
+    \hilite<3> \item 界面友好
+  \end{itemize}
+
+\begin{overlayarea}  {\textwidth}{\textheight}
+  \only<1-3>{
+    \begin{figure}[ht]
+      \centering \includegraphics[width=0.9\textwidth]{SPSS.png}
+      \caption{SPSS用户操作界面}
+    \end{figure}}
+   
+  \only<4->{
+    \begin{alertblock}{SPSS及其他所见即所得工具的缺陷}
+      \begin{itemize} \small
+        \hilite<4> \item[\PencilLeftDown] 按钮的数量总是有限的，而统计模型是无限的
+        \hilite<5> \item[\PencilLeftDown] 计算机完成了太多
+        本该由用户完成的图形要素控制
+        \hilite<6> \item[\PencilLeftDown] 生成一张图易，生成N张图难
+        \hilite<7> \item[\PencilLeftDown] 贫穷限制了想象力，模块单独付费
+      \end{itemize}
+    \end{alertblock}}
+\end{overlayarea}
+\end{frame}
+
+\subsection{所想即所得工具}
+\begin{frame}[t]{\subsecname}{SAS}
+  \begin{itemize}
+    \hilite<1> \item 1960年诞生于SAS软件研究所，老牌专业统计软件
+    \hilite<2> \item 基于数据库进行数据管理，具有大型数据集处理分析能力
+    \hilite<3> \item 有专门的SAS认证考试，包括程序员、业务分析师、数据挖掘、系统开发
+           专家和系统管理专家五种不同角色
+  \end{itemize}
+  
+  \begin{overlayarea} {\textwidth}{\textheight}
+    \only<1-4>{
+      \begin{figure}
+        \centering \includegraphics[width=0.7\columnwidth]{sas_ui.png}
+        \caption{SAS软件界面}
+      \end{figure}}
+  \end{overlayarea}
+\end{frame}
+
+\begin{frame}[t, fragile]{\subsecname}{SAS}
+  \begin{itemize}
+    \item 200多个集成模块，涵盖了主流统计模型和分析方法，而且通过内置
+           脚本语言实现统计建模和绘图等功能
+  \end{itemize}
+ 
+      \begin{columns}
+        \begin{column}{.5\textwidth}
+          \begin{figure}
+            \centering
+            \includegraphics[width=0.8\columnwidth]{sas_boxplot.png}
+            \caption{箱形图(Box plot)}
+          \end{figure}
+        \end{column}
+
+        \begin{column}{.5\textwidth}
+\begin{lstlisting}[language=SAS]
+PROC SQL;
+create table CARS1 as
+SELECT make,model,type,invoice,horsepower,length,weight
+ FROM SASHELP.CARS
+WHERE make in ('Audi','BMW');
+RUN;
+
+PROC SGPLOT  DATA=CARS1;
+  VBOX horsepower 
+  / category = type;
+
+   title 'Horsepower of cars by types';
+RUN; 
+\end{lstlisting}
+        \end{column}
+      \end{columns}
+\end{frame}
+
+\begin{frame}[t]{\subsecname}{S-Plus}
+    \begin{itemize}
+      \item S语言是1976年AT\&T贝尔实验室开发的一种用于统计计算的解释型编程语言
+    \end{itemize}
+
+    \begin{figure}
+      \centering \includegraphics[width=0.5\columnwidth]{S_init.png}
+      \caption{S语言的设计草图(1976.5.5)}
+    \end{figure}
+
+\end{frame}   
+
+\begin{frame}[t, fragile]{\subsecname}{S-Plus}
+    \begin{itemize}
+      \item 与SAS内置脚本语言相比，S语言更加符合现代程序语言的设计，方便灵活控制
+            图形输出，制作既精美又专业的统计图形
+      \item 能够与其他主流程序语言集成
+    \end{itemize}
+
+    \begin{onlyenv}<1>
+      \begin{columns}
+        \begin{column}{.7\textwidth}
+          \begin{figure}
+            \centering
+            \includegraphics[width=0.8\columnwidth]{splus_boxplot.png}
+            \caption{箱形图(Box plot)}
+          \end{figure}
+        \end{column}
+
+        \begin{column}{.3\textwidth}
+\begin{lstlisting}[language=S]
+  boxplot(Weight)
+\end{lstlisting}
+        \end{column}
+      \end{columns}
+    \end{onlyenv}
+\end{frame}    
+
+\begin{frame}[t]{\subsecname}{S-Plus}
+    \begin{itemize}
+      \item S-Plus是基于S语言开发的商业化统计软件，1993年由MathSoft公司开发，
+            2008年起由TIBCO负责运维
+      \item 与SPSS和SAS并称世界三大统计软件，具有专业的统计功能
+    \end{itemize}
+
+    \begin{figure}
+      \centering \includegraphics[width=0.8\columnwidth]{splus_ui.png}
+      \caption{S-Plus软件界面}
+    \end{figure}
+\end{frame}    
+
+\begin{frame}{\subsecname}{}
+  % \begin{variableblock}{所想即所得工具}{bg=green!20,fg=black}{fg=white,bg=SpringGreen4}
+  %   \begin{itemize}
+  %   \item wowo
+  %   \item sdsfs
+  %   \end{itemize}
+  % \end{variableblock}
+\onslide<1->{
+  \begin{goodbox}{所想即所得工具的优势}
+     \begin{itemize}
+     \item[\PencilLeftDown] 想象力有多大，世界就有多精彩
+     \item[\PencilLeftDown] 花有重开日，人无再少年
+     \item[\PencilLeftDown] 深入算法内核，由术至道 
+     \end{itemize}
+  \end{goodbox}}
+
+\onslide<2->{
+  \begin{badbox}{所想即所得工具的劣势}
+     \begin{itemize}
+     \item[\PencilLeftDown] 人机交互全靠命令，需要一定的编程基础
+     \item[\PencilLeftDown] 需要扎实的统计学基础，学习曲线陡峭
+     \item[\PencilLeftDown] 键盘易损坏，手指易抽筋    
+     \end{itemize}
+  \end{badbox}}
+
+\end{frame} 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{R简介}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{为什么用R}
+\begin{frame}[t]{\subsecname}{R的历史}
+
+\begin{itemize}
+\hilite<1> \item R诞生于1995年，由新西兰Auckland大学统计学家\emphText{R}obert Gentleman
+        和\emphText{R}oss Ihaka开发，而且完全开放源代码，是一款
+        基于GNU General Public License(GPL)协议的开源软件
+\hilite<2> \item R是“所想即所得”工具，其核心是基于S语言设计的R语言，S语言的代码可以不经过
+        任何修改就在R中运行，因此R被看做是S语言的非商业化实现
+\hilite<3> \item 由于两位开发者的名字都以“R”开头，而且为了向S语言致敬，因此命名为R 
+\end{itemize}
+
+\begin{overlayarea} {\textwidth}{\textheight}
+    \begin{figure}\centering
+      \captionsetup[subfigure]{labelformat=empty} 
+      \subfloat[Ross Ihaka]
+      {\includegraphics[width=0.45\columnwidth]{Ross_Ihaka.png}} \vspace{1pt}
+      \subfloat[Robert Gentleman]
+      {\includegraphics[width=0.4\columnwidth]{Robert_Gentleman.png}} 
+    \end{figure}
+\end{overlayarea}
+
+\end{frame}
+
+\begin{frame}[t]{\subsecname}{R的优势}
+\begin{itemize}
+\hilite<1> \item R具备S-Plus几乎所有的优点，而且更加小巧轻便
+\hilite<2> \item 开源项目，完全免费，这点是其他统计软件都不具备的
+\hilite<3> \item 因为上述优点，世界各地有大量研究机构和专业统计人员使用
+                 并自愿贡献代码，具有良好的生态系统
+\end{itemize}  
+
+\begin{overlayarea}{\textwidth}{\textheight}
+
+\only<1-2>{
+  \begin{figure}[ht]
+    \centering
+    \includegraphics[width=\columnwidth]{CRAN.png}
+    \caption{R的官方网站CRAN(https://cran.r-project.org/)}
+  \end{figure}}
+
+\only<3>{
+  \begin{figure}[ht]
+    \centering
+    \includegraphics[width=\columnwidth]{R_community.jpg}
+    \caption{来自世界各地R的无私贡献者们}
+  \end{figure}}
+\end{overlayarea}
+
+\end{frame} 
+
+\begin{frame}[t]{\subsecname}{R的优势}
+\begin{itemize}
+\hilite<1> \item R是高度模块化软件，通过各种程序包(package)来扩展其功能,目前CRAN上
+                 接收的程序包超过12000个,绝大多数来自自愿者的贡献
+\hilite<2> \item 与其他语言具有极好的兼容性
+\hilite<3-> \item 目前最新的统计模型和算法几乎都有R的实现版本，与统计研究前沿相接轨 
+\end{itemize}  
+
+\begin{overlayarea}{\textwidth}{\textheight}
+\only<1>{
+  \begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.8\columnwidth]{number_of_R_packages.png}
+    \caption{历年R packages提交的数量统计}
+  \end{figure}}
+
+\only<2>{
+\begin{block}{R语言的兼容性}
+  \begin{itemize}
+  \item[\PencilLeftDown] \emphText{内部兼容}：由于R语言本身是解释性语言，
+    执行效率较低，因此R的底层函数有很大一部分代码是C语言和Fortran语言编
+    写的
+  \item[\PencilLeftDown] \emphText{外部兼容}：目前主流的编程语言，例
+    如JAVA、c++、python等几乎都有相应的程序库来调用R语言编写的程序，来
+    帮助这些编程语言简化统计计算和绘图相关的功能
+  \end{itemize}
+\end{block}}
+
+\only<3>{
+  \begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.6\columnwidth]{CRAN_TASK1.png}
+    \caption{R packages的任务分类}
+  \end{figure}}
+
+\only<4>{
+  \begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.6\columnwidth]{CRAN_TASK2.png}
+    \caption{R packages的任务分类}
+  \end{figure}}
+\end{overlayarea}
+
+\end{frame} 
+
+\subsection{基础知识}
+\begin{frame}[shrink]{\subsecname}{R的工作原理}
+\begin{itemize}
+\item 在R中进行的所有操作都是针对存储在\emphText{内存中的对象}
+\item 用户通过输入命令调用函数，\emphText{分析结果可以被直接显示在屏幕上，也可以被存入某个对象或被
+写入硬盘}(如图片对象)
+\item 因为分析结果本身也是对象，所以它们也能\emphText{被视为数据并能像一般数据那样被处理分析}
+\item 数据可以从本地磁盘读取，也可从远程服务器端获得 
+\end{itemize} 
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.9\columnwidth]{R_principle.png}
+  \caption{R的工作原理}
+\end{figure}
+\end{frame}
+
+\begin{frame}[t]{\subsecname}{安装运行环境}
+\begin{itemize}
+\hilite<1> \item R的主安装程序由自愿者进行编译上传，基本上每个在CRAN上可以自由下载，包括windows、linux
+                 和mac三大主流平台
+\hilite<2>\item 安装后的程序界面是一个交互式命令行终端，默认由一个“>”符号表示命令输入和结果
+                 输出指示符
+\hilite<3-> \item 在windows有一个简陋的GUI，linux和mac下默认只有CLI终端 
+\end{itemize} 
+
+\begin{overlayarea}{\textwidth}{\textheight}
+\only<1>{
+  \begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.8\columnwidth]{R_download.png}
+    \caption{R在CRAN的下载界面}
+  \end{figure}}
+
+\only<3>{
+  \begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.6\columnwidth]{R_gui.png}
+    \caption{R在windows下的GUI}
+  \end{figure}}
+
+\only<4>{
+  \begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.7\columnwidth]{R_cli.png}
+    \caption{R在linux下的cli终端}
+  \end{figure}}
+\end{overlayarea}
+\end{frame}
+
+\begin{frame}[t, fragile]{\subsecname}{基本操作}
+\begin{itemize}
+  \item R的第一种操作就是\emphText{“输入命令$\rightarrow$回车$\rightarrow$输出结果”}这种
+             标准的交互式命令行方式  
+\end{itemize} 
+
+\begin{overlayarea}{\textwidth}{\textheight}
+\begin{onlyenv}<1>
+\begin{rc}
+> x = runif(100); y = 0.2*x + 0.1*rnorm(100)
+> fit = lm(y ~ x)
+> summary(fit)
+\end{rc}
+\begin{rc}
+Call:
+lm(formula = y ~ x)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.30665 -0.05002 -0.01135  0.06047  0.24599 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  0.02052    0.01670   1.229    0.222    
+x            0.17510    0.03107   5.636 1.67e-07 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.08959 on 98 degrees of freedom
+Multiple R-squared:  0.2448,    Adjusted R-squared:  0.2371 
+F-statistic: 31.77 on 1 and 98 DF,  p-value: 1.671e-07
+\end{rc}
+\end{onlyenv}
+
+\begin{onlyenv}<2>
+\begin{rc}
+plot(x, y); abline(fit)
+\end{rc}
+\begin{figure}
+    \centering
+    \includegraphics[width=0.55\columnwidth]{R_output.png}
+\end{figure}
+\end{onlyenv}
+\end{overlayarea}
+\end{frame}
+
+\begin{frame}[t, fragile]{\subsecname}{基本操作}
+\begin{itemize}
+  \hilite<1> \item 第二种方式是将脚本代码写在文件中，然后一次性运行
+  \hilite<2> \item 如果代码量很大建议使用第二种方式，因为文件比较容易修改和保存，而且目前
+        有专用IDE可以辅助编写R脚本代码  
+\end{itemize} 
+
+\begin{overlayarea}{\textwidth}{\textheight}
+\only<1>{
+  \begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.8\columnwidth]{R_editor.png}
+    \caption{在文本编辑器中编写脚本，然后一次性在终端运行}
+  \end{figure}}   
+
+\only<2>{
+  \begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.6\columnwidth]{RStudio.jpg}
+    \caption{\emphText{RStudio}是目前最专业的R IDE，具有大量针对R语言特点设计的功能，
+             而且个人桌面版完全开源，可以免费使用}
+  \end{figure}}   
+\end{overlayarea}
+\end{frame}
+
+\begin{frame}[t]{\subsecname}{程序包}
+  \begin{itemize}
+    \hilite<1> \item R的程序包分为\emphText{base包}和\emphText{contrib包}
+    \hilite<2> \item base包是安装R的时候就自带的，不需要单独安装，
+    这类包的质量都非常高，性能稳定
+    \hilite<3> \item contrib包是自愿者上传的，质量参次不齐；其中质量好
+    且用户量大的扩展包有可能会纳入下一个版本的主程序包
+  \end{itemize}
+
+\begin{overlayarea}{\textwidth}{\textheight}
+\only<1>{
+  \begin{figure}[h]
+    \centering
+    \includegraphics[width=\columnwidth]{R_packages.png}
+    \caption{CRAN上下载base包和contrib包}
+  \end{figure}}  
+
+\only<2>{
+  \begin{table} \centering \small
+    \begin{tabular}{|c|c|}
+      \toprule
+      \rowcolor{LightCyan}
+      名称 & 用途\\\hline
+      base & R基础函数包\\\hline
+      methods & 用于 R 对象和编程工具的方法和类的定义\\\hline
+      datasets & R通用数据集\\\hline
+      graphics & 基础统计绘图包 \\\hline
+      utils & 通用函数包 \\\hline
+      stats & 基础统计计算包 \\\hline
+      grDevices & 基础或grid图形设备\\
+      \bottomrule
+    \end{tabular}
+    \caption{常用的base包}
+  \end{table}}
+
+\only<3>{
+  \begin{table} \centering \small 
+    \begin{tabular}{|c|c|}
+      \toprule
+      \rowcolor{LightCyan}
+      名称 & 用途\\\hline
+      cluster & 聚类分析包\\\hline
+      maptools & 空间数据读取和处理包\\\hline
+      spatstat & 空间点数据分析包\\\hline
+      sp & 空间数据基础类包\\\hline
+      spdep & 空间自相关模型包\\\hline
+      ggplot2 & 基于绘图语法的数据可视化包 \\\hline
+      knitr & R文学编程包 \\\hline
+      \bottomrule
+    \end{tabular}
+    \caption{常用的contrib包}
+  \end{table}}
+\end{overlayarea}
+\end{frame}
+
+\begin{frame}[t,fragile]{\subsecname}{程序包}
+  \begin{itemize}
+    \hilite<1> \item base包在R启动之后自动加载，可以直接使用；而contrib包则需要通过library函数调用，如果未安装
+               相应包则会报错
+    \hilite<2> \item 通过\emphTextStep{2-}{install.packages}函数安装contrib包
+  \end{itemize}
+
+\begin{overlayarea}{\textwidth}{\textheight}
+\begin{onlyenv}<1>
+\begin{rc}
+> library(sp)
+Error in library(sp) : there is no package called ‘sp’
+\end{rc}
+\end{onlyenv}
+
+\begin{onlyenv}<2>
+\begin{rc}
+> install.packages("sp")
+Installing package into ‘/home/mono/Softwares/R/3.4’
+(as ‘lib’ is unspecified)
+--- Please select a CRAN mirror for use in this session ---
+trying URL 'http://mirrors.tuna.tsinghua.edu.cn/CRAN/src/contrib/sp_1.2-6.tar.gz'
+Content type 'application/octet-stream' length 1133739 bytes (1.1 MB)
+==================================================
+downloaded 1.1 MB
+
+* installing *source* package ‘sp’ ...
+\end{rc}
+\end{onlyenv}
+\end{overlayarea}
+\end{frame}
+
+\begin{frame}[t,fragile]{\subsecname}{帮助系统}
+  \begin{itemize}
+    \hilite<1> \item 通过\emphTextStep{1-}{?命令}或者\emphTextStep{1-}{help函数}
+               查看程序包中函数的本地帮助文档
+    \hilite<2> \item 通过\emphTextStep{2-}{help.search函数}在整个帮助系统中进行关键字搜索
+    \hilite<3> \item \emphTextStep{3-}{find函数}可以根据名称精确查找对象，
+               \emphTextStep{3-}{apropos函数}可以根据名称模糊查找对象
+  \end{itemize}
+
+\begin{overlayarea}{\textwidth}{\textheight}
+\begin{onlyenv}<1>
+\begin{rc}
+> ?lm
+lm               package:stats            R Documentation
+
+Fitting Linear Models
+
+Description:
+
+     ‘lm’ is used to fit linear models.  It can be used to carry out regression, single stratum analysis of variance and analysis of covariance (although ‘aov’ may provide a more convenient interface for these).
+
+Usage:
+
+     lm(formula, data, subset, weights, na.action, method = "qr", model = TRUE, x = FALSE, y = FALSE, qr = TRUE, singular.ok = TRUE, contrasts = NULL, offset, ...)
+     
+Arguments:
+
+ formula: an object of class ‘"formula"’ (or one that can be coerced to that class): a symbolic description of the model to be fitted.  The details of model specification are given under ‘Details’.
+\end{rc}
+\end{onlyenv}
+
+\begin{onlyenv}<2>
+\begin{rc}
+> help.search("data input")
+Help files with alias or concept or title matching ‘data input’ using fuzzy matching:
+
+
+utils::read.DIF         Data Input from Spreadsheet
+utils::read.table       Data Input
+
+
+Type '?PKG::FOO' to inspect entries 'PKG::FOO', or 'TYPE?PKG::FOO' for entries like 'PKG::FOO-TYPE'.
+\end{rc}
+\end{onlyenv}
+
+\begin{onlyenv}<3>
+\begin{rc}
+> find("lm")
+[1] "package:stats"
+> appropos("lm")
+ [1] "colMeans"        ".colMeans"       "confint.lm"      "contr.helmert"  
+ [5] "dummy.coef.lm"   "getAllMethods"   "glm"             "glm.control"    
+ [9] "glm.fit"         "KalmanForecast"  "KalmanLike"      "KalmanRun"      
+[13] "KalmanSmooth"    "kappa.lm"        "lm"              ".lm.fit"        
+[17] "lm.fit"          "lm.influence"    "lm.wfit"         "model.matrix.lm"
+[21] "nlm"             "nlminb"          "predict.glm"     "predict.lm"     
+[25] "residuals.glm"   "residuals.lm"    "summary.glm"     "summary.lm" 
+\end{rc}
+\end{onlyenv}
+
+\end{overlayarea}
+\end{frame}
+
+\subsection{数据操作}
+\begin{frame}{\subsecname}{数据类型(mode)}
+  \begin{itemize}
+  \item 实数型(real):整数(integer)、单精度(single)、双精度(double)
+  \item 虚数型(complex):如10+21i
+  \item 字符型(character, string):如"hello world"
+  \item 逻辑型(logical):TRUE(可以简写成T),FALSE(可以简写成F)
+  \item 函数(function)
+  \item 表达式(expression)
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[t]{\subsecname}{对象和数据结构}
+  \begin{itemize}
+  \item 在R语言中，\emphText{几乎任何东西都是对象}；使用对象的好处是可以复用，提升自动化程度
+  \item R语言中为了提高数据的使用效率，预定义了一些数据结构，\emphText{R语言会根据
+        这些数据结构来创建对象}
+  \item 这些数据结构支撑了R强大的统计分析能力
+  \end{itemize}
+
+  \begin{table} \centering \small
+    \begin{tabular}{|c|c|}
+      \toprule
+      \rowcolor{LightCyan}
+      数据结构 & 类型\\\hline
+      向量(vector) & 数值型,字符型,复数型,逻辑型\\\hline
+      因子(factor) & 数值型,字符型\\\hline
+      数组(array) & 数值型,字符型,复数型,逻辑型\\\hline
+      矩阵(matrix) & 数值型,字符型,复数型,逻辑型 \\\hline
+      数据框(data.frame) & 数值型,字符型,复数型,逻辑型 \\\hline
+      列表(list) & 任意其他类型 \\\hline
+      时间序列(ts) & 数值型,字符型,复数型,逻辑型\\
+      \bottomrule
+    \end{tabular}
+    \caption{R基础数据结构}
+  \end{table} 
+\end{frame}
+
+\begin{frame}[t,fragile]{\subsecname}{数据输入输出}
+  \begin{itemize}
+    \hilite<1> \item R的数据可以按照数据结构手动输入，也可以通过读取外部文件自动输入
+    \hilite<2> \item R base包提供了文本文件(ASCII)的读取函数：\emphTextStep{2-}{read.table}、
+                     \emphTextStep{2-}{scan}和\emphTextStep{2-}{read.fwf}等
+    \hilite<3> \item R base包也提供了文本文件(ASCII)的输出函数：\emphTextStep{2-}{write.table}
+    \hilite<4> \item 另外，\emphTextStep{4-}{图形作为对象也可以输出}，这将在后面会专门介绍
+  \end{itemize}
+
+\begin{overlayarea}{\textwidth}{\textheight}
+\begin{onlyenv}<2>
+\begin{rc}
+# 从外部读取data.dat文件，并且将数据赋给一个名为mydata的对象，这里mydata是一个data.frame数据结构
+> mydata <- read.table("data.dat")
+
+# read.table的参数
+read.table(file, header = FALSE, sep = "", quote = "\"’", dec = ".", row.names, col.names, as.is = FALSE, na.strings = "NA",colClasses = NA, nrows = -1,skip = 0, check.names = TRUE, fill =!blank.lines.skip,strip.white = FALSE, blank.lines.skip = TRUE,comment.char = "#")
+\end{rc}
+\end{onlyenv}
+
+\begin{onlyenv}<3>
+\begin{rc}
+# 函数write.table可以在文件中写入一个对象,一般是写一个数据框,也可以是其它类型的对象
+write.table(x, file = "", append = FALSE, quote = TRUE, sep = " ", eol = "\n", na = "NA", dec = ".", row.names = TRUE, col.names = TRUE, qmethod = c("escape", "double"))
+\end{rc}
+\end{onlyenv}
+
+\end{overlayarea}
+\end{frame}
+
+\subsection{程序控制}
+\begin{frame}{\subsecname}{控制语句}
+  \begin{itemize}
+  \item<1-> if (条件) {表达式}
+  \item<1-> if (条件) {表达式} else {表达式}
+  \item<1-> if...else if...else if... else...
+  \item<1-> ifelse (条件, yes, no)
+  \item<2-> for (变量 in 向量) {表达式}
+  \item<2-> while (条件) {表达式} 
+  \end{itemize}
+
+\onslide<3>{
+\begin{badbox}{}
+循环的编程模式在R中效率很低,尽量避免使用!
+\end{badbox}} 
+\end{frame}
+
+\subsection{函数}
+
+\subsection{面向对象编程}
+\begin{frame}[c]
+  \frametitle{www}
+  Everything in S is an object;
+Every object is S has a class.
+\end{frame} 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{R绘图}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{R混合嵌入}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 结束页
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[plain,noframenumbering]%
+  \finalpage{
+    \begin{table} \Huge \centering
+      \begin{tabular}{c}
+        汇~报~完~毕\\
+        谢~谢!
+      \end{tabular} \end{table}
+    \titlegraphic{\pgfuseimage{mainlogo}}}
+\end{frame}
+\end{document}
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
