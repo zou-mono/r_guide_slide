@@ -1299,7 +1299,7 @@ write.table(x, file = "", append = FALSE, quote = TRUE, sep = " ", eol = "\n", n
      \item[\PencilLeftDown] 当需要一个新的函数，该函数可以根据不同的
 参数类型做出不同的反应的时候
   \end{itemize}
-\item R语言中有三种OO的实现系统：\emphText{S3、S4和RC(R5)}
+\item R语言中有四种OO的实现系统：\emphText{S3、S4、RC(R5)和R6}
 \end{itemize}  
 \end{frame} 
 
@@ -1307,7 +1307,7 @@ write.table(x, file = "", append = FALSE, quote = TRUE, sep = " ", eol = "\n", n
   \begin{itemize}
   \item S3是R语言的第一种也是最简单的一种OO系统，也是\emphText{CRAN程序包中最常用的一种OO系统}
   \item S3系统中方法(method)是属于函数而不是属于类，这种函数称为\emphText{泛型函数}(generic function)
-  \item 泛型函数的形式是generic.class()，其实质是根据传入函数的第一个参数的类去调用相应的“子函数”
+  \item 泛型函数的形式是\emphText{generic.class()}，其实质是根据传入函数的第一个参数的类去调用相应的“子函数”
   \end{itemize}  
 
   %\begin{overlayarea}{\textwidth}{\textheight}
@@ -1331,6 +1331,148 @@ write.table(x, file = "", append = FALSE, quote = TRUE, sep = " ", eol = "\n", n
   %\end{overlayarea}
 \end{frame}
 
+\begin{frame}[t,fragile]{\subsecname}{S3系统}
+  \begin{itemize}
+  \item<1-> 创建S3对象最简单的方法是给一个变量增加\emphText{class属性}；也可以通过\emphText{structure()}函数创建
+  \item<2-> 使用\emphText{UseMethod()}函数定义S3型泛型函数
+  \item<3-> 通过\emphText{NextMethod()}函数实现继承
+  \end{itemize}  
+
+  %\begin{overlayarea}{\textwidth}{\textheight}
+\begin{onlyenv}<1>
+\begin{rc}
+# 通过给变量增加class属性来创建S3型对象
+> x <- 1; attr(x,'class') <- 'foo'
+> x
+[1] 1
+attr(,"class")
+[1] "foo"
+> otype(x)
+[1] "S3"
+# 通过structure函数来创建S3型对象
+> y <- structure(2, class='foo')
+> y
+[1] 2
+attr(,"class")
+[1] "foo"
+> otype(y)
+[1] "S3"
+\end{rc}  
+\end{onlyenv}
+
+\begin{onlyenv}<2>
+\begin{rc}
+# 用UseMethod定义S3泛型函数
+> teacher <- function(x,...) UseMethod("teacher")
+# 定义了三个teacher的内部函数
+> teacher.lecture <- function(x) print("上课")
+> teacher.assignment <- function(x) print("布置作业")
+> teacher.default <- function(x) print("你不是老师")
+# 定义一个S3对象a,其class是lecture
+> a <- structure('A', class='lecture')
+# teacher泛型函数根据传入的类调取teacher.lecture()函数
+> teacher(a) 
+[1] "上课"
+# 默认泛型函数
+> teacher()
+[1] "你不是老师"
+\end{rc}  
+\end{onlyenv}
+
+\begin{onlyenv}<3>
+\begin{rc}
+# 定义一个S3泛型函数node
+> node <- function(x) UseMethod('node', x)
+# 定义node的内部函数，其中son函数通过NextMethod()指向father
+> node.default <- function(x) "Default node"
+> node.father <- function(x) c("father")
+> node.son <- function(x) c("son", NextMethod())
+# 定义对象n有两个class，调用node函数会先执行son函数，再执行father函数，模拟了子函数调用父函数的过程
+> n <- structure(1, class = c("son", "father"))
+> node(n)
+[1] "son"    "father"
+\end{rc}
+\end{onlyenv}
+
+\begin{onlyenv}<4>
+\begin{badbox}{S3系统的缺点}
+\begin{itemize}
+\item[\PencilLeftDown] S3系统并不是真正的OO，只是通过函数来模拟OO
+\item[\PencilLeftDown] S3系统使用简单，但是很难处理复杂的对象关系
+\item[\PencilLeftDown] S3系统的内部函数并没有真正封装，可以绕过泛型函数检查直接被调用
+\item[\PencilLeftDown] S3系统的class属性可以被任意设置，没有检查机制
+\end{itemize}
+\end{badbox}
+\end{onlyenv}
+  %\end{overlayarea}
+\end{frame}
+
+\begin{frame}[t,fragile]{\subsecname}{S4系统}
+  \begin{itemize}
+  \item<1-> 相比S3系统，S4系统有更明确和严谨的OO系统特征
+  \item<2-> 专门的类定义函数\emphText{setClass()}和类的实例化函数\emphText{new()}
+  \item<3-> 对象类型检查函数\emphText{setValidity()}
+  \item<4-> S4泛型函数实现了方法定义和实现的分离，通过\emphText{setGeneric()}函数定义接口，
+    \emphText{setMethod()}函数定义实现类
+  \end{itemize}  
+
+  %\begin{overlayarea}{\textwidth}{\textheight}
+\begin{onlyenv}<2>
+\begin{rc}
+# 定义S4类person以及person的子类son
+> setClass('person',slots=list(name="character",age="numeric"))
+> setClass("son", slots=list(father="person",mother="person"),contains="person")
+# 实例化对象
+> father <- new("person",name="F",age=44)
+> mother <- new("person",name="M",age=42)
+> son <- new("son",name="S",age=16,father=father,mother=mother)
+# 查看son对象的属性
+> son@father
+An object of class "person"
+Slot "name":
+[1] "F"
+
+Slot "age":
+[1] 44
+\end{rc}  
+\end{onlyenv}
+
+\begin{onlyenv}<3>
+\begin{rc}
+# 定义S4类person
+> setClass('person',slots=list(name="character",age="numeric"))
+# 传入错误的age类型
+> bad <- new("person",name="bad",age="aaa")
+Error in validObject(.Object) : 
+  invalid class “person” object: invalid object for slot "age" in class "person": got class "character", should be or extend class "numeric"
+# 设置age属性的非负检查
+> setValidity("person",function(object){
++    if(object@age <=0) stop("Age is negative.")
++ })
+# 传入age属性小于0时会报错
+> bad2 <- new("person",name="bad",age=-1)
+Error in validityMethod(object) : Age is negative.
+\end{rc}  
+\end{onlyenv}
+
+\begin{onlyenv}<4>
+\begin{rc}
+# 定义person类
+> setClass('person',slots=list(name="character",age="numeric"))
+# 定义泛型函数work，即接口
+> setGeneric("work",function(obj) standardGeneric("work"))
+[1] "work"
+# 定义work的实现函数，并指定参数类型为person
+> setMethod("work",signature(obj="person"),function(obj) cat(obj@name, "is working"))
+[1] "work"
+# 创建person类型对象a，并将其传入work函数
+> a <- new("person",name="Conan",age=16)
+> work(a)
+Conan is working
+\end{rc}  
+\end{onlyenv}
+  %\end{overlayarea}
+\end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{R绘图}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
