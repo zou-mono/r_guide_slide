@@ -89,12 +89,9 @@
     \end{figure}} \only<2>{
     \begin{figure}
       \centering
-      \includegraphics[width=0.8\textwidth]{Playfair_TimeSeries.png}
-      \caption{苏格兰工程师和政治经济学家William Playfair于1786年在他的
-        书《Commercial and Political Atlas》中绘制的线图，这幅图展示
-        了1700年至1780年间英格兰的进出口时序数据。\emphText{Playfair是
-          历史上第一个系统使用统计图形的人，因此被称为“统计图形奠基
-          人”}}
+      \includegraphics[width=0.75\textwidth]{Playfair_TimeSeries.png}
+      \caption{苏格兰工程师和政治经济学家William Playfair于1786年在《Commercial and Political Atlas》
+        一书中绘制的线图，这幅图展示了1700年至1780年间英格兰的进出口时序数据。\emphText{Playfair是历史上第一个系统使用统计图形的人，被称为“统计图形奠基人”}}
     \end{figure}}
 \end{overlayarea}
  
@@ -195,9 +192,8 @@
         \caption{法国各地向巴黎输送牲畜产品的分布情况图(Charles Joseph Minard, 1858)\\
           此图的作者也是Joseph Minard，\emphText{经典之处在于首次将饼图融合到地图中}\\
           这位法国工程师，将一生大部分时间都贡献给了水坝，运河和桥梁的
-          工程建造和教育事业,直到1851年退休，已近70岁高龄的他才正式转入
-          了可视化领域，研究数据信息图形的绘制。在他最后的20年
-          里，Minard在可视化领域贡献了许多创新，共绘制了51幅各种形式的
+          工程建造与教育事业,直到1851年退休，已近70岁高龄才正式开始研究数据信息图形可视化。在他最后的20年
+          里，Minard在这个领域贡献了许多创新，共绘制了51幅各种形式的
           可视化图形，是那个可视化黄金时代当之无愧的大师，\emphText{被
             称为法国的“William Playfair”}}
       \end{column}
@@ -697,8 +693,8 @@ RUN;
 
 \begin{frame}[t]{\subsecname}{R的优势}
 \begin{itemize}
-\hilite<1> \item R是高度模块化软件，通过各种程序包(package)来扩展其功能,目前CRAN上
-                 接收的程序包超过12000个,绝大多数来自自愿者的贡献
+\hilite<1> \item R是高度模块化软件，通过各种程序包(package)来扩展其功能，目前CRAN上
+                 接收的程序包超过12000个，绝大多数来自自愿者的贡献
 \hilite<2> \item 与其他语言具有极好的兼容性
 \hilite<3-> \item 目前最新的统计模型和算法几乎都有R的实现版本，与统计研究前沿相接轨 
 \end{itemize}  
@@ -1056,6 +1052,13 @@ Type '?PKG::FOO' to inspect entries 'PKG::FOO', or 'TYPE?PKG::FOO' for entries l
 [1] "character"
 [1] "logical"
 [1] "complex"
+# 表达式
+> x <- 3; y <- 2.5; z <- 1
+> exp1 <- expression(x / (y + exp(z)))
+> exp1
+expression(x/(y + exp(z)))
+> eval(exp1)
+[1] 0.5749019
 \end{rc}
 \end{frame}
 
@@ -1087,12 +1090,12 @@ Type '?PKG::FOO' to inspect entries 'PKG::FOO', or 'TYPE?PKG::FOO' for entries l
   \end{table}
 \end{frame}
 
-\begin{frame}[t,fragile]
-  \frametitle{\subsecname}{向量(vector)}
+\begin{frame}[t,fragile]{\subsecname}{数据结构}
+  \frametitle{}{向量(vector)}
   \begin{itemize}
-  \item \emphText{列向量是R中最基本的数据单元},向量中的对象类型必须相同
-  \item 构建向量常用的函数: rep(), c(), seq(), cbind(), rbind()等
-  \item \emphText{向量的下标从1开始},这和其他计算机高级编程语言是不一样的!
+  \item \emphText{向量是R中最基本的数据单元}，向量中的对象类型必须相同
+  \item 构建向量常用的函数: rep()、c()、seq()、cbind()、rbind()等
+  \item \emphText{向量的下标从1开始}，这和其他计算机高级编程语言是不一样的!
   \end{itemize}  
 
 \begin{rc}
@@ -1112,6 +1115,107 @@ Type '?PKG::FOO' to inspect entries 'PKG::FOO', or 'TYPE?PKG::FOO' for entries l
      [,1] [,2] [,3] [,4]
 [1,]    0    1    1    1
 [2,]    0    1    2    3
+\end{rc}  
+\end{frame}
+
+\begin{frame}[t,fragile]{\subsecname}{数据结构}
+  \frametitle{}{因子(factor)}
+  \begin{itemize}
+  \item 因子是对应统计学中的分类数据(categorical data)而设计的
+  \item 因子形式上是一个对等长的向量元素进行分类(分组)的向量对象
+  \item 因子数据具有水平(level)和标签(label)，前者即分类变量的不同取
+值，后者即各类取值的名称
+  \end{itemize}  
+
+\begin{rc}
+> factor(1:3, labels=c("A", "B", "C"))
+[1] A B C
+Levels: A B C
+> (x = factor(c(1, 2, 3, 1, 1, 3, 2, 3, 3), levels = 1:3,
++   labels = c("g1", "g2", "g3")))
+[1] g1 g2 g3 g1 g1 g3 g2 g3 g3
+Levels: g1 g2 g3
+\end{rc}  
+\end{frame}
+
+\begin{frame}[t,fragile]{\subsecname}{数据结构}
+  \frametitle{}{数组(array)和矩阵(matrix)}
+  \begin{itemize}
+  \item 数组和矩阵是具有维度属性(dimension)的数据结构，
+        实质是有附加属性(维数dim)的向量
+  \item 矩阵是数组的特例，它的维度为2，用来指定行数和列数
+  \end{itemize}  
+
+\begin{rc}
+# 二维矩阵
+> matrix(data=5, nr=2, nc=2)
+     [,1] [,2]
+[1,]    5    5
+[2,]    5    5
+# 三维数组
+> array(1:24, c(3, 4, 2))
+, , 1
+     [,1] [,2] [,3] [,4]
+[1,]    1    4    7   10
+[2,]    2    5    8   11
+[3,]    3    6    9   12
+
+, , 2
+     [,1] [,2] [,3] [,4]
+[1,]   13   16   19   22
+[2,]   14   17   20   23
+[3,]   15   18   21   24
+\end{rc}  
+\end{frame}
+
+\begin{frame}[t,fragile]{\subsecname}{数据结构}
+  \frametitle{}{列表(list)}
+  \begin{itemize}
+  \item 列表是一种灵活的数据结构，\emphText{用于生成包含不同类型对象的集合}
+  \end{itemize}  
+
+\begin{rc}
+# 创建list
+> x <- 1:4; y <- 2:4; L1 <- list(A=x, B=y); L1
+$A
+[1] 1 2 3 4
+
+$B
+[1] 2 3 4
+# list元素的引用
+> L1[[1]]
+[1] 1 2 3 4
+> L1["A"]
+$A
+[1] 1 2 3 4
+> L1[["A"]]
+[1] 1 2 3 4
+> L1$B
+[1] 2 3 4
+\end{rc}  
+\end{frame}
+
+\begin{frame}[t,fragile]{\subsecname}{数据结构}
+  \frametitle{}{数据框(data.frame)}
+  \begin{itemize}
+  \item 数据框是由许多向量组成的一个二维的对象，主要用于保存建模所需要的数据
+  \item 数据框的实质是一个“整齐的”列表，它只要求各列内的数据类型相同,而列之间的可以不同
+  \item \emphText{数据框是R中最重要的一种数据结构}，大多数数据都是以数据框形式输到R中的
+  \end{itemize}  
+
+\begin{rc}
+# 创建数据框
+# 数据框中的向量必须有相同的长度,如果其中有一个比其它的短,它将“循环”整数次(以使得其长度与其它向量相同)
+> x <- 1:4; M <- c(10, 35); y <- 2:4
+> data.frame(x, M)
+  x  M
+1 1 10
+2 2 35
+3 3 10
+4 4 35
+> data.frame(x, y)
+Error in data.frame(x, y) :
+   arguments imply differing number of rows: 4, 3
 \end{rc}  
 \end{frame}
 
@@ -1158,19 +1262,74 @@ write.table(x, file = "", append = FALSE, quote = TRUE, sep = " ", eol = "\n", n
 
 \onslide<3>{
 \begin{badbox}{}
-循环的编程模式在R中效率很低,尽量避免使用!
+循环的编程模式在R中效率很低，尽量避免使用!
 \end{badbox}} 
 \end{frame}
 
 \subsection{函数}
+\begin{frame}[t,fragile]{\subsecname}{}
+  \begin{itemize}
+  \item R语言中可以定义函数，以便编程中可以以不同的参数值重复使用同一段代码
+  \item 定义函数的方式为:function(arglist) expr return(value);
+其中arglist是参数列表,expr是函数的主体,return()用来返回函数值
+\item \emphText{函数是R中用于黑箱操作的重要实体}
+  \end{itemize}  
+
+\begin{rc}
+# 定义峰度函数kurtosis,该函数有两个参数,数据向量x和是否删除缺失值na.rm,后者有默认值FALSE
+> kurtosis = function(x, na.rm = FALSE) {
++   if (na.rm)
++     x = x[!is.na(x)]
++   return(sum((x - mean(x))^4)/(length(x) * var(x)^2) - 3)
++ }
+> # 引用函数
+> kurtosis(runif(100))
+[1] -1.36086
+\end{rc}  
+\end{frame}
 
 \subsection{面向对象编程}
-\begin{frame}[c]
-  %\item<1-> 
-  \frametitle{www}
-  Everything in S is an object;
-Every object is S has a class.
+\begin{frame}[t]{\subsecname}{}
+\begin{itemize}
+\item \emphText{R语言中支持面向对象(Object-Oriented, OO)编程来提高代码的使用率}，从而实现具体功能的扩展和模块化
+  \item R语言作为一种统计编程语言，需要用的OO的场景主要有以下两类：
+  \begin{itemize}
+     \item[\PencilLeftDown] 当需要用一种新的类型来表示数据，该类型与
+   已有的数据类型有区别的时候
+     \item[\PencilLeftDown] 当需要一个新的函数，该函数可以根据不同的
+参数类型做出不同的反应的时候
+  \end{itemize}
+\item R语言中有三种OO的实现系统：\emphText{S3、S4和RC(R5)}
+\end{itemize}  
 \end{frame} 
+
+\begin{frame}[t,fragile]{\subsecname}{S3系统}
+  \begin{itemize}
+  \item S3是R语言的第一种也是最简单的一种OO系统，也是\emphText{CRAN程序包中最常用的一种OO系统}
+  \item S3系统中方法(method)是属于函数而不是属于类，这种函数称为\emphText{泛型函数}(generic function)
+  \item 泛型函数的形式是generic.class()，其实质是根据传入函数的第一个参数的类去调用相应的“子函数”
+  \end{itemize}  
+
+  %\begin{overlayarea}{\textwidth}{\textheight}
+\begin{rc}
+> library(pryr) # 调用pryr程序包检测某个方法是否是S3系统
+> df <- data.frame(x = 1:10, y = letters[1:10])
+> otype(df)    # data.frame是一个S3方法
+[1] "S3"
+# 调用methods()来查看属于某个泛型的所有方法
+> methods("mean")
+[1] mean.Date   mean.default    mean.difftime   mean.POSIXct    mean.POSIXlt
+# 根据传入函数的第一个参数的类去调用相应的“子函数”
+> (today <- Sys.Date())
+[1] "2018-01-18"
+> tenweeks <- seq(today, length.out=10, by="1 week")
+> class(tenweeks)
+[1] "Date"
+> mean(tenweeks) # 这里调用的实际上是mean.Date
+[1] "2018-02-18" 
+\end{rc}  
+  %\end{overlayarea}
+\end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{R绘图}

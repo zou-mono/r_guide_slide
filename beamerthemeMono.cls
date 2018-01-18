@@ -156,10 +156,10 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \RequirePackage{caption}
 \DeclareCaptionFont{subtitle}{\tiny}
-\captionsetup[figure]{font=rm,belowskip=-5pt, textfont=small, position=bottom, name=图}
-\captionsetup[table]{font=rm, belowskip=0pt, textfont=small, position=bottom, singlelinecheck=false, justification=centering, name=表}
-\captionsetup[subfigure]{labelfont=small, textfont=small, position=bottom,justification=centering}
-\captionsetup[subtable]{labelfont=small, textfont=small,position=bottom, farskip=2pt,captionskip=0pt,topadjust=-5pt, nearskip=2pt,margin=0pt}
+\captionsetup[figure]{font=rm,belowskip=-5pt, textfont=footnotesize, position=bottom, name=图}
+\captionsetup[table]{font=rm, belowskip=0pt, textfont=footnotesize, position=bottom, singlelinecheck=false, justification=centering, name=表}
+\captionsetup[subfigure]{labelfont=small, textfont=footnotesize, position=bottom,justification=centering}
+\captionsetup[subtable]{labelfont=small, textfont=footnotesize, position=bottom, farskip=2pt,captionskip=0pt,topadjust=-5pt, nearskip=2pt,margin=0pt}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % 设置自定义环境
