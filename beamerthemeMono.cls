@@ -36,7 +36,7 @@
 % ... or whatever. Note that the encoding and the font should match.
 % If T1 does not look nice, try deleting the line with the fontenc.
 \RequirePackage{lmodern} %optional
-\RequirePackage{listings}
+\RequirePackage{listings} %代码高亮
 \RequirePackage{wasysym}
 \RequirePackage{amsmath,amssymb,bm}
 \RequirePackage[style=numeric-comp,citetracker=true,sorting=none]{biblatex}
