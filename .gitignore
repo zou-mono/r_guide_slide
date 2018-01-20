@@ -1,4 +1,5 @@
 /auto
+/_minted*
 *.aux
 *.bbl
 *.bcf
@@ -17,3 +18,4 @@
 *~*
 *.lock*
 *.swp*
+*.listing

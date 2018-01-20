@@ -667,7 +667,7 @@ RUN;
 \begin{itemize}
 \hilite<1> \item R具备S-Plus几乎所有的优点，而且更加小巧轻便
 \hilite<2> \item 开源项目，完全免费，这点是其他统计软件都不具备的
-\hilite<3> \item 因为上述优点，世界各地有大量研究机构和专业统计人员使用
+\hilite<3> \item 世界各地有大量研究机构和专业统计人员使用
                  并自愿贡献代码，具有良好的生态系统
 \end{itemize}  
 
@@ -793,12 +793,11 @@ RUN;
 
 \begin{overlayarea}{\textwidth}{\textheight}
 \begin{onlyenv}<1>
-\begin{rc}
+\begin{rcode}
 > x = runif(100); y = 0.2*x + 0.1*rnorm(100)
 > fit = lm(y ~ x)
 > summary(fit)
-\end{rc}
-\begin{rc}
+
 Call:
 lm(formula = y ~ x)
 
@@ -816,13 +815,13 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 Residual standard error: 0.08959 on 98 degrees of freedom
 Multiple R-squared:  0.2448,    Adjusted R-squared:  0.2371 
 F-statistic: 31.77 on 1 and 98 DF,  p-value: 1.671e-07
-\end{rc}
+\end{rcode}
 \end{onlyenv}
 
 \begin{onlyenv}<2>
-\begin{rc}
+\begin{rcode}
 plot(x, y); abline(fit)
-\end{rc}
+\end{rcode}
 \begin{figure}
     \centering
     \includegraphics[width=0.55\columnwidth]{R_output.png}
@@ -920,14 +919,14 @@ plot(x, y); abline(fit)
 
 \begin{overlayarea}{\textwidth}{\textheight}
 \begin{onlyenv}<1->
-\begin{rc}
+\begin{rcode}
 > library(sp)
 Error in library(sp) : there is no package called ‘sp’
-\end{rc}
+\end{rcode}
 \end{onlyenv}
 
 \begin{onlyenv}<2>
-\begin{rc}
+\begin{rcode}
 > install.packages("sp")
 Installing package into ‘/home/mono/Softwares/R/3.4’
 (as ‘lib’ is unspecified)
@@ -938,7 +937,7 @@ Content type 'application/octet-stream' length 1133739 bytes (1.1 MB)
 downloaded 1.1 MB
 
 * installing *source* package ‘sp’ ...
-\end{rc}
+\end{rcode}
 \end{onlyenv}
 \end{overlayarea}
 \end{frame}
@@ -954,7 +953,7 @@ downloaded 1.1 MB
 
 \begin{overlayarea}{\textwidth}{\textheight}
 \begin{onlyenv}<1>
-\begin{rc}
+\begin{rcode}
 > ?lm
 lm               package:stats            R Documentation
 
@@ -967,11 +966,11 @@ Description:
 Usage:
 
      lm(formula, data, subset, weights, na.action, method = "qr", model = TRUE, x = FALSE, y = FALSE, qr = TRUE, singular.ok = TRUE, contrasts = NULL, offset, ...)
-\end{rc}
+\end{rcode}
 \end{onlyenv}
 
 \begin{onlyenv}<2>
-\begin{rc}
+\begin{rcode}
 > help.search("data input")
 Help files with alias or concept or title matching ‘data input’ using fuzzy matching:
 
@@ -981,11 +980,11 @@ utils::read.table       Data Input
 
 
 Type '?PKG::FOO' to inspect entries 'PKG::FOO', or 'TYPE?PKG::FOO' for entries like 'PKG::FOO-TYPE'.
-\end{rc}
+\end{rcode}
 \end{onlyenv}
 
 \begin{onlyenv}<3>
-\begin{rc}
+\begin{rcode}
 > find("lm")
 [1] "package:stats"
 > appropos("lm")
@@ -996,7 +995,7 @@ Type '?PKG::FOO' to inspect entries 'PKG::FOO', or 'TYPE?PKG::FOO' for entries l
 [17] "lm.fit"          "lm.influence"    "lm.wfit"         "model.matrix.lm"
 [21] "nlm"             "nlminb"          "predict.glm"     "predict.lm"     
 [25] "residuals.glm"   "residuals.lm"    "summary.glm"     "summary.lm" 
-\end{rc}
+\end{rcode}
 \end{onlyenv}
 
 \end{overlayarea}
@@ -1036,7 +1035,8 @@ Type '?PKG::FOO' to inspect entries 'PKG::FOO', or 'TYPE?PKG::FOO' for entries l
   \item 表达式(expression)
   \end{itemize}
 
-\begin{rc}
+\begin{overlayarea}{\textwidth}{\textheight}
+\begin{rcode}
 > x <- 1
 > mode(x)
 [1] "numeric"
@@ -1054,7 +1054,8 @@ Type '?PKG::FOO' to inspect entries 'PKG::FOO', or 'TYPE?PKG::FOO' for entries l
 expression(x/(y + exp(z)))
 > eval(exp1)
 [1] 0.5749019
-\end{rc}
+\end{rcode}
+\end{overlayarea}
 \end{frame}
 
 \begin{frame}[t]{\subsecname}{数据结构}
@@ -1093,7 +1094,8 @@ expression(x/(y + exp(z)))
   \item \emphText{向量的下标从1开始}，这和其他计算机高级编程语言是不一样的!
   \end{itemize}  
 
-\begin{rc}
+%\begin{overlayarea}{\textwidth}{\textheight}
+\begin{rcode}
 > x <-1:10; x
 [1]  1  2  3  4  5  6  7  8  9 10
 > x[3]
@@ -1110,7 +1112,8 @@ expression(x/(y + exp(z)))
      [,1] [,2] [,3] [,4]
 [1,]    0    1    1    1
 [2,]    0    1    2    3
-\end{rc}  
+\end{rcode}  
+%\end{overlayarea}
 \end{frame}
 
 \begin{frame}[t,fragile]{\subsecname}{数据结构}
@@ -1122,7 +1125,7 @@ expression(x/(y + exp(z)))
 值，后者即各类取值的名称
   \end{itemize}  
 
-\begin{rc}
+\begin{rcode}
 > factor(1:3, labels=c("A", "B", "C"))
 [1] A B C
 Levels: A B C
@@ -1130,7 +1133,7 @@ Levels: A B C
 +   labels = c("g1", "g2", "g3")))
 [1] g1 g2 g3 g1 g1 g3 g2 g3 g3
 Levels: g1 g2 g3
-\end{rc}  
+\end{rcode}  
 \end{frame}
 
 \begin{frame}[t,fragile]{\subsecname}{数据结构}
@@ -1141,7 +1144,7 @@ Levels: g1 g2 g3
   \item 矩阵是数组的特例，它的维度为2，用来指定行数和列数
   \end{itemize}  
 
-\begin{rc}
+\begin{rcode}
 # 二维矩阵
 > matrix(data=5, nr=2, nc=2)
      [,1] [,2]
@@ -1160,7 +1163,7 @@ Levels: g1 g2 g3
 [1,]   13   16   19   22
 [2,]   14   17   20   23
 [3,]   15   18   21   24
-\end{rc}  
+\end{rcode}  
 \end{frame}
 
 \begin{frame}[t,fragile]{\subsecname}{数据结构}
@@ -1169,7 +1172,7 @@ Levels: g1 g2 g3
   \item 列表是一种灵活的数据结构，\emphText{用于生成包含不同类型对象的集合}
   \end{itemize}  
 
-\begin{rc}
+\begin{rcode}
 # 创建list
 > x <- 1:4; y <- 2:4; L1 <- list(A=x, B=y); L1
 $A
@@ -1187,7 +1190,7 @@ $A
 [1] 1 2 3 4
 > L1$B
 [1] 2 3 4
-\end{rc}  
+\end{rcode}  
 \end{frame}
 
 \begin{frame}[t,fragile]{\subsecname}{数据结构}
@@ -1198,7 +1201,7 @@ $A
   \item \emphText{数据框是R中最重要的一种数据结构}，大多数数据都是以数据框形式输到R中的
   \end{itemize}  
 
-\begin{rc}
+\begin{rcode}
 # 创建数据框
 # 数据框中的向量必须有相同的长度,如果其中有一个比其它的短,它将“循环”整数次(以使得其长度与其它向量相同)
 > x <- 1:4; M <- c(10, 35); y <- 2:4
@@ -1211,7 +1214,7 @@ $A
 > data.frame(x, y)
 Error in data.frame(x, y) :
    arguments imply differing number of rows: 4, 3
-\end{rc}  
+\end{rcode}  
 \end{frame}
 
 \begin{frame}[t,fragile]{\subsecname}{数据输入输出}
@@ -1225,20 +1228,22 @@ Error in data.frame(x, y) :
 
 \begin{overlayarea}{\textwidth}{\textheight}
 \begin{onlyenv}<2>
-\begin{rc}
+%\begin{minted}{R}
+\begin{rcode}
 # 从外部读取data.dat文件，并且将数据赋给一个名为mydata的对象，这里mydata是一个data.frame数据结构
 > mydata <- read.table("data.dat")
 
 # read.table的参数
 read.table(file, header = FALSE, sep = "", quote = "\"’", dec = ".", row.names, col.names, as.is = FALSE, na.strings = "NA",colClasses = NA, nrows = -1,skip = 0, check.names = TRUE, fill =!blank.lines.skip,strip.white = FALSE, blank.lines.skip = TRUE,comment.char = "#")
-\end{rc}
+\end{rcode}
+%\end{rcode}
 \end{onlyenv}
 
 \begin{onlyenv}<3>
-\begin{rc}
+\begin{rcode}
 # 函数write.table可以在文件中写入一个对象,一般是写一个数据框,也可以是其它类型的对象
 write.table(x, file = "", append = FALSE, quote = TRUE, sep = " ", eol = "\n", na = "NA", dec = ".", row.names = TRUE, col.names = TRUE, qmethod = c("escape", "double"))
-\end{rc}
+\end{rcode}
 \end{onlyenv}
 
 \end{overlayarea}
@@ -1270,7 +1275,7 @@ write.table(x, file = "", append = FALSE, quote = TRUE, sep = " ", eol = "\n", n
 \item \emphText{函数是R中用于黑箱操作的重要实体}
   \end{itemize}  
 
-\begin{rc}
+\begin{rcode}
 # 定义峰度函数kurtosis,该函数有两个参数,数据向量x和是否删除缺失值na.rm,后者有默认值FALSE
 > kurtosis = function(x, na.rm = FALSE) {
 +   if (na.rm)
@@ -1280,7 +1285,7 @@ write.table(x, file = "", append = FALSE, quote = TRUE, sep = " ", eol = "\n", n
 > # 引用函数
 > kurtosis(runif(100))
 [1] -1.36086
-\end{rc}  
+\end{rcode}  
 \end{frame}
 
 \subsection{面向对象编程}
@@ -1306,7 +1311,7 @@ write.table(x, file = "", append = FALSE, quote = TRUE, sep = " ", eol = "\n", n
   \end{itemize}  
 
   %\begin{overlayarea}{\textwidth}{\textheight}
-\begin{rc}
+\begin{rcode}
 > library(pryr) # 调用pryr程序包检测某个方法是否是S3系统
 > df <- data.frame(x = 1:10, y = letters[1:10])
 > otype(df)    # data.frame是一个S3方法
@@ -1322,7 +1327,7 @@ write.table(x, file = "", append = FALSE, quote = TRUE, sep = " ", eol = "\n", n
 [1] "Date"
 > mean(tenweeks) # 这里调用的实际上是mean.Date
 [1] "2018-02-18" 
-\end{rc}  
+\end{rcode}  
   %\end{overlayarea}
 \end{frame}
 
@@ -1335,7 +1340,7 @@ write.table(x, file = "", append = FALSE, quote = TRUE, sep = " ", eol = "\n", n
 
 \begin{overlayarea}{\textwidth}{0.5\textheight}
 \begin{onlyenv}<1>
-\begin{rc}
+\begin{rcode}
 # 通过给变量增加class属性来创建S3型对象
 > x <- 1; attr(x,'class') <- 'foo'
 > x
@@ -1352,11 +1357,11 @@ attr(,"class")
 [1] "foo"
 > otype(y)
 [1] "S3"
-\end{rc}  
+\end{rcode}  
 \end{onlyenv}
 
 \begin{onlyenv}<2>
-\begin{rc}
+\begin{rcode}
 # 用UseMethod定义S3泛型函数
 > teacher <- function(x,...) UseMethod("teacher")
 # 定义了三个teacher的内部函数
@@ -1371,11 +1376,11 @@ attr(,"class")
 # 默认泛型函数
 > teacher()
 [1] "你不是老师"
-\end{rc}  
+\end{rcode}  
 \end{onlyenv}
 
 \begin{onlyenv}<3>
-\begin{rc}
+\begin{rcode}
 # 定义一个S3泛型函数node
 > node <- function(x) UseMethod('node', x)
 # 定义node的内部函数，其中son函数通过NextMethod()指向father
@@ -1386,7 +1391,7 @@ attr(,"class")
 > n <- structure(1, class = c("son", "father"))
 > node(n)
 [1] "son"    "father"
-\end{rc}
+\end{rcode}
 \end{onlyenv}
 
 \begin{onlyenv}<4>
@@ -1414,7 +1419,7 @@ attr(,"class")
 
 \begin{overlayarea}{\textwidth}{\textheight}
 \begin{onlyenv}<2>
-\begin{rc}
+\begin{rcode}
 # 定义S4类person以及person的子类son
 > setClass('person',slots=list(name="character",age="numeric"))
 > setClass("son", slots=list(father="person",mother="person"),contains="person")
@@ -1430,11 +1435,11 @@ Slot "name":
 
 Slot "age":
 [1] 44
-\end{rc}  
+\end{rcode}  
 \end{onlyenv}
 
 \begin{onlyenv}<3>
-\begin{rc}
+\begin{rcode}
 # 定义S4类person
 > setClass('person',slots=list(name="character",age="numeric"))
 # 传入错误的age类型
@@ -1448,11 +1453,11 @@ Error in validObject(.Object) :
 # 传入age属性小于0时会报错
 > bad2 <- new("person",name="bad",age=-1)
 Error in validityMethod(object) : Age is negative.
-\end{rc}
+\end{rcode}
 \end{onlyenv}
 
 \begin{onlyenv}<4>
-\begin{rc}
+\begin{rcode}
 # 定义person类,slots参数定义类的属性
 > setClass('person',slots=list(name="character",age="numeric"))
 # 定义泛型函数work，即接口
@@ -1465,7 +1470,7 @@ Error in validityMethod(object) : Age is negative.
 > a <- new("person",name="Conan",age=16)
 > work(a)
 Conan is working
-\end{rc}  
+\end{rcode}  
 \end{onlyenv}
 \end{overlayarea}
 \end{frame}
@@ -1480,7 +1485,7 @@ Conan is working
 
 \begin{overlayarea}{\textwidth}{\textheight}
 \begin{onlyenv}<2>
-\begin{rc}
+\begin{rcode}
 # 定义一个RC类，方法包括在定义中
 > user<-setRefClass("user",
 +      fields=list(name="character",favorite="vector"), 
@@ -1495,7 +1500,7 @@ Conan is working
 > u$addFavorite('shopping')
 > u$favorite
 [1] "movie"    "football" "shopping"
-\end{rc}  
+\end{rcode}  
 \end{onlyenv}
 \end{overlayarea}
 \end{frame}
@@ -1534,53 +1539,53 @@ Conan is working
 
 \begin{overlayarea}{\textwidth}{\textheight}
 \begin{onlyenv}<2>
-\begin{rc}
+\begin{rcode}
 # 开启三个绘图设备，X11函数用于开启窗口设备，pdf和jpeg函数用于输出图形到文件
 > x11();pdf();jpeg()
 > dev.list()
 X11cairo      pdf     jpeg 
        2        3        4 
-\end{rc}  
+\end{rcode}  
 \end{onlyenv}
 
 \begin{onlyenv}<3>
       \begin{columns}
-        \begin{column}{.5\textwidth}
+        \begin{column}{.4\textwidth}
           \begin{figure}
             \centering
-            \includegraphics[width=0.6\columnwidth]{layout.png}
+            \includegraphics[width=0.8\columnwidth]{layout.png}
 %            \caption{箱形图(Box plot)}
           \end{figure}
         \end{column}
 
-        \begin{column}{.5\textwidth}
+        \begin{column}{.6\textwidth}
  \centering
-\begin{rc}
+\begin{rcode}
 > mat <- matrix(1:4, 2, 2)
 > layout(mat)
 > layout.show(4)
-\end{rc}
+\end{rcode}
         \end{column}
       \end{columns}
 \end{onlyenv}
 
 \begin{onlyenv}<4>
       \begin{columns}
-        \begin{column}{.5\textwidth}
+        \begin{column}{.4\textwidth}
           \begin{figure}
             \centering
-            \includegraphics[width=0.6\columnwidth]{layout2.png}
+            \includegraphics[width=0.8\columnwidth]{layout2.png}
 %            \caption{箱形图(Box plot)}
           \end{figure}
         \end{column}
 
-        \begin{column}{.5\textwidth}
+        \begin{column}{.6\textwidth}
  \centering
-\begin{rc}
+\begin{rcode}
 > mat <- matrix(c(1:3, 3), 2, 2)
 > layout(mat)
 > layout.show(3)
-\end{rc}
+\end{rcode}
         \end{column}
       \end{columns}
 \end{onlyenv}

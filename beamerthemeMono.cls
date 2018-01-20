@@ -213,6 +213,22 @@
   }
 ]{ornamentblock}
 
+\newtcolorbox{goodbox}[1]{
+    colback=green!20,
+    colframe=green!75!black,
+    coltitle=white,
+    coltext=black,
+    %fonttitle=\bfseries
+    title=#1
+}
+\newtcolorbox{badbox}[1]{
+    colback=red!20,
+    colframe=red!75!black,
+    coltitle=white,
+    coltext=black,
+    title=#1
+}
+
 %%%%%%%%%% 代码高亮
 \definecolor{codegreen}{rgb}{0,0.6,0}
 \definecolor{codegray}{rgb}{0.5,0.5,0.5}
@@ -244,21 +260,63 @@
 \lstset{style=mystyle}
 \lstnewenvironment{rc}[1][]{\lstset{language=R,style=mystyle}}{}
 
-\newtcolorbox{goodbox}[1]{
-    colback=green!20,
-    colframe=green!75!black,
-    coltitle=white,
-    coltext=black,
-    %fonttitle=\bfseries
-    title=#1
+\BeforeBeginEnvironment{minted}{\vspace{-0.5cm}}
+\AfterEndEnvironment{minted}{\vspace{-0.5cm}}
+%\BeforeBeginEnvironment{minted}{\begin{mdframed}}
+%\AfterEndEnvironment{minted}{\end{mdframed}}
+\RequirePackage{minted}
+\renewcommand{\theFancyVerbLine}{\sffamily
+\textcolor[rgb]{0.5,0.5,0.5}{\tiny
+\oldstylenums{\arabic{FancyVerbLine}}}}
+
+\usemintedstyle{emacs}
+\setminted[R]{
+    fontsize=\scriptsize,
+    linenos=true,
+    breaklines=true,
+%    numberblanklines=false,
+    numbersep=2pt, 
+    texcl=true,
+    bgcolor=backcolour,
+    baselinestretch=1
 }
-\newtcolorbox{badbox}[1]{
-    colback=red!20,
-    colframe=red!75!black,
-    coltitle=white,
-    coltext=black,
-    title=#1
+
+% tcolorbox和minted混合
+\tcbuselibrary{minted,skins}
+\newtcblisting{rcode}{
+    %boxsep=0mm,
+    top=-3mm,
+    bottom=-3mm,
+    %show bounding box,
+    listing engine=minted,
+    colback=backcolour,
+    colframe=blue!75!black,
+    listing only, 
+    minted style=colorful,
+    minted language=R,
+    minted options={
+         fontfamily=Monaco,
+         style=emacs,
+         fontsize=\scriptsize,
+         linenos=true,
+         breaklines=true,
+         %breakanywhere=true, 
+         mathescape=true,
+         numbersep=2mm,
+         texcl=true,
+         bgcolor=backcolour},
+    left=3mm,enhanced,
+    overlay={\begin{tcbclipinterior}\fill[black!25] (frame.south west) 
+           rectangle ([xshift=3mm]frame.north west);\end{tcbclipinterior}}
 }
+
+\newtcblisting{myjava}{listing engine=minted,minted style=colorful,
+%top=0mm,bottom=0mm,
+minted language=java,minted options={fontsize=\small,linenos,numbersep=3mm},
+colback=blue!5!white,colframe=blue!75!black,listing only,
+left=5mm,enhanced,
+overlay={\begin{tcbclipinterior}\fill[red!20!blue!20!white] (frame.south west)
+rectangle ([xshift=5mm]frame.north west);\end{tcbclipinterior}}}
 
 % \lstset{% 
 %     basicstyle=\small\ttfamily\bfseries,
