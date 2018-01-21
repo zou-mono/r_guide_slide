@@ -1507,34 +1507,15 @@ Conan is working
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{R绘图}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{细节拆解}
-\begin{frame}{\subsecname}{}
-  \begin{columns}
-    \begin{column}{.4\textwidth}
-      \begin{figure}
-        \centering \includegraphics[width=\columnwidth]{庖丁解牛.jpg}
-      \end{figure}
-    \end{column}
-
-    \begin{column}{.6\textwidth}
-      \begin{ornamentblock}
-        %\centering
-        { 庖丁为文惠君解牛，手之所触，肩之所倚，足之所履，膝之所踦，砉然向然，奏刀騞然，莫不中音。\\
-          \rightline{\textemdash《庄子·养生主》}}
-      \end{ornamentblock}
-      % \curlyframe{工欲善其事,必先利其器\\
-      % \rightline{-----《论语·卫灵公》}}
-    \end{column}
-  \end{columns}
-\end{frame}
-
+\subsection{绘图基础知识}
 \begin{frame}[t, fragile]{\subsecname}{绘图设备}
   \begin{itemize}
-  \item<1-> 绘图设备用于管理R的图形输出，分为窗口设备和图形设备
-  \item<2-> 窗口设备通过一个依赖于操作系统底层的窗口来输出图形，在Unix/Linux系统中称为X11，在
+  \item<1-> 绘图设备用于管理R的图形输出，分为\emphText{窗口设备和图形设备}
+  \item<2-> 窗口设备通过一个依赖于\emphTextStep{2-}{操作系统底层窗口来输出图形}，在Unix/Linux系统中称为X11，在
         Windows系统中称为windows
-  \item<2-> 图形设备用于将R对象输出到文件，例如jpeg、pdf、png、bmp、metafile等
-  \item<3-> layout()函数用于将绘图设备进行分割，图形将一次显示在不同的部分中 
+  \item<2-> 图形设备用于将\emphTextStep{2-}{R对象输出到文件}，例如jpeg、pdf、png、bmp、metafile等
+  \item<3-> \emphTextStep{3-}{layout()}函数用于将绘图设备进行分割，
+            图形将一次显示在不同的部分中；不再使用的绘图设备用\emphTextStep{3-}{dev.off()}函数关闭 
   \end{itemize} 
 
 \begin{overlayarea}{\textwidth}{\textheight}
@@ -1545,6 +1526,8 @@ Conan is working
 > dev.list()
 X11cairo      pdf     jpeg 
        2        3        4 
+# 关闭2号绘图设备
+> dev.off(2) 
 \end{rcode}  
 \end{onlyenv}
 
@@ -1554,7 +1537,6 @@ X11cairo      pdf     jpeg
           \begin{figure}
             \centering
             \includegraphics[width=0.8\columnwidth]{layout.png}
-%            \caption{箱形图(Box plot)}
           \end{figure}
         \end{column}
 
@@ -1575,7 +1557,6 @@ X11cairo      pdf     jpeg
           \begin{figure}
             \centering
             \includegraphics[width=0.8\columnwidth]{layout2.png}
-%            \caption{箱形图(Box plot)}
           \end{figure}
         \end{column}
 
@@ -1591,6 +1572,143 @@ X11cairo      pdf     jpeg
 \end{onlyenv}
 \end{overlayarea}
 \end{frame} 
+
+\begin{frame}[t,fragile]{\subsecname}{绘图函数}
+\begin{itemize}
+\item R中的统计图形都是由相应的绘图函数生成，其包含了统计图形中各种细节的设置
+\item 绘图函数分为\emphText{高级绘图函数和低级绘图函数}
+\item 高级绘图函数用于快速绘制常见的统计图形，
+低级绘图函数用于在高级绘图函数绘制的统计图形基础上进行个性化的定制
+\end{itemize}
+
+\begin{overlayarea}{\textwidth}{\textheight}
+\begin{onlyenv}<2>
+\begin{columns}
+        \begin{column}{.4\textwidth}
+          \begin{figure}
+            \centering
+            \includegraphics[width=\columnwidth]{高级绘图函数.png}
+          \end{figure}
+        \end{column}
+
+        \begin{column}{.6\textwidth}
+ \centering
+\begin{rcode}
+> x = runif(100); y = 0.2*x + 0.1*rnorm(100)
+# 高级绘图函数plot绘制散点图
+> plot(x, y)
+\end{rcode}
+        \end{column}
+      \end{columns}
+\end{onlyenv}
+
+\begin{onlyenv}<3>
+\begin{columns}
+        \begin{column}{.4\textwidth}
+          \begin{figure}
+            \centering
+            \includegraphics[width=\columnwidth]{低级绘图函数.png}
+          \end{figure}
+        \end{column}
+
+        \begin{column}{.6\textwidth}
+ \centering
+\begin{rcode}
+> x = runif(100); y = 0.2*x + 0.1*rnorm(100)
+# 高级绘图函数plot绘制散点图
+> plot(x, y)
+# 回归模型拟合散点数据
+> fit = lm(y ~ x)
+# 低级绘图函数abline在原散点图基础上增加拟合直线
+> abline(fit)
+\end{rcode}
+        \end{column}
+      \end{columns}
+\end{onlyenv}
+\end{overlayarea}  
+\end{frame}
+
+\begin{frame}[t,fragile]{\subsecname}{绘图参数}
+\begin{itemize}
+\item<1-> 除了低级绘图函数之外，图形的显示也可以用绘图参数来定制
+\item<2-> 绘图函数里面可以临时设置参数，不会影响后面其他绘图函数的效果
+\item<3-> \emphTextStep{3-}{par()}函数可以设置全局参数，全局参数只要绘图设备不关闭就会一直起作用
+\end{itemize}
+
+\begin{overlayarea}{\textwidth}{\textheight}
+\begin{onlyenv}<2>
+\begin{columns}
+        \begin{column}{.4\textwidth}
+          \begin{figure}
+            \centering
+            \includegraphics[width=\columnwidth]{plot.png}
+          \end{figure}
+        \end{column}
+
+        \begin{column}{.6\textwidth}
+ \centering
+\begin{rcode}
+> x<-rnorm(10); y<-rnorm(10)
+# 通过设置plot函数的参数实现临时效果
+> dplot(x, y, xlab="Ten random values", ylab="Ten other values",xlim=c(-2, 2), ylim=c(-2, 2), pch=22, col="red", bg="yellow", bty="l", tcl=-.25, las=1, cex=1.5, main="通过plot函数的参数来定制散点图")
+\end{rcode}
+        \end{column}
+      \end{columns}
+\end{onlyenv}
+
+\begin{onlyenv}<3>
+\begin{columns}
+        \begin{column}{.4\textwidth}
+          \begin{figure}
+            \centering
+            \includegraphics[width=\columnwidth]{par.png}
+          \end{figure}
+        \end{column}
+
+        \begin{column}{.6\textwidth}
+ \centering
+\begin{rcode}
+# 缺省绘图参数被复制到opar对象
+> opar <- par()
+# 通过par()函数定制图形
+> par(bg="lightyellow", col.axis="blue", mar=c(4, 4, 2.5, 0.25))
+> plot(x, y, xlab="Ten random values", ylab="Ten other values",
++ xlim=c(-2, 2), ylim=c(-2, 2), pch=22, col="red", bg="yellow",
++ bty="l", tcl=-.25, las=1, cex=1.5)
+# 通过低级绘图函数title为上图添加定制标题
+> title("通过par参数来定制散点图", font.main=3, adj=1)
+# 恢复缺省绘图参数
+> par(opar)
+\end{rcode}
+        \end{column}
+      \end{columns}
+\end{onlyenv}
+\end{overlayarea}  
+\end{frame}
+
+\subsection{绘图元素拆解}
+\begin{frame}{\subsecname}{}
+  \begin{columns}
+    \begin{column}{.4\textwidth}
+      \begin{figure}
+        \centering \includegraphics[width=\columnwidth]{庖丁解牛.jpg}
+      \end{figure}
+    \end{column}
+
+    \begin{column}{.6\textwidth}
+      \begin{ornamentblock}
+        { 庖丁为文惠君解牛，手之所触，肩之所倚，足之所履，膝之所踦，砉然向然，奏刀騞然，莫不中音。\\
+          \rightline{\textemdash《庄子·养生主》}}
+      \end{ornamentblock}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\subsection{标准绘图程序包}
+
+\subsection{lattice程序包}
+
+\subsection{ggplot程序包}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{R图形混合嵌入}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

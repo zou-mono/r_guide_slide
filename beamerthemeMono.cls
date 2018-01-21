@@ -283,7 +283,7 @@
 
 % tcolorbox和minted混合
 \tcbuselibrary{minted,skins}
-\newtcblisting{rcode}{
+\newtcblisting{rcode}[1][]{
     %boxsep=0mm,
     top=-3mm,
     bottom=-3mm,
@@ -291,13 +291,13 @@
     listing engine=minted,
     colback=backcolour,
     colframe=blue!75!black,
-    listing only, 
+    listing only,
     minted style=colorful,
     minted language=R,
     minted options={
          fontfamily=Monaco,
          style=emacs,
-         fontsize=\scriptsize,
+         fontsize=\tiny,
          linenos=true,
          breaklines=true,
          %breakanywhere=true, 
@@ -305,7 +305,7 @@
          numbersep=2mm,
          texcl=true,
          bgcolor=backcolour},
-    left=3mm,enhanced,
+    left=3mm,enhanced,#1,
     overlay={\begin{tcbclipinterior}\fill[black!25] (frame.south west) 
            rectangle ([xshift=3mm]frame.north west);\end{tcbclipinterior}}
 }
