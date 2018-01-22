@@ -283,7 +283,7 @@
 
 % tcolorbox和minted混合
 \tcbuselibrary{minted,skins}
-\newtcblisting{rcode}[1][]{
+\newtcblisting{rcode}{
     %boxsep=0mm,
     top=-3mm,
     bottom=-3mm,
@@ -305,7 +305,7 @@
          numbersep=2mm,
          texcl=true,
          bgcolor=backcolour},
-    left=3mm,enhanced,#1,
+    left=3mm,enhanced,
     overlay={\begin{tcbclipinterior}\fill[black!25] (frame.south west) 
            rectangle ([xshift=3mm]frame.north west);\end{tcbclipinterior}}
 }

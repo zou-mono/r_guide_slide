@@ -1704,6 +1704,32 @@ X11cairo      pdf     jpeg
   \end{columns}
 \end{frame}
 
+\begin{frame}[t,fragile]{\subsecname}
+\begin{itemize}
+\item<1-> 统计图形的所有元素都可以在R语言中\emphText{通过低级绘图函数进行定制}
+\end{itemize}
+
+\begin{overlayarea}{\textwidth}{\textheight}
+  \begin{table} \centering \small
+    \begin{tabular}{|c|c|}
+      \toprule
+      \rowcolor{LightCyan}
+      统计图形元素 & 常用函数\\\hline
+      颜色 & color(),palette(),rgb(),rainbow()\\\hline
+      点 & points()\\\hline
+      线 & abline(),arrows(),segments\\\hline
+      面 & 数值型,字符型,复数型,逻辑型 \\\hline
+      网格线 & 数值型,字符型,复数型,逻辑型 \\\hline
+      文本 & 任意其他类型 \\\hline
+      图例 & 数值型,字符型,复数型,逻辑型\\\hline
+      坐标轴 & ddd \\   
+      \bottomrule
+    \end{tabular}
+    \caption{统计图形的要素}
+  \end{table}
+\end{overlayarea}  
+\end{frame}
+
 \subsection{标准绘图程序包}
 
 \subsection{lattice程序包}
