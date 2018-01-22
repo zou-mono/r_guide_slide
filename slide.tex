@@ -1686,6 +1686,40 @@ X11cairo      pdf     jpeg
 \end{overlayarea}  
 \end{frame}
 
+\begin{frame}{\subsecname}{绘图参数}
+\only<1>{
+  \begin{table} \centering \scriptsize
+    \begin{tabular}{|c|c|}
+      \toprule
+      \rowcolor{LightCyan}
+      参数名称 & 作用\\\hline
+      adj & 调整图中文字的相对位置\\\hline
+      bg,fg & 背景颜色和前景颜色\\\hline
+      bty & 设置图形边框样式\\\hline
+      cex & 图上元素(文本、符号等)的缩放倍数 \\\hline
+      col & 图中符号的颜色 \\\hline
+      family,font & 设置文本的字体族和字体样式 \\\hline
+      lab,mgp & 设置坐标轴刻度数目和边界宽度\\\hline
+      lend,ljoin & 线条末端样式和线条相交处的样式\\\hline
+      lheight & 图中文本行高\\\hline
+      lty,lwd & 线条样式和宽度\\\hline
+      mar,oma,pty & 图形区域设置\\\hline
+      pch & 点符号样式\\\hline
+      srt & 字符串旋转角度\\\hline
+      tck,tcl & 坐标轴刻度线高度\\
+      \bottomrule
+    \end{tabular}
+    \caption{par函数的部分参数}
+  \end{table}}  
+
+\only<2>{
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.65\columnwidth]{par-example.png}
+  \caption{par函数参数效果示例}
+\end{figure}}
+\end{frame}
+
 \subsection{绘图元素拆解}
 \begin{frame}{\subsecname}{}
   \begin{columns}
@@ -1715,14 +1749,14 @@ X11cairo      pdf     jpeg
       \toprule
       \rowcolor{LightCyan}
       统计图形元素 & 常用函数\\\hline
-      颜色 & color(),palette(),rgb(),rainbow()\\\hline
-      点 & points()\\\hline
-      线 & abline(),arrows(),segments\\\hline
-      面 & 数值型,字符型,复数型,逻辑型 \\\hline
-      网格线 & 数值型,字符型,复数型,逻辑型 \\\hline
-      文本 & 任意其他类型 \\\hline
-      图例 & 数值型,字符型,复数型,逻辑型\\\hline
-      坐标轴 & ddd \\   
+      颜色 & color,palette,rgb,rainbow\\\hline
+      点 & points\\\hline
+      线 & lines,abline,arrows,segments,xspline\\\hline
+      面 & polygon,rect,box \\\hline
+      网格线 & grid \\\hline
+      文本 & text,title,mtext \\\hline
+      图例 & legend\\\hline
+      坐标轴 & axis \\   
       \bottomrule
     \end{tabular}
     \caption{统计图形的要素}
