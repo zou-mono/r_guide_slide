@@ -1620,7 +1620,7 @@ X11cairo      pdf     jpeg
 # 回归模型拟合散点数据
 > fit = lm(y ~ x)
 # 低级绘图函数abline在原散点图基础上增加拟合直线
-> abline(fit)
+> |\colorbox{green}{abline(fit)}|
 \end{rcode}
         \end{column}
       \end{columns}
@@ -1631,8 +1631,8 @@ X11cairo      pdf     jpeg
 \begin{frame}[t,fragile]{\subsecname}{绘图参数}
 \begin{itemize}
 \item<1-> 除了低级绘图函数之外，图形的显示也可以用绘图参数来定制
-\item<2-> 绘图函数里面可以临时设置参数，不会影响后面其他绘图函数的效果
-\item<3-> \emphTextStep{3-}{par()}函数可以设置全局参数，全局参数只要绘图设备不关闭就会一直起作用
+\item<2-> 绘图函数里面可以\emphTextStep{2-}{临时设置参数}，不会影响后面其他绘图函数的效果
+\item<3-> \emphTextStep{3-}{par()函数可以设置全局参数}，全局参数只要绘图设备不关闭就会一直起作用
 \end{itemize}
 
 \begin{overlayarea}{\textwidth}{\textheight}
@@ -1650,7 +1650,7 @@ X11cairo      pdf     jpeg
 \begin{rcode}
 > x<-rnorm(10); y<-rnorm(10)
 # 通过设置plot函数的参数实现临时效果
-> dplot(x, y, xlab="Ten random values", ylab="Ten other values",xlim=c(-2, 2), ylim=c(-2, 2), pch=22, col="red", bg="yellow", bty="l", tcl=-.25, las=1, cex=1.5, main="通过plot函数的参数来定制散点图")
+> plot(x, y, xlab="Ten random values", ylab="Ten other values",xlim=c(-2, 2), ylim=c(-2, 2), pch=22, col="red", bg="yellow", bty="l", tcl=-.25, las=1, cex=1.5, main="通过plot函数的参数来定制散点图")
 \end{rcode}
         \end{column}
       \end{columns}
@@ -1715,8 +1715,38 @@ X11cairo      pdf     jpeg
 \only<2>{
 \begin{figure}[ht]
   \centering
-  \includegraphics[width=0.65\columnwidth]{par-example.png}
+  \includegraphics[width=0.8\columnwidth]{par-example.png}
   \caption{par函数参数效果示例}
+\end{figure}}
+\end{frame}
+
+\begin{frame}{\subsecname}{绘图参数}
+\only<1>{
+  \begin{table} \centering \small
+    \begin{tabular}{|c|c|}
+      \toprule
+      \rowcolor{LightCyan}
+      参数名称 & 作用\\\hline
+      type & 图形样式类型\\\hline
+      main,sub & 主标题和副标题\\\hline
+      xlab,ylab & 坐标轴标题\\\hline
+      asp & 图形横轴比 \\\hline
+      x,y & 散点图的两个向量 \\\hline
+      xlim,ylim & 坐标系界限\\\hline
+      axes & 是否画坐标轴\\\hline
+      frame.plot & 是否给图形加框\\\hline
+      panel.first & 作图前完成的工作\\\hline
+      panel.last & 作图后要完成的工作\\
+      \bottomrule
+    \end{tabular}
+    \caption{plot函数的部分参数}
+  \end{table}}  
+
+\only<2>{
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.8\columnwidth]{plot-example.png}
+  \caption{plot函数参数type的九种效果示例}
 \end{figure}}
 \end{frame}
 
@@ -1738,7 +1768,7 @@ X11cairo      pdf     jpeg
   \end{columns}
 \end{frame}
 
-\begin{frame}[t,fragile]{\subsecname}
+\begin{frame}[t]{\subsecname}
 \begin{itemize}
 \item<1-> 统计图形的所有元素都可以在R语言中\emphText{通过低级绘图函数进行定制}
 \end{itemize}
@@ -1749,7 +1779,7 @@ X11cairo      pdf     jpeg
       \toprule
       \rowcolor{LightCyan}
       统计图形元素 & 常用函数\\\hline
-      颜色 & color,palette,rgb,rainbow\\\hline
+      颜色 & colors,palette,rgb,rainbow\\\hline
       点 & points\\\hline
       线 & lines,abline,arrows,segments,xspline\\\hline
       面 & polygon,rect,box \\\hline
@@ -1764,6 +1794,42 @@ X11cairo      pdf     jpeg
 \end{overlayarea}  
 \end{frame}
 
+\begin{frame}[t]{\subsecname}{颜色}
+\begin{itemize}
+\item<1-> R中颜色的设置由grDevices包支持，提供了大量颜色函数
+\item<2-> 颜色函数分\emphTextStep{2}{为固定颜色选择函数、颜色生成函数和转换函数和特定颜色主题调色板}
+\end{itemize}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.7\columnwidth]{colors-example.png}
+  \caption{R中的颜色} 
+\end{figure}  
+\end{frame}
+
+\begin{frame}[t,fragile]{\subsecname}{颜色}
+\begin{itemize}
+\item<1-> 固定颜色选择函数：colors()、palette()
+\end{itemize}
+
+\begin{overlayarea}{\textwidth}{\textheight}
+\begin{onlyenv}<1>
+\begin{rcode}
+# colors函数通过英文名称来调取预设颜色
+> sample(colors(), 20)
+ [1] "tomato"       "lightcyan4"   "navajowhite1" "gray5"        "seagreen3"   
+ [6] "ghostwhite"   "grey60"       "cornsilk4"    "linen"        "darkblue"    
+[11] "gray26"       "steelblue1"   "grey"         "plum4"        "violet"      
+[16] "gray83"       "red"          "thistle1"     "palegreen4"   "oldlace" 
+\end{rcode}
+\begin{figure}
+  \centering
+  \includegraphics[height=0.45\textheight]{colors-bar.png}
+  \caption{R中部分根据英文名称预设的颜色} 
+\end{figure} 
+\end{onlyenv}
+\end{overlayarea}  
+\end{frame}
 \subsection{标准绘图程序包}
 
 \subsection{lattice程序包}

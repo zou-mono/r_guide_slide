@@ -300,6 +300,7 @@
          fontsize=\tiny,
          linenos=true,
          breaklines=true,
+         escapeinside=||,
          %breakanywhere=true, 
          mathescape=true,
          numbersep=2mm,
