@@ -280,7 +280,7 @@
           文,左图是其论文的主要依据:图中心东西
           方向的街道是Broad大街,黑点表示死亡地点\\
           这幅图形象揭示了一个重要现象,就是死亡地点都在街道中部一处水源
-          （水井）周围,而市内其它水源周围极少发现死者，通过进一步调查他
+          (水井)周围,而市内其它水源周围极少发现死者，通过进一步调查他
           发现这些死者都饮用过这里的井水，从而发现了霍乱传播的源头是水
           井的把手，\emphText{这就是统计图形在公共卫生领域最早的应用}}
       \end{column}
@@ -1779,6 +1779,7 @@ X11cairo      pdf     jpeg
       \toprule
       \rowcolor{LightCyan}
       统计图形元素 & 常用函数\\\hline
+      图形区域 & par\\\hline
       颜色 & colors,palette,rgb,rainbow\\\hline
       点 & points\\\hline
       线 & lines,abline,arrows,segments,xspline\\\hline
@@ -1792,6 +1793,20 @@ X11cairo      pdf     jpeg
     \caption{统计图形的要素}
   \end{table}
 \end{overlayarea}  
+\end{frame}
+
+\begin{frame}[t]{\subsecname}{图形区域}
+\begin{itemize}
+\item R的绘图设备分为三个区域：\emphText{作图区域(Plot Region)、图形区域(Figure Region)和设备区域(Device Region)}
+\item 这三个区域对应两个边界：\emphText{图形边界(Figure Margin)和外边界(Outer Margin)}；图形边界由par函数的\emphText{mar参数}设置，外边界由\emphText{oma参数}设置
+\end{itemize}  
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.5\columnwidth]{plot_region.png}
+  \caption{最大的灰色区域是\emphText{设备区域}，设备区域内的白色实框区域是\emphText{图形区域},
+最里面的灰色虚框区域是\emphText{作图区域}，\emphText{所有的统计图形都是在作图区域内绘制}}
+\end{figure}
 \end{frame}
 
 \begin{frame}[t]{\subsecname}{颜色}
@@ -1809,11 +1824,24 @@ X11cairo      pdf     jpeg
 
 \begin{frame}[t,fragile]{\subsecname}{颜色}
 \begin{itemize}
-\item<1-> 固定颜色选择函数：colors()、palette()
+\item<1-> 固定颜色选择函数：\emphText{colors()}、\emphText{palette()}
+\item<2-> colors()函数直接通过英文名称来调取预设颜色
+\item<3-> palette()函数用来设置调色板或者获得调色板颜色值。和colors不同的是palette函数结果并不是固定颜色；
+但是只要一旦设置了调试板，它的取值在下一次设置前会一直保存
 \end{itemize}
 
 \begin{overlayarea}{\textwidth}{\textheight}
-\begin{onlyenv}<1>
+\begin{onlyenv}<2>
+  \begin{columns}
+    \begin{column}{.4\textwidth}
+\centering
+      \begin{figure}
+        \includegraphics[width=\columnwidth]{colors-bar.png} 
+      \end{figure}
+    \end{column}
+
+    \begin{column}{.6\textwidth}
+\centering
 \begin{rcode}
 # colors函数通过英文名称来调取预设颜色
 > sample(colors(), 20)
@@ -1822,11 +1850,30 @@ X11cairo      pdf     jpeg
 [11] "gray26"       "steelblue1"   "grey"         "plum4"        "violet"      
 [16] "gray83"       "red"          "thistle1"     "palegreen4"   "oldlace" 
 \end{rcode}
-\begin{figure}
-  \centering
-  \includegraphics[height=0.45\textheight]{colors-bar.png}
-  \caption{R中部分根据英文名称预设的颜色} 
-\end{figure} 
+    \end{column}
+  \end{columns}
+\end{onlyenv}
+
+\begin{onlyenv}<3>
+\begin{rcode}
+# palette默认颜色
+> palette()
+[1] "black"   "red"     "green3"  "blue"    "cyan"    "magenta" "yellow" 
+[8] "gray" 
+
+# 更改后的调色板颜色
+> palette(colors()[1:10])
+> palette()
+ [1] "white"         "aliceblue"     "antiquewhite"  "antiquewhite1"
+ [5] "antiquewhite2" "antiquewhite3" "antiquewhite4" "aquamarine"   
+ [9] "aquamarine"    "aquamarine2"  
+
+> # 恢复默认调色板
+> palette("default")
+> palette()
+[1] "black"   "red"     "green3"  "blue"    "cyan"    "magenta" "yellow" 
+[8] "gray" 
+\end{rcode}
 \end{onlyenv}
 \end{overlayarea}  
 \end{frame}
