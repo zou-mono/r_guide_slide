@@ -1522,7 +1522,7 @@ Conan is working
 \begin{onlyenv}<2>
 \begin{rcode}
 # 开启三个绘图设备，X11函数用于开启窗口设备，pdf和jpeg函数用于输出图形到文件
-> x11();pdf();jpeg()
+> |\colorbox{green}{x11();pdf();jpeg()}|
 > dev.list()
 X11cairo      pdf     jpeg 
        2        3        4 
@@ -1671,7 +1671,7 @@ X11cairo      pdf     jpeg
 # 缺省绘图参数被复制到opar对象
 > opar <- par()
 # 通过par()函数定制图形
-> par(bg="lightyellow", col.axis="blue", mar=c(4, 4, 2.5, 0.25))
+> par(|\colorbox{green}{bg}|="lightyellow", |\colorbox{green}{col.axis}|="blue", |\colorbox{green}{mar}|=c(4, 4, 2.5, 0.25))
 > plot(x, y, xlab="Ten random values", ylab="Ten other values",
 + xlim=c(-2, 2), ylim=c(-2, 2), pch=22, col="red", bg="yellow",
 + bty="l", tcl=-.25, las=1, cex=1.5)
@@ -1874,6 +1874,77 @@ X11cairo      pdf     jpeg
 [1] "black"   "red"     "green3"  "blue"    "cyan"    "magenta" "yellow" 
 [8] "gray" 
 \end{rcode}
+\end{onlyenv}
+\end{overlayarea}  
+\end{frame}
+
+\begin{frame}[t,fragile]{\subsecname}{颜色}
+\begin{itemize}
+\item R中还提供利用颜色生成原理构造颜色，如RGB模型(红绿蓝三原色)、
+          HSV色彩模型(色调、饱和度和纯度)、HCL色彩模型(色调、色度和亮度)等
+\item 对应的颜色生成和转换函数：\emphText{rgb()}、\emphText{hsv()}、
+      \emphText{hcl()}、\emphText{gray()}等
+\end{itemize}
+
+\begin{overlayarea}{\textwidth}{\textheight}
+\begin{onlyenv}<2>
+\begin{rcode}
+# 利用rgb()函数的透明度参数alpha生成半透明的显示效果
+> library(MSG)
+> data(BinormCircle)
+> par(mfrow = c(1, 2), pch = 20, ann = FALSE, mar = c(2, 2 + 2, 0.5, 0.2))
+> plot(BinormCircle, col = rgb(1, 0, 0))
+> plot(BinormCircle, col = rgb(1, 0, 0, |\colorbox{green}{alpha}| = 0.01))
+\end{rcode}
+\begin{figure}\centering
+  \includegraphics[width=0.9\columnwidth]{color-example.png}
+\end{figure}
+\end{onlyenv}
+\end{overlayarea}  
+\end{frame}
+
+\begin{frame}[t,fragile]{\subsecname}{颜色}
+\begin{itemize}
+\item<1-> 由于基于颜色生成原理构造颜色过于专业，因此R中还提供了一种比较简单的\emphText{特定颜色主题调试板}
+\item<1-> 特定颜色主题调试板用\emphText{渐变的颜色}来表现特定的主题
+\item<2-> 另外，\emphText{RColorBrewer}包更加简化了颜色的生成，只需要指定调色板名称，
+然后通过brewer.pal()就可以自动生成非常科学的颜色组合
+\end{itemize}
+
+\begin{overlayarea}{\textwidth}{\textheight}
+\begin{onlyenv}<1>
+  \begin{table} \centering \small
+    \begin{tabular}{|m{0.2\columnwidth}|m{0.7\columnwidth}|}
+      \toprule
+      \rowcolor{LightCyan}
+      函数名称 & 效果\\\hline
+      rainbow() & 彩虹颜色(红橙黄绿青蓝紫)\\\hline
+      heat.colors() & 从红色渐变到黄色再变到白色,适合表示“高温”、“白热化”\\\hline
+      terrain.colors() & 从绿色渐变到黄色再到棕色最后到白色,适合表示地理地形\\\hline
+      topo.colors() & 从蓝色渐变到青色再到黄色最后到棕色\\\hline
+      cm.colors() & 从青色渐变到白色再到粉红色 \\
+      \bottomrule
+    \end{tabular}
+    \caption{常用的特定颜色主题调色板}
+  \end{table}
+\end{onlyenv}
+
+\begin{onlyenv}<2>
+  \begin{table} \centering \small
+    \begin{tabular}{|m{0.3\columnwidth}|m{0.6\columnwidth}|}
+      \toprule
+      \rowcolor{LightCyan}
+      调色板 & 作用\\\hline
+      \tabincell{l}{连续型调色板\\(Sequential palettes)} & 生成一系列连续渐变的颜色，通常用来
+标记连续型数值的大小\\\hline
+      \tabincell{l}{极端化调色板\\(Diverging palettes)} & 生成用深色强调两端、浅色标示中部的
+系列颜色，可用来标记数据中的离群点\\\hline
+      \tabincell{l}{离散型调色板\\(Qualitative palettes)} & 生成一系列彼此差异比较明显的颜色，
+通常用来标记分类数据\\
+      \bottomrule
+    \end{tabular}
+    \caption{RColorBrewer提供的调色板}
+  \end{table}
 \end{onlyenv}
 \end{overlayarea}  
 \end{frame}

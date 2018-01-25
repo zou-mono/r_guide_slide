@@ -66,3 +66,11 @@ barplot(rep(1,20), col = c("tomato","lightcyan4","navajowhite1",
 "thistle1","palegreen4","oldlace"), horiz = TRUE, las = 1,
 xaxt = "n")
 dev.off()
+
+png("color-example.png",width=1600,height=600,res=300,pointsize=3)
+library(MSG)
+data(BinormCircle)
+par(mfrow = c(1, 2), pch = 20, ann = FALSE, mar = c(2, 2 + 2, 0.5, 0.2))
+plot(BinormCircle, col = rgb(1, 0, 0))
+plot(BinormCircle, col = rgb(1, 0, 0, alpha = 0.01))
+dev.off()
