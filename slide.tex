@@ -1288,6 +1288,11 @@ write.table(x, file = "", append = FALSE, quote = TRUE, sep = " ", eol = "\n", n
 \end{rcode}  
 \end{frame}
 
+\subsection{公式和表达式}
+\begin{frame}[t, fragile]{\subsecname}{}
+
+\end{frame}
+
 \subsection{面向对象编程}
 \begin{frame}[t]{\subsecname}{}
 \begin{itemize}
@@ -1843,7 +1848,7 @@ X11cairo      pdf     jpeg
     \begin{column}{.6\textwidth}
 \centering
 \begin{rcode}
-# colors函数通过英文名称来调取预设颜色
+# 通过colors函数随机生成20种预设颜色
 > sample(colors(), 20)
  [1] "tomato"       "lightcyan4"   "navajowhite1" "gray5"        "seagreen3"   
  [6] "ghostwhite"   "grey60"       "cornsilk4"    "linen"        "darkblue"    
@@ -1889,6 +1894,21 @@ X11cairo      pdf     jpeg
 \begin{overlayarea}{\textwidth}{\textheight}
 \begin{onlyenv}<2>
 \begin{rcode}
+# 在rgb()函数中用一元线性函数控制绿色在[0, 1]上的取值，同时将红色和蓝色分别控制为1和0，那么我们将得到从纯红色到黄色的一个颜色渐变
+> (x = rgb(1, seq(0, 1, length = 20), 0))
+ [1] "#FF0000" "#FF0D00" "#FF1B00" "#FF2800" "#FF3600" "#FF4300" 
+ [7] "#FF5100" "#FF5E00" "#FF6B00" "#FF7900" "#FF8600" "#FF9400" 
+[13] "#FFA100" "#FFAE00" "#FFBC00" "#FFC900" "#FFD700" "#FFE400" 
+[19] "#FFF200" "#FFFF00"
+> barplot(rep(1, 20), col = x)
+\end{rcode}
+\begin{figure}\centering
+  \includegraphics[width=0.8\columnwidth]{rgb-bar.png}
+\end{figure}
+\end{onlyenv}
+
+\begin{onlyenv}<3>
+\begin{rcode}
 # 利用rgb()函数的透明度参数alpha生成半透明的显示效果
 > library(MSG)
 > data(BinormCircle)
@@ -1905,14 +1925,12 @@ X11cairo      pdf     jpeg
 
 \begin{frame}[t,fragile]{\subsecname}{颜色}
 \begin{itemize}
-\item<1-> 由于基于颜色生成原理构造颜色过于专业，因此R中还提供了一种比较简单的\emphText{特定颜色主题调试板}
-\item<1-> 特定颜色主题调试板用\emphText{渐变的颜色}来表现特定的主题
-\item<2-> 另外，\emphText{RColorBrewer}包更加简化了颜色的生成，只需要指定调色板名称，
-然后通过brewer.pal()就可以自动生成非常科学的颜色组合
+\item 由于基于颜色生成原理构造颜色过于专业，因此R中还提供了一种比较简单的\emphText{特定颜色主题调试板}
+\item 特定颜色主题调试板用\emphText{渐变的颜色}来表现特定的主题
 \end{itemize}
 
 \begin{overlayarea}{\textwidth}{\textheight}
-\begin{onlyenv}<1>
+\only<1>{
   \begin{table} \centering \small
     \begin{tabular}{|m{0.2\columnwidth}|m{0.7\columnwidth}|}
       \toprule
@@ -1922,14 +1940,108 @@ X11cairo      pdf     jpeg
       heat.colors() & 从红色渐变到黄色再变到白色,适合表示“高温”、“白热化”\\\hline
       terrain.colors() & 从绿色渐变到黄色再到棕色最后到白色,适合表示地理地形\\\hline
       topo.colors() & 从蓝色渐变到青色再到黄色最后到棕色\\\hline
-      cm.colors() & 从青色渐变到白色再到粉红色 \\
+      cm.colors() & 从青色渐变到白色再到粉红色 \\\hline
+      gray() & 灰度(由黑渐变到白) \\
       \bottomrule
     \end{tabular}
     \caption{常用的特定颜色主题调色板}
-  \end{table}
-\end{onlyenv}
+  \end{table}}
 
 \begin{onlyenv}<2>
+  \begin{columns}
+    \begin{column}{.4\textwidth}
+\centering
+\begin{figure}
+  \includegraphics[width=\columnwidth]{terrain_colors.png}
+  %\caption{terrain.colors()渲染的等高线图}
+\end{figure}
+    \end{column}
+
+    \begin{column}{.6\textwidth}
+\centering
+\begin{rcode}
+> x <- 10*(1:nrow(volcano))
+> x.at <- seq(100, 800, by=100)
+> y <- 10*(1:ncol(volcano))
+> y.at <- seq(100, 600, by=100)
+# Using Terrain Colors 
+> image(x, y, volcano, axes=FALSE, xlab="",ylab="",|\colorbox{green}{col=terrain.colors(100)}|)
+> contour(x, y, volcano, levels=seq(90, 200, by=5), add=TRUE, col="brown")
+> axis(1, at=x.at)
+> axis(2, at=y.at)
+> box()
+\end{rcode}
+    \end{column}
+  \end{columns}
+\end{onlyenv}
+
+\begin{onlyenv}<3>
+  \begin{columns}
+    \begin{column}{.4\textwidth}
+\centering
+\begin{figure}
+  \includegraphics[width=\columnwidth]{heat_colors.png}
+  %\caption{terrain.colors()渲染的等高线图}
+\end{figure}
+    \end{column}
+
+    \begin{column}{.6\textwidth}
+\centering
+\begin{rcode}
+> x <- 10*(1:nrow(volcano))
+> x.at <- seq(100, 800, by=100)
+> y <- 10*(1:ncol(volcano))
+> y.at <- seq(100, 600, by=100)
+# Using Terrain Colors 
+> image(x, y, volcano, axes=FALSE, xlab="",ylab="",|\colorbox{green}{col=heat.colors(100)}|)
+> contour(x, y, volcano, levels=seq(90, 200, by=5), add=TRUE, col="brown")
+> axis(1, at=x.at)
+> axis(2, at=y.at)
+> box()
+\end{rcode}
+    \end{column}
+  \end{columns}
+\end{onlyenv}
+
+\begin{onlyenv}<4>
+  \begin{columns}
+    \begin{column}{.4\textwidth}
+\centering
+\begin{figure}
+  \includegraphics[width=\columnwidth]{gray_colors.png}
+  %\caption{terrain.colors()渲染的等高线图}
+\end{figure}
+    \end{column}
+
+    \begin{column}{.6\textwidth}
+\centering
+\begin{rcode}
+> x <- 10*(1:nrow(volcano))
+> x.at <- seq(100, 800, by=100)
+> y <- 10*(1:ncol(volcano))
+> y.at <- seq(100, 600, by=100)
+# Using Terrain Colors 
+> image(x, y, volcano, axes=FALSE, xlab="",ylab="",|\colorbox{green}{col=gray(100:200/200)}|)
+> contour(x, y, volcano, levels=seq(90, 200, by=5), add=TRUE, col="brown")
+> axis(1, at=x.at)
+> axis(2, at=y.at)
+> box()
+\end{rcode}
+    \end{column}
+  \end{columns}
+\end{onlyenv}
+
+\end{overlayarea}  
+\end{frame}
+
+\begin{frame}[t]{\subsecname}{颜色}
+\begin{itemize}
+\item 另外，\emphText{RColorBrewer}包还提供了更简化的颜色生成函数，只需要指定调色板名称，
+再通过brewer.pal()函数就可以自动生成符合色彩科学的预设组合
+\end{itemize}
+
+\begin{overlayarea}{\textwidth}{\textheight}
+\only<1>{
   \begin{table} \centering \small
     \begin{tabular}{|m{0.3\columnwidth}|m{0.6\columnwidth}|}
       \toprule
@@ -1944,8 +2056,22 @@ X11cairo      pdf     jpeg
       \bottomrule
     \end{tabular}
     \caption{RColorBrewer提供的调色板}
-  \end{table}
-\end{onlyenv}
+  \end{table}}
+
+\only<2>{
+\begin{figure}
+    \begin{columns}
+      \begin{column}{.6\textwidth}
+        \includegraphics[width=0.9\columnwidth]{rcolorbrewer.png}
+      \end{column}
+
+      \begin{column}{.4\textwidth}
+        \centering
+        \caption{RColorBrewer包中所有调色板颜色的演示:从上至下依次是连续
+型(18种)、极端型(9种)和离散型(8种)调色板}
+      \end{column}
+    \end{columns}
+\end{figure}}
 \end{overlayarea}  
 \end{frame}
 \subsection{标准绘图程序包}

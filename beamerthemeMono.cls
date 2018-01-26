@@ -191,6 +191,10 @@
 \setlength{\extrarowheight}{.75ex}
 
 %%%%%%%%%%% 装饰框
+% 移除colorbox不必要的外边框
+%{\setlength{\fboxsep}{0pt}\colorbox{<color>}{<text>}}
+\setlength{\fboxsep}{0pt}
+
 \RequirePackage[object=vectorian]{pgfornament}
 \RequirePackage[framemethod=tikz]{mdframed}
 \RequirePackage{tcolorbox}
