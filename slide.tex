@@ -1964,7 +1964,7 @@ X11cairo      pdf     jpeg
 > x.at <- seq(100, 800, by=100)
 > y <- 10*(1:ncol(volcano))
 > y.at <- seq(100, 600, by=100)
-# Using Terrain Colors 
+# 使用Terrain Colors 
 > image(x, y, volcano, axes=FALSE, xlab="",ylab="",|\colorbox{green}{col=terrain.colors(100)}|)
 > contour(x, y, volcano, levels=seq(90, 200, by=5), add=TRUE, col="brown")
 > axis(1, at=x.at)
@@ -1992,7 +1992,7 @@ X11cairo      pdf     jpeg
 > x.at <- seq(100, 800, by=100)
 > y <- 10*(1:ncol(volcano))
 > y.at <- seq(100, 600, by=100)
-# Using Terrain Colors 
+# 使用Heat Colors 
 > image(x, y, volcano, axes=FALSE, xlab="",ylab="",|\colorbox{green}{col=heat.colors(100)}|)
 > contour(x, y, volcano, levels=seq(90, 200, by=5), add=TRUE, col="brown")
 > axis(1, at=x.at)
@@ -2020,7 +2020,7 @@ X11cairo      pdf     jpeg
 > x.at <- seq(100, 800, by=100)
 > y <- 10*(1:ncol(volcano))
 > y.at <- seq(100, 600, by=100)
-# Using Terrain Colors 
+# 使用Gray Colors 
 > image(x, y, volcano, axes=FALSE, xlab="",ylab="",|\colorbox{green}{col=gray(100:200/200)}|)
 > contour(x, y, volcano, levels=seq(90, 200, by=5), add=TRUE, col="brown")
 > axis(1, at=x.at)
@@ -2073,6 +2073,259 @@ X11cairo      pdf     jpeg
     \end{columns}
 \end{figure}}
 \end{overlayarea}  
+\end{frame}
+
+\begin{frame}[t,fragile]{\subsecname}{点}
+\begin{itemize}
+\item 点的设置可以通过部分高级绘图函数中的pch参数完成，也可以通过低级绘图函数\emphText{points()}
+\item points函数有两个重要参数\emphText{pch}和\emphText{col}，前者用于设置点的
+样式，后者用于设置点的颜色；另外，\emphText{bg}可以设置部分点类型的背景色，\emphText{lwd}可以设置点边缘的宽度
+\end{itemize}
+
+\begin{overlayarea}{\textwidth}{\textheight}
+\only<1>{
+\begin{figure}
+    \begin{columns}
+      \begin{column}{.6\textwidth}
+        \includegraphics[width=\columnwidth]{pch-example.png}
+      \end{column}
+
+      \begin{column}{.4\textwidth}
+        \centering
+        \caption{pch参数不同取值的点类型，其中col=“red3”,pch=21-25的bg="gold"}
+      \end{column}
+    \end{columns}
+\end{figure}}
+
+\begin{onlyenv}<2>
+  \begin{columns}
+    \begin{column}{.4\textwidth}
+\centering
+\begin{figure}
+  \includegraphics[width=\columnwidth]{points-art01.png}
+  \caption{点的艺术}
+\end{figure}
+    \end{column}
+
+    \begin{column}{.6\textwidth}
+\centering
+\begin{rcode}
+# 利用随机数在随机位置生成随机样式的点
+> set.seed(711)
+> plot.new()
+> size = c(replicate(n, 1/rbeta(2, 1.5, 4)))
+> center = t(replicate(n, runif(2)))
+> center = center[rep(1:n, each = 2), ]
+> color = apply(replicate(2 * n, sample(c(0:9, LETTERS[1:6]),8, replace = TRUE)),
+              2, function(x) sprintf("#%s",paste(x, collapse = "")))
+> points(center, cex = size, pch = rep(20:21, n), col = color)
+\end{rcode}
+    \end{column}
+  \end{columns}
+\end{onlyenv}
+
+\begin{onlyenv}<3>
+  \begin{columns}
+    \begin{column}{.4\textwidth}
+\centering
+\begin{figure}
+  \includegraphics[width=\columnwidth]{points-art02.png}
+  \caption{点的艺术}
+\end{figure}
+    \end{column}
+
+    \begin{column}{.6\textwidth}
+\centering
+\begin{rcode}
+# 利用随机数在随机位置生成随机样式的点
+> set.seed(711)
+> plot.new()
+> size = c(replicate(n, 1/rbeta(2, 1.5, 4)))
+> center = t(replicate(n, runif(2)))
+> center = center[rep(1:n, each = 2), ]
+> color = apply(replicate(2 * n, sample(c(0:9, LETTERS[1:6]),8, replace = TRUE)),
+              2, function(x) sprintf("#%s",paste(x, collapse = "")))
+> points(center, cex = size, pch = rep(20:21, n), col = color)
+\end{rcode}
+    \end{column}
+  \end{columns}
+\end{onlyenv}
+
+\begin{onlyenv}<4>
+  \begin{columns}
+    \begin{column}{.4\textwidth}
+\centering
+\begin{figure}
+  \includegraphics[width=\columnwidth]{points-art03.png}
+  \caption{点的艺术}
+\end{figure}
+    \end{column}
+
+    \begin{column}{.6\textwidth}
+\centering
+\begin{rcode}
+# 利用随机数在随机位置生成随机样式的点
+> set.seed(711)
+> plot.new()
+> size = c(replicate(n, 1/rbeta(2, 1.5, 4)))
+> center = t(replicate(n, runif(2)))
+> center = center[rep(1:n, each = 2), ]
+> color = apply(replicate(2 * n, sample(c(0:9, LETTERS[1:6]),8, replace = TRUE)),
+              2, function(x) sprintf("#%s",paste(x, collapse = "")))
+> points(center, cex = size, pch = rep(20:21, n), col = color)
+\end{rcode}
+    \end{column}
+  \end{columns}
+\end{onlyenv}
+
+\begin{onlyenv}<5>
+  \begin{columns}
+    \begin{column}{.4\textwidth}
+\centering
+\begin{figure}
+  \includegraphics[width=\columnwidth]{points-art04.png}
+  \caption{点的艺术}
+\end{figure}
+    \end{column}
+
+    \begin{column}{.6\textwidth}
+\begin{rcode}
+# 利用随机数在随机位置生成随机样式的点
+> set.seed(711)
+> plot.new()
+> size = c(replicate(n, 1/rbeta(2, 1.5, 4)))
+> center = t(replicate(n, runif(2)))
+> center = center[rep(1:n, each = 2), ]
+> color = apply(replicate(2 * n, sample(c(0:9, LETTERS[1:6]),8, replace = TRUE)),
+              2, function(x) sprintf("#%s",paste(x, collapse = "")))
+> points(center, cex = size, pch = rep(20:21, n), col = color)
+\end{rcode}
+    \end{column}
+  \end{columns}
+\end{onlyenv}
+\end{overlayarea}  
+\end{frame}
+
+\begin{frame}[t,fragile]{\subsecname}{线}
+\begin{itemize}
+\item<1-> R中的线样式包括直线、线段、多段线、箭头和样条曲线
+\item<2-> 直线：\emphText{abline()}函数
+\item<3-> 线段：\emphText{segment()}函数
+\item<4-> 多段线：\emphText{lines()}函数
+\item<5-> 箭头：\emphText{arrows()}函数
+\item<6-> 样条曲线：\emphText{xspline()}函数
+\end{itemize}
+
+\begin{onlyenv}<2>
+\begin{rcode}
+# 主要参数：a是截距，b是斜率，h是画水平线时的纵轴值，v是画垂直线时的横轴值，reg是一个能用函数coef()提取系数
+(包含斜率和截距)的R对象,典型的就是用线性模型(回归)生成的对象,系数是一个长度为2的向量,分别为截距和斜率
+abline(a = NULL, b = NULL, h = NULL, v = NULL, reg = NULL, coef = NULL, untf = FALSE, ...)
+\end{rcode}
+\end{onlyenv}  
+
+\begin{onlyenv}<3>
+\begin{rcode}
+#主要参数：前四个参数表示线段的起点和终点坐标
+segments(x0, y0, x1 = x0, y1 = y0, col = par("fg"), lty = par("lty"), lwd = par("lwd"), ...)
+\end{rcode}
+\end{onlyenv} 
+
+\begin{onlyenv}<4>
+\begin{rcode}
+# 主要参数：x和y是元素个数相同的向量，表示n组多段线的节点
+lines(x, y = NULL, type = "l", ...)
+\end{rcode}
+\end{onlyenv} 
+
+\begin{onlyenv}<5>
+\begin{rcode}
+#主要参数：前四个参数表示箭头的起点和终点坐标，length表示箭头尖上短线的长度(单位:英寸)，angle表示箭头尖短线的角度，code表示箭头的样式(整数1~3分别表示尾部箭头、首部箭头和两端都带箭头)
+arrows(x0, y0, x1 = x0, y1 = y0, length = 0.25, angle = 30, code = 2, col = par("fg"), lty = par("lty"), lwd = par("lwd"), ...)
+\end{rcode}
+\end{onlyenv} 
+
+\begin{onlyenv}<6>
+\begin{rcode}
+# 主要参数：前两个参数给定点的位置,shape为样条的形状,取值在[-1, 1]之间,当取值为负数时,曲线穿过给定的点,负值绝对值越小则曲线的角度越尖锐,反之角度越圆滑,shape取值为正数时,曲线脱离给定的点,正值越小越靠近给定点;open决定是否样条曲线封闭;repEnds为逻辑值,当样条曲线不封闭时,该参数决定是否重复使用端点上的点;draw决定是否画线,若为FALSE,则仅仅计算曲线的坐标位置而不画线;border为曲线的颜色;col为封闭曲线的填充颜色
+xspline(x, y = NULL, shape = 0, open = TRUE, repEnds = TRUE, draw = TRUE, border = par("fg"), col = NA, ...)
+\end{rcode}
+\end{onlyenv} 
+
+\begin{onlyenv}<7>
+\begin{block}{\small 特殊参数}\footnotesize 
+\HandPencilLeft~线的lty参数相当灵活,除了取值0-6之外,还可以根据一个十六进制的数字串来设定线条的虚实,
+具体原理是:\emphText{奇数位上的数字表示画相应长度的实线,偶数位上的数字则表示空缺相应的长度},这样可以实现几乎无数种线条样式;例如，’711911’表示:7单位长实线、1单位长空白、1单位长实线、
+9单位长空白、1单位长实线、1单位长空白\\
+\HandPencilLeft~\emphText{当设定type=’h’时,col参数可以使用向量,此时各条竖线都将使用
+不同的颜色};除此之外,若其它参数使用了向量,那么只有向量的第
+一个元素会被使用,其它元素都将被忽略掉
+\end{block}
+\end{onlyenv}  
+\end{frame}
+
+\begin{frame}[c,fragile]{\subsecname}{线}
+\begin{onlyenv}<1>
+    \begin{figure}
+ \begin{columns}
+    \begin{column}[c]{.4\textwidth}
+  \includegraphics[width=\columnwidth]{line-example.png}
+    \end{column}
+
+    \begin{column}[c]{.6\textwidth}
+\begin{rcode}
+# 不作图,只画出框架,且指定坐标轴范围
+plot(1:10, type = "n", xlim = c(0, 10), ylim = c(0,10))
+# 10个正态随机数绝对值的波动线
+lines(1:10, abs(rnorm(10)))
+# 不同的直线
+abline(a = 0, b = 1, col = "gray")
+abline(v = 2, lty = 2)
+abline(h = 2, lty = 2)
+#添加文本
+text(8, 3, "abline(a = 0, b = 1)")
+# 添加箭头
+arrows(8, 3.5, 6, 5.7, angle = 40)
+# 参数用了向量:不同灰度的线段
+segments(rep(3, 4), 6:9, rep(5, 4), 6:9, col = gray(seq(0.2,0.8, length = 4)))
+text(4, 9.8, "segments")
+\end{rcode}
+    \end{column}
+  \end{columns}
+  \caption{直线、曲线、线段和箭头示例}
+\end{figure}
+\end{onlyenv}
+
+\begin{onlyenv}<2>
+    \begin{figure}
+ \begin{columns}
+    \begin{column}[c]{.4\textwidth}
+  \includegraphics[width=\columnwidth]{open-xspline.png}
+    \end{column}
+
+    \begin{column}[c]{.6\textwidth}
+\begin{rcode}
+xsplineTest <- function(s, open = TRUE, x = c(1,1,3,3)/4, y = c(1,3,3,1)/4, ...) {
+  plot(c(0,1), c(0,1), type = "n", axes = FALSE, xlab = "", ylab = "")
+  points(x, y, pch = 19)
+  xspline(x, y, s, open, ...)
+  text(x+0.05*c(-1,-1,1,1), y+0.05*c(-1,1,1,-1), s)}
+xsplineTest(c(0, -1, -1, 0))
+xsplineTest(c(0, -1,  0, 0))
+xsplineTest(c(0, -1,  1, 0))
+xsplineTest(c(0,  0, -1, 0))
+xsplineTest(c(0,  0,  0, 0))
+xsplineTest(c(0,  0,  1, 0))
+xsplineTest(c(0,  1, -1, 0))
+xsplineTest(c(0,  1,  0, 0))
+xsplineTest(c(0,  1,  1, 0))
+title("Open X-splines", outer = TRUE)
+\end{rcode}
+    \end{column}
+  \end{columns}
+  \caption{样条曲线示例}
+\end{figure}
+\end{onlyenv}  
 \end{frame}
 \subsection{标准绘图程序包}
 

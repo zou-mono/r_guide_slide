@@ -136,5 +136,99 @@ display.brewer.all(type = "qual")
 dev.off()
 
 
+##-------- Showing all the extra & some char graphics symbols ---------
+library(cairoDevice)
+Cairo_png("pch-example.png",width=15,height=15)
+par(mar = c(0,0,0,0) + 0.1)
+pchShow <-
+  function(extras = c("*",".", "o","O","0","+","-","|","%","#"),
+           cex = 3, ## good for both .Device=="postscript" and "x11"
+           col = "red3", bg = "gold", coltext = "brown", cextext = 1.2,
+           main = NULL
+           )
+  {
+    nex <- length(extras)
+    np  <- 26 + nex
+    ipch <- 0:(np-1)
+    k <- floor(sqrt(np))
+    dd <- c(-1,1)/2
+    rx <- dd + range(ix <- ipch %/% k)
+    ry <- dd + range(iy <- 3 + (k-1)- ipch %% k)
+    pch <- as.list(ipch) # list with integers & strings
+    if(nex > 0) pch[26+ 1:nex] <- as.list(extras)
+    plot(rx, ry, type = "n", axes  =  FALSE, xlab = "", ylab = "", main = main)
+    abline(v = ix, h = iy, col = "lightgray", lty = "dotted")
+    for(i in 1:np) {
+      pc <- pch[[i]]
+      ## 'col' symbols with a 'bg'-colored interior (where available) :
+      points(ix[i], iy[i], pch = pc, col = col, bg = bg, cex = cex)
+      if(cextext > 0)
+          text(ix[i] - 0.3, iy[i], pc, col = coltext, cex = cextext)
+    }
+  }
+
+pchShow()
+dev.off()
+
+library(cairoDevice)
+i <- 1
+for (n in c(63, 60, 76, 74)) {
+    Cairo_png(paste0("points-art0", as.character(i), ".png"), width = 15,
+              height = 15)
+    par(mar = c(0, 0, 0, 0))
+    set.seed(711)
+    plot.new()
+    size = c(replicate(n, 1/rbeta(2, 1.5, 4)))
+    center = t(replicate(n, runif(2)))
+    center = center[rep(1:n, each = 2), ]
+    color = apply(replicate(2 * n, sample(c(0:9, LETTERS[1:6]),8, replace = TRUE)),
+                  2, function(x) sprintf("#%s",paste(x, collapse = "")))
+    points(center, cex = size, pch = rep(20:21, n), col = color)
+    dev.off()
+    i <- i+1
+}
 
 
+library(cairoDevice)
+Cairo_png("line-example.png",width=15,height=15)
+par(mar = c(2.5,2.5,0,0) + 0.1)
+# 不作图,只画出框架,且指定坐标轴范围
+plot(1:10, type = "n", xlim = c(0, 10), ylim = c(0,10),cex.axis=2)
+# 10个正态随机数绝对值的波动线
+lines(1:10, abs(rnorm(10)))
+# 不同的直线
+abline(a = 0, b = 1, col = "gray")
+abline(v = 2, lty = 2)
+abline(h = 2, lty = 2)
+#添加文本
+text(8, 3, "abline(a = 0, b = 1)",cex=2)
+# 添加箭头
+arrows(8, 3.5, 6, 5.7, angle = 40,cex=2)
+# 参数用了向量:不同灰度的线段
+segments(rep(3, 4), 6:9, rep(5, 4), 6:9, col = gray(seq(0.2,
+0.8, length = 4)))
+text(4, 9.8, "segments",cex=2)
+dev.off()
+
+library(xspline)
+png("open-xspline.png")
+op <- par(mfrow = c(3,3), mar = rep(0,4), oma = c(0,0,2,0))
+xsplineTest <- function(s, open = TRUE, x = c(1,1,3,3)/4, y = c(1,3,3,1)/4, ...) {
+    plot(c(0,1), c(0,1), type = "n", axes = FALSE, xlab = "", ylab = "")
+    points(x, y, pch = 19)
+    xspline(x, y, s, open, ...)
+    text(x+0.05*c(-1,-1,1,1), y+0.05*c(-1,1,1,-1), s)
+}
+
+xsplineTest(c(0, -1, -1, 0))
+xsplineTest(c(0, -1,  0, 0))
+xsplineTest(c(0, -1,  1, 0))
+xsplineTest(c(0,  0, -1, 0))
+xsplineTest(c(0,  0,  0, 0))
+xsplineTest(c(0,  0,  1, 0))
+xsplineTest(c(0,  1, -1, 0))
+xsplineTest(c(0,  1,  0, 0))
+xsplineTest(c(0,  1,  1, 0))
+title("Open X-splines", outer = TRUE)
+par(op)
+dev.off()
