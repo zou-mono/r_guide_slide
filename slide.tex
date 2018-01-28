@@ -1886,8 +1886,7 @@ X11cairo      pdf     jpeg
 \item R中还提供利用颜色生成原理构造颜色，如RGB模型(红绿蓝三原色)、
           HSV色彩模型(色调、饱和度和纯度)、HCL色彩模型(色调、色度和亮度)等
 \item 对应的颜色生成函数：\emphText{rgb()}、\emphText{hsv()}、
-      \emphText{hcl()}、\emphText{gray()}等；相比固定颜色函数，颜色生成函数更加灵活，
-理论上可以调配出任意颜色
+      \emphText{hcl()}、\emphText{gray()}等；相比固定颜色函数，颜色生成函数更加灵活，可以调配出任意颜色
 \end{itemize}
 
 \begin{overlayarea}{\textwidth}{\textheight}
@@ -2403,10 +2402,9 @@ grid(nx = NULL, ny = nx, col = "lightgray", lty = "dotted", lwd = par("lwd"), eq
     \begin{column}[c]{.6\textwidth}
 \begin{rcode}
 > with(iris,
-+   {
-+   plot(Sepal.Length, Sepal.Width, col = as.integer(Species),
-+        panel.first = |\colorbox{green}{grid}|(8, lty = 1, lwd = 2))
-+   })
+   {
+   plot(Sepal.Length, Sepal.Width, col = as.integer(Species), panel.first = |\colorbox{green}{grid}|(8, lty = 1, lwd = 2))
+   })
 \end{rcode}
     \end{column}
   \end{columns}
@@ -2415,6 +2413,93 @@ grid(nx = NULL, ny = nx, col = "lightgray", lty = "dotted", lwd = par("lwd"), eq
 \end{onlyenv} 
 \end{frame} 
 
+\begin{frame}[t,fragile]{\subsecname}{文本}
+\begin{itemize}
+\item R中把统计图形中的文本分为三类：\emphText{标题}、\emphText{任意文本}和\emphText{图形周边文本}
+\item 对应的函数分别为：\emphText{title()}、\emphText{text()}和\emphText{mtext()}
+\end{itemize}
+
+\begin{onlyenv}<1>
+\begin{rcode}
+# 主要参数：前四个参数分别是主标题、副标题、x轴和y轴标题；line设置一个距离图形边缘的距离(line×行高)；outer表示是否将文本放在外边界中
+title(main = NULL, sub = NULL, xlab = NULL, ylab = N, line = NA, outex=FALSE, ...
+
+# 主要参数：label是添加的文本；pos取值1-4，表示文本位置在坐标点的下、左、上、右方；offset在会pos基础上向相应方向再偏移一定比例的距离；vfont是用Hershey矢量字体设置文本的字体式样
+text(x, y = NULL, label= seq_along(x), adj = NULL, pos = NULL, offset = 0.5, vfont = NULL, cex = 1, col = NULL font = NULL, ...)
+
+# 主要参数：side取值为1-4， 表示周边文本绘制在图形的下、左、上、右边
+mtext(text, side = 3, line = 0, outer = FALSE, at = NA, adj = NA, padj = NA, cex = NA, col = NA, font = NA, ...)
+\end{rcode}
+\end{onlyenv}  
+
+\begin{onlyenv}<2>
+\begin{figure}
+ \begin{columns}
+    \begin{column}[c]{.4\textwidth}
+        \includegraphics[width=\columnwidth]{text-example.png}
+    \end{column}
+
+    \begin{column}[c]{.6\textwidth}
+\begin{rcode}
+> par(mar = c(4, 4, 4, 3))
+> plot(0:10, type = "n", xlab = "", ylab = "", xlim = c(0,12))
+> grid(col = "gray")
+> |\colorbox{green}{title}|(main = "Demonstration of text in R Graphics", xlab = "X-axis title", ylab = "Y-axis title")
+> |\colorbox{green}{mtext}|("Here is \"side = 4\"", side = 4, line = 1)
+> x = c(6, 4, 6, 8)
+> y = c(8, 5, 2, 5)
+> s = c(0, 90, 180, 270)
+> for (i in 1:4) |\colorbox{green}{text}|(x[i], y[i], sprintf("srt = %d",s[i]), srt = s[i])
+> segments(c(6, 0, 6, 12), c(10, 5, 0, 5), c(0, 6,12, 6), c(5, 0, 5, 10), lty = c(2, 1, 1, 2))
+\end{rcode}
+    \end{column}
+  \end{columns}
+  \caption{文本函数示例}
+\end{figure}
+\end{onlyenv}
+\end{frame}
+
+\begin{frame}[t,fragile]{\subsecname}{图例}
+\begin{itemize}
+\item 图例是统计图形中很重要的辅助解释信息，其作用将不同的对象分组为不同的样式
+\item R中绘制图例的函数是\emphText{legend()}
+\end{itemize}
+
+\begin{onlyenv}<1>
+\begin{rcode}
+# 主要参数：前两个参数x和y表示图例的坐标位置(左上角顶点的坐标)；legend通常为一个字符向量，表示图例中的文字；fill指定一个与图例字符向量对应的颜色向量用以在文本左边绘制一个颜色填充方块；col设置图例中点和线的颜色；lty、lwd和pch指定图例中点线的样式；angle和density效果类似于fill参数,只是换成指定角度和密度的阴影线填充方块；bty数设置图例框的样式；title设定图例的标题
+legend(x, y = NULL, legend, fill = NULL, col = par("col"), border = "black", lty, lwd, pch, angle = 45, density = NULL, bty = "o", bg = par("bg"), box.lwd = par("lwd"), box.lty = par("lty"), box.col = par("fg"), pt.bg = NA, cex = 1, pt.cex = cex, pt.lwd = lwd, xjust = 0, yjust = 1, x.intersp = 1, y.intersp = 1, adj = c(0, 0.5), text.width = NULL, text.col = par("col"), merge = do.lies && has.pch, trace = FALSE, plot = TRUE, ncol = 1, horiz = FALSE,title = NULL, inset = 0, xpd, title.col = text.col)
+\end{rcode}
+\end{onlyenv}  
+
+\begin{onlyenv}<2>
+\begin{figure}
+ \begin{columns}
+    \begin{column}[c]{.4\textwidth}
+        \includegraphics[width=\columnwidth]{legend-example.png}
+    \end{column}
+
+    \begin{column}[c]{.6\textwidth}
+\begin{rcode}
+> par(mar = c(4, 4, 4, 3))
+> plot(0:10, type = "n", xlab = "", ylab = "", xlim = c(0,12))
+> grid(col = "gray")
+> title(main = "Demonstration of text in R Graphics",
++ xlab = "X-axis title", ylab = "Y-axis title")
+> mtext("Here is \"side = 4\"", side = 4, line = 1)
+> x = c(6, 4, 6, 8)
+> y = c(8, 5, 2, 5)
+> s = c(0, 90, 180, 270)
+> for (i in 1:4) text(x[i], y[i], sprintf("srt = %d",s[i]), srt = s[i])
+> segments(c(6, 0, 6, 12), c(10, 5, 0, 5), c(0, 6,12, 6), c(5, 0, 5, 10), lty = c(2, 1, 1, 2))
+> |\colorbox{green}{legend}|(-0.2, 9.8, c("Upper", "Lower"), lty = 2:1, cex = 0.8, bty = "n", text.col="red", col="red")
+\end{rcode}
+    \end{column}
+  \end{columns}
+  \caption{文本函数示例}
+\end{figure}
+\end{onlyenv}
+\end{frame}
 \subsection{标准绘图程序包}
 
 \subsection{lattice程序包}
