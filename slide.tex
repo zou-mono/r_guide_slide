@@ -392,29 +392,28 @@
 \subsection{何为利器}
 \begin{frame}[t]{\subsecname}
   \begin{itemize}
-    \hilite<1> \item 统计计算功能齐全
-    \hilite<2> \item 图形元素易于控制
-    \hilite<3> \item 统计图形类型种类丰富
+    \item 统计计算功能齐全
+    \item 图形元素易于控制
+    \item 统计图形种类丰富
   \end{itemize}
 
 \begin{figure}[ht]
   \centering \includegraphics[width=0.8\textwidth]{stat_tools.png}
   \caption{常见的一些统计绘图工具}
 \end{figure}
-
 \end{frame}
 
 \subsection{所见即所得工具}
 
 \begin{frame}[t]{\subsecname}{excel}
-  \begin{itemize}
-    \hilite<1> \item 微软公司开发的电子数据表软件，从1985年发布1.0版本
-    至今已经30多年历史，是电子数据表类软件的工业标准\hilite<2> \item 优
-    秀的人机交互设计，所见即所得\hilite<3> \item 能够完成简单的统计功能
-    以及数据绘图，但并不是统计软件
-  \end{itemize}
+\begin{itemize}
+\item<1-> 微软公司开发的电子数据表软件，从1985年发布1.0版本
+    至今已经30多年历史，是电子数据表类软件的工业标准
+\item<2-> 优秀的人机实时交互设计，所见即所得
+\item<3-> 能够完成简单的统计功能以及数据绘图，但并不是统计软件
+\end{itemize}
 
-\begin{overlayarea}  {\textwidth}{\textheight} 
+\begin{overlayarea}{\textwidth}{\textheight} 
   \only<1>{
     \begin{figure}\centering
       \includegraphics[width=0.65\columnwidth] {excel条形图.png}
@@ -443,15 +442,14 @@
   \only<5->{
     \begin{alertblock}{excel作为统计绘图工具的缺点}
       \begin{itemize} \small
-        \hilite<5> \item[\PencilLeftDown] excel擅长对原始数据的展示，统
+        \item<6-> [\PencilLeftDown] excel并非专业统计软件，只擅长对原始数据的展示，统
         计分析和建模功能十分有限。因此，著名统计学家Leland
-        Wilkinson\footnote[frame,1]{统计学经典书籍《The Grammar of
+        Wilkinson\footnote<6>[frame,1]{统计学经典书籍《The Grammar of
           Graphics》一书的作者，任职SPSS公司十年，而且一直领导其可视化
-          小组}说\emphTextStep{5-}{“给统计刊物投稿时永远不要用Excel作图”}
-        \hilite<6> \item[\PencilLeftDown] 数据量的限制，处理速度慢
-        \hilite<7> \item[\PencilLeftDown] 只能在windows单机上运行，无
-          法开展跨平台和分布式计算，不具备大规模数据管理功能
-        %\hilite<8> \item[\PencilLeftDown] 商业软件，价格不菲
+          小组}说\emphText{“给统计刊物投稿时永远不要用Excel作图”}
+        \item<7->[\PencilLeftDown] 只能在windows单机上运行，处理数据量有限而且速度慢，
+                 不具备大规模数据管理功能
+        \item<8->[\PencilLeftDown] 绘图功能十分有限，只提供部分基本统计图形 
       \end{itemize}
     \end{alertblock}}
 \end{overlayarea}  
@@ -459,9 +457,9 @@
 
 \begin{frame}[t]{\subsecname}{SPSS}
   \begin{itemize}
-    \hilite<1> \item 易学易用的统计分析软件
-    \hilite<2> \item 功能全面的统计分析软件
-    \hilite<3> \item 界面友好
+    \item<1-> 易学易用
+    \item<2-> 功能全面
+    \item<3-> 界面友好
   \end{itemize}
 
 \begin{overlayarea}  {\textwidth}{\textheight}
@@ -474,11 +472,10 @@
   \only<4->{
     \begin{alertblock}{SPSS及其他所见即所得工具的缺陷}
       \begin{itemize} \small
-        \hilite<4> \item[\PencilLeftDown] 按钮的数量总是有限的，而统计模型是无限的
-        \hilite<5> \item[\PencilLeftDown] 计算机完成了太多
-        本该由用户完成的图形要素控制
-        \hilite<6> \item[\PencilLeftDown] 生成一张图易，生成N张图难
-        \hilite<7> \item[\PencilLeftDown] 贫穷限制了想象力，模块单独付费
+        \item<4->[\PencilLeftDown] 按钮的数量总是有限的，而统计模型是无限的
+        \item<5->[\PencilLeftDown] 计算机完成了太多图形要素控制工作，缺乏灵活性
+        \item<6->[\PencilLeftDown] 生成一张图易，生成N张图难
+        \item<7->[\PencilLeftDown] 贫穷限制了想象力：商业软件费用高昂，而且部分模块需单独付费
       \end{itemize}
     \end{alertblock}}
 \end{overlayarea}
@@ -487,9 +484,9 @@
 \subsection{所想即所得工具}
 \begin{frame}[t]{\subsecname}{SAS}
   \begin{itemize}
-    \hilite<1> \item 1960年诞生于SAS软件研究所，老牌专业统计软件
-    \hilite<2> \item 基于数据库进行数据管理，具有大型数据集处理分析能力
-    \hilite<3> \item 有专门的SAS认证考试，包括程序员、业务分析师、数据挖掘、系统开发
+    \item<1-> 1960年诞生于SAS软件研究所，老牌专业统计软件
+    \item<2-> 基于数据库进行数据管理，具有大型数据集处理分析能力
+    \item<3-> 有专门的SAS认证考试，包括程序员、业务分析师、数据挖掘、系统开发
            专家和系统管理专家五种不同角色
   \end{itemize}
   
@@ -509,15 +506,15 @@
   \end{itemize}
  
       \begin{columns}
-        \begin{column}{.5\textwidth}
+        \begin{column}[c]{.5\textwidth}
+          \centering 
           \begin{figure}
-            \centering
             \includegraphics[width=0.8\columnwidth]{sas_boxplot.png}
             \caption{箱形图(Box plot)}
           \end{figure}
         \end{column}
 
-        \begin{column}{.5\textwidth}
+        \begin{column}[c]{.5\textwidth}\centering
 \begin{lstlisting}[language=SAS]
 PROC SQL;
 create table CARS1 as
@@ -607,9 +604,9 @@ RUN;
 \onslide<2->{
   \begin{badbox}{所想即所得工具的劣势}
      \begin{itemize}
-     \item[\PencilLeftDown] 人机交互全靠命令，需要一定的编程基础
+     \item[\PencilLeftDown] 人机交互全靠指令输入，需要具备编程基础
      \item[\PencilLeftDown] 需要扎实的统计学基础，学习曲线陡峭
-     \item[\PencilLeftDown] 键盘易损坏，手指易抽筋    
+     \item[\PencilLeftDown] 实现简单的统计功能时不如“所见即所得工具”快捷    
      \end{itemize}
   \end{badbox}}
 
@@ -643,12 +640,12 @@ RUN;
 \begin{frame}[t]{\subsecname}{R的历史}
 
 \begin{itemize}
-\hilite<1> \item R诞生于1995年，由新西兰Auckland大学统计学家\emphText{R}obert Gentleman
+\item<1-> R诞生于1995年，由新西兰Auckland大学统计学家\emphText{R}obert Gentleman
         和\emphText{R}oss Ihaka开发，而且完全开放源代码，是一款
-        基于GNU General Public License(GPL)协议的开源软件
-\hilite<2> \item R是“所想即所得”工具，其核心是基于S语言设计的R语言，S语言的代码可以不经过
-        任何修改就在R中运行，因此R被看做是S语言的非商业化实现
-\hilite<3> \item 由于两位开发者的名字都以“R”开头，而且为了向S语言致敬，因此命名为R 
+        基于GNU General Public License(GPL)协议的开源软件；
+由于两位开发者的名字都以“R”开头，而且为了向S语言致敬，因此命名为R
+\item<2-> R是“所想即所得”工具，其核心是基于S语言设计的R语言，S语言的代码可以不经过
+        任何修改就在R中运行，因此R被看做是S语言的非商业化实现  
 \end{itemize}
 
 \begin{overlayarea} {\textwidth}{\textheight}
@@ -665,9 +662,9 @@ RUN;
 
 \begin{frame}[t]{\subsecname}{R的优势}
 \begin{itemize}
-\hilite<1> \item R具备S-Plus几乎所有的优点，而且更加小巧轻便
-\hilite<2> \item 开源项目，完全免费，这点是其他统计软件都不具备的
-\hilite<3> \item 世界各地有大量研究机构和专业统计人员使用
+\item<1-> R具备S-Plus几乎所有的优点，而且更加小巧轻便
+\item<2-> 开源项目，完全免费，这点是其他统计软件都不具备的
+\item<3-> 世界各地有大量研究机构和专业统计人员使用
                  并自愿贡献代码，具有良好的生态系统
 \end{itemize}  
 
@@ -680,7 +677,7 @@ RUN;
     \caption{R的官方网站CRAN(https://cran.r-project.org/)}
   \end{figure}}
 
-\only<3>{
+\only<3->{
   \begin{figure}[ht]
     \centering
     \includegraphics[width=\columnwidth]{R_community.jpg}
@@ -692,10 +689,10 @@ RUN;
 
 \begin{frame}[t]{\subsecname}{R的优势}
 \begin{itemize}
-\hilite<1> \item R是高度模块化软件，通过各种程序包(package)来扩展其功能，目前CRAN上
+\item<1-> R是高度模块化软件，通过各种程序包(package)来扩展其功能，目前CRAN上
                  接收的程序包超过12000个，绝大多数来自自愿者的贡献
-\hilite<2> \item 与其他语言具有极好的兼容性
-\hilite<3-> \item 目前最新的统计模型和算法几乎都有R的实现版本，与统计研究前沿相接轨 
+\item<2-> R语言语法简单，并不需要很高的编程技巧，而且与其他语言具有极好的兼容性
+\item<3-> 目前最新的统计模型和算法几乎都有R的实现版本，与统计研究前沿相接轨 
 \end{itemize}  
 
 \begin{overlayarea}{\textwidth}{\textheight}
@@ -754,11 +751,11 @@ RUN;
 
 \begin{frame}[t]{\subsecname}{安装运行环境}
 \begin{itemize}
-\hilite<1> \item R的主安装程序由自愿者进行编译上传，基本上每个在CRAN上可以自由下载，包括windows、linux
+\item R的主安装程序由自愿者进行编译上传，基本上每个在CRAN上可以自由下载，包括windows、linux
                  和mac三大主流平台
-\hilite<2>\item 安装后的程序界面是一个交互式命令行终端，默认由一个“>”符号表示命令输入和结果
+\item 安装后的程序界面是一个交互式命令行终端，默认由一个“>”符号表示命令输入和结果
                  输出指示符
-\hilite<3-> \item 在windows有一个简陋的GUI，linux和mac下默认只有CLI终端 
+\item 在windows有一个简陋的GUI，linux和mac下默认只有CLI终端 
 \end{itemize} 
 
 \begin{overlayarea}{\textwidth}{\textheight}
@@ -832,8 +829,8 @@ plot(x, y); abline(fit)
 
 \begin{frame}[t, fragile]{\subsecname}{基本操作}
 \begin{itemize}
-  \hilite<1> \item 第二种方式是将脚本代码写在文件中，然后一次性运行
-  \hilite<2> \item 如果代码量很大建议使用第二种方式，因为文件比较容易修改和保存，而且目前
+\item<1-> 第二种方式是将脚本代码写在文件中，然后一次性运行
+\item<2-> 如果代码量很大建议使用第二种方式，因为文件比较容易修改和保存，而且目前
         有专用IDE可以辅助编写R脚本代码  
 \end{itemize} 
 
@@ -856,13 +853,13 @@ plot(x, y); abline(fit)
 \end{frame}
 
 \begin{frame}[t]{\subsecname}{程序包}
-  \begin{itemize}
-    \hilite<1> \item R的程序包分为\emphText{base包}和\emphText{contrib包}
-    \hilite<2> \item base包是安装R的时候就自带的，不需要单独安装，
+\begin{itemize}
+\item<1-> R的程序包分为\emphText{base包}和\emphText{contrib包}
+\item<2-> base包是安装R的时候就自带的，不需要单独安装，
     这类包的质量都非常高，性能稳定
-    \hilite<3> \item contrib包是自愿者上传的，质量参次不齐；其中质量好
+\item<3-> contrib包是自愿者上传的，质量参次不齐；其中质量好
     且用户量大的扩展包有可能会纳入下一个版本的主程序包
-  \end{itemize}
+\end{itemize}
 
 \begin{overlayarea}{\textwidth}{\textheight}
 \only<1>{
@@ -911,11 +908,11 @@ plot(x, y); abline(fit)
 \end{frame}
 
 \begin{frame}[t,fragile]{\subsecname}{程序包}
-  \begin{itemize}
-    \hilite<1> \item base包在R启动之后自动加载，可以直接使用；而contrib包则需要通过library函数调用，如果未安装
+\begin{itemize}
+\item<1-> base包在R启动之后自动加载，可以直接使用；而contrib包则需要通过library函数调用，如果未安装
                相应包则会报错
-    \hilite<2> \item 通过\emphTextStep{2-}{install.packages}函数安装contrib包
-  \end{itemize}
+\item<2-> 通过\emphTextStep{2-}{install.packages}函数安装contrib包
+\end{itemize}
 
 \begin{overlayarea}{\textwidth}{\textheight}
 \begin{onlyenv}<1->
@@ -943,13 +940,13 @@ downloaded 1.1 MB
 \end{frame}
 
 \begin{frame}[t,fragile]{\subsecname}{帮助系统}
-  \begin{itemize}
-    \hilite<1> \item 通过\emphTextStep{1-}{?命令}或者\emphTextStep{1-}{help函数}
+\begin{itemize}
+\item<1-> 通过\emphTextStep{1-}{?命令}或者\emphTextStep{1-}{help函数}
                查看程序包中函数的本地帮助文档
-    \hilite<2> \item 通过\emphTextStep{2-}{help.search函数}在整个帮助系统中进行关键字搜索
-    \hilite<3> \item \emphTextStep{3-}{find函数}可以根据名称精确查找对象，
+\item<2-> 通过\emphTextStep{2-}{help.search函数}在整个帮助系统中进行关键字搜索
+\item<3-> \emphTextStep{3-}{find函数}可以根据名称精确查找对象，
                \emphTextStep{3-}{apropos函数}可以根据名称模糊查找对象
-  \end{itemize}
+\end{itemize}
 
 \begin{overlayarea}{\textwidth}{\textheight}
 \begin{onlyenv}<1>
@@ -1218,13 +1215,13 @@ Error in data.frame(x, y) :
 \end{frame}
 
 \begin{frame}[t,fragile]{\subsecname}{数据输入输出}
-  \begin{itemize}
-    \hilite<1> \item R的数据可以按照数据结构手动输入，也可以通过读取外部文件自动输入
-    \hilite<2> \item R base包提供了文本文件(ASCII)的读取函数：\emphTextStep{2-}{read.table}、
+\begin{itemize}
+\item<1-> R的数据可以按照数据结构手动输入，也可以通过读取外部文件自动输入
+\item<2-> R base包提供了文本文件(ASCII)的读取函数：\emphTextStep{2-}{read.table}、
                      \emphTextStep{2-}{scan}和\emphTextStep{2-}{read.fwf}等
-    \hilite<3> \item R base包也提供了文本文件(ASCII)的输出函数：\emphTextStep{2-}{write.table}
-    \hilite<4> \item 另外，\emphTextStep{4-}{图形作为对象也可以输出}，这将在后面会专门介绍
-  \end{itemize}
+\item<3-> R base包也提供了文本文件(ASCII)的输出函数：\emphTextStep{2-}{write.table}
+\item<4-> 另外，\emphTextStep{4-}{图形作为对象也可以输出}，这将在后面会专门介绍
+\end{itemize}
 
 \begin{overlayarea}{\textwidth}{\textheight}
 \begin{onlyenv}<2>
@@ -1775,7 +1772,8 @@ X11cairo      pdf     jpeg
 
 \begin{frame}[t]{\subsecname}
 \begin{itemize}
-\item<1-> 统计图形的所有元素都可以在R语言中\emphText{通过低级绘图函数进行定制}
+\item 统计图形的所有元素都可以在R语言中\emphText{通过低级绘图函数和par()函数中的绘图参数实现高度定制化}，
+使得统计图形的绘制在R中非常灵活
 \end{itemize}
 
 \begin{overlayarea}{\textwidth}{\textheight}
@@ -1784,7 +1782,7 @@ X11cairo      pdf     jpeg
       \toprule
       \rowcolor{LightCyan}
       统计图形元素 & 常用函数\\\hline
-      图形区域 & par\\\hline
+      区域 & par\\\hline
       颜色 & colors,palette,rgb,rainbow\\\hline
       点 & points\\\hline
       线 & lines,abline,arrows,segments,xspline\\\hline
@@ -1800,9 +1798,9 @@ X11cairo      pdf     jpeg
 \end{overlayarea}  
 \end{frame}
 
-\begin{frame}[t]{\subsecname}{图形区域}
+\begin{frame}[t]{\subsecname}{区域}
 \begin{itemize}
-\item R的绘图设备分为三个区域：\emphText{作图区域(Plot Region)、图形区域(Figure Region)和设备区域(Device Region)}
+\item R的绘图设备分为三块区域：\emphText{绘图区域(Plot Region)、图形区域(Figure Region)和设备区域(Device Region)}
 \item 这三个区域对应两个边界：\emphText{图形边界(Figure Margin)和外边界(Outer Margin)}；图形边界由par函数的\emphText{mar参数}设置，外边界由\emphText{oma参数}设置
 \end{itemize}  
 
@@ -1816,14 +1814,14 @@ X11cairo      pdf     jpeg
 
 \begin{frame}[t]{\subsecname}{颜色}
 \begin{itemize}
-\item<1-> R中颜色的设置由grDevices包支持，提供了大量颜色函数
-\item<2-> 颜色函数分\emphTextStep{2}{为固定颜色选择函数、颜色生成函数和转换函数和特定颜色主题调色板}
+\item<1-> 颜色元素由\emphText{grDevices包}支持，其内部编写了大量颜色函数
+\item<2-> 颜色函数分为\emphTextStep{2}{固定颜色选择函数、颜色生成函数和特定颜色主题调色板}
 \end{itemize}
 
 \begin{figure}
   \centering
   \includegraphics[width=0.7\columnwidth]{colors-example.png}
-  \caption{R中的颜色} 
+  \caption{R中的部分颜色} 
 \end{figure}  
 \end{frame}
 
@@ -1849,7 +1847,7 @@ X11cairo      pdf     jpeg
 \centering
 \begin{rcode}
 # 通过colors函数随机生成20种预设颜色
-> sample(colors(), 20)
+> sample(|\colorbox{green}{colors()}|, 20)
  [1] "tomato"       "lightcyan4"   "navajowhite1" "gray5"        "seagreen3"   
  [6] "ghostwhite"   "grey60"       "cornsilk4"    "linen"        "darkblue"    
 [11] "gray26"       "steelblue1"   "grey"         "plum4"        "violet"      
@@ -1862,7 +1860,7 @@ X11cairo      pdf     jpeg
 \begin{onlyenv}<3>
 \begin{rcode}
 # palette默认颜色
-> palette()
+> |\colorbox{green}{palette()}|
 [1] "black"   "red"     "green3"  "blue"    "cyan"    "magenta" "yellow" 
 [8] "gray" 
 
@@ -1887,15 +1885,16 @@ X11cairo      pdf     jpeg
 \begin{itemize}
 \item R中还提供利用颜色生成原理构造颜色，如RGB模型(红绿蓝三原色)、
           HSV色彩模型(色调、饱和度和纯度)、HCL色彩模型(色调、色度和亮度)等
-\item 对应的颜色生成和转换函数：\emphText{rgb()}、\emphText{hsv()}、
-      \emphText{hcl()}、\emphText{gray()}等
+\item 对应的颜色生成函数：\emphText{rgb()}、\emphText{hsv()}、
+      \emphText{hcl()}、\emphText{gray()}等；相比固定颜色函数，颜色生成函数更加灵活，
+理论上可以调配出任意颜色
 \end{itemize}
 
 \begin{overlayarea}{\textwidth}{\textheight}
 \begin{onlyenv}<2>
 \begin{rcode}
 # 在rgb()函数中用一元线性函数控制绿色在[0, 1]上的取值，同时将红色和蓝色分别控制为1和0，那么我们将得到从纯红色到黄色的一个颜色渐变
-> (x = rgb(1, seq(0, 1, length = 20), 0))
+> (x = |\colorbox{green}{rgb}|(1, seq(0, 1, length = 20), 0))
  [1] "#FF0000" "#FF0D00" "#FF1B00" "#FF2800" "#FF3600" "#FF4300" 
  [7] "#FF5100" "#FF5E00" "#FF6B00" "#FF7900" "#FF8600" "#FF9400" 
 [13] "#FFA100" "#FFAE00" "#FFBC00" "#FFC900" "#FFD700" "#FFE400" 
@@ -2077,7 +2076,7 @@ X11cairo      pdf     jpeg
 
 \begin{frame}[t,fragile]{\subsecname}{点}
 \begin{itemize}
-\item 点的设置可以通过部分高级绘图函数中的pch参数完成，也可以通过低级绘图函数\emphText{points()}
+\item 点元素可以通过部分高级绘图函数中的pch参数绘制，也可以通过低级绘图函数\emphText{points()}绘制
 \item points函数有两个重要参数\emphText{pch}和\emphText{col}，前者用于设置点的
 样式，后者用于设置点的颜色；另外，\emphText{bg}可以设置部分点类型的背景色，\emphText{lwd}可以设置点边缘的宽度
 \end{itemize}
@@ -2118,7 +2117,7 @@ X11cairo      pdf     jpeg
 > center = center[rep(1:n, each = 2), ]
 > color = apply(replicate(2 * n, sample(c(0:9, LETTERS[1:6]),8, replace = TRUE)),
               2, function(x) sprintf("#%s",paste(x, collapse = "")))
-> points(center, cex = size, pch = rep(20:21, n), col = color)
+> |\colorbox{green}{points}|(center, cex = size, pch = rep(20:21, n), col = color)
 \end{rcode}
     \end{column}
   \end{columns}
@@ -2145,7 +2144,7 @@ X11cairo      pdf     jpeg
 > center = center[rep(1:n, each = 2), ]
 > color = apply(replicate(2 * n, sample(c(0:9, LETTERS[1:6]),8, replace = TRUE)),
               2, function(x) sprintf("#%s",paste(x, collapse = "")))
-> points(center, cex = size, pch = rep(20:21, n), col = color)
+> |\colorbox{green}{points}|(center, cex = size, pch = rep(20:21, n), col = color)
 \end{rcode}
     \end{column}
   \end{columns}
@@ -2156,8 +2155,8 @@ X11cairo      pdf     jpeg
     \begin{column}{.4\textwidth}
 \centering
 \begin{figure}
-  \includegraphics[width=\columnwidth]{points-art03.png}
-  \caption{点的艺术}
+    \includegraphics[width=\columnwidth]{points-art03.png}
+    \caption{点的艺术}
 \end{figure}
     \end{column}
 
@@ -2172,7 +2171,7 @@ X11cairo      pdf     jpeg
 > center = center[rep(1:n, each = 2), ]
 > color = apply(replicate(2 * n, sample(c(0:9, LETTERS[1:6]),8, replace = TRUE)),
               2, function(x) sprintf("#%s",paste(x, collapse = "")))
-> points(center, cex = size, pch = rep(20:21, n), col = color)
+> |\colorbox{green}{points}|(center, cex = size, pch = rep(20:21, n), col = color)
 \end{rcode}
     \end{column}
   \end{columns}
@@ -2183,8 +2182,8 @@ X11cairo      pdf     jpeg
     \begin{column}{.4\textwidth}
 \centering
 \begin{figure}
-  \includegraphics[width=\columnwidth]{points-art04.png}
-  \caption{点的艺术}
+    \includegraphics[width=\columnwidth]{points-art04.png}
+    \caption{点的艺术}
 \end{figure}
     \end{column}
 
@@ -2198,7 +2197,7 @@ X11cairo      pdf     jpeg
 > center = center[rep(1:n, each = 2), ]
 > color = apply(replicate(2 * n, sample(c(0:9, LETTERS[1:6]),8, replace = TRUE)),
               2, function(x) sprintf("#%s",paste(x, collapse = "")))
-> points(center, cex = size, pch = rep(20:21, n), col = color)
+> |\colorbox{green}{points}|(center, cex = size, pch = rep(20:21, n), col = color)
 \end{rcode}
     \end{column}
   \end{columns}
@@ -2208,7 +2207,7 @@ X11cairo      pdf     jpeg
 
 \begin{frame}[t,fragile]{\subsecname}{线}
 \begin{itemize}
-\item<1-> R中的线样式包括直线、线段、多段线、箭头和样条曲线
+\item<1-> R中的线元素包括\emphText{直线、线段、多段线、箭头和样条曲线}
 \item<2-> 直线：\emphText{abline()}函数
 \item<3-> 线段：\emphText{segment()}函数
 \item<4-> 多段线：\emphText{lines()}函数
@@ -2219,7 +2218,7 @@ X11cairo      pdf     jpeg
 \begin{onlyenv}<2>
 \begin{rcode}
 # 主要参数：a是截距，b是斜率，h是画水平线时的纵轴值，v是画垂直线时的横轴值，reg是一个能用函数coef()提取系数
-(包含斜率和截距)的R对象,典型的就是用线性模型(回归)生成的对象,系数是一个长度为2的向量,分别为截距和斜率
+(包含斜率和截距)的R对象，典型的就是用线性模型(回归)生成的对象，系数是一个长度为2的向量,分别为截距和斜率
 abline(a = NULL, b = NULL, h = NULL, v = NULL, reg = NULL, coef = NULL, untf = FALSE, ...)
 \end{rcode}
 \end{onlyenv}  
@@ -2247,7 +2246,7 @@ arrows(x0, y0, x1 = x0, y1 = y0, length = 0.25, angle = 30, code = 2, col = par(
 
 \begin{onlyenv}<6>
 \begin{rcode}
-# 主要参数：前两个参数给定点的位置,shape为样条的形状,取值在[-1, 1]之间,当取值为负数时,曲线穿过给定的点,负值绝对值越小则曲线的角度越尖锐,反之角度越圆滑,shape取值为正数时,曲线脱离给定的点,正值越小越靠近给定点;open决定是否样条曲线封闭;repEnds为逻辑值,当样条曲线不封闭时,该参数决定是否重复使用端点上的点;draw决定是否画线,若为FALSE,则仅仅计算曲线的坐标位置而不画线;border为曲线的颜色;col为封闭曲线的填充颜色
+# 主要参数：前两个参数给定点的位置，shape为样条的形状,取值在[-1, 1]之间，当取值为负数时，曲线穿过给定的点，负值绝对值越小则曲线的角度越尖锐，反之角度越圆滑，shape取值为正数时，曲线脱离给定的点，正值越小越靠近给定点；open决定是否样条曲线封闭；repEnds为逻辑值，当样条曲线不封闭时，该参数决定是否重复使用端点上的点；draw决定是否画线，若为FALSE，则仅仅计算曲线的坐标位置而不画线；border为曲线的颜色；col为封闭曲线的填充颜色
 xspline(x, y = NULL, shape = 0, open = TRUE, repEnds = TRUE, draw = TRUE, border = par("fg"), col = NA, ...)
 \end{rcode}
 \end{onlyenv} 
@@ -2269,26 +2268,26 @@ xspline(x, y = NULL, shape = 0, open = TRUE, repEnds = TRUE, draw = TRUE, border
     \begin{figure}
  \begin{columns}
     \begin{column}[c]{.4\textwidth}
-  \includegraphics[width=\columnwidth]{line-example.png}
+        \includegraphics[width=\columnwidth]{line-example.png}
     \end{column}
 
     \begin{column}[c]{.6\textwidth}
 \begin{rcode}
-# 不作图,只画出框架,且指定坐标轴范围
-plot(1:10, type = "n", xlim = c(0, 10), ylim = c(0,10))
+# 不作图，只画出框架，且指定坐标轴范围
+> plot(1:10, type = "n", xlim = c(0, 10), ylim = c(0,10))
 # 10个正态随机数绝对值的波动线
-lines(1:10, abs(rnorm(10)))
+> |\colorbox{green}{lines}|(1:10, abs(rnorm(10)))
 # 不同的直线
-abline(a = 0, b = 1, col = "gray")
-abline(v = 2, lty = 2)
-abline(h = 2, lty = 2)
-#添加文本
-text(8, 3, "abline(a = 0, b = 1)")
+> |\colorbox{green}{abline}|(a = 0, b = 1, col = "gray")
+> |\colorbox{green}{abline}|(v = 2, lty = 2)
+> |\colorbox{green}{abline}|(h = 2, lty = 2)
+# 添加文本
+> text(8, 3, "abline(a = 0, b = 1)")
 # 添加箭头
-arrows(8, 3.5, 6, 5.7, angle = 40)
-# 参数用了向量:不同灰度的线段
-segments(rep(3, 4), 6:9, rep(5, 4), 6:9, col = gray(seq(0.2,0.8, length = 4)))
-text(4, 9.8, "segments")
+> |\colorbox{green}{arrows}|(8, 3.5, 6, 5.7, angle = 40)
+# 参数用了向量：不同灰度的线段
+> |\colorbox{green}{segments}|(rep(3, 4), 6:9, rep(5, 4), 6:9, col = gray(seq(0.2,0.8, length = 4)))
+> text(4, 9.8, "segments")
 \end{rcode}
     \end{column}
   \end{columns}
@@ -2297,29 +2296,29 @@ text(4, 9.8, "segments")
 \end{onlyenv}
 
 \begin{onlyenv}<2>
-    \begin{figure}
- \begin{columns}
+\begin{figure}
+  \begin{columns}
     \begin{column}[c]{.4\textwidth}
-  \includegraphics[width=\columnwidth]{open-xspline.png}
+        \includegraphics[width=\columnwidth]{open-xspline.png}
     \end{column}
 
     \begin{column}[c]{.6\textwidth}
 \begin{rcode}
-xsplineTest <- function(s, open = TRUE, x = c(1,1,3,3)/4, y = c(1,3,3,1)/4, ...) {
+> xsplineTest <- function(s, open = TRUE, x = c(1,1,3,3)/4, y = c(1,3,3,1)/4, ...) {
   plot(c(0,1), c(0,1), type = "n", axes = FALSE, xlab = "", ylab = "")
   points(x, y, pch = 19)
-  xspline(x, y, s, open, ...)
+  |\colorbox{green}{xspline}|(x, y, s, open, ...)
   text(x+0.05*c(-1,-1,1,1), y+0.05*c(-1,1,1,-1), s)}
-xsplineTest(c(0, -1, -1, 0))
-xsplineTest(c(0, -1,  0, 0))
-xsplineTest(c(0, -1,  1, 0))
-xsplineTest(c(0,  0, -1, 0))
-xsplineTest(c(0,  0,  0, 0))
-xsplineTest(c(0,  0,  1, 0))
-xsplineTest(c(0,  1, -1, 0))
-xsplineTest(c(0,  1,  0, 0))
-xsplineTest(c(0,  1,  1, 0))
-title("Open X-splines", outer = TRUE)
+> xsplineTest(c(0, -1, -1, 0))
+> xsplineTest(c(0, -1,  0, 0))
+> xsplineTest(c(0, -1,  1, 0))
+> xsplineTest(c(0,  0, -1, 0))
+> xsplineTest(c(0,  0,  0, 0))
+> xsplineTest(c(0,  0,  1, 0))
+> xsplineTest(c(0,  1, -1, 0))
+> xsplineTest(c(0,  1,  0, 0))
+> xsplineTest(c(0,  1,  1, 0))
+> title("Open X-splines", outer = TRUE)
 \end{rcode}
     \end{column}
   \end{columns}
@@ -2327,6 +2326,95 @@ title("Open X-splines", outer = TRUE)
 \end{figure}
 \end{onlyenv}  
 \end{frame}
+
+\begin{frame}[t,fragile]{\subsecname}{面}
+\begin{itemize}
+\item \emphText{polygon()}函数用于绘制多边形
+\item 矩形是多边形的特例，有专门绘制矩形的函数\emphText{rect()}
+\item 整幅图形的边框也是一种特殊的矩形，用\emphText{box()}函数绘制
+\end{itemize}
+
+\begin{onlyenv}<1>
+\begin{rcode}
+# rect函数用于绘制矩形
+# 主要参数：前四个参数分别绘制左下角和右上角的坐标；angle参数设置填充线条的角度；col设置填充颜色；border设置边框颜色
+rect(xleft, ybottom, xright, ytop, density = NULL, angle = 45, col = NA, border = NULL, lty = par("lty"), lwd = par("lwd"), ...)
+\end{rcode}
+\begin{rcode}
+# polygon函数用于绘制多边形
+# 主要参数：density参数设置阴影线的填充密度；angle参数设置填充线条的角度；col设置填充颜色；border设置边框颜色
+polygon(x, y = NULL, density = NULL, angle = 45, border = NULL, col = NA, lty = par("lty"), ..., fillOddEven = FALSE)
+\end{rcode}
+\end{onlyenv}
+
+\begin{onlyenv}<2>
+\begin{figure}
+ \begin{columns}
+    \begin{column}[c]{.4\textwidth}
+        \includegraphics[width=\columnwidth]{polygon-example.png}
+    \end{column}
+
+    \begin{column}[c]{.6\textwidth}
+\begin{rcode}
+# 产生40个正态随机数
+> x = rnorm(40)
+# 画线图
+> plot(x, xlab = "", type = "l")
+# 绘制多边形的连线路径，用红色填充
+> |\colorbox{green}{polygon}|(c(1, 1:40, 40), c(0, x, 0), col = "red")
+# 获取当前图形区域坐标范围，以便下用
+> xy = par("usr")
+# 用红色矩形挡住了0以下的部分
+> |\colorbox{green}{rect}|(xy[1], xy[3], xy[2], 0, col = "red")
+# 重画一遍x的线条
+> lines(x)
+# 添加水平线
+> abline(h = 0, col = "lightgray")
+\end{rcode}
+    \end{column}
+  \end{columns}
+  \caption{多边形和矩形函数示例（0上下数值分别用不同颜色填充）}
+\end{figure}
+\end{onlyenv}  
+\end{frame}
+
+\begin{frame}[t,fragile]{\subsecname}{网格线}
+\begin{itemize}
+\item 网格线用\emphText{对齐坐标轴的横纵直线}来辅助获取更精确的元素位置
+\item \emphText{grid()}函数是专门用于绘制网格线的函数
+\item par()函数的\emphText{tcl}参数也可以用于绘制网格线；或者是通过
+直线函数abline()的\emphText{h}和\emphText{v}参数绘制横纵直线来表示网格线
+\end{itemize}
+
+\begin{onlyenv}<1>
+\begin{rcode}
+# 主要参数：网格线默认颜色col为浅灰色,线条样式lty为点线,这是一种比较美观的设置；参数nx和ny分别表示横纵轴上网格线的条数；equilogs参数意思是，当坐标取了对数之后，是依然使用等距的网格线(TRUE)还是根据对数函数使用不等距的网格线(FALSE)
+grid(nx = NULL, ny = nx, col = "lightgray", lty = "dotted", lwd = par("lwd"), equilogs = TRUE)
+\end{rcode}
+\end{onlyenv} 
+
+\begin{onlyenv}<2>
+\begin{figure}
+ \begin{columns}
+    \begin{column}[c]{.4\textwidth}
+        \includegraphics[width=\columnwidth]{grid-example.png}
+    \end{column}
+
+    \begin{column}[c]{.6\textwidth}
+\begin{rcode}
+> with(iris,
++   {
++   plot(Sepal.Length, Sepal.Width, col = as.integer(Species),
++        panel.first = |\colorbox{green}{grid}|(8, lty = 1, lwd = 2))
++   })
+\end{rcode}
+    \end{column}
+  \end{columns}
+  \caption{grid函数示例}
+\end{figure}
+\end{onlyenv} 
+\end{frame} 
+
 \subsection{标准绘图程序包}
 
 \subsection{lattice程序包}

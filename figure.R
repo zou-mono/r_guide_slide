@@ -232,3 +232,31 @@ xsplineTest(c(0,  1,  1, 0))
 title("Open X-splines", outer = TRUE)
 par(op)
 dev.off()
+
+png("polygon-example.png",width=1000,height=1000,res=300,pointsize=6)
+par(mar = c(2.5,2.5,0,0) + 0.1)
+# 产生40个正态随机数
+x = rnorm(40)
+# 画线图
+plot(x, xlab = "", ylab="", type = "l")
+# 多边形的连线路径
+polygon(c(1, 1:40, 40), c(0, x, 0), col = "red")
+# 获取当前图形区域坐标范围,以便下用
+xy = par("usr")
+# 用白色矩形挡住了0以下的部分
+rect(xy[1], xy[3], xy[2], 0, col = "white")
+# 重画一遍x的线条
+lines(x)
+# 添加水平线
+abline(h = 0, col = "lightgray")
+dev.off()
+
+png("grid-example.png",width=1000,height=1000,res=300,pointsize=6)
+par(mar = c(2.5,2.5,0,0) + 0.1)
+with(iris,
+     {
+     plot(Sepal.Length, Sepal.Width, col = as.integer(Species),
+          panel.first = grid(3, lty = 1, lwd = 2))
+     }
+     )
+dev.off()
