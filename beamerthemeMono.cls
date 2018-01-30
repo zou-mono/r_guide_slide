@@ -84,12 +84,15 @@
 %公式断行
 \allowdisplaybreaks
 
+
+%\usepackage[bottom]{footmisc}
 % 设置脚注
 % Code for placing the footnote above the navigiation symbols
 \addtobeamertemplate{footnote}{\vspace{-6pt}\advance\hsize-.5cm}{\vspace{6pt}}
 % Alternative A: footnote rule
 \renewcommand*{\footnoterule}{\kern -3pt \hrule \@width 2in \kern 8.6pt}
 \setbeamerfont{footnote}{size=\scriptsize}
+\renewcommand\thempfootnote{\arabic{mpfootnote}} %把block、column等环境中的footnote标号变成阿拉伯数字
 
 %% 定义表格单元格内换行
 \newcommand{\tabincell}[2]{\begin{tabular}{@{}#1@{}}#2\end{tabular}}

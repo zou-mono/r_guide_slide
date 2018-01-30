@@ -341,7 +341,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{统计绘图工具}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{为什么要用绘图工具}
+\subsection{为什么用绘图工具}
 \begin{frame}{\subsecname}{}
 
   \begin{columns}
@@ -417,7 +417,6 @@
   \only<1>{
     \begin{figure}\centering
       \includegraphics[width=0.65\columnwidth] {excel条形图.png}
-      %{\includegraphics[width=0.45\columnwidth] {excel折线图.png}}
       \caption{表示绝对数值大小的条形图}
     \end{figure}}
 
@@ -444,15 +443,20 @@
       \begin{itemize} \small
         \item<6-> [\PencilLeftDown] excel并非专业统计软件，只擅长对原始数据的展示，统
         计分析和建模功能十分有限。因此，著名统计学家Leland
-        Wilkinson\footnote<6>[frame,1]{统计学经典书籍《The Grammar of
-          Graphics》一书的作者，任职SPSS公司十年，而且一直领导其可视化
-          小组}说\emphText{“给统计刊物投稿时永远不要用Excel作图”}
+        Wilkinson\footnotemark[1] 说\emphText{“给统计刊物投稿时永远不要用Excel作图”}
         \item<7->[\PencilLeftDown] 只能在windows单机上运行，处理数据量有限而且速度慢，
                  不具备大规模数据管理功能
         \item<8->[\PencilLeftDown] 绘图功能十分有限，只提供部分基本统计图形 
       \end{itemize}
-    \end{alertblock}}
+    \end{alertblock}
+~} %使footnote看上去在“最下面”
+\only<6->{
+\footnotetext[1]{统计学经典书籍《The Grammar of Graphics》一书的作者，任职SPSS公司十年，而且一直领导其可视化小组}}
 \end{overlayarea}  
+
+% \renewcommand{\footnoterule}{}
+% \uncover<6->{\footnoterule}
+
 \end{frame}
 
 \begin{frame}[t]{\subsecname}{SPSS}
@@ -2372,7 +2376,7 @@ polygon(x, y = NULL, density = NULL, angle = 45, border = NULL, col = NA, lty = 
 \end{rcode}
     \end{column}
   \end{columns}
-  \caption{多边形和矩形函数示例（0上下数值分别用不同颜色填充）}
+  \caption{多边形和矩形函数示例(0上下数值分别用不同颜色填充)}
 \end{figure}
 \end{onlyenv}  
 \end{frame}
@@ -2497,6 +2501,48 @@ legend(x, y = NULL, legend, fill = NULL, col = par("col"), border = "black", lty
     \end{column}
   \end{columns}
   \caption{文本函数示例}
+\end{figure}
+\end{onlyenv}
+\end{frame}
+
+\begin{frame}[t,fragile]{\subsecname}{坐标轴}
+\begin{itemize}
+\item 坐标轴是统计图形中元素数值大小的参照物
+\item R中绘制图例的函数是\emphText{axis()}
+\end{itemize}
+
+\begin{onlyenv}<1>
+\begin{rcode}
+# 主要参数：side参数与mtext()函数中的参数类似,表示将坐标轴画在哪条边上；at参数表示在什么位置画坐标轴标记线；labels参数指定坐标轴刻度标记的字符；tick参数表示是否绘制刻度线
+axis(side, at = NULL, labels = TRUE, tick = TRUE, line = NA, pos = NA, outer = FALSE, font = NA, lty = "solid", lwd = 1, lwd.ticks = lwd, col = NULL, col.ticks = NULL, hadj = NA, padj = NA, ...)
+\end{rcode}
+\end{onlyenv}  
+
+\begin{onlyenv}<2>
+\begin{figure}
+ \begin{columns}
+    \begin{column}[c]{.4\textwidth}
+        \includegraphics[width=\columnwidth]{axis-example.png}
+    \end{column}
+
+    \begin{column}[c]{.6\textwidth}
+\begin{rcode}
+> x <- 1:2; y <- runif(2, 0, 100)
+> plot(x, y, type="n", xlim=c(0.5, 2.5), ylim=c(-10, 110), axes=FALSE, ann=FALSE)
+> axis(2, at=seq(0, 100, 20))
+> mtext("Temperature (Centigrade)", side=2, line=3)
+# 绘制双坐标轴
+> |\colorbox{green}{axis}|(1, at=1:2, labels=c("Treatment 1", "Treatment 2"))
+> |\colorbox{green}{axis}|(4, at=seq(0, 100, 20), labels=seq(0, 100, 20)*9/5 + 32)
+> mtext("Temperature (Fahrenheit)", side=4, line=3)
+> box()
+> segments(x, 0, x, 100, lwd=20, col="dark grey")
+> segments(x, 0, x, 100, lwd=16, col="white")
+> segments(x, 0, x, y, lwd=16, col="red")
+\end{rcode}
+    \end{column}
+  \end{columns}
+  \caption{坐标轴函数示例(摄氏度双坐标轴)}
 \end{figure}
 \end{onlyenv}
 \end{frame}
