@@ -34,13 +34,13 @@ abline(fit)
 par(opar)
 dev.off()
 
-png("plot-example.png",width=1600, height=1200,res=300,pointsize=6)
-par(mfrow = c(3, 3), mar = c(2, 2.5, 3, 2))
-for (i in c("p", "l", "b", "c", "o", "h", "s", "S","n")) {
-plot(c(1:5, 5:1), type = i, main = paste("Plot type: \"",
-i, "\"", sep = ""), xlab = "")
-}
-dev.off()
+## png("plot-example.png",width=1600, height=1200,res=300,pointsize=6)
+## par(mfrow = c(3, 3), mar = c(2, 2.5, 3, 2))
+## for (i in c("p", "l", "b", "c", "o", "h", "s", "S","n")) {
+## plot(c(1:5, 5:1), type = i, main = paste("Plot type: \"",
+## i, "\"", sep = ""), xlab = "")
+## }
+## dev.off()
 
 png("plot-example.png",width=1600, height=1200,res=300,pointsize=6)
 showCols1 <- function(bg = "gray", cex = 0.75, srt = 30) {
@@ -53,20 +53,6 @@ showCols1 <- function(bg = "gray", cex = 0.75, srt = 30) {
     text(col(cm), rev(row(cm)), cm,  col = cl, cex=cex, srt=srt)
 }
 showCols1()
-dev.off()
-
-png("colors-bar.png")
-opar <- par()
-par(mar = c(0, 6, 0, 0) + 0.1, height=30, yaxs = "i")
-barplot(rep(1,20), col = c("tomato","lightcyan4","navajowhite1",
-"gray5","seagreen3","ghostwhite","grey60","cornsilk4","linen","darkblue",
-"gray26","steelblue1","grey","plum4","violet","gray83","red",
-"thistle1","palegreen4","oldlace"),names.arg = c("tomato","lightcyan4","navajowhite1",
-"gray5","seagreen3","ghostwhite","grey60","cornsilk4","linen","darkblue",
-"gray26","steelblue1","grey","plum4","violet","gray83","red",
-"thistle1","palegreen4","oldlace"), horiz = TRUE, las = 1,
-xaxt = "n")
-par(opar)
 dev.off()
 
 png("colors-bar.png")
@@ -189,8 +175,9 @@ for (n in c(63, 60, 76, 74)) {
 }
 
 
-library(cairoDevice)
-Cairo_png("line-example.png",width=15,height=15)
+#library(cairoDevice)
+#Cairo_png("line-example.png",width=15,height=15)
+png("line-example.png",width=1000,height=1000,res=300,pointsize=6)
 par(mar = c(2.5,2.5,0,0) + 0.1)
 # 不作图,只画出框架,且指定坐标轴范围
 plot(1:10, type = "n", xlim = c(0, 10), ylim = c(0,10),cex.axis=2)
@@ -210,14 +197,14 @@ segments(rep(3, 4), 6:9, rep(5, 4), 6:9, col = gray(seq(0.2,
 text(4, 9.8, "segments",cex=2)
 dev.off()
 
-library(xspline)
-png("open-xspline.png")
+png("open-xspline.png",width=1000,height=1000,res=300,pointsize=6)
+#png("open-xspline.png")
 op <- par(mfrow = c(3,3), mar = rep(0,4), oma = c(0,0,2,0))
-xsplineTest <- function(s, open = TRUE, x = c(1,1,3,3)/4, y = c(1,3,3,1)/4, ...) {
+xsplineTest <- function(s, open = TRUE, x = c(1,1,3,3)/4, y = c(1,3,3,1)/4, cex=2,...) {
     plot(c(0,1), c(0,1), type = "n", axes = FALSE, xlab = "", ylab = "")
     points(x, y, pch = 19)
     xspline(x, y, s, open, ...)
-    text(x+0.05*c(-1,-1,1,1), y+0.05*c(-1,1,1,-1), s)
+    text(x+0.05*c(-1,-1,1,1), y+0.05*c(-1,1,1,-1), s, cex=2)
 }
 
 xsplineTest(c(0, -1, -1, 0))
@@ -229,7 +216,7 @@ xsplineTest(c(0,  0,  1, 0))
 xsplineTest(c(0,  1, -1, 0))
 xsplineTest(c(0,  1,  0, 0))
 xsplineTest(c(0,  1,  1, 0))
-title("Open X-splines", outer = TRUE)
+title(main=list("Open X-splines",cex=2), outer = TRUE)
 par(op)
 dev.off()
 

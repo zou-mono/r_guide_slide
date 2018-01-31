@@ -1298,7 +1298,7 @@ write.table(x, file = "", append = FALSE, quote = TRUE, sep = " ", eol = "\n", n
 \begin{frame}[t]{\subsecname}{}
 \begin{itemize}
 \item \emphText{R语言中支持面向对象(Object-Oriented, OO)编程来提高代码的使用率}，从而实现具体功能的扩展和模块化
-  \item R语言作为一种统计编程语言，需要用的OO的场景主要有以下两类：
+  \item R语言作为一种统计编程语言，需要用到OO的场景主要有以下两类：
   \begin{itemize}
      \item[\PencilLeftDown] 当需要用一种新的类型来表示数据，该类型与
    已有的数据类型有区别的时候
@@ -2256,12 +2256,17 @@ xspline(x, y = NULL, shape = 0, open = TRUE, repEnds = TRUE, draw = TRUE, border
 
 \begin{onlyenv}<7>
 \begin{block}{\small 特殊参数}\footnotesize 
-\HandPencilLeft~线的lty参数相当灵活,除了取值0-6之外,还可以根据一个十六进制的数字串来设定线条的虚实,
-具体原理是:\emphText{奇数位上的数字表示画相应长度的实线,偶数位上的数字则表示空缺相应的长度},这样可以实现几乎无数种线条样式;例如，’711911’表示:7单位长实线、1单位长空白、1单位长实线、
-9单位长空白、1单位长实线、1单位长空白\\
-\HandPencilLeft~\emphText{当设定type=’h’时,col参数可以使用向量,此时各条竖线都将使用
+% \HandPencilLeft~线的lty参数相当灵活,除了取值0-6之外,还可以根据一个十六进制的数字串来设定线条的虚实,
+% 具体原理是:\emphText{奇数位上的数字表示画相应长度的实线,偶数位上的数字则表示空缺相应的长度},这样可以实现几乎无数种线条样式;例如，’711911’表示:7单位长实线、1单位长空白、1单位长实线、
+% 9单位长空白、1单位长实线、1单位长空白\\
+\begin{itemize}
+\item[\faLightbulbO] 线的lty参数相当灵活,除了取值0-6之外,还可以根据一个十六进制的数字串来设定线的虚实,
+具体原理是:\emphText{奇数位上的数字表示画相应长度的实线,偶数位上的数字则表示空缺相应的长度},这样可以实现几乎无数种线条样式;例如，711911表示:7单位长实线、1单位长空白、1单位长实线、
+9单位长空白、1单位长实线、1单位长空白
+\item[\faLightbulbO] \emphText{当设定type='h'时,col参数可以使用向量,此时各条竖线都将使用
 不同的颜色};除此之外,若其它参数使用了向量,那么只有向量的第
 一个元素会被使用,其它元素都将被忽略掉
+\end{itemize}
 \end{block}
 \end{onlyenv}  
 \end{frame}

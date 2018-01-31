@@ -16,6 +16,7 @@
 
 \usecolortheme{orchid} 
 
+\RequirePackage[T1]{fontenc}
 \RequirePackage{subfig} %%图形或表格并排排列
 \RequirePackage{algorithm}
 \RequirePackage{calc}
@@ -33,7 +34,6 @@
 \RequirePackage{fancybox}
 \RequirePackage[utf8]{inputenc}
 \RequirePackage[english]{babel}
-\RequirePackage[T1]{fontenc}
 % ... or whatever. Note that the encoding and the font should match.
 % If T1 does not look nice, try deleting the line with the fontenc.
 \RequirePackage{lmodern} %optional
