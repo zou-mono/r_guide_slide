@@ -24,6 +24,7 @@
 \RequirePackage{colortbl,dcolumn}     %% 彩色表格
 \RequirePackage{longtable,booktabs,multirow,tabularx}
 \RequirePackage{bbding} %手势
+\RequirePackage{fontawesome} %图标
 \RequirePackage[timeinterval=10]{tdclock}  %时钟宏包
 
 \RequirePackage{xeCJK}
