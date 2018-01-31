@@ -293,3 +293,119 @@ segments(x, 0, x, 100, lwd=16, col="white")
 segments(x, 0, x, y, lwd=16, col="red")
 dev.off()
 
+png("hist-example.png",width=1000,height=1000,res=300,pointsize=6)
+data(geyser, package = "MASS")
+par(mar = c(1.8, 3, 0.5, 0.1), mgp = c(2, 0.5, 0))
+data(geyser, package = "MASS")
+hst = hist(geyser$waiting, probability = TRUE, main = "", xlab = "waiting")
+d = density(geyser$waiting)
+polygon(c(min(d$x), d$x, max(d$x)), c(0, d$y, 0),
+col = "lightgray", border = NA)
+lines(d)
+ht = NULL
+brk = seq(40, 110, 5)
+for (i in brk) ht = c(ht, d$y[which.min(abs(d$x -i))])
+segments(brk, 0, brk, ht, lty = 3)
+dev.off()
+
+png("boxplot-example.png",width=1000,height=1000,res=300,pointsize=6)
+par(mar = c(4, 4, 4, 0.1)+0.1)
+boxplot(len ~ dose, data = ToothGrowth,
+        boxwex = 0.25, at = 1:3 - 0.2,
+        subset = supp == "VC", col = "yellow",
+        main = "Guinea Pigs' Tooth Growth",
+        xlab = "Vitamin C dose mg",
+        ylab = "tooth length",
+        xlim = c(0.5, 3.5), ylim = c(0, 35), yaxs = "i")
+boxplot(len ~ dose, data = ToothGrowth, add = TRUE,
+        boxwex = 0.25, at = 1:3 + 0.2,
+        subset = supp == "OJ", col = "orange")
+legend(2, 9, c("Ascorbic acid", "Orange juice"), fill = c("yellow", "orange"))
+dev.off()
+
+png("barplot-example.png",width=1000,height=1000,res=300,pointsize=6)
+par(mar = c(4, 4, 4, 0)+0.1)
+library(RColorBrewer)
+par(mfrow = c(2, 1), mar = c(3, 2.5, 0.5, 0.1))
+death = t(VADeaths)[, 5:1]
+barplot(death, col = brewer.pal(4, "Set1"))
+barplot(death, col = brewer.pal(4, "Set1"), beside = TRUE, legend = TRUE)
+dev.off()
+
+png("contour-example.png",width=1000,height=1000,res=300,pointsize=6)
+par(mar = c(4, 4, 0, 0)+0.1)
+data(ChinaLifeEdu, package="MSG")
+x = ChinaLifeEdu
+plot(0, 0, type = "n", xlim = range(x[, 1]), ylim = range(x[,2]), xlab = "预期寿命", ylab ="高学历人数")
+u = par("usr")
+rect(u[1], u[3], u[2], u[4], col = "antiquewhite", border = "red")
+library(KernSmooth)
+est = bkde2D(x, apply(x, 2, dpik))
+contour(est$x1, est$x2, est$fhat, nlevels = 15, col = "darkgreen", add = TRUE, vfont = c("sans serif", "plain"))
+points(x)
+dev.off()
+
+png("persp-example.png",width=1000,height=1000,res=300,pointsize=6)
+par(mar = c(0, 0, 0, 0))
+data(ChinaLifeEdu, package="MSG")
+x = ChinaLifeEdu
+library(KernSmooth)
+est = bkde2D(x, apply(x, 2, dpik))
+persp(est[["x1"]], est[["x2"]], est[["fhat"]], shade = 0.75, col = "lightblue", phi = 20, theta = 15, box = TRUE)
+dev.off()
+
+png("pairs-example.png",width=1000,height=1000,res=300,pointsize=6)
+panel.hist = function(x, ...) {
+   usr = par("usr")
+   on.exit(par(usr))
+   par(usr = c(usr[1:2], 0, 1.5))
+   h = hist(x, plot = FALSE)
+   nB = length(breaks <- h$breaks)
+   y = h$counts/max(h$counts)
+   rect(breaks[-nB], 0, breaks[-1], y, col = "beige")
+}
+idx = as.integer(iris[["Species"]])
+pairs(iris[1:4], upper.panel = function(x, y, ...) points(x, y, pch = c(17, 16, 6)[idx], col = idx), pch = 20, oma = c(2, 2, 2, 2), lower.panel = panel.smooth, diag.panel = panel.hist)
+dev.off()
+
+png("smoothscatter-example.png",width=1000,height=1000,res=300,pointsize=6)
+par(mar = c(2, 2, 0.1, 0.1))
+data(BinormCircle, package="MSG")
+smoothScatter(BinormCircle)
+dev.off()
+
+png("heatmap-example.png",width=1000,height=1000,res=300,pointsize=6)
+heatmap(as.matrix(mtcars), col = brewer.pal(9, "RdYlBu"), scale = "column", margins = c(4, 8))
+dev.off()
+
+png("vioplot-example.png",width=1000,height=1000,res=300,pointsize=6)
+library(vioplot)
+par(mar = c(2, 2, 0.1, 0.1))
+x <- rnorm(100)
+y <- rnorm(100)
+plot(x, y, xlim=c(-5,5), ylim=c(-5,5))
+vioplot(x, col="tomato", horizontal=TRUE, at=-4, add=TRUE,lty=2, rectCol="gray")
+vioplot(y, col="cyan", horizontal=FALSE, at=-4, add=TRUE,lty=2)
+dev.off()
+
+png("map-example.png",width=1000,height=1000,res=300,pointsize=6)
+library(maps)
+par(mar = c(0.1, 0.1, 0.1, 0.1))
+map("state", interior = FALSE)
+map("state", boundary = FALSE, lty = 2, add = TRUE)
+dev.off()
+
+png("teachingdemos-example.png",width=1000,height=1000,res=300,pointsize=6)
+par(mar = c(0.1, 0.1, 0.1, 0.1))
+library(TeachingDemos)
+faces2(mtcars[, c("hp", "disp", "mpg", "qsec", "wt")], which = c(14, 9, 11, 6, 5), adj = c(0.5, 0))
+dev.off()
+
+png("parcoord-example.png",width=1000,height=1000,res=300,pointsize=6)
+par(mar = c(2, 0.3, 0.1, 0.3))
+library(MASS)
+ir <- rbind(iris3[,,1], iris3[,,2], iris3[,,3])
+parcoord(log(ir)[, c(3, 4, 2, 1)], col = 1 + (0:149)%/%50)
+dev.off()
+
+

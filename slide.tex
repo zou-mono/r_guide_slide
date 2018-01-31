@@ -1583,8 +1583,8 @@ X11cairo      pdf     jpeg
 \begin{itemize}
 \item R中的统计图形都是由相应的绘图函数生成，其包含了统计图形中各种细节的设置
 \item 绘图函数分为\emphText{高级绘图函数和低级绘图函数}
-\item 高级绘图函数用于快速绘制常见的统计图形，
-低级绘图函数用于在高级绘图函数绘制的统计图形基础上进行个性化的定制
+\item 高级绘图函数用于快速绘制常见的统计图形，\emphText{相当于打一个底稿}；
+然后低级绘图函数再在高级绘图函数绘制的图形基础上进行\emphText{个性化的定制}
 \end{itemize}
 
 \begin{overlayarea}{\textwidth}{\textheight}
@@ -2260,10 +2260,10 @@ xspline(x, y = NULL, shape = 0, open = TRUE, repEnds = TRUE, draw = TRUE, border
 % 具体原理是:\emphText{奇数位上的数字表示画相应长度的实线,偶数位上的数字则表示空缺相应的长度},这样可以实现几乎无数种线条样式;例如，’711911’表示:7单位长实线、1单位长空白、1单位长实线、
 % 9单位长空白、1单位长实线、1单位长空白\\
 \begin{itemize}
-\item[\faLightbulbO] 线的lty参数相当灵活,除了取值0-6之外,还可以根据一个十六进制的数字串来设定线的虚实,
+\item[\HandPencilLeft] 线的lty参数相当灵活,除了取值0-6之外,还可以根据一个十六进制的数字串来设定线的虚实,
 具体原理是:\emphText{奇数位上的数字表示画相应长度的实线,偶数位上的数字则表示空缺相应的长度},这样可以实现几乎无数种线条样式;例如，711911表示:7单位长实线、1单位长空白、1单位长实线、
 9单位长空白、1单位长实线、1单位长空白
-\item[\faLightbulbO] \emphText{当设定type='h'时,col参数可以使用向量,此时各条竖线都将使用
+\item[\HandPencilLeft] \emphText{当设定type='h'时,col参数可以使用向量,此时各条竖线都将使用
 不同的颜色};除此之外,若其它参数使用了向量,那么只有向量的第
 一个元素会被使用,其它元素都将被忽略掉
 \end{itemize}
@@ -2551,11 +2551,311 @@ axis(side, at = NULL, labels = TRUE, tick = TRUE, line = NA, pos = NA, outer = F
 \end{figure}
 \end{onlyenv}
 \end{frame}
-\subsection{标准绘图程序包}
 
+\subsection{统计图形库}
+\begin{frame}[t]{\subsecname}{}
+\begin{itemize}
+\item R的base包中包括标准绘图程序包\emphText{graphics}，除了包括前面介绍的所有统计元素之外，
+还包含大量预置的统计图形
+\item 绘图程序包通过\emphText{高级绘图函数}在R中绘制图形
+\item graphics程序包中预置的统计图形库已经涵盖了绝大多数常见的统计图形；
+但除此之外，\emphText{contrib包中也包括大量绘图程序包来进一步完善统计图形库}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{\subsecname}{}
+\begin{table} \centering \footnotesize
+  \begin{tabular}{|c|c|c|}
+    \toprule
+    \rowcolor{LightCyan}
+    统计图形 & 程序包 & 绘图函数\\\hline
+    直方图 & graphics & hist\\\hline
+    箱线图 & graphics & boxplot\\\hline
+    等高线图 & graphics & contour\\\hline
+    颜色图 & graphics & image\\\hline
+    散点图矩阵 & graphics & pairs \\\hline
+    三维透视图 & graphics & persp\\\hline
+    饼图 & graphics & pie \\\hline
+    热图 & stats & heatmap\\\hline
+    分类和回归线图 & rpart & plot.rpart\\\hline
+    小提琴图 & vioplot & vioplot \\\hline
+    地图 & maps & map\\\hline
+    脸谱图 & TeachingDemos & faces2\\\hline
+    平行坐标图 & MASS & parcoord \\
+    \bottomrule
+  \end{tabular}
+  \caption{部分统计图形和对应的绘图函数}
+\end{table}  
+\end{frame}
+
+\begin{frame}[c,fragile]{\subsecname}{}
+\begin{figure}
+ \begin{columns}
+    \begin{column}[c]{.4\textwidth}
+        \includegraphics[width=\columnwidth]{hist-example.png}
+    \end{column}
+
+    \begin{column}[c]{.6\textwidth}
+\begin{rcode}
+> data(geyser, package = "MASS")
+> par(mar = c(1.8, 3, 0.5, 0.1), mgp = c(2, 0.5, 0))
+> data(geyser, package = "MASS")
+> hst = |\colorbox{green}{hist}|(geyser$waiting, probability = TRUE, main = "", xlab = "waiting")
+> d = |\colorbox{green}{density}|(geyser$waiting)
+> polygon(c(min(d$x), d$x, max(d$x)), c(0, d$y, 0),
++ col = "lightgray", border = NA)
+> lines(d)
+> ht = NULL
+> brk = seq(40, 110, 5)
+> for (i in brk) ht = c(ht, d$y[which.min(abs(d$x -i))])
+> segments(brk, 0, brk, ht, lty = 3)
+\end{rcode}
+    \end{column}
+  \end{columns}
+  \caption{直方图与密度曲线的结合：借助函数density()可以计算出数据的核
+密度估计,然后利用低层作图函数lines()将核密度估计曲线添加到直方图中}
+\end{figure}
+\end{frame}
+
+\begin{frame}[c,fragile]{\subsecname}{}
+\begin{figure}
+ \begin{columns}
+    \begin{column}[c]{.4\textwidth}
+        \includegraphics[width=\columnwidth]{boxplot-example.png}
+    \end{column}
+
+    \begin{column}[c]{.6\textwidth}
+\begin{rcode}
+> |\colorbox{green}{boxplot}|(len ~ dose, data = ToothGrowth,
+          boxwex = 0.25, at = 1:3 - 0.2,
+          subset = supp == "VC", col = "yellow",
+          main = "Guinea Pigs' Tooth Growth",
+          xlab = "Vitamin C dose mg",
+          ylab = "tooth length",
+          xlim = c(0.5, 3.5), ylim = c(0, 35), yaxs = "i")
+> |\colorbox{green}{boxplot}|(len ~ dose, data = ToothGrowth, add = TRUE,
+          boxwex = 0.25, at = 1:3 + 0.2,
+          subset = supp == "OJ", col = "orange")
+> legend(2, 9, c("Ascorbic acid", "Orange juice"), fill = c("yellow", "orange"))
+\end{rcode}
+    \end{column}
+  \end{columns}
+  \caption{箱线图示例：几内亚猪牙齿增长数据}
+\end{figure}
+\end{frame}
+
+\begin{frame}[c,fragile]{\subsecname}{}
+\begin{figure}
+ \begin{columns}
+    \begin{column}[c]{.5\textwidth}
+        \includegraphics[width=\columnwidth]{barplot-example.png}
+    \end{column}
+
+    \begin{column}[c]{.5\textwidth}
+\begin{rcode}
+> library(RColorBrewer)
+> par(mfrow = c(2, 1), mar = c(3, 2.5, 0.5, 0.1))
+> death = t(VADeaths)[, 5:1]
+> |\colorbox{green}{barplot}|(death, col = brewer.pal(4, "Set1"))
+> |\colorbox{green}{barplot}|(death, col = brewer.pal(4, "Set1"), beside = TRUE, legend = TRUE)
+\end{rcode}
+    \end{column}
+  \end{columns}
+  \caption{堆砌和并列的条形图示例：弗吉尼亚死亡率数据}
+\end{figure}
+\end{frame}
+
+\begin{frame}[c,fragile]{\subsecname}{}
+\begin{figure}
+ \begin{columns}
+    \begin{column}[c]{.5\textwidth}
+        \includegraphics[width=\columnwidth]{contour-example.png}
+    \end{column}
+
+    \begin{column}[c]{.5\textwidth}
+\begin{rcode}
+> data(ChinaLifeEdu, package="MSG")
+> x = ChinaLifeEdu
+> plot(0, 0, type = "n", xlim = range(x[, 1]), ylim = range(x[,2]), xlab = "预期寿命", ylab ="高学历人数")
+> u = par("usr")
+> rect(u[1], u[3], u[2], u[4], col = "antiquewhite", border = "red")
+> library(KernSmooth)
+> est = bkde2D(x, apply(x, 2, dpik))
+> |\colorbox{green}{contour}|(est$x1, est$x2, est$fhat, nlevels = 15, col = "darkgreen", add = TRUE, vfont = c("sans serif", "plain"))
+> points(x)
+\end{rcode}
+    \end{column}
+  \end{columns}
+  \caption{等高线图示例：2005年中国31地区国民预期寿命和高学历人数密度数据}
+\end{figure}
+\end{frame}
+
+\begin{frame}[c,fragile]{\subsecname}{}
+\begin{figure}
+ \begin{columns}
+    \begin{column}[c]{.4\textwidth}
+        \includegraphics[width=\columnwidth]{persp-example.png}
+    \end{column}
+
+    \begin{column}[c]{.6\textwidth}
+\begin{rcode}
+> data(ChinaLifeEdu, package="MSG")
+> x = ChinaLifeEdu
+> library(KernSmooth)
+> est = bkde2D(x, apply(x, 2, dpik))
+> |\colorbox{green}{persp}|(est[["x1"]], est[["x2"]], est[["fhat"]], shade = 0.75, border = NA, col = "lightblue", phi = 20, theta = 15, box = FALSE)
+\end{rcode}
+    \end{column}
+  \end{columns}
+  \caption{三维透视图示例：2005年中国31地区国民预期寿命和高学历人数密度数据}
+\end{figure}
+\end{frame}
+
+\begin{frame}[c,fragile]{\subsecname}{}
+\begin{figure}
+ \begin{columns}
+    \begin{column}[c]{.5\textwidth}
+        \includegraphics[width=\columnwidth]{pairs-example.png}
+    \end{column}
+
+    \begin{column}[c]{.5\textwidth}
+\begin{rcode}
+> panel.hist = function(x, ...) {
+     usr = par("usr")
+     on.exit(par(usr))
+     par(usr = c(usr[1:2], 0, 1.5))
+     h = hist(x, plot = FALSE)
+     nB = length(breaks <- h$breaks)
+     y = h$counts/max(h$counts)
+     rect(breaks[-nB], 0, breaks[-1], y, col = "beige")
+  }
+> idx = as.integer(iris[["Species"]])
+> |\colorbox{green}{pairs}|(iris[1:4], upper.panel = function(x, y, ...) points(x, y, pch = c(17, 16, 6)[idx], col = idx), pch = 20, oma = c(2, 2, 2, 2), lower.panel = panel.smooth, diag.panel = panel.hist)
+\end{rcode}
+    \end{column}
+  \end{columns}
+  \caption{散点矩阵图示例：鸢尾花数据}
+\end{figure}
+\end{frame}
+
+\begin{frame}[c,fragile]{\subsecname}{}
+\begin{figure}
+ \begin{columns}
+    \begin{column}[c]{.5\textwidth}
+        \includegraphics[width=\columnwidth]{smoothscatter-example.png}
+    \end{column}
+
+    \begin{column}[c]{.5\textwidth}
+\begin{rcode}
+> data(BinormCircle, package="MSG")
+> |\colorbox{green}{smoothScatter}|(BinormCircle)
+\end{rcode}
+    \end{column}
+  \end{columns}
+  \caption{平滑散点图示例：基于核密度估计找出散点图中暗含的圆圈}
+\end{figure}
+\end{frame}
+
+\begin{frame}[c,fragile]{\subsecname}{}
+\begin{figure}
+ \begin{columns}
+    \begin{column}[c]{.5\textwidth}
+        \includegraphics[width=\columnwidth]{heatmap-example.png}
+    \end{column}
+
+    \begin{column}[c]{.5\textwidth}
+\begin{rcode}
+> |\colorbox{green}{heatmap}|(as.matrix(mtcars), col = brewer.pal(9, "RdYlBu"), scale = "column", margins = c(4, 8))
+\end{rcode}
+    \end{column}
+  \end{columns}
+  \caption{热图示例：Motor Trend杂志1974年汽车数据}
+\end{figure}
+\end{frame}
+
+\begin{frame}[c,fragile]{\subsecname}{}
+\begin{figure}
+ \begin{columns}
+    \begin{column}[c]{.4\textwidth}
+        \includegraphics[width=\columnwidth]{vioplot-example.png}
+    \end{column}
+
+    \begin{column}[c]{.6\textwidth}
+\begin{rcode}
+> library(vioplot)
+> x <- rnorm(100)
+> y <- rnorm(100)
+> plot(x, y, xlim=c(-5,5), ylim=c(-5,5))
+> |\colorbox{green}{vioplot}|(x, col="tomato", horizontal=TRUE, at=-4, add=TRUE,lty=2, rectCol="gray")
+> |\colorbox{green}{vioplot}|(y, col="cyan", horizontal=FALSE, at=-4, add=TRUE,lty=2))
+\end{rcode}
+    \end{column}
+  \end{columns}
+  \caption{小提琴图示例}
+\end{figure}
+\end{frame}
+
+\begin{frame}[c,fragile]{\subsecname}{}
+\begin{figure}
+ \begin{columns}
+    \begin{column}[c]{.5\textwidth}
+        \includegraphics[width=\columnwidth]{map-example.png}
+    \end{column}
+
+    \begin{column}[c]{.5\textwidth}
+\begin{rcode}
+> library(maps)
+> map("state", interior = FALSE)
+> map("state", boundary = FALSE, lty = 2, add = TRUE)
+\end{rcode}
+    \end{column}
+  \end{columns}
+  \caption{地图示例：美国50个州边界数据}
+\end{figure}
+\end{frame}
+
+\begin{frame}[c,fragile]{\subsecname}{}
+\begin{figure}
+ \begin{columns}
+    \begin{column}[c]{.5\textwidth}
+        \includegraphics[width=\columnwidth]{teachingdemos-example.png}
+    \end{column}
+
+    \begin{column}[c]{.5\textwidth}
+\begin{rcode}
+> library(TeachingDemos)
+> faces2(mtcars[, c("hp", "disp", "mpg", "qsec", "wt")], which = c(14, 9, 11, 6, 5), adj = c(0.5, 0))
+\end{rcode}
+    \end{column}
+  \end{columns}
+  \caption{脸谱图示例：汽车数据mtcars中5个变量的脸谱图，这5个变量分别为马
+力hp、气缸排量disp、每加仑行驶英里数mpg、行驶1/4英里时间qsec和车重wt}
+\end{figure}
+\end{frame}
+
+\begin{frame}[c,fragile]{\subsecname}{}
+\begin{figure}
+ \begin{columns}
+    \begin{column}[c]{.5\textwidth}
+        \includegraphics[width=\columnwidth]{parcoord-example.png}
+    \end{column}
+
+    \begin{column}[c]{.5\textwidth}
+\begin{rcode}
+> library(MASS)
+> ir <- rbind(iris3[,,1], iris3[,,2], iris3[,,3])
+> parcoord(log(ir)[, c(3, 4, 2, 1)], col = 1 + (0:149)%/%50)
+\end{rcode}
+    \end{column}
+  \end{columns}
+  \caption{平行坐标图示例：鸢尾花数据包括50个样本和4个属性}
+\end{figure}
+\end{frame}
 \subsection{lattice程序包}
 
 \subsection{ggplot程序包}
+
+\subsection{空间数据绘图}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{R图形混合嵌入}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
