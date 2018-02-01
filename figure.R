@@ -1,4 +1,15 @@
 setwd("~/Documents/tex_projects/r_guide_slide")
+
+png("expression-example.png",width=1000,height=1000,res=300,pointsize=6)
+par(mar=c(2,2,0,0)+0.1)
+plot(1:10, 1:10)
+text(4, 9, expression(hat(beta) == (X^t * X)^{-1} * X^t * y))
+text(4, 8.4, "expression(hat(beta) == (X^t * X)^{-1} * X^t * y)", cex = .8)
+text(4, 7, expression(bar(x) == sum(frac(x[i], n), i==1, n)))
+text(4, 6.4, "expression(bar(x) == sum(frac(x[i], n), i==1, n))", cex = .8)
+text(8, 5, expression(paste(frac(1, sigma*sqrt(2*pi)), " ", plain(e)^{frac(-(x-mu)^2, 2*sigma^2)})), cex = 1.2)
+dev.off()
+
 png("par-example.png",width=1600, height=1200,res=300,pointsize=6)
 opar<-par()
 par(mfrow=c(2,2),mar=c(3,3,3,3))
@@ -407,5 +418,4 @@ library(MASS)
 ir <- rbind(iris3[,,1], iris3[,,2], iris3[,,3])
 parcoord(log(ir)[, c(3, 4, 2, 1)], col = 1 + (0:149)%/%50)
 dev.off()
-
 

@@ -76,6 +76,7 @@
 
 %\newcolumntype{H}{>{\columncolor{blue!20}}c!{\vrule}}
 \newcolumntype{H}{>{\columncolor{blue!20}}c}  %% 表格设置
+%\newcommand*{\thbf}[1]{\multicolumn{1}{|c|}{\bfseries #1}}
 
 
 %%让单元格垂直居中

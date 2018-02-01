@@ -15,7 +15,7 @@
 
 \AtBeginSection[] {
   \begin{frame}
-    \frametitle{目录}
+    \frametitle{目录} 
     {\tableofcontents[%
       currentsection, % causes all sections but the current to be shown in a semi-transparent way.
 %     currentsubsection, % causes all subsections but the current subsection in the current section to ...
@@ -27,6 +27,17 @@
 %     sections={ overlay specification },
       ]}
    \end{frame}}
+
+% \AtBeginSubsection[]                            % 在每个子段落之前
+% {
+%   \frame{                                         % handout:0 表示只在手稿中出现
+%     \frametitle{目录} \small
+%     \tableofcontents[
+%       currentsection,
+%       currentsubsection,
+%       subsectionstyle=show/shaded/hide]
+%   }
+% }
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
           % 文档开始
@@ -67,7 +78,7 @@
 %%%%%%%%%%%%%%%%
 
  % TOC
- \begin{frame}{大纲}{}
+ \begin{frame}{目录}{}
    {\tableofcontents[hideallsubsections]}
  \end{frame}
 
@@ -720,14 +731,14 @@ RUN;
 \end{block}}
 
 \only<3>{
-  \begin{figure}[ht]
+  \begin{figure}
     \centering
     \includegraphics[width=0.6\columnwidth]{CRAN_TASK1.png}
     \caption{R packages的任务分类}
   \end{figure}}
 
 \only<4>{
-  \begin{figure}[ht]
+  \begin{figure}
     \centering
     \includegraphics[width=0.6\columnwidth]{CRAN_TASK2.png}
     \caption{R packages的任务分类}
@@ -1218,6 +1229,54 @@ Error in data.frame(x, y) :
 \end{rcode}  
 \end{frame}
 
+\begin{frame}[t,fragile]{\subsecname}{表达式(expression)}
+  \begin{itemize}
+  \item 表达式类型对象在R中有着很基础的地位，是R能够解释的字符序列
+  \item \emphText{所有有效的R命令都是表达式}，表达式分为\emphText{求值表达式和非求值表达式}
+  % \item 当命令从被键盘输入后，它就将被R求值，如果是有效命令则会被R解释器执行，因此\emphText{R中
+% 有效命令默认都是求值表达式}；但是有些情况，需要构造非求值表达式，比如将公式作为函数参数进行传递，
+% 或者在图形绘制数学公式等
+  \item \emphText{R中有效命令默认都是求值表达式}，可以在终端直接输入，
+也可以用\emphText{eval()函数}执行；而非求值表达式通过\emphText{expression()函数}执行
+  \end{itemize}  
+
+\begin{ovelayarea}{\textwidth}{\textheight}
+\begin{onlyenv}<2>
+\begin{rcode}
+> x <- 3; y <- 2.5; z <- 1
+# 创建非求值表达式
+> exp1 <- expression(x / (y + exp(z)))
+> exp1
+expression(x/(y + exp(z)))
+# 执行求值表达式
+> eval(exp1)
+[1] 0.5749019
+\end{rcode}  
+\end{onlyenv}
+
+\begin{onlyenv}<3>
+\begin{columns}
+  \begin{column}[c]{.5\textwidth}
+\begin{figure}
+  \includegraphics[width=0.8\columnwidth]{expression-example.png}
+\end{figure}
+  \end{column}
+
+  \begin{column}[c]{.5\textwidth}
+\begin{rcode}
+> plot(1:10, 1:10)
+> text(4, 9, expression(hat(beta) == (X^t * X)^{-1} * X^t * y))
+> text(4, 8.4, "expression(hat(beta) == (X^t * X)^{-1} * X^t * y)", cex = .8)
+> text(4, 7, expression(bar(x) == sum(frac(x[i], n), i==1, n)))
+> text(4, 6.4, "expression(bar(x) == sum(frac(x[i], n), i==1, n))", cex = .8)
+> text(8, 5, expression(paste(frac(1, sigma*sqrt(2*pi)), " ", plain(e)^{frac(-(x-mu)^2, 2*sigma^2)})), cex = 1.2)
+\end{rcode}  
+  \end{column}
+\end{columns}
+\end{onlyenv}
+\end{overlayarea}
+\end{frame}
+
 \begin{frame}[t,fragile]{\subsecname}{数据输入输出}
 \begin{itemize}
 \item<1-> R的数据可以按照数据结构手动输入，也可以通过读取外部文件自动输入
@@ -1263,35 +1322,81 @@ write.table(x, file = "", append = FALSE, quote = TRUE, sep = " ", eol = "\n", n
 
 \onslide<3>{
 \begin{badbox}{}
-循环的编程模式在R中效率很低，尽量避免使用!
+循环的编程模式在R语言中效率很低，尽量避免使用，应该尽量使用基于列表的操作模式！
 \end{badbox}} 
 \end{frame}
 
 \subsection{函数}
 \begin{frame}[t,fragile]{\subsecname}{}
-  \begin{itemize}
+\begin{itemize}
   \item R语言中可以定义函数，以便编程中可以以不同的参数值重复使用同一段代码
-  \item 定义函数的方式为:function(arglist) expr return(value);
-其中arglist是参数列表,expr是函数的主体,return()用来返回函数值
-\item \emphText{函数是R中用于黑箱操作的重要实体}
-  \end{itemize}  
+  \item 定义函数：\emphText{function(arglist) expr return(value)}；
+其中arglist是参数列表，expr是函数的主体，return()用来返回函数值
+  \item \emphText{函数是R中用于黑箱操作的重要实体}
+  \item<2-> R函数的参数除了允许传递常规变量类型之外，
+还\emphText{允许以匿名函数的形式将函数作为参数进行传递}
+\end{itemize}  
 
+\begin{onlyenv}<1>
 \begin{rcode}
 # 定义峰度函数kurtosis,该函数有两个参数,数据向量x和是否删除缺失值na.rm,后者有默认值FALSE
 > kurtosis = function(x, na.rm = FALSE) {
-+   if (na.rm)
-+     x = x[!is.na(x)]
-+   return(sum((x - mean(x))^4)/(length(x) * var(x)^2) - 3)
-+ }
+    if (na.rm)
+      x = x[!is.na(x)]
+    return(sum((x - mean(x))^4)/(length(x) * var(x)^2) - 3)
+  }
 > # 引用函数
 > kurtosis(runif(100))
 [1] -1.36086
 \end{rcode}  
+\end{onlyenv}
+
+\begin{onlyenv}<2>
+\begin{rcode}
+# xyplot函数的panel参数传递是一个匿名函数
+xyplot(Murder ~ Population | state.region, data = states,
+       groups = state.name,
+       |colorbox{green}{panel = function(x, y, subscripts, groups)}| {
+           ltext(x = x, y = y, labels = groups[subscripts], cex=1,
+                 fontfamily = "HersheySans")
+       })
+\end{rcode}  
+\end{onlyenv}
 \end{frame}
 
-\subsection{公式和表达式}
-\begin{frame}[t, fragile]{\subsecname}{}
+\subsection{公式}
+\begin{frame}[t]{\subsecname}{}
+\begin{itemize}
+\item<1-> 公式是R中用于统计建模的重要元素，表示统计模型中变量之间的关系，其基本形式是
+\emphText{$y \sim mode$}；
+其中\emphText{y是响应变量}，\emphText{mode是一些元素项的集合}而且要为其中一些项估计参数
+\item<2-> 元素项通过一些有特殊涵义的运算符连接
+\end{itemize} 
 
+\only<2>{
+\begin{table} \centering \scriptsize
+  \begin{tabular}{|m{0.1\columnwidth}|m{0.8\columnwidth}|}
+    \toprule
+    \rowcolor{LightCyan}
+%     \multicolumn{1}{|>{\centering\arraybackslash}m{0.1\columnwidth}|}{运算符}& 
+% \multicolumn{1}{|>{\centering\arraybackslash}m{0.8\columnwidth}|}{含义}\\\hline
+ %   \thbf{运算符} & \thbf{含义} \\\hline
+\multicolumn{1}{|c|}{\textbf{运算符}} & \multicolumn{1}{c|}{\textbf{含义}} \\\hline
+    a+b & a和b的相加效应,例如$y\sim x_1+x_2$表示线性模型$y=\beta_1x_1+\beta_2x_2+\alpha$\\\hline
+    X & 如果X是一个矩 阵, 这将反映各列的相加效应,即
+$X[,1]+X[,2]+...+X[,ncol(X)]$; 还可以通过索引向量
+选择特定列进行分析,如$X[,2:4]$\\\hline
+    a:b & a和b的交互效应\\\hline
+    a*b & 相加和交互效应，等价于a+b+a:b \\\hline
+    \^{}n & 包含所有的直到n阶的交互作用,例如$(a+b+c)^2$等价于$a+b+c+a:b+a:c+b:c$ \\\hline
+    b \%in\% a & b和a的嵌套分类设计,等价于a+a:b,或者a/b\\\hline
+    -b & 去掉因子b的影响, 如:$(a+b+c)^2-a:b$等价于$a+b+c+a:c+b:c$\\\hline
+    -1 & $y\sim x-1$表示通过原点的线性回归,等价于$y\simx+0$或者$0+y\sim x$\\\hline
+    1 & $y\sim 1$拟合一个没有因子影响的模型(仅仅是截距)\\\hline
+    offset(...) & 向模型中增加一个影响因子但不估计任何参数,例如offset(3*x)\\
+    \bottomrule
+  \end{tabular}
+\end{table}}
 \end{frame}
 
 \subsection{面向对象编程}
@@ -2552,7 +2657,7 @@ axis(side, at = NULL, labels = TRUE, tick = TRUE, line = NA, pos = NA, outer = F
 \end{onlyenv}
 \end{frame}
 
-\subsection{统计图形库}
+\subsection{基础统计图形库}
 \begin{frame}[t]{\subsecname}{}
 \begin{itemize}
 \item R的base包中包括标准绘图程序包\emphText{graphics}，除了包括前面介绍的所有统计元素之外，
@@ -2805,8 +2910,8 @@ axis(side, at = NULL, labels = TRUE, tick = TRUE, line = NA, pos = NA, outer = F
     \begin{column}[c]{.5\textwidth}
 \begin{rcode}
 > library(maps)
-> map("state", interior = FALSE)
-> map("state", boundary = FALSE, lty = 2, add = TRUE)
+> |\colorbox{green}{map}|("state", interior = FALSE)
+> |\colorbox{green}{map}|("state", boundary = FALSE, lty = 2, add = TRUE)
 \end{rcode}
     \end{column}
   \end{columns}
@@ -2824,7 +2929,7 @@ axis(side, at = NULL, labels = TRUE, tick = TRUE, line = NA, pos = NA, outer = F
     \begin{column}[c]{.5\textwidth}
 \begin{rcode}
 > library(TeachingDemos)
-> faces2(mtcars[, c("hp", "disp", "mpg", "qsec", "wt")], which = c(14, 9, 11, 6, 5), adj = c(0.5, 0))
+> |\colorbox{green}{faces2}|(mtcars[, c("hp", "disp", "mpg", "qsec", "wt")], which = c(14, 9, 11, 6, 5), adj = c(0.5, 0))
 \end{rcode}
     \end{column}
   \end{columns}
@@ -2844,15 +2949,65 @@ axis(side, at = NULL, labels = TRUE, tick = TRUE, line = NA, pos = NA, outer = F
 \begin{rcode}
 > library(MASS)
 > ir <- rbind(iris3[,,1], iris3[,,2], iris3[,,3])
-> parcoord(log(ir)[, c(3, 4, 2, 1)], col = 1 + (0:149)%/%50)
+> |\colorbox{green}{parcoord}|(log(ir)[, c(3, 4, 2, 1)], col = 1 + (0:149)%/%50)
 \end{rcode}
     \end{column}
   \end{columns}
   \caption{平行坐标图示例：鸢尾花数据包括50个样本和4个属性}
 \end{figure}
 \end{frame}
-\subsection{lattice程序包}
 
+\subsection{lattice程序包}
+\begin{frame}[t,fragile]{\subsecname}{}
+\begin{itemize}
+\item<1-> 前面介绍的graphics程序包是R中默认的一套绘图系统，
+除此之外还有另外一套\emphText{grid绘图系统}
+\item<2-> grid绘图系统与graphics程序包截然不同，是另一套全新的绘图模式，
+其\emphText{设计初衷是为了克服基础统计图形系统中元素不能动态修改的弱点}
+\item<3-> 使用grid绘图系统前需要先加载\emphText{grid程序包}，该程序包由PaulMurrell开发维护
+\item<3-> 虽然在相同的绘图设备上，同一会话里用两种绘图系统是被允许的，
+但是\emphText{grid图形通常不和graphics图形混用}
+\end{itemize}
+
+\begin{overlayarea}{\textwidth}{\textheight}
+\only<2>{
+\begin{block}{grid绘图系统和基础统计图形库的区别}
+\begin{itemize} 
+\item[\HandRight] 用\emphText{视口(viewports)}实现绘图设备的分割，
+绘图对象(grob)可以在不同的视口中进行共享，比graphics中的处理方式更加灵活
+\item[\HandRight] 绘图对象可以被修改或者从一个图形中移除，\emphText{而不需要重新绘制所有的图形}，
+但是在graphics中则必须重绘 
+\end{itemize}
+\end{block}}
+
+\begin{onlyenv}<3>
+\begin{columns}
+  \begin{column}[t]{.5\textwidth}
+    \begin{rcode}
+# 基础统计图形库处理方式
+plot(0:1, 0:1)
+rect(0, 0, 1, 1, col = "red")
+# 为了改变颜色,必须重画整幅图形
+plot(0:1, 0:1)
+# 虽然可以用新的矩形覆盖旧的,但旧矩形仍然存在
+rect(0, 0, 1, 1, col = "blue")
+    \end{rcode} 
+  \end{column}
+
+  \begin{column}[t]{.5\textwidth}
+    \begin{rcode}
+# grid绘图系统的处理方式
+grid.rect(name = "rect0")
+# 修改它的填充颜色为红色
+grid.edit("rect0", gp = gpar(fill = "red"))
+# 修改为蓝色,不需要重新用grid.rect()画矩形
+grid.edit("rect0", gp = gpar(fill = "blue"))
+    \end{rcode} 
+  \end{column}
+\end{columns} 
+\end{onlyenv}
+\end{overlayarea}  
+\end{frame} 
 \subsection{ggplot程序包}
 
 \subsection{空间数据绘图}
