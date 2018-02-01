@@ -1,5 +1,6 @@
 setwd("~/Documents/tex_projects/r_guide_slide")
 
+
 png("expression-example.png",width=1000,height=1000,res=300,pointsize=6)
 par(mar=c(2,2,0,0)+0.1)
 plot(1:10, 1:10)
@@ -10,31 +11,29 @@ text(4, 6.4, "expression(bar(x) == sum(frac(x[i], n), i==1, n))", cex = .8)
 text(8, 5, expression(paste(frac(1, sigma*sqrt(2*pi)), " ", plain(e)^{frac(-(x-mu)^2, 2*sigma^2)})), cex = 1.2)
 dev.off()
 
+
 png("par-example.png",width=1600, height=1200,res=300,pointsize=6)
 opar<-par()
 par(mfrow=c(2,2),mar=c(3,3,3,3))
-
 plot(x=1,y=1,col="red",xlab="x",ylab="y")
 text(1,1,"adj=c(0.5,0.5)")
 text(1,1,"adj=c(0,1)",adj=c(0,1))
-
 plot(1:10,1:10,mgp=c(5,3,1),xlab="x",ylab="y",main="mgp=c(5,3,1)")
-
 plot(1:10,1:10,tcl=1,xlab="x",ylab="y")
 text(2,7,"srt=30",srt=30)
-
 plot(x=c(0,1,0),y=c(0,1,2),type="l",lwd=10,ljoin=2,main="ljoin=2",xlab="x",ylab="y")
 par(opar)
 dev.off()
 
 
-x = runif(100); y = 0.2*x + 0.1*rnorm(100)
 png("高级绘图函数.png",res=300)
+x = runif(100); y = 0.2*x + 0.1*rnorm(100)
 opar <- par()
 par(mar=c(2,2,0.1,0.1))
 plot(x,y)
 par(opar)
 dev.off()
+
 
 png("低级绘图函数.png",res=300)
 opar <- par()
@@ -45,13 +44,6 @@ abline(fit)
 par(opar)
 dev.off()
 
-## png("plot-example.png",width=1600, height=1200,res=300,pointsize=6)
-## par(mfrow = c(3, 3), mar = c(2, 2.5, 3, 2))
-## for (i in c("p", "l", "b", "c", "o", "h", "s", "S","n")) {
-## plot(c(1:5, 5:1), type = i, main = paste("Plot type: \"",
-## i, "\"", sep = ""), xlab = "")
-## }
-## dev.off()
 
 png("plot-example.png",width=1600, height=1200,res=300,pointsize=6)
 showCols1 <- function(bg = "gray", cex = 0.75, srt = 30) {
@@ -65,6 +57,7 @@ showCols1 <- function(bg = "gray", cex = 0.75, srt = 30) {
 }
 showCols1()
 dev.off()
+
 
 png("colors-bar.png")
 opar <- par()
@@ -80,11 +73,13 @@ xaxt = "n")
 par(opar)
 dev.off()
 
+
 png("rgb-bar.png",width=1600,height=600,res=300,pointsize=3)
 par(mar = c(0.2, 2, 1, 0) + 0.1, yaxs = "i")
 x = rgb(1, seq(0, 1, length = 20), 0)
 barplot(rep(1, 20), col = x)
 dev.off()
+
 
 require(datasets)
 #require(grDevices); require(graphics)
@@ -101,6 +96,7 @@ box()
 title(main="col=terrain.colors(100)", font.main=4)
 dev.off()
 
+
 png("heat_colors.png")
 par(mar = c(2,2,2,0) + 0.1)
 image(x, y, volcano, col=heat.colors(100), axes=FALSE)
@@ -111,6 +107,7 @@ box()
 title(main="col=heat.colors(100)", font.main=4)
 dev.off()
 
+
 png("gray_colors.png")
 par(mar = c(2,2,2,0) + 0.1)
 image(x, y, volcano, col=gray(100:200/200), axes=FALSE)
@@ -120,6 +117,7 @@ axis(2, at=y.at)
 box()
 title(main="col=gray(100:200/200)", font.main=4)
 dev.off()
+
 
 png("rcolorbrewer.png")
 layout(matrix(1:3, 3), heights = c(2, 1, 1))
@@ -166,6 +164,7 @@ pchShow <-
 
 pchShow()
 dev.off()
+
 
 library(cairoDevice)
 i <- 1
@@ -231,6 +230,7 @@ title(main=list("Open X-splines",cex=2), outer = TRUE)
 par(op)
 dev.off()
 
+
 png("polygon-example.png",width=1000,height=1000,res=300,pointsize=6)
 par(mar = c(2.5,2.5,0,0) + 0.1)
 # 产生40个正态随机数
@@ -249,6 +249,7 @@ lines(x)
 abline(h = 0, col = "lightgray")
 dev.off()
 
+
 png("grid-example.png",width=1000,height=1000,res=300,pointsize=6)
 par(mar = c(2.5,2.5,0,0) + 0.1)
 with(iris,
@@ -258,6 +259,7 @@ with(iris,
      }
      )
 dev.off()
+
 
 png("text-example.png",width=1000,height=1000,res=300,pointsize=6)
 par(mar = c(4, 4, 4, 3))
@@ -271,8 +273,8 @@ y = c(8, 5, 2, 5)
 s = c(0, 90, 180, 270)
 for (i in 1:4) text(x[i], y[i], sprintf("srt = %d",s[i]), srt = s[i])
 segments(c(6, 0, 6, 12), c(10, 5, 0, 5), c(0, 6,12, 6), c(5, 0, 5, 10), lty = c(2, 1, 1, 2))
-
 dev.off()
+
 
 png("legend-example.png",width=1000,height=1000,res=300,pointsize=6)
 par(mar = c(4, 4, 4, 3))
@@ -289,6 +291,7 @@ segments(c(6, 0, 6, 12), c(10, 5, 0, 5), c(0, 6,12, 6), c(5, 0, 5, 10), lty = c(
 legend(-0.2, 9.8, c("Upper", "Lower"), lty = 2:1, cex = 0.8, bty = "n",text.col="red",col="red")
 dev.off()
 
+
 png("axis-example.png",width=1000,height=1000,res=300,pointsize=6)
 par(mar = c(2, 4, 0, 4)+0.1)
 x <- 1:2; y <- runif(2, 0, 100)
@@ -303,6 +306,7 @@ segments(x, 0, x, 100, lwd=20, col="dark gray")
 segments(x, 0, x, 100, lwd=16, col="white")
 segments(x, 0, x, y, lwd=16, col="red")
 dev.off()
+
 
 png("hist-example.png",width=1000,height=1000,res=300,pointsize=6)
 data(geyser, package = "MASS")
@@ -319,6 +323,7 @@ for (i in brk) ht = c(ht, d$y[which.min(abs(d$x -i))])
 segments(brk, 0, brk, ht, lty = 3)
 dev.off()
 
+
 png("boxplot-example.png",width=1000,height=1000,res=300,pointsize=6)
 par(mar = c(4, 4, 4, 0.1)+0.1)
 boxplot(len ~ dose, data = ToothGrowth,
@@ -334,6 +339,7 @@ boxplot(len ~ dose, data = ToothGrowth, add = TRUE,
 legend(2, 9, c("Ascorbic acid", "Orange juice"), fill = c("yellow", "orange"))
 dev.off()
 
+
 png("barplot-example.png",width=1000,height=1000,res=300,pointsize=6)
 par(mar = c(4, 4, 4, 0)+0.1)
 library(RColorBrewer)
@@ -342,6 +348,7 @@ death = t(VADeaths)[, 5:1]
 barplot(death, col = brewer.pal(4, "Set1"))
 barplot(death, col = brewer.pal(4, "Set1"), beside = TRUE, legend = TRUE)
 dev.off()
+
 
 png("contour-example.png",width=1000,height=1000,res=300,pointsize=6)
 par(mar = c(4, 4, 0, 0)+0.1)
@@ -356,6 +363,7 @@ contour(est$x1, est$x2, est$fhat, nlevels = 15, col = "darkgreen", add = TRUE, v
 points(x)
 dev.off()
 
+
 png("persp-example.png",width=1000,height=1000,res=300,pointsize=6)
 par(mar = c(0, 0, 0, 0))
 data(ChinaLifeEdu, package="MSG")
@@ -364,6 +372,7 @@ library(KernSmooth)
 est = bkde2D(x, apply(x, 2, dpik))
 persp(est[["x1"]], est[["x2"]], est[["fhat"]], shade = 0.75, col = "lightblue", phi = 20, theta = 15, box = TRUE)
 dev.off()
+
 
 png("pairs-example.png",width=1000,height=1000,res=300,pointsize=6)
 panel.hist = function(x, ...) {
@@ -379,15 +388,18 @@ idx = as.integer(iris[["Species"]])
 pairs(iris[1:4], upper.panel = function(x, y, ...) points(x, y, pch = c(17, 16, 6)[idx], col = idx), pch = 20, oma = c(2, 2, 2, 2), lower.panel = panel.smooth, diag.panel = panel.hist)
 dev.off()
 
+
 png("smoothscatter-example.png",width=1000,height=1000,res=300,pointsize=6)
 par(mar = c(2, 2, 0.1, 0.1))
 data(BinormCircle, package="MSG")
 smoothScatter(BinormCircle)
 dev.off()
 
+
 png("heatmap-example.png",width=1000,height=1000,res=300,pointsize=6)
 heatmap(as.matrix(mtcars), col = brewer.pal(9, "RdYlBu"), scale = "column", margins = c(4, 8))
 dev.off()
+
 
 png("vioplot-example.png",width=1000,height=1000,res=300,pointsize=6)
 library(vioplot)
@@ -399,6 +411,7 @@ vioplot(x, col="tomato", horizontal=TRUE, at=-4, add=TRUE,lty=2, rectCol="gray")
 vioplot(y, col="cyan", horizontal=FALSE, at=-4, add=TRUE,lty=2)
 dev.off()
 
+
 png("map-example.png",width=1000,height=1000,res=300,pointsize=6)
 library(maps)
 par(mar = c(0.1, 0.1, 0.1, 0.1))
@@ -406,11 +419,13 @@ map("state", interior = FALSE)
 map("state", boundary = FALSE, lty = 2, add = TRUE)
 dev.off()
 
+
 png("teachingdemos-example.png",width=1000,height=1000,res=300,pointsize=6)
 par(mar = c(0.1, 0.1, 0.1, 0.1))
 library(TeachingDemos)
 faces2(mtcars[, c("hp", "disp", "mpg", "qsec", "wt")], which = c(14, 9, 11, 6, 5), adj = c(0.5, 0))
 dev.off()
+
 
 png("parcoord-example.png",width=1000,height=1000,res=300,pointsize=6)
 par(mar = c(2, 0.3, 0.1, 0.3))
