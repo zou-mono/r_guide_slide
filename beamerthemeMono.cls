@@ -344,3 +344,68 @@ rectangle ([xshift=5mm]frame.north west);\end{tcbclipinterior}}}
 %     keepspaces=true,
 %     sensitive=false,
 % }
+\RequirePackage{xparse}
+\newlength\fitimageht
+\newlength\fitotherht
+\newsavebox\fitimagebox
+\NewDocumentCommand \fitimage { m m O{} }{%
+  \sbox\fitimagebox{%
+    \parbox{\textwidth}{%
+      #1\par
+      #3
+    }%
+  }%
+  \settototalheight{\fitotherht}{%
+    \usebox\fitimagebox
+  }%
+  \setlength\fitimageht{\textheight}%
+  \addtolength\fitimageht{-\fitotherht-\topskip-\footskip-3\baselineskip}%
+  #1\par
+  \centering
+  \includegraphics[width=\textwidth,height=\fitimageht,keepaspectratio]{#2}\par
+#3}
+
+\newif\ifsidebartheme
+\sidebarthemefalse
+
+\newdimen\contentheight
+\newdimen\contentwidth
+\newdimen\contentleft
+\newdimen\contentbottom
+\makeatletter
+\newcommand*{\calculatespace}{%
+    \contentheight=\paperheight%
+    \ifx\beamer@frametitle\@empty%
+        \setbox\@tempboxa=\box\voidb@x%
+      \else%
+        \setbox\@tempboxa=\vbox{%
+          \vbox{}%
+          {\parskip0pt\usebeamertemplate***{frametitle}}%
+        }%
+        \ifsidebartheme%
+          \advance\contentheight by-1em%
+        \fi%
+      \fi%
+    \advance\contentheight by-\ht\@tempboxa%
+    \advance\contentheight by-\dp\@tempboxa%
+    \advance\contentheight by-\beamer@frametopskip%
+    \ifbeamer@plainframe%
+    \contentbottom=0pt%
+    \else%
+    \advance\contentheight by-\headheight%
+    \advance\contentheight by\headdp%
+    \advance\contentheight by-\footheight%
+    \advance\contentheight by4pt%
+    \contentbottom=\footheight%
+    \advance\contentbottom by-4pt%
+    \fi%
+    \contentwidth=\paperwidth%
+    \ifbeamer@plainframe%
+    \contentleft=0pt%
+    \else%
+    \advance\contentwidth by-\beamer@rightsidebar%
+    \advance\contentwidth by-\beamer@leftsidebar\relax%
+    \contentleft=\beamer@leftsidebar%
+    \fi%
+}
+\makeatother

@@ -1345,11 +1345,74 @@ axis(side, at = NULL, labels = TRUE, tick = TRUE, line = NA, pos = NA, outer = F
 \end{figure}
 \end{frame}
 
-\subsection{lattice程序包}
+\subsection{grid绘图系统}
 \begin{frame}[t,fragile]{\subsecname}{}
 \begin{itemize}
-\item<1-> 前面介绍的graphics程序包是R中默认的一套绘图系统，
-除此之外还有另外一套\emphText{grid绘图系统}
+\item<1-> 前面介绍的graphics程序包是R的标准绘图系统，也称为\emphText{graphics绘图系统}，
+除此之外R中还有另一套截然不同的\emphText{grid绘图系统}
+\item<2-> grid绘图系统的\emphText{设计初衷是为了克服graphics系统中元素不能动态修改的弱点}
+\item<3-> 使用grid绘图系统前需要先加载\emphText{grid程序包}，该程序包由奥克兰大学的Paul Murrell开发维护 
+\end{itemize}
+
+\begin{overlayarea}{\textwidth}{\textheight}
+\only<2>{
+\begin{block}{\small grid系统和graphics系统的区别} \footnotesize
+\begin{itemize} 
+\item[\HandRight] grid用\emphText{视口(viewports)}将绘图设备分割为不同的区域，
+绘图对象(grob)可以在不同的视口中进行共享，比graphics中的处理方式更加灵活
+\item[\HandRight] grid绘图对象可以被修改或者从一个图形中移除，\emphText{而不需要重新绘制所有的图形}，
+但是在graphics中则必须重绘 
+\item[\HandRight] grid绘图系统是一个绘图框架，其原生的grid程序包仅提供低级绘图函数用于绘制统计图形中的元素，
+不像graphis程序包还集成了高级绘图函数用于绘制常用的统计图形，因此要直接用grid程序包绘制统计图形比较复杂
+\end{itemize}
+\end{block}}
+
+\begin{onlyenv}<3>
+\begin{columns}
+  \begin{column}[t]{.5\textwidth}
+    \begin{rcode}
+# 基础统计图形库处理方式
+plot(0:1, 0:1)
+rect(0, 0, 1, 1, col = "red")
+# 为了改变颜色,必须重画整幅图形
+plot(0:1, 0:1)
+# 虽然可以用新的矩形覆盖旧的,但旧矩形仍然存在
+rect(0, 0, 1, 1, col = "blue")
+    \end{rcode} 
+  \end{column}
+
+  \begin{column}[t]{.5\textwidth}
+    \begin{rcode}
+# grid绘图系统的处理方式
+grid.rect(name = "rect0")
+# 修改它的填充颜色为红色
+grid.edit("rect0", gp = gpar(fill = "red"))
+# 修改为蓝色,不需要重新用grid.rect()画矩形
+grid.edit("rect0", gp = gpar(fill = "blue"))
+    \end{rcode} 
+  \end{column}
+\end{columns} 
+\end{onlyenv}
+
+\only<4>{
+\begin{block}{lattice包和ggplot2包是grid绘图系统的两种实现}
+因为直接用grid包绘制统计图形比较复杂，所以有专门基于grid包开发的绘图程序包，提供
+高级绘图函数来简化统计图形的绘制过程，比较著名的是\emphText{lattice}和\emphText{ggplot2}
+\end{block}}
+
+\only<5>{
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.45\columnwidth]{grid_system.png}
+\caption{grid绘图系统与graphics绘图系统的关系}
+\end{figure}}
+
+\end{overlayarea}  
+\end{frame} 
+
+\begin{frame}[t,fragile]{\subsecname}{}
+\begin{itemize}
+\item<1-> lattice程序包是基于grid的编写的一套统计图形系统
 \item<2-> grid绘图系统与graphics程序包截然不同，是另一套全新的绘图模式，
 其\emphText{设计初衷是为了克服基础统计图形系统中元素不能动态修改的弱点}
 \item<3-> 使用grid绘图系统前需要先加载\emphText{grid程序包}，该程序包由PaulMurrell开发维护
