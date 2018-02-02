@@ -16,6 +16,7 @@
 
 \usecolortheme{orchid} 
 
+\RequirePackage{ulem} %下划线换行
 \RequirePackage[T1]{fontenc}
 \RequirePackage{subfig} %%图形或表格并排排列
 \RequirePackage{algorithm}
@@ -86,6 +87,9 @@
 %公式断行
 \allowdisplaybreaks
 
+%超链接颜色
+\definecolor{links}{HTML}{2A1B81}
+\hypersetup{colorlinks,linkcolor=,urlcolor=links,driverfallback=xetex}
 
 %\usepackage[bottom]{footmisc}
 % 设置脚注
