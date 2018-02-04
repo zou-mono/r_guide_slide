@@ -191,7 +191,7 @@ X11cairo      pdf     jpeg
     \begin{tabular}{|c|c|}
       \toprule
       \rowcolor{LightCyan}
-      参数名称 & 作用\\\hline
+      \multicolumn{1}{|c|}{\textbf{参数名称}} & \multicolumn{1}{c|}{\textbf{作用}} \\\hline
       adj & 调整图中文字的相对位置\\\hline
       bg,fg & 背景颜色和前景颜色\\\hline
       bty & 设置图形边框样式\\\hline
@@ -225,7 +225,7 @@ X11cairo      pdf     jpeg
     \begin{tabular}{|c|c|}
       \toprule
       \rowcolor{LightCyan}
-      参数名称 & 作用\\\hline
+      \textbf{参数名称} & \textbf{作用}\\\hline
       type & 图形样式类型\\\hline
       main,sub & 主标题和副标题\\\hline
       xlab,ylab & 坐标轴标题\\\hline
@@ -278,7 +278,7 @@ X11cairo      pdf     jpeg
     \begin{tabular}{|c|c|}
       \toprule
       \rowcolor{LightCyan}
-      统计图形元素 & 常用函数\\\hline
+      \textbf{统计图形元素} & \textbf{常用函数}\\\hline
       区域 & par\\\hline
       颜色 & colors,palette,rgb,rainbow\\\hline
       点 & points\\\hline
@@ -427,10 +427,11 @@ X11cairo      pdf     jpeg
 \begin{overlayarea}{\textwidth}{\textheight}
 \only<1>{
   \begin{table} \centering \small
-    \begin{tabular}{|m{0.2\columnwidth}|m{0.7\columnwidth}|}
+    \begin{tabular}{|>{\centering\arraybackslash} m{0.2\columnwidth}|m{0.7\columnwidth}|}
       \toprule
       \rowcolor{LightCyan}
-      函数名称 & 效果\\\hline
+      \multicolumn{1}{|c|}{\textbf{函数名称}} & \multicolumn{1}{c|}{\textbf{效果}} \\\hline
+      %\textbf{函数名称} & \textbf{效果}\\\hline
       rainbow() & 彩虹颜色(红橙黄绿青蓝紫)\\\hline
       heat.colors() & 从红色渐变到黄色再变到白色,适合表示“高温”、“白热化”\\\hline
       terrain.colors() & 从绿色渐变到黄色再到棕色最后到白色,适合表示地理地形\\\hline
@@ -541,7 +542,8 @@ X11cairo      pdf     jpeg
     \begin{tabular}{|m{0.3\columnwidth}|m{0.6\columnwidth}|}
       \toprule
       \rowcolor{LightCyan}
-      调色板 & 作用\\\hline
+      %\textbf{调色板} & \textbf{作用}\\\hline
+      \multicolumn{1}{|c|}{\textbf{调色板}} & \multicolumn{1}{c|}{\textbf{作用}} \\\hline
       \tabincell{l}{连续型调色板\\(Sequential palettes)} & 生成一系列连续渐变的颜色，通常用来
 标记连续型数值的大小\\\hline
       \tabincell{l}{极端化调色板\\(Diverging palettes)} & 生成用深色强调两端、浅色标示中部的
@@ -1045,14 +1047,14 @@ axis(side, at = NULL, labels = TRUE, tick = TRUE, line = NA, pos = NA, outer = F
 \end{onlyenv}
 \end{frame}
 
-\subsection{基础统计图形库}
+\subsection{graphics统计图形库}
 \begin{frame}[t]{\subsecname}{}
 \begin{itemize}
-\item R的base包中包括标准绘图程序包\emphText{graphics}，除了包括前面介绍的所有统计元素之外，
-还包含大量预置的统计图形
-\item 绘图程序包通过\emphText{高级绘图函数}在R中绘制图形
-\item graphics程序包中预置的统计图形库已经涵盖了绝大多数常见的统计图形；
-但除此之外，\emphText{contrib包中也包括大量绘图程序包来进一步完善统计图形库}
+\item R中通过\emphText{高级绘图函数}来绘制统计图形
+\item R的base包中提供标准绘图程序包\emphText{graphics}，除了包括前面介绍的所有统计元素之外，
+还包含预置的统计图形库
+\item graphics包中预置的统计图形库已经涵盖了绝大多数常见的统计图形；
+但除此之外，\emphText{contrib包中也包括大量绘图程序包来进一步扩展统计图形库}
 \end{itemize}
 \end{frame}
 
@@ -1353,7 +1355,6 @@ axis(side, at = NULL, labels = TRUE, tick = TRUE, line = NA, pos = NA, outer = F
 \item<1-> 使用grid绘图系统前需要先加载\emphText{grid程序包}，
 该程序包由\href{https://www.stat.auckland.ac.nz/~paul/}{\uline{Paul Murrell}}开发维护
 %\textsuperscript{\underline{\href{https://www.stat.auckland.ac.nz/~paul/}{主页}}} 
-%\uline{\href{https://www.stat.auckland.ac.nz/~paul/}{Paul Murrell}}
 \item<2-> grid绘图系统的\emphText{设计初衷是为了克服graphics系统中元素不能动态修改的弱点}
 \end{itemize}
 
@@ -1373,7 +1374,7 @@ axis(side, at = NULL, labels = TRUE, tick = TRUE, line = NA, pos = NA, outer = F
 \item[\HandRight] grid绘图系统是一个绘图框架，其原生的grid程序包仅提供低级绘图函数用于绘制统计图形中的元素，
 不像graphis程序包还集成了高级绘图函数用于绘制常用的统计图形，
 因此\emphText{直接用grid程序包绘制统计图形比较繁琐}
-\item[\HandRight] \emphText{两套系统的绘图函数和绘图参数完全不同，不能混用}
+\item[\HandRight] \emphText{两套系统的绘图函数和绘图参数完全不同，不能混用！}
 \end{itemize}
 \end{block}}
 
@@ -1417,15 +1418,156 @@ grid.edit("rect0", gp = gpar(fill = "blue"))
 \subsection{lattice程序包}
 \begin{frame}[t,fragile]{\subsecname}{}
 \begin{itemize}
-\item<1-> lattice程序包是基于grid包的编写的一套统计图形库，其设计理念来自S-PLUS中的
-Trellis图形，由Deepayan Sarkar开发维护
-\item<2-> Trellis图形是
+\item lattice程序包是基于grid包的编写的一套统计图形库，由
+\href{https://www.isid.ac.in/~deepayan/}{\uline{Deepayan Sarkar}}开发维护
+\item lattice设计理念来自S-PLUS中的Trellis图形，是一种\emphText{多元数据可
+视化的方法}，其所有绘图要素被保存在一个\emphText{trellis对象}中，并在\emphText{嵌板(panel)}中绘制
+\item lattice包从R 3.0版本开始已纳入base包，\emphText{不需要再单独安装}，但是要用
+\emphText{library(lattice)}语句进行加载
+\end{itemize}
+
+\vspace{-10pt}
+\begin{overlayarea}{\textwidth}{\textheight}
+\only<2>{
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.7\columnwidth]{lattice-example1.png}
+  \caption{不同的GvHD病患者在细胞检测中的FSC-H结果数据}
+\end{figure}}
+
+\only<3>{
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.7\columnwidth]{lattice-example2.png}
+  \caption{泰坦尼克号生存率的交叉分类数据}
+\end{figure}}
+\end{overlayarea}  
+\end{frame} 
+
+\begin{frame}[t]{\subsecname}{公式参数}
+\begin{itemize}
+\item lattice的绘图函数都会\emphText{用公式作为第一位置参数}
+\item<2-> 如果在不同panel中绘制多元数据，公式参数根据\emphText{“|”}符号后的变量对数据进行分类
+\item<3-> 如果是在同一panel中绘制多元数据，则使用\emphText{group参数}对数据进行分类
 \end{itemize}
 
 \begin{overlayarea}{\textwidth}{\textheight}
-
-\end{overlayarea}  
+\only<2>{
+  \begin{table} \centering \footnotesize
+    \begin{tabular}{|>{\centering\arraybackslash} m{0.2\columnwidth}|m{0.7\columnwidth}|}
+      \toprule
+      \rowcolor{LightCyan}
+      \multicolumn{1}{|c|}{\textbf{公式参数}} & \multicolumn{1}{c|}{\textbf{含义}} \\\hline
+      $\sim y$ & 单变量数据\\\hline
+      $\sim y|z$ & 根据z变量对单变量数据划分panel\\\hline
+      $y\sim x$ & 二元变量数据\\\hline
+      $y\sim x|z $ & 根据z变量对二元变量数据划分panel\\\hline
+      $y\sim x|a+b$ & 根据多条件变量划分panel，等价于$y\sim x|a$和$y\sim x|b$ \\\hline
+      $y_1+y_2\sim x$ & 多元变量数据绘图，等价于$y_1\sim x$,和$y_2\sim x$\\\hline
+      $z\sim x*y$ & 绘制三维图形(x,y,z)\\
+      \bottomrule
+    \end{tabular}
+    \caption{lattice中的公式参数}
+  \end{table}}
+\end{overlayarea}
 \end{frame} 
+
+\begin{frame}[t,fragile]{\subsecname}{公式参数}
+\begin{onlyenv}<1>
+\begin{rcode}
+> densityplot(|\colorbox{green}{$\sim$mpg}|, data=mtcars)
+\end{rcode}
+\begin{figure}
+  \includegraphics[width=0.6\columnwidth]{lattice-parameter1.png}
+  \caption{在panel中绘制单变量数据}
+\end{figure}
+\end{onlyenv}
+
+\begin{onlyenv}<2>
+\begin{rcode}
+> densityplot(|\colorbox{green}{$\sim$mpg\textbar cyl}|, data=mtcars, layout=c(1,3))
+\end{rcode}
+\begin{figure}
+  \includegraphics[width=0.6\columnwidth]{lattice-parameter2.png}
+  \caption{在不同panel中绘制单变量分类数据}
+\end{figure}
+\end{onlyenv}
+
+\begin{onlyenv}<3>
+\begin{rcode}
+> densityplot(~mpg, data=mtcars, |\colorbox{green}{group=cyl}|)
+\end{rcode}
+\begin{figure}
+  \includegraphics[width=0.6\columnwidth]{lattice-parameter3.png}
+  \caption{在同一panel中绘制单变量分类数据}
+\end{figure}
+\end{onlyenv}
+
+\begin{onlyenv}<4>
+\begin{rcode}
+> EE <- equal.count(ethanol$E, number=9, overlap=1/4)
+> xyplot(|\colorbox{green}{NOx$\sim$ C \textbar EE}|, data = ethanol)
+\end{rcode}
+\begin{figure}
+  \includegraphics[width=0.6\columnwidth]{lattice-parameter4.png}
+  \caption{在不同panel中绘制多变量分类数据}
+\end{figure}
+\end{onlyenv}
+\end{frame} 
+
+\begin{frame}[t]{\subsecname}{高级绘图函数}
+\begin{itemize}
+\item lattice提供了大量高级绘图函数用于绘制常用的统计图形
+\end{itemize}
+\begin{figure}\centering
+    \includegraphics[width=0.65\columnwidth]{lattice-all.png}
+    \caption{lattice中的高级绘图函数}
+\end{figure}
+\end{frame} 
+
+\begin{frame}[t]{\subsecname}{高级绘图函数}
+  \begin{table} \centering \scriptsize
+    \begin{tabular}{|>{\centering\arraybackslash} m{0.2\columnwidth}|>{\centering\arraybackslash} m{0.2\columnwidth}|>{\centering\arraybackslash} m{0.2\columnwidth} |>{\centering\arraybackslash} m{0.2\columnwidth}|}
+      \toprule
+      \rowcolor{LightCyan}
+      \multicolumn{1}{|c|}{\textbf{lattcie函数}} & \multicolumn{1}{c|}{\textbf{公式参数}} &
+\multicolumn{1}{c|}{\textbf{描述}} & \multicolumn{1}{c|}{\textbf{graphics对应函数}} \\\hline
+      barchart() & $y\sim x$ & 条形图 & barplot() \\\hline
+      bwplot() & $y\sim x$ & 箱线图 & boxplot() \\\hline
+      densityplot() & $\sim y$ & 核密度图 & plot.density()\\\hline
+      dotplot() & $\sim y$ & Cleveland点图 & dotchart()\\\hline
+      histogram() & $\sim x$ & 直方图 & hist()\\\hline
+      stripplot() & $\sim y$ & 带状图 & stripchart()\\\hline
+      xyplot() & $y\sim x$ & 散点图 & plot()\\\hline
+      contourplot() & $z\sim x*y$ & 等高线图 & contour()\\\hline
+      cloud() & $z\sim x*y$ &三维散点图 & 无\\\hline
+      levelplot() & $z\sim x*y$ & 颜色图 & image()\\\hline
+      wireframe() & $z\sim x*y$ & 三维透视图 & persp()\\\hline
+      qq() & $\sim x$ & QQ图 & qqnorm()\\\hline
+      splom() & $\sim data.frame$ & 散点图矩阵 & pairs()\\\hline
+      parallel() & $\sim data.frame$ & 平行坐标图 & 无 \\
+      \bottomrule
+    \end{tabular}
+    \caption{lattice包与graphics包的对应函数}
+  \end{table}
+\end{frame} 
+
+\begin{frame}[t]{\subsecname}{低级绘图函数}
+\begin{itemize}
+\item<1-> lattice通过高级绘图函数中的panel参数对图形添加附加要素，\emphText{panel参数本身是一个匿名函数}，
+类似于低级绘图函数的作用
+\item<2-> lattice也可以通过\emphText{update()}函数修改既有trellis对象中的绘图要素，从而达到修改图形的目的
+\end{itemize}
+\end{frame} 
+
+\begin{frame}[t]{\subsecname}{主题}
+\begin{itemize}
+\item 所有的trellis对象都有一个主题(theme)，用于定义颜色、尺寸、宽度、大小等图形要素
+\item 主题有点类似于par()函数，但是par()函数无法统一graphics包中的所有高级绘图函数，
+而在\emphText{主题中的参数设置对于lattice包中所有高级绘图函数都是一致的}，这样就可以通过指定主题来达到
+图形风格的统一
+\end{itemize}
+\end{frame}
 \subsection{ggplot程序包}
 
 \subsection{空间数据绘图}

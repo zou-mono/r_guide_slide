@@ -434,3 +434,74 @@ ir <- rbind(iris3[,,1], iris3[,,2], iris3[,,3])
 parcoord(log(ir)[, c(3, 4, 2, 1)], col = 1 + (0:149)%/%50)
 dev.off()
 
+trellis.par.set(theme = col.whitebg())
+library(lattice)
+
+png("lattice-example1.png",width=1920,height=1080,res=300,pointsize=12)
+library(flowViz)
+lw <- list(left.padding = list(x = 0, units = "inches"))
+lw$right.padding <- list(x = -0.1, units = "inches")
+lh$top.padding <- list(x = -0.1, units = "inches")
+lh$bottom.padding <- list(x = -0.2, units = "inches")
+lattice.options(layout.widths = lw, layout.heights = lh)
+data(GvHD, package = "flowCore")
+densityplot(Visit ~ `FSC-H` | Patient, data = GvHD, ylim=c(0.9,9))
+dev.off()
+
+png("lattice-example2.png",width=1920,height=1080,res=300,pointsize=12)
+trellis.par.set(theme = col.whitebg())
+lw <- list(left.padding = list(x = 0, units = "inches"))
+lw$right.padding <- list(x = -0.1, units = "inches")
+lh$top.padding <- list(x = -0.1, units = "inches")
+lh$bottom.padding <- list(x = 0, units = "inches")
+lattice.options(layout.widths = lw, layout.heights = lh)
+bc.titanic <-
+barchart(Class ~ Freq | Sex + Age, as.data.frame(Titanic),
+groups = Survived, stack = TRUE, layout = c(4, 1),
+auto.key = list(title = "Survived", columns = 2),
+scales = list(x = "free"))
+
+update(bc.titanic,
+panel = function(...) {
+panel.grid(h = 0, v = -1)
+panel.barchart(...)
+})
+dev.off()
+
+
+png("lattice-parameter1.png")
+densityplot(~mpg, data=mtcars)
+dev.off()
+
+png("lattice-parameter2.png")
+densityplot(~mpg|cyl, data=mtcars,layout=c(1,3))
+dev.off()
+
+png("lattice-parameter3.png")
+densityplot(~mpg, groups=cyl, data=mtcars)
+dev.off()
+
+png("lattice-parameter4.png")
+EE <- equal.count(ethanol$E, number=9, overlap=1/4)
+
+## Constructing panel functions on the fly; prepanel
+xyplot(NOx ~ C | EE, data = ethanol)
+dev.off()
+
+
+
+png("lattice-parameter4.png")
+EE <- equal.count(ethanol$E, number=9, overlap=1/4)
+
+## Constructing panel functions on the fly; prepanel
+xyplot(NOx ~ C | EE, data = ethanol,
+       prepanel = function(x, y) prepanel.loess(x, y, span = 1),
+       xlab = "Compression Ratio", ylab = "NOx (micrograms/J)",
+       panel = function(x, y) {
+           panel.grid(h = -1, v = 2)
+           panel.xyplot(x, y)
+           panel.loess(x, y, span=1)
+       },
+       aspect = "xy")
+dev.off()
+
