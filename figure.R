@@ -619,7 +619,7 @@ p <- xyplot(c(-1, 1) ~ c(-1, 1), aspect = 1, cycles = 15, scales = list(draw = F
 p[rep(1, 9)]
 dev.off()
 
-CairoPNG("trellis_par_set1.png",width=800*3,height=800*3,res=72*3,point)
+CairoPNG("trellis_par_set1.png",width=800*3,height=800*3,res=72*3)
  # 绘制dotplot传递给trellis对象vad.plot
 vad.plot <- 
     dotplot(reorder(Var2, Freq) ~ Freq | Var1,
@@ -630,3 +630,53 @@ vad.plot <-
 vad.plot
 dev.off()
 
+CairoPNG("trellis_par_set2.png",width=800*3,height=800*3,res=72*3)
+vad.plot <- 
+    dotplot(reorder(Var2, Freq) ~ Freq | Var1,
+            data = as.data.frame.table(VADeaths), 
+            origin = 0, type = c("p", "h"),
+            main = "Death Rates in Virginia - 1940", 
+            xlab = "Number of deaths per 100")
+dot.line.settings <- trellis.par.get("dot.line")
+str(dot.line.settings)
+dot.line.settings$col <- "transparent"
+trellis.par.set("dot.line", dot.line.settings)
+plot.line.settings <- trellis.par.get("plot.line")
+str(plot.line.settings)
+plot.line.settings$lwd <- 3
+trellis.par.set("plot.line", plot.line.settings)
+vad.plot
+dev.off()
+
+CairoPNG("update-example1.png",width=800*3,height=800*3,res=72*3)
+p <-
+cloud(depth ~ long + lat, quakes, zlim = c(690, 30),
+pch = ".", cex = 4, zoom = 1,
+xlab = NULL, ylab = NULL, zlab = NULL,
+par.settings = list(axis.line = list(col = "transparent")),
+scales = list(draw = FALSE))
+p
+dev.off()
+
+CairoPNG("update-example2.png",width=800*3,height=800*3,res=72*3)
+p <-
+cloud(depth ~ long + lat, quakes, zlim = c(690, 30),
+pch = ".", cex = 4, zoom = 1,
+xlab = NULL, ylab = NULL, zlab = NULL,
+par.settings = list(axis.line = list(col = "transparent")),
+scales = list(draw = FALSE))
+p
+npanel <- 2
+rotz <- seq(-30, 30, length = npanel)
+roty <- c(3, 0)
+update(p[rep(1, 2 * npanel)],
+layout = c(2, npanel),
+panel = function(..., screen) {
+crow <- current.row()
+ccol <- current.column()
+panel.cloud(..., screen = list(z = rotz[crow], x = -60, y = roty[ccol]))})
+dev.off()
+
+CairoPNG("show_settings.png",width=1200*3,height=800*3,res=72*5)
+show.settings()
+dev.off()
