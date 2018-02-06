@@ -505,3 +505,128 @@ xyplot(NOx ~ C | EE, data = ethanol,
        aspect = "xy")
 dev.off()
 
+png("lattice-all.png")
+x <- 1:5
+y <- 1:5
+g <- factor(1:5)
+types <- c("barchart", "bwplot", "densityplot", "dotplot",
+           "histogram", "qqmath", "stripplot", "qq",
+           "xyplot", "levelplot", "contourplot",
+           "cloud", "wireframe", "splom", "parallel")
+angle <- seq(0, 2*pi, length=21)[-21]
+xx <- cos(angle)
+yy <- sin(angle)
+gg <- factor(rep(1:2, each=10))
+
+aaa <- seq(0, pi, length=10)
+xxx <- rep(aaa, 10)
+yyy <- rep(aaa, each=10)
+zzz <- sin(xxx) + sin(yyy)
+
+
+doplot <- function(name, ...) {
+  do.call(name, 
+          list(..., scales=list(draw=FALSE), xlab=NULL, ylab=NULL,
+               strip=function(which.panel, ...) { 
+                       grid.rect(gp=gpar(fill="grey90")); grid.text(name) 
+                     }))
+}
+plot <- vector("list", 15)
+plot[[1]] <- doplot("barchart", y ~ g | 1)
+plot[[2]] <- doplot("bwplot", yy ~ gg | 1, 
+                    par.settings=list(box.umbrella=list(lwd=0.5)))
+plot[[3]] <- doplot("densityplot", ~ yy | 1)
+plot[[4]] <- doplot("dotplot", y ~ g | 1)
+plot[[5]] <- doplot("histogram", ~ yy | 1)
+plot[[6]] <- doplot("qqmath", ~ yy | 1)
+plot[[7]] <- doplot("stripplot", yy ~ gg | 1)
+plot[[8]] <- doplot("qq", gg ~ yy | 1)
+plot[[9]] <- doplot("xyplot", xx ~ yy | 1)
+plot[[10]] <- doplot("levelplot", zzz ~ xxx + yyy | 1, colorkey=FALSE)
+plot[[11]] <- doplot("contourplot", zzz ~ xxx + yyy | 1, labels=FALSE, cuts=8)
+plot[[12]] <- doplot("cloud", zzz ~ xxx + yyy | 1, zlab=NULL, zoom=0.9, 
+                     par.settings=list(box.3d=list(lwd=0.01)))
+plot[[13]] <- doplot("wireframe", zzz ~ xxx + yyy | 1, zlab=NULL, zoom=0.9,
+                     drape=TRUE, par.settings=list(box.3d=list(lwd=0.01)),
+                     colorkey=FALSE)
+plot[[14]] <- doplot("splom", ~ data.frame(x=xx[1:10], y=yy[1:10]) | 1, 
+                     pscales=0)
+plot[[15]] <- doplot("parallel", ~ data.frame(x=xx[1:10], y=yy[1:10]) | 1)
+
+grid.newpage()
+pushViewport(viewport(layout=grid.layout(4, 4)))
+for (i in 1:15) {
+  pushViewport(viewport(layout.pos.col=((i - 1) %% 4) + 1,
+                        layout.pos.row=((i - 1) %/% 4) + 1))
+  print(plot[[i]], newpage=FALSE, 
+        panel.width=list(1.025, "inches"),
+        panel.height=list(1.025, "inches"))
+  popViewport()
+}
+popViewport()
+dev.off()
+
+library(Cairo)
+png("panel-example1.png")
+types.plain <- c("p", "l", "o", "r", "g", "s", "S", "h", "a", "smooth")
+types.horiz <- c("s", "S", "h", "a", "smooth")
+horiz <- rep(c(FALSE, TRUE), c(length(types.plain), length(types.horiz)))
+
+types <- c(types.plain, types.horiz)
+
+x <- sample(seq(-10, 10, length.out = 15), 30, TRUE)
+y <- x + 0.25 * (x + 1)^2 + rnorm(length(x), sd = 5)
+
+xyplot(y ~ x | gl(1, length(types)),
+       xlab = "type", 
+       ylab = list(c("horizontal=TRUE", "horizontal=FALSE"), y = c(1/6, 4/6)),
+       as.table = TRUE, layout = c(5, 3),
+       between = list(y = c(0, 1)),
+       strip = function(...) {
+           panel.fill(trellis.par.get("strip.background")$col[1])
+           type <- types[panel.number()]
+           grid::grid.text(label = sprintf('"%s"', type), 
+                           x = 0.5, y = 0.5)
+           grid::grid.rect()
+       },
+       scales = list(alternating = c(0, 2), tck = c(0, 0.7), draw = FALSE),
+       par.settings = 
+       list(layout.widths = list(strip.left = c(1, 0, 0, 0, 0))),
+       panel = function(...) {
+           type <- types[panel.number()]
+           horizontal <- horiz[panel.number()]
+           panel.xyplot(..., 
+                        type = type,
+                        horizontal = horizontal)
+       })[rep(1, length(types))]
+dev.off()
+
+library(Cairo)
+CairoPNG("panel-example2.png",width=800*3,height=800*3,res=72*3)
+panel.hypotrochoid <- function(r, d, cycles = 10, density = 30)
+{
+    if (missing(r)) r <- runif(1, 0.25, 0.75)
+    if (missing(d)) d <- runif(1, 0.25 * r, r)
+    t <- 2*pi*seq(0,cycles,by = 1/density)
+    x <- (1-r)*cos(t)+d*cos((1-r)*t/r)
+    y <- (1-r)*sin(t)-d*sin((1-r)*t/r)
+    panel.lines(x, y)
+}
+prepanel.hypocycloid <- function(x, y) {
+    list(xlim = c(-1, 1), ylim = c(-1, 1))
+}
+p <- xyplot(c(-1, 1) ~ c(-1, 1), aspect = 1, cycles = 15, scales = list(draw = FALSE), xlab = "", ylab = "", panel = panel.hypotrochoid)
+p[rep(1, 9)]
+dev.off()
+
+CairoPNG("trellis_par_set1.png",width=800*3,height=800*3,res=72*3,point)
+ # 绘制dotplot传递给trellis对象vad.plot
+vad.plot <- 
+    dotplot(reorder(Var2, Freq) ~ Freq | Var1,
+            data = as.data.frame.table(VADeaths), 
+            origin = 0, type = c("p", "h"),
+            main = "Death Rates in Virginia - 1940", 
+            xlab = "Number of deaths per 100")
+vad.plot
+dev.off()
+
