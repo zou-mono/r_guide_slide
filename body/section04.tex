@@ -1421,12 +1421,19 @@ grid.edit("rect0", gp = gpar(fill = "blue"))
 \item lattice程序包是基于grid包的编写的一套统计图形库，2000年发布了第一个版本，由
 \href{https://www.isid.ac.in/~deepayan/}{\uline{Deepayan Sarkar}}等人开发维护，从R 3.0版本开始纳入base包，\emphText{不需要再单独安装}
 \item lattice设计理念来自S-PLUS中的Trellis图形，是一种\emphText{多元数据可
-视化的方法}，其所有绘图要素被保存在一个\emphText{trellis对象}中，并且在\emphText{嵌板(panel)}中绘制，
-另外，在每个panel上方还有一个条板(strip)区域用来描述分类信息
+视化的方法}：首先将多元数据分类组织，然后将绘图元素都 保存在一个\emphText{trellis对象}中，最后在\emphText{嵌板(panel)}区域绘制该对象，并且在panel上方用
+\emphText{条板(strip)}区域来描述分类信息
 \end{itemize}
 
 \vspace{-8pt}
 \begin{overlayarea}{\textwidth}{\textheight}
+\only<1>{
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.7\columnwidth]{deepayan_sarkar.png}
+  \caption{lattice程序包作者Deepayan Sarkar，目前是印度统计研究院的研究员}
+\end{figure}}
+
 \only<2>{
 \begin{figure}[ht]
   \centering
@@ -1601,8 +1608,8 @@ xyplot(y ~ x |\textbar| gl(1, length(types)),
 
 \begin{onlyenv}<2>
 \begin{figure}\centering
-    \includegraphics[width=0.6\columnwidth]{panel-example1.png}
-    \caption{在高级绘图函数xyplot中自定义panel和strip的示例}
+    \includegraphics[width=0.7\columnwidth]{panel-example1.png}
+    \caption{在高级绘图函数xyplot中自定义panel和strip}
 \end{figure}
 \end{onlyenv} 
 \end{frame}
@@ -1643,9 +1650,9 @@ xyplot(y ~ x |\textbar| gl(1, length(types)),
 \end{figure}
 \end{frame} 
 
-\begin{frame}[t,fragile]{\subsecname}{图形参数和主题}
+\begin{frame}[t,fragile]{\subsecname}{主题和图形参数设置}
 \begin{itemize}
-\item 在lattice中，所有的trellis对象都包含一个主题(theme)，theme中拥有完整的图形要素设置
+\item 在lattice中，所有的trellis对象都有一个主题(theme)，theme中包含完整的图形要素：颜色、线宽、字体等
 \item 当前theme的参数可以直接通过\emphText{trellis.par.get()}函数获取，通过
 \emphText{trellis.par.set()}函数直接修改；\emphText{对theme参数的设置作用于当前绘图设备中的
 所有高级绘图函数}
@@ -1738,7 +1745,7 @@ xyplot(y ~ x |\textbar| gl(1, length(types)),
 \end{overlayarea}
 \end{frame}
 
-\begin{frame}[t,fragile]{\subsecname}{图形参数和主题}
+\begin{frame}[t,fragile]{\subsecname}{主题和图形参数设置}
 \begin{itemize}
 \item 除了设置theme参数之外，还可以通过\emphText{par.settings参数}仅对当前图形进行图形参数调整，
 这比较类似par()函数的作用
@@ -1746,7 +1753,6 @@ xyplot(y ~ x |\textbar| gl(1, length(types)),
 配合par.settings参数可以在不重绘图形的情况下实现图形的修改
 \end{itemize}
 
-%\vspace{-10pt}
 \begin{overlayarea}{\textwidth}{\textheight}
 \begin{onlyenv}<2>
 \begin{figure}
@@ -1770,6 +1776,7 @@ xyplot(y ~ x |\textbar| gl(1, length(types)),
 \end{figure}
 \end{onlyenv}
 
+\vspace{-10pt}
 \begin{onlyenv}<3>
 \begin{figure}
  \begin{columns}
@@ -1803,13 +1810,31 @@ xyplot(y ~ x |\textbar| gl(1, length(types)),
 \end{frame}
 
 %https://www.cnblogs.com/nxld/p/6059603.html
-\subsection{ggplot程序包}
+
+\subsection{ggplot2程序包}
 \begin{frame}{\subsecname}{}
 \begin{itemize}
-\item lattice包具有精细的绘图参数，对于定制统计图形具有极大地灵活性，
-但是过于复杂的参数往往将新手拒之门外；相比之下，ggplot2包以易用性为原则进行设计，而同时又兼具了一定的灵活性
-\item 
+\item<1-> ggplot2是grid绘图系统的另一个广泛使用的实现包，由\href{http://hadley.nz/}{\uline{Hadley Wickham}}开发维护，\emphText{目前该包尚未纳入base包，需要单独下载} 
+\item<2-> ggplot2的设计理念来自Leland Wilkinson的\emphText{《The Grammar of Graphics》}一书，其吸取了书中提出的绘图理论和优雅的绘图语法：\emphText{将绘图与数据分离，数据相关绘图与数据无关绘图分离}
 \end{itemize}
+
+%\vspace{-5pt}
+\begin{overlayarea}{\textwidth}{\textheight}
+\only<1>{
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.8\columnwidth]{hadley_wickham.png}
+  \caption{ggplot2程序包的作者Hadley Wickham，目前是RStudio公司首席科学家}
+\end{figure}}
+
+\only<2->{
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.55\columnwidth]{the_grammar_of_graphics.png}
+  \caption{统计图形领域经典著作《The Grammar of Graphics》的第一版(1999)和第二版(2005)，ggplot2的命名就取自这本书的首字母缩写再加上plot}
+\end{figure}}
+
+\end{overlayarea}
 \end{frame}
 
 \subsection{空间数据绘图}
