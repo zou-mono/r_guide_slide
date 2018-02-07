@@ -674,7 +674,8 @@ layout = c(2, npanel),
 panel = function(..., screen) {
 crow <- current.row()
 ccol <- current.column()
-panel.cloud(..., screen = list(z = rotz[crow], x = -60, y = roty[ccol]))})
+panel.cloud(..., screen = list(z = rotz[crow], x = -60, y = roty[ccol]))},
+par.settings=list(axis.line=list(col="red")))
 dev.off()
 
 CairoPNG("show_settings.png",width=1200*3,height=800*3,res=72*5)

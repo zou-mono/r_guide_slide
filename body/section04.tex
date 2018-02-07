@@ -1692,7 +1692,7 @@ xyplot(y ~ x |\textbar| gl(1, length(types)),
 \begin{rcode}
 # 绘制dotplot传递给trellis对象vad.plot
 > vad.plot <- 
-    dotplot(reorder(Var2, Freq)~Freq|\textbar|Var1,
+    dotplot(reorder(Var2, Freq)~Freq |\textbar| Var1,
             data = as.data.frame.table(VADeaths), 
             origin = 0, type = c("p", "h"),
             main = "Death Rates in Virginia - 1940", 
@@ -1717,17 +1717,17 @@ xyplot(y ~ x |\textbar| gl(1, length(types)),
 \begin{rcode}
 # 在上图基础上修改绘图参数
 # 获得当前主题的dot.line设置
-> dot.line.settings <- trellis.par.get("dot.line")
+> dot.line.settings <- |\colorbox{green}{trellis.par.get}|("dot.line")
 # 将dot.line的颜色设置为透明不可见
 > dot.line.settings$col <- "transparent"
 # 应用新的参数设置
-> trellis.par.set("dot.line", dot.line.settings)
+> |\colorbox{green}{trellis.par.set}|("dot.line", dot.line.settings)
 # 获得当前主题的plot.line设置
-> plot.line.settings <- trellis.par.get("plot.line")
+> plot.line.settings <- |\colorbox{green}{trellis.par.get}|("plot.line")
 # 将plot.line的线宽设置为3，默认是1
 > plot.line.settings$lwd <- 3
 # 应用新的参数设置
-> trellis.par.set("plot.line", plot.line.settings)
+> |\colorbox{green}{trellis.par.set}|("plot.line", plot.line.settings)
 > vad.plot
 \end{rcode}
     \end{column}
@@ -1760,8 +1760,8 @@ xyplot(y ~ x |\textbar| gl(1, length(types)),
 # 首先定义一个三维散点图，并将其传入trellis对象p
 > p <-
   cloud(depth ~ long + lat, quakes, zlim = c(690, 30), pch = ".", cex = 4, zoom = 1, xlab = NULL, ylab = NULL, zlab = NULL,scales = list(draw = FALSE),
-        # 用par.settings参数设置 
-        par.settings = list(axis.line = list(col = "transparent")))
+        # 用par.settings参数设置坐标线为透明
+        |\colorbox{green}{par.settings}|=list(axis.line = list(col = "transparent")))
 > p
 \end{rcode}
     \end{column}
@@ -1785,12 +1785,14 @@ xyplot(y ~ x |\textbar| gl(1, length(types)),
 > roty <- c(3, 0)
 # 用update.trellis函数更改原有图形
 # 注意：由于update.trellis函数是一个继承自update函数的S3型对象，而传入的p是trellis对象，因此这里直接可以写update
-> update(p[rep(1, 2 * npanel)], 
+> |\colorbox{green}{update}|(p[rep(1, 2 * npanel)], 
          layout = c(2, npanel),
          panel = function(..., screen) {
            crow <- current.row()
            ccol <- current.column()
-         panel.cloud(..., screen = list(z = rotz[crow], x = -60, y = roty[ccol]))})
+         panel.cloud(..., screen = list(z = rotz[crow], x = -60, y = roty[ccol]))},
+         # 用par.settings参数设置坐标线颜色为红 
+         |\colorbox{green}{par.settings}|=list(axis.line=list(col="red")))
 \end{rcode}
     \end{column}
   \end{columns}
@@ -1799,6 +1801,15 @@ xyplot(y ~ x |\textbar| gl(1, length(types)),
 \end{onlyenv}
 \end{overlayarea}
 \end{frame}
+
+%https://www.cnblogs.com/nxld/p/6059603.html
 \subsection{ggplot程序包}
+\begin{frame}{\subsecname}{}
+\begin{itemize}
+\item lattice包具有精细的绘图参数，对于定制统计图形具有极大地灵活性，
+但是过于复杂的参数往往将新手拒之门外；相比之下，ggplot2包以易用性为原则进行设计，而同时又兼具了一定的灵活性
+\item 
+\end{itemize}
+\end{frame}
 
 \subsection{空间数据绘图}
