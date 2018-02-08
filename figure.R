@@ -697,3 +697,35 @@ for (i in seq(-10, 10, length = 100))
         lwd = 4 * runif(1, 0.3))
 }
 dev.off()
+
+CairoPNG("line-art2.png",width=1000*3,height=1000*3,res=72*3,bg="black")
+x = seq(-50, 50, by = 1)
+y = -(x^2)
+par(bg = 'black', mar = rep(0.5, 4))
+plot(y, x, type = 'n')
+lines(y, x, lwd = 2*runif(1), col = hsv(0.08, 1, 1, alpha = runif(1, 0.5, 0.9)))
+for (i in seq(10, 2500, 10)){
+lines(y-i, x, lwd = 2*runif(1), col = hsv(0.08, 1, 1, alpha = runif(1, 0.5, 0.9)))
+}
+for (i in seq(500, 600, 10)){
+lines(y - i, x, lwd = 2*runif(1), col = hsv(0, 1, 1, alpha = runif(1, 0.5, 0.9)))
+}
+for (i in seq(2000, 2300, 10)){
+lines(y - i, x, lwd = 2*runif(1), col = hsv(0, 1, 1, alpha = runif(1, 0.5, 0.9)))
+}
+for (i in seq(100, 150, 10)){
+lines(y - i, x, lwd = 2*runif(1), col = hsv(0, 1, 1, alpha = runif(1, 0.5, 0.9)))
+}
+dev.off()
+
+CairoPNG("line-art3.png",width=1000*3,height=1000*3,res=72*3,bg="black")
+theta = seq(0, pi, length = 300)
+x = cos(theta)
+y = sin(theta)
+op = par(bg = "black", mar = rep(0.5, 4))
+plot(x, y, type = 'n')
+segments(rep(0, 299), rep(0, 299), x[1:299] * runif(299, 0.7),
+         y[1:299] * runif(299, 0.7),
+         col = hsv(runif(299, 0.45, 0.55), 1, 1, runif(299, 0.5)),
+         lwd = 5*runif(299))
+dev.off()

@@ -6,7 +6,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{R绘图}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% \subsection{绘图基础知识}
+\subsection{绘图基础知识}
 % \begin{frame}[t, fragile]{\subsecname}{绘图设备}
 %   \begin{itemize}
 %   \item<1-> 绘图设备用于管理R的图形输出，分为\emphText{窗口设备和图形设备}
@@ -830,7 +830,7 @@
 % \end{onlyenv}  
 % \end{frame}
 
-\begin{frame}{\subsecname}{线}
+\begin{frame}[c,fragile]{\subsecname}{线}
 \begin{onlyenv}<1>
 \begin{figure}
   \begin{columns}
@@ -842,20 +842,77 @@
 \begin{rcode}
 > x1 = c(seq(0, pi, length = 50), seq(pi, 2*pi, length = 50))
 > y1 = cos(x1) / sin(x1)
-> x2 = seq(1.02 * 2 * pi + pi/2, 4*pi + pi/2, length = 50)
+> x2 = seq(1.02*2*pi+pi/2, 4*pi+pi/2, length = 50)
 > y2 = tan(x2)
 > op = par(bg="black", mar=rep(.5,4))
 > plot(c(x1, x2), c(y1, y2), type = "n", ylim = c(-11, 11))
-> for (i in seq(-10, 10, length = 100)){
-  lines(x1, y1 + i, col = hsv(runif(1,.65,.7), 1, 1, runif(1,.7)), lwd = 4 * runif(1, 0.3))
-  lines(x2, y2 + i, col = hsv(runif(1,.65,.7), 1, 1, runif(1,.7)), lwd = 4 * runif(1, 0.3))
-}
+> for(i in seq(-10, 10, length = 100)){
+      lines(x1, y1 + i,col = hsv(runif(1,.65,.7),1,1,runif(1,.7)),
+            lwd=4*runif(1,0.3))
+      lines(x2, y2 + i,col = hsv(runif(1,.65,.7),1,1,runif(1,.7)),
+            lwd=4*runif(1,0.3))
+  }
 \end{rcode}
     \end{column}
   \end{columns}
   \caption{线的艺术}
 \end{figure}
 \end{onlyenv} 
+
+\begin{onlyenv}<2>
+\begin{figure}
+  \begin{columns}
+    \begin{column}[c]{.4\textwidth}
+        \includegraphics[width=\columnwidth]{line-art2.png}
+    \end{column}
+
+    \begin{column}[c]{.6\textwidth}
+\begin{rcode}
+> x = seq(-50, 50, by = 1)
+> y = -(x^2)
+> par(bg = 'black', mar = rep(0.5, 4))
+> plot(y, x, type = 'n')
+> lines(y, x, lwd = 2*runif(1), col = hsv(0.08, 1, 1, alpha = runif(1, 0.5, 0.9)))
+> for(i in seq(10, 2500, 10)){
+      lines(y-i, x, lwd = 2*runif(1), col = hsv(0.08, 1, 1, alpha = runif(1, 0.5, 0.9)))
+  }
+> for(i in seq(500, 600, 10)){
+      lines(y-i, x, lwd = 2*runif(1), col = hsv(0, 1, 1, alpha = runif(1, 0.5, 0.9)))
+  }
+> for(i in seq(2000, 2300, 10)){
+      lines(y-i, x, lwd = 2*runif(1), col = hsv(0, 1, 1, alpha = runif(1, 0.5, 0.9)))
+  }
+> for(i in seq(100, 150, 10)){
+      lines(y-i, x, lwd = 2*runif(1), col = hsv(0, 1, 1, alpha = runif(1, 0.5, 0.9)))
+  }
+\end{rcode}
+    \end{column}
+  \end{columns}
+  \caption{线的艺术}
+\end{figure}
+\end{onlyenv} 
+
+\begin{onlyenv}<3>
+\begin{figure}
+  \begin{columns}
+    \begin{column}[c]{.4\textwidth}
+        \includegraphics[width=\columnwidth]{line-art3.png}
+    \end{column}
+
+    \begin{column}[c]{.6\textwidth}
+\begin{rcode}
+> theta = seq(0, pi, length = 300)
+> x = cos(theta)
+> y = sin(theta)
+> op = par(bg = "black", mar = rep(0.5, 4))
+> plot(x, y, type = 'n')
+> segments(rep(0, 299), rep(0, 299), x[1:299] * runif(299, 0.7), y[1:299] * runif(299, 0.7), col = hsv(runif(299, 0.45, 0.55), 1, 1, runif(299, 0.5)), lwd = 5*runif(299))
+\end{rcode}
+    \end{column}
+  \end{columns}
+  \caption{线的艺术}
+\end{figure}
+\end{onlyenv}
 \end{frame}
 
 % \begin{frame}[t,fragile]{\subsecname}{面}
@@ -1865,4 +1922,4 @@ xyplot(y ~ x |\textbar| gl(1, length(types)),
 \end{overlayarea}
 \end{frame}
 
-\subsection{空间数据绘图}
+%\subsection{空间数据绘图}
