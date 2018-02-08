@@ -830,6 +830,34 @@
 % \end{onlyenv}  
 % \end{frame}
 
+\begin{frame}{\subsecname}{线}
+\begin{onlyenv}<1>
+\begin{figure}
+  \begin{columns}
+    \begin{column}[c]{.4\textwidth}
+        \includegraphics[width=\columnwidth]{line-art1.png}
+    \end{column}
+
+    \begin{column}[c]{.6\textwidth}
+\begin{rcode}
+> x1 = c(seq(0, pi, length = 50), seq(pi, 2*pi, length = 50))
+> y1 = cos(x1) / sin(x1)
+> x2 = seq(1.02 * 2 * pi + pi/2, 4*pi + pi/2, length = 50)
+> y2 = tan(x2)
+> op = par(bg="black", mar=rep(.5,4))
+> plot(c(x1, x2), c(y1, y2), type = "n", ylim = c(-11, 11))
+> for (i in seq(-10, 10, length = 100)){
+  lines(x1, y1 + i, col = hsv(runif(1,.65,.7), 1, 1, runif(1,.7)), lwd = 4 * runif(1, 0.3))
+  lines(x2, y2 + i, col = hsv(runif(1,.65,.7), 1, 1, runif(1,.7)), lwd = 4 * runif(1, 0.3))
+}
+\end{rcode}
+    \end{column}
+  \end{columns}
+  \caption{线的艺术}
+\end{figure}
+\end{onlyenv} 
+\end{frame}
+
 % \begin{frame}[t,fragile]{\subsecname}{面}
 % \begin{itemize}
 % \item \emphText{polygon()}函数用于绘制多边形
@@ -1806,9 +1834,11 @@ xyplot(y ~ x |\textbar| gl(1, length(types)),
 \subsection{ggplot程序包}
 \begin{frame}{\subsecname}{}
 \begin{itemize}
-\item lattice包具有精细的绘图参数，对于定制统计图形具有极大地灵活性，
-但是过于复杂的参数往往将新手拒之门外；相比之下，ggplot2包以易用性为原则进行设计，而同时又兼具了一定的灵活性
-\item 
+\item graphics和lattice包具有精细的绘图参数，对于定制统计图形具有极大地灵活性，
+但是过于复杂的参数令人望而却步；相比之下，ggplot2包以易用性为原则进行设计，而同时又兼具了一定的灵活性
+\item ggplot2包也是在grid包基础上开发的grid绘图系统，由
+\href{http://hadley.nz/}{\uline{Hadley Wickham}}开发维护
+\item 与lattice的设计理念来自trellis图形不同，ggplot2的设计理念来自
 \end{itemize}
 \end{frame}
 
