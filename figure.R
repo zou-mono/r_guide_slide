@@ -729,3 +729,17 @@ segments(rep(0, 299), rep(0, 299), x[1:299] * runif(299, 0.7),
          col = hsv(runif(299, 0.45, 0.55), 1, 1, runif(299, 0.5)),
          lwd = 5*runif(299))
 dev.off()
+
+CairoPNG("line-art1.png",width=1000*3,height=1000*3,res=72*3,bg="black")
+theta = 1:100
+x = sin(theta)
+y = cos(theta)
+op = par(bg = 'black', mar = rep(0.5, 4))
+plot.new()
+plot.window(xlim = c(-1, 1), ylim = c(-1, 1), asp = 1)
+lines(x, y, col = hsv(0.65, 1, 1))
+lines(0.8 * x, 0.8 * y, col = hsv(0.8, 1, 1))
+lines(0.6 * x, 0.6 * y, col = hsv(0.9, 1, 1))
+lines(0.4 * x, 0.4 * y, col = hsv(0.95, 1, 1))
+dev.off()
+

@@ -830,90 +830,88 @@
 % \end{onlyenv}  
 % \end{frame}
 
-\begin{frame}[c,fragile]{\subsecname}{线}
-\begin{onlyenv}<1>
-\begin{figure}
-  \begin{columns}
-    \begin{column}[c]{.4\textwidth}
-        \includegraphics[width=\columnwidth]{line-art1.png}
-    \end{column}
+% \begin{frame}[c,fragile]{\subsecname}{线}
+% \begin{onlyenv}<1>
+% \begin{figure}
+%   \begin{columns}
+%     \begin{column}[c]{.4\textwidth}
+%         \includegraphics[width=\columnwidth]{line-art1.png}
+%     \end{column}
 
-    \begin{column}[c]{.6\textwidth}
-\begin{rcode}
-> x1 = c(seq(0, pi, length = 50), seq(pi, 2*pi, length = 50))
-> y1 = cos(x1) / sin(x1)
-> x2 = seq(1.02*2*pi+pi/2, 4*pi+pi/2, length = 50)
-> y2 = tan(x2)
-> op = par(bg="black", mar=rep(.5,4))
-> plot(c(x1, x2), c(y1, y2), type = "n", ylim = c(-11, 11))
-> for(i in seq(-10, 10, length = 100)){
-      lines(x1, y1 + i,col = hsv(runif(1,.65,.7),1,1,runif(1,.7)),
-            lwd=4*runif(1,0.3))
-      lines(x2, y2 + i,col = hsv(runif(1,.65,.7),1,1,runif(1,.7)),
-            lwd=4*runif(1,0.3))
-  }
-\end{rcode}
-    \end{column}
-  \end{columns}
-  \caption{线的艺术}
-\end{figure}
-\end{onlyenv} 
+%     \begin{column}[c]{.6\textwidth}
+% \begin{rcode}
+% > theta = 1:100
+% > x = sin(theta)
+% > y = cos(theta)
+% > op = par(bg = 'black', mar = rep(0.5, 4))
+% > plot.new()
+% > plot.window(xlim = c(-1, 1), ylim = c(-1, 1), asp = 1)
+% > lines(x, y, col = hsv(0.65, 1, 1))
+% > lines(0.8*x, 0.8*y, col = hsv(0.8, 1, 1))
+% > lines(0.6*x, 0.6*y, col = hsv(0.9, 1, 1))
+% > lines(0.4*x, 0.4*y, col = hsv(0.95, 1, 1))
+% \end{rcode}
+%     \end{column}
+%   \end{columns}
+%   \caption{线的艺术}
+% \end{figure}
+% \end{onlyenv} 
 
-\begin{onlyenv}<2>
-\begin{figure}
-  \begin{columns}
-    \begin{column}[c]{.4\textwidth}
-        \includegraphics[width=\columnwidth]{line-art2.png}
-    \end{column}
+% \begin{onlyenv}<2>
+% \begin{figure}
+%   \begin{columns}
+%     \begin{column}[c]{.4\textwidth}
+%         \includegraphics[width=\columnwidth]{line-art2.png}
+%     \end{column}
 
-    \begin{column}[c]{.6\textwidth}
-\begin{rcode}
-> x = seq(-50, 50, by = 1)
-> y = -(x^2)
-> par(bg = 'black', mar = rep(0.5, 4))
-> plot(y, x, type = 'n')
-> lines(y, x, lwd = 2*runif(1), col = hsv(0.08, 1, 1, alpha = runif(1, 0.5, 0.9)))
-> for(i in seq(10, 2500, 10)){
-      lines(y-i, x, lwd = 2*runif(1), col = hsv(0.08, 1, 1, alpha = runif(1, 0.5, 0.9)))
-  }
-> for(i in seq(500, 600, 10)){
-      lines(y-i, x, lwd = 2*runif(1), col = hsv(0, 1, 1, alpha = runif(1, 0.5, 0.9)))
-  }
-> for(i in seq(2000, 2300, 10)){
-      lines(y-i, x, lwd = 2*runif(1), col = hsv(0, 1, 1, alpha = runif(1, 0.5, 0.9)))
-  }
-> for(i in seq(100, 150, 10)){
-      lines(y-i, x, lwd = 2*runif(1), col = hsv(0, 1, 1, alpha = runif(1, 0.5, 0.9)))
-  }
-\end{rcode}
-    \end{column}
-  \end{columns}
-  \caption{线的艺术}
-\end{figure}
-\end{onlyenv} 
+%     \begin{column}[c]{.6\textwidth}
+% \begin{rcode}
+% > x = seq(-50, 50, by = 1)
+% > y = -(x^2)
+% > par(bg = 'black', mar = rep(0.5, 4))
+% > plot(y, x, type = 'n')
+% > lines(y, x, lwd = 2*runif(1), col = hsv(0.08, 1, 1, alpha = runif(1, 0.5, 0.9)))
+% > for(i in seq(10, 2500, 10)){
+%       lines(y-i, x, lwd = 2*runif(1), col = hsv(0.08, 1, 1, alpha = runif(1, 0.5, 0.9)))
+%   }
+% > for(i in seq(500, 600, 10)){
+%       lines(y-i, x, lwd = 2*runif(1), col = hsv(0, 1, 1, alpha = runif(1, 0.5, 0.9)))
+%   }
+% > for(i in seq(2000, 2300, 10)){
+%       lines(y-i, x, lwd = 2*runif(1), col = hsv(0, 1, 1, alpha = runif(1, 0.5, 0.9)))
+%   }
+% > for(i in seq(100, 150, 10)){
+%       lines(y-i, x, lwd = 2*runif(1), col = hsv(0, 1, 1, alpha = runif(1, 0.5, 0.9)))
+%   }
+% \end{rcode}
+%     \end{column}
+%   \end{columns}
+%   \caption{线的艺术}
+% \end{figure}
+% \end{onlyenv} 
 
-\begin{onlyenv}<3>
-\begin{figure}
-  \begin{columns}
-    \begin{column}[c]{.4\textwidth}
-        \includegraphics[width=\columnwidth]{line-art3.png}
-    \end{column}
+% \begin{onlyenv}<3>
+% \begin{figure}
+%   \begin{columns}
+%     \begin{column}[c]{.4\textwidth}
+%         \includegraphics[width=\columnwidth]{line-art3.png}
+%     \end{column}
 
-    \begin{column}[c]{.6\textwidth}
-\begin{rcode}
-> theta = seq(0, pi, length = 300)
-> x = cos(theta)
-> y = sin(theta)
-> op = par(bg = "black", mar = rep(0.5, 4))
-> plot(x, y, type = 'n')
-> segments(rep(0, 299), rep(0, 299), x[1:299] * runif(299, 0.7), y[1:299] * runif(299, 0.7), col = hsv(runif(299, 0.45, 0.55), 1, 1, runif(299, 0.5)), lwd = 5*runif(299))
-\end{rcode}
-    \end{column}
-  \end{columns}
-  \caption{线的艺术}
-\end{figure}
-\end{onlyenv}
-\end{frame}
+%     \begin{column}[c]{.6\textwidth}
+% \begin{rcode}
+% > theta = seq(0, pi, length = 300)
+% > x = cos(theta)
+% > y = sin(theta)
+% > op = par(bg = "black", mar = rep(0.5, 4))
+% > plot(x, y, type = 'n')
+% > segments(rep(0, 299), rep(0, 299), x[1:299] * runif(299, 0.7), y[1:299] * runif(299, 0.7), col = hsv(runif(299, 0.45, 0.55), 1, 1, runif(299, 0.5)), lwd = 5*runif(299))
+% \end{rcode}
+%     \end{column}
+%   \end{columns}
+%   \caption{线的艺术}
+% \end{figure}
+% \end{onlyenv}
+% \end{frame}
 
 % \begin{frame}[t,fragile]{\subsecname}{面}
 % \begin{itemize}
@@ -1432,73 +1430,80 @@
 % \end{figure}
 % \end{frame}
 
-\subsection{grid绘图系统}
-\begin{frame}[t,fragile]{\subsecname}{}
-\begin{itemize}
-\item<1-> 前面介绍的graphics程序包是R的标准绘图系统，也称为\emphText{graphics绘图系统}，
-  除此之外R中还有另一套截然不同的\emphText{grid绘图系统}
-\item<1-> 使用grid绘图系统前需要先用\emphText{library(grid)}加载grid程序包，
-该程序包由\href{https://www.stat.auckland.ac.nz/~paul/}{\uline{Paul Murrell}}开发维护
-%\textsuperscript{\underline{\href{https://www.stat.auckland.ac.nz/~paul/}{主页}}} 
-\item<2-> grid绘图系统的\emphText{设计初衷是为了克服graphics系统中元素不能动态修改的弱点}
-\end{itemize}
+% \subsection{grid绘图系统}
+% \begin{frame}[t,fragile]{\subsecname}{}
+% \begin{itemize}
+% \item<1-> 前面介绍的graphics程序包是R的标准绘图系统，也称为\emphText{graphics绘图系统}，
+%   除此之外R中还有另一套截然不同的\emphText{grid绘图系统}
+% \item<1-> 使用grid绘图系统前需要先用\emphText{library(grid)}加载grid程序包，
+% 该程序包由\href{https://www.stat.auckland.ac.nz/~paul/}{\uline{Paul Murrell}}开发维护
+% %\textsuperscript{\underline{\href{https://www.stat.auckland.ac.nz/~paul/}{主页}}} 
+% \item<2-> grid绘图系统的\emphText{设计初衷是为了克服graphics系统中元素不能动态修改的弱点}
+% \end{itemize}
 
-\vspace{-10pt}
+% \vspace{-10pt}
+% \begin{overlayarea}{\textwidth}{\textheight}
+% \only<1>{
+% \begin{figure}\centering
+%   \captionsetup[subfigure]{labelformat=empty} 
+%   \subfloat[]
+%   {\includegraphics[height=0.4\textheight]{paul_murrell.jpg}} \vspace{1pt}
+%   \subfloat[]
+%   {\includegraphics[height=0.4\textheight]{R_graphics_cover.jpg}} \vspace{-10pt}
+%   \caption{左图是grid作者Paul Murrell，目前是奥克兰大学统计系副教授；右图是他在2005年写的
+% 书—《R Graphics》,现在已成为R领域的经典入门书籍}  
+% \end{figure}}
 
-\begin{overlayarea}{\textwidth}{\textheight}
-\only<1>{
-}
+% \only<3>{
+% \begin{block}{\small grid系统和graphics系统的区别} \footnotesize
+% \begin{itemize} 
+% \item[\HandRight] grid用\emphText{视口(viewports)}将绘图设备分割为不同的区域，
+% 绘图对象(grob)可以在不同的视口中进行共享，比graphics中的处理方式更加灵活
+% \item[\HandRight] grid绘图对象可以被修改或者从一个图形中移除，\emphText{而不需要重新绘制所有的图形}，
+% 但是在graphics中则必须重绘 
+% \item[\HandRight] grid绘图系统是一个绘图框架，其原生的grid程序包仅提供低级绘图函数用于绘制统计图形中的元素，
+% 不像graphis程序包还集成了高级绘图函数用于绘制常用的统计图形，
+% 因此\emphText{直接用grid程序包绘制统计图形比较繁琐}
+% \item[\HandRight] \emphText{两套系统的绘图函数和绘图参数完全不同，不能混用！}
+% \end{itemize}
+% \end{block}}
 
-\only<3>{
-\begin{block}{\small grid系统和graphics系统的区别} \footnotesize
-\begin{itemize} 
-\item[\HandRight] grid用\emphText{视口(viewports)}将绘图设备分割为不同的区域，
-绘图对象(grob)可以在不同的视口中进行共享，比graphics中的处理方式更加灵活
-\item[\HandRight] grid绘图对象可以被修改或者从一个图形中移除，\emphText{而不需要重新绘制所有的图形}，
-但是在graphics中则必须重绘 
-\item[\HandRight] grid绘图系统是一个绘图框架，其原生的grid程序包仅提供低级绘图函数用于绘制统计图形中的元素，
-不像graphis程序包还集成了高级绘图函数用于绘制常用的统计图形，
-因此\emphText{直接用grid程序包绘制统计图形比较繁琐}
-\item[\HandRight] \emphText{两套系统的绘图函数和绘图参数完全不同，不能混用！}
-\end{itemize}
-\end{block}}
+% \begin{onlyenv}<2>
+% \begin{columns}
+%   \begin{column}[t]{.5\textwidth}
+%     \begin{rcode}
+% # 基础统计图形库处理方式
+% plot(0:1, 0:1)
+% rect(0, 0, 1, 1, col = "red")
+% # 为了改变颜色,必须重画整幅图形
+% plot(0:1, 0:1)
+% # 虽然可以用新的矩形覆盖旧的,但旧矩形仍然存在
+% rect(0, 0, 1, 1, col = "blue")
+%     \end{rcode} 
+%   \end{column}
 
-\begin{onlyenv}<2>
-\begin{columns}
-  \begin{column}[t]{.5\textwidth}
-    \begin{rcode}
-# 基础统计图形库处理方式
-plot(0:1, 0:1)
-rect(0, 0, 1, 1, col = "red")
-# 为了改变颜色,必须重画整幅图形
-plot(0:1, 0:1)
-# 虽然可以用新的矩形覆盖旧的,但旧矩形仍然存在
-rect(0, 0, 1, 1, col = "blue")
-    \end{rcode} 
-  \end{column}
+%   \begin{column}[t]{.5\textwidth}
+%     \begin{rcode}
+% # grid绘图系统的处理方式
+% grid.rect(name = "rect0")
+% # 修改它的填充颜色为红色
+% grid.edit("rect0", gp = gpar(fill = "red"))
+% # 修改为蓝色,不需要重新用grid.rect()画矩形
+% grid.edit("rect0", gp = gpar(fill = "blue"))
+%     \end{rcode} 
+%   \end{column}
+% \end{columns} 
+% \end{onlyenv}
 
-  \begin{column}[t]{.5\textwidth}
-    \begin{rcode}
-# grid绘图系统的处理方式
-grid.rect(name = "rect0")
-# 修改它的填充颜色为红色
-grid.edit("rect0", gp = gpar(fill = "red"))
-# 修改为蓝色,不需要重新用grid.rect()画矩形
-grid.edit("rect0", gp = gpar(fill = "blue"))
-    \end{rcode} 
-  \end{column}
-\end{columns} 
-\end{onlyenv}
-
-\only<4>{
-\begin{figure}[t]
-\centering
-\includegraphics[width=0.45\columnwidth]{grid_system.png}
-\caption{\emphText{lattice}和\emphText{ggplot2}是基于grid包开发的绘图程序包，这样就在grid
-绘图系统中使用高级绘图函数来简化统计图形的绘制过程}
-\end{figure}}
-\end{overlayarea}
-\end{frame} 
+% \only<4>{
+% \begin{figure}[t]
+% \centering
+% \includegraphics[width=0.45\columnwidth]{grid_system.png}
+% \caption{\emphText{lattice}和\emphText{ggplot2}是基于grid包开发的绘图程序包，这样就在grid
+% 绘图系统中使用高级绘图函数来简化统计图形的绘制过程}
+% \end{figure}}
+% \end{overlayarea}
+% \end{frame} 
 
 \subsection{lattice程序包}
 \begin{frame}[t,fragile]{\subsecname}{}
