@@ -1,5 +1,6 @@
 setwd("~/Documents/tex_projects/r_guide_slide")
-
+library(ggplot2)
+library(Cairo)
 
 png("expression-example.png",width=1000,height=1000,res=300,pointsize=6)
 par(mar=c(2,2,0,0)+0.1)
@@ -601,7 +602,6 @@ xyplot(y ~ x | gl(1, length(types)),
        })[rep(1, length(types))]
 dev.off()
 
-library(Cairo)
 CairoPNG("panel-example2.png",width=800*3,height=800*3,res=72*3)
 panel.hypotrochoid <- function(r, d, cycles = 10, density = 30)
 {
@@ -743,3 +743,36 @@ lines(0.6 * x, 0.6 * y, col = hsv(0.9, 1, 1))
 lines(0.4 * x, 0.4 * y, col = hsv(0.95, 1, 1))
 dev.off()
 
+CairoPNG("ggplot_first_example.png",width=1000,height=500,res=72)
+CairoFonts(regular = "WenQuanYi Micro Hei", bold = "WenQuanYi Micro Hei")
+ggplot(mpg, aes(x=cty, y=hwy))+   
+  geom_point(aes(colour=class,size=displ),alpha=0.6,position = "jitter")+  
+  stat_smooth()+  
+  scale_size_continuous(range = c(4, 10))+  
+  facet_wrap(~ year,ncol=2)+  
+  ggtitle("汽车油耗与型号")+  
+  labs(y='每加仑高速公路行驶距离',  
+       x='每加仑城市公路行驶距离')+  
+  guides(size=guide_legend(title='排量'),  
+         colour = guide_legend(title='车型',  
+                               override.aes=list(size=5)))
+dev.off()
+
+CairoPNG("ggplot_mapping1.png",width=1000,height=500,res=72)
+ggplot(mtcars,aes(mpg,wt,colour=cyl)) +
+    geom_point() +
+    theme(axis.title.x =element_text(size=14), axis.title.y=element_text(size=14))
+dev.off()
+
+CairoPNG("ggplot_mapping2.png",width=1000,height=500,res=72)
+library(nlme)
+ggplot(Oxboys, aes(age,height, group= Subject)) + geom_line() +
+    geom_smooth(aes(group=1), method = "lm", size = 2, se=F)
+dev.off()
+
+CairoPNG("ggplot_scales.png",width=1000,height=500,res=72)
+p <- qplot(sleep_total, sleep_cycle, data = msleep, colour = vore)
+p + scale_colour_hue("What does\nit eat?",
+breaks = c("herbi", "carni", "omni", NA),
+labels = c("plants", "meat", "both", "don’t know"))
+dev.off()

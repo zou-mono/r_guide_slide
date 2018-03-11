@@ -514,17 +514,19 @@
 \end{overlayarea}
 \end{frame}
 
-\begin{frame}[t,fragile]{\subsecname}{ggplot2绘图逻辑}
+\begin{frame}[t,fragile]{\subsecname}{绘图原理}
 \begin{itemize}
-\item<1-> 按\emphText{图层(layer)}概念绘图，图层之间的叠加通过“+”符号实现，越往后的图层越高
-\item<1-> 有明确的起始(ggplot函数)与终止，\emphText{一条语句绘制一张图}
-\item<3-> 保有标准绘图系统的命令式调整函数，可以对图形做灵活修改
+\item<1-> 将绘图与数据分离，数据相关绘图与数据无关绘图分离
+\item<2-> 按照\emphText{图层(layer)}概念绘图，图层之间的叠加通过“+”符号实现，越往后的图层越高
+\item<2-> 有明确的起始(ggplot、qplot函数)与终止，\emphText{一条语句绘制一张图}
+\item<3-> 和lattice包一样，所有绘图内容都保存在一个绘图对象中
+\item<4-> 保留标准绘图系统的命令式调整函数，对图形做个性化修改
 \item<4-> 将常见的统计变换融入到了绘图过程中
 \end{itemize}
 
 \begin{overlayarea}{\textwidth}{\textheight}
-\begin{onlyenv}<1>
-   \begin{minipage}{\textwidth}
+\begin{onlyenv}<2>
+\begin{minipage}{\textwidth}
 \begin{rcode}
 # graphics中的实现
 # 以plot开始，可以以任何方式结束，每加上一个元素，实际上都是一句单独的命令，这与人类对于画图的认识有冲突，而且由于没有停止绘图的标志，使得后续操作会产生困惑
@@ -533,21 +535,316 @@
 > plot(x,y)   #绘制散点图
 > text(15,20, expression(x[1] == x[2])) #添加注释
 \end{rcode} 
-  \end{minipage}
+\end{minipage}
 
-  \begin{minipage}{\textwidth}
+\begin{minipage}{\textwidth}
 \begin{rcode}
 # ggplot2中的实现
 # 1、有明确的起始（以ggplot函数开始）与终止（一句语句一幅图）
 # 2、图层之间的叠加是靠“+”号实现的，越往后的图层越高
 > x <- rnorm(100,10,5) 
 > y <- x + rnorm(100,0,1) 
-> ggplot(data= NULL, aes(x = x, y = y)) +  #开始绘图
-  geom_point(color = "darkred") +  #添加点
-  annotate("text",x =15, y = 20,parse = T,label = "x[1] == x[2]") #添加注释
+> |\colorbox{green}{ggplot}|(data= NULL, aes(x = x, y = y)) +  #开始绘图
+  |\colorbox{green}{geom\_point}|(color = "darkred") +  #添加点
+  |\colorbox{green}{annotate}|("text",x =15, y = 20,parse = T,label = "x[1] == x[2]") #添加注释
 \end{rcode}
-  \end{minipage}
+\end{minipage}
 \end{onlyenv}
 \end{overlayarea}
 \end{frame}
+
+\begin{frame}[t,fragile]{\subsecname}{数据无关的图形要素}
+\begin{itemize}
+\item 数据无关的图形要素\emphText{负责实现图形的结构化外观}
+\item 通过\emphText{theme()}函数对数据无关的图形要素进行统一设置，包括四个基础类型：文本、线、矩形和空白
+\end{itemize}
+
+\begin{overlayarea}{\textwidth}{\textheight}
+\only<1>{
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.9\columnwidth]{ggplot_theme.png}
+  \caption{数据无关的图形要素}
+\end{figure}}
+
+\only<2>{
+\begin{table} \centering \scriptsize
+    \renewcommand\arraystretch{0.8}
+    \begin{tabular}{>{\centering\arraybackslash} m{0.3\columnwidth} >{\centering\arraybackslash} m{0.1\columnwidth} >{\centering\arraybackslash} m{0.5\columnwidth}}
+      \toprule
+      \rowcolor{LightCyan}
+      \multicolumn{1}{c}{\textbf{要素}} & \multicolumn{1}{c}{\textbf{函数}} &
+\multicolumn{1}{c}{\textbf{描述}} \\\hline
+      axis.line & element\_line & axis的线 \\
+      axis.text.x(y) & element\_text & x,y轴标签\\
+      axis.ticks & element\_line & axis刻度线 \\
+      axis.title.x(y) & element\_text & axis刻度标签\\
+      legend.background & element\_rect & legend背景\\
+      legend.key & element\_rect & legend标示背景\\
+      legend.text & element\_text & legend标签\\
+      legend.title & element\_text & legend标题\\
+      panel.background & element\_rect & panel背景\\
+      panel.grid.major(minor) & element\_line & panel网格线样式\\
+      plot.background & element\_rect & plot背景\\
+      plot.title & element\_text & plot标题\\
+      strip.background & element\_rect & strip背景\\
+      strip.text.x(y) & element\_text & strip文字\\
+      \bottomrule
+    \end{tabular}
+    \caption{theme要素(详见?theme帮助)}
+\end{table}}
+\end{overlayarea}
+\end{frame}
+
+\begin{frame}[t,fragile]{\subsecname}{数据相关的图形要素}
+\begin{itemize}
+\item 数据相关的图形要素\emphText{负责构造统计数据的绘制图形}，大致可以分为数据层、几何图形层和美学层三类
+\end{itemize}
+
+\begin{overlayarea}{\textwidth}{\textheight}
+\only<1>{
+\begin{table} \centering \scriptsize
+    \begin{tabular}{|>{\centering\arraybackslash} m{0.3\columnwidth}|>{\centering\arraybackslash} m{0.35\columnwidth}|>{\centering\arraybackslash} m{0.25\columnwidth}|}
+      \toprule
+      \rowcolor{LightCyan}
+      \multicolumn{1}{|c|}{\textbf{语法要素}} & \multicolumn{1}{c|}{\textbf{描述}} &
+\multicolumn{1}{c|}{\textbf{对应函数}} \\\hline
+      数据(data) & 绘图的数据，必须是data.frame类型 & data.frame() \\\hline
+      映射(mapping) & 将数据按变量映射为图形要素 & aes()\\\hline
+      几何对象(geometric object) & 用来展示数据的几何对象 & geom\_XXX()、annotate() \\\hline
+      统计变换(statistical transformations) & 对原始数据进行统计变换计算 & stat\_XXX()\\\hline
+      标度(scales) & 变量映射到图形要素的标度，体现为图例和坐标刻度 & scale\_XXX()、labs()、guides()\\\hline
+      坐标系(coordinate system) & 绘图坐标系统 & coord\_XXX()\\\hline
+      位置调整(position adjustments) & 对图形位置做精细控制 & position\_XXX()\\\hline
+      分面(faceting) & 在不同网格中绘制图形，类似lattice & facet\_XXX()\\
+      \bottomrule
+    \end{tabular}
+    %\caption{ggplot2中的语法要素}
+\end{table}}
+\end{overlayarea}
+\end{frame}
+
+\begin{frame}[t,fragile]{\subsecname}{数据(data)}
+\begin{itemize}
+\item ggplot2对数据的要求是\emphText{必须是data.frame类型}
+\item ggplot2从给定的data.frame中提取绘图所需变量\emphText{生成新的数据集}，而不是直接在原数据上进行变换
+\item ggplot2允许\emphText{用相同代码、不同数据集进行绘图}，只需要用\emphText{“\%+\%”}
+添加新的数据集代替原数据集
+\end{itemize}
+
+\begin{onlyenv}<2>
+\begin{rcode}
+# 将绘图内容保存在一个绘图对象p中
+> p <- ggplot(mtcars, aes(mpg, wt, colour = cyl)) + geom_point()
+
+# 通过变换重新生成一份新的数据集
+> mtcars_new <- transform(mtcars, mpg = mpg ^ 2)
+
+# 按照原来的绘图设定对新数据集进行绘制
+> p |\colorbox{green}{%+%}| mtcars_new
+\end{rcode}
+\end{onlyenv}
+\end{frame}
+
+\begin{frame}[t,fragile]{\subsecname}{映射(mapping))}
+\begin{itemize}
+\item<1-> \emphText{aes()}函数用来将数据变量映射到图形中，使变量成为可以被感知的图形属性
+\item<1-> \emphText{最好不要使用指定数据集之外的变量}，这不利于将绘图所需数据都封装到一个对象中
+\item<3-> 通过\emphText{group}参数将数据按照变量映射到不同分组进行绘图
+\end{itemize}
+
+\begin{onlyenv}<1>
+\begin{rcode}
+> p <- ggplot(mtcars)
+> summary(p)
+# mtcars数据集中包括wt和hp两个变量
+> data: mpg, cyl, disp, hp, drat, wt, qsec, vs, am, gear, carb [32x11]
+  faceting: <ggproto object: Class FacetNull, Facet>
+# 将wt和hp两个变量分别映射到x坐标和y坐标
+> p <- p + aes(x=wt,y=hp)
+> summary(p)
+> data: mpg, cyl, disp, hp, drat, wt, qsec, vs, am, gear, carb [32x11]
+  |\colorbox{green}{mapping:  x = wt, y = hp}|
+  faceting: <ggproto object: Class FacetNull, Facet>
+\end{rcode}
+\end{onlyenv}
+
+\begin{onlyenv}<2>
+\begin{minipage}{\textwidth}
+\begin{rcode}
+# 按照cyl变量将颜色映射到散点 
+> ggplot(mtcars,|\colorbox{green}{aes(mpg,wt,colour=cyl)}|) + geom_point()
+\end{rcode}
+\end{minipage}
+
+\begin{minipage}{\textwidth}
+\centering
+\includegraphics[width=0.8\columnwidth]{ggplot_mapping1.png}
+\end{minipage}
+\end{onlyenv}
+
+\begin{onlyenv}<3>
+\begin{minipage}{\textwidth}
+\begin{rcode}
+# 对Oxboys数据集按照Subject变量分为26个分组
+> ggplot(Oxboys, aes(age,height,|\colorbox{green}{group=Subject}|)) + geom_line() +
+     geom_smooth(aes(group=1), method = "lm", size = 2, se=F)
+\end{rcode}
+\end{minipage}
+
+\begin{minipage}{\textwidth}
+\centering
+\includegraphics[width=0.8\columnwidth]{ggplot_mapping2.png}
+\end{minipage}
+\end{onlyenv}
+\end{frame}
+
+\begin{frame}[t,fragile]{\subsecname}{标度(scales)}
+\begin{itemize}
+\item 标度是\emphText{从数据空间的定义域到图形属性空间值域的映射}，
+将数据转化为视觉上可以感知的颜色、大小、位置和形状
+\item ggplot2将标度分为位置标度、颜色标度、手动离散标度和同一型标度，标度函数统一形式为
+\emphText{scale\_图形属性\_类型}
+\end{itemize}
+
+\begin{overlayarea}{\textwidth}{\textheight}
+\only<1>{
+\begin{table} \centering \scriptsize
+    \renewcommand\arraystretch{0.8}
+    \begin{tabular}{>{\centering\arraybackslash} m{0.4\columnwidth} >{\centering\arraybackslash} m{0.2\columnwidth} >{\centering\arraybackslash} m{0.2\columnwidth}}
+      \toprule
+      \rowcolor{LightCyan}
+      \multicolumn{1}{c}{\textbf{图形属性}} & \multicolumn{1}{c}{\textbf{离散型}} & \multicolumn{1}{c}{\textbf{连续型}}\\\hline
+      颜色(colour)和填充色(fill) & brewer & \textbf{gradient}\\
+      & grey & gradient2 \\
+      & \textbf{hue} & gradientn \\
+      & identity,manual &\\
+      位置(x,y) & \textbf{discrete} & \textbf{continuous}\\
+      & & date\\
+      形状(shape) & \textbf{shape} & \\
+      & identity,manual &\\
+      线类型(line type) & \textbf{linetype} & \\
+      & identity,manual &\\
+      大小(size) & identity,manual & \textbf{size}\\
+      \bottomrule
+    \end{tabular}
+    \caption{按图形属性和变量类型组成的标度函数，默认值为粗体，详见ggplot帮助}
+\end{table}}
+
+\begin{onlyenv}<2>
+\begin{minipage}{\textwidth}
+\begin{rcode}
+> p <- qplot(sleep_total, sleep_cycle, data = msleep, colour = vore)
+# 通过标度函数scale\_colour\_hue对离散型分类数据集按变量进行颜色值映射
+> p + |\colorbox{green}{scale\_colour\_hue}|("What does\nit eat?", breaks = c("herbi", "carni", "omni", NA), labels = c("plants", "meat", "both", "don’t know"))
+\end{rcode}
+\end{minipage}
+
+\begin{minipage}{\textwidth}
+\centering
+\includegraphics[width=0.9\columnwidth]{ggplot_scales.png}
+\end{minipage}
+\end{onlyenv}
+\end{overlayarea}
+\end{frame}
+
+\begin{frame}[t,fragile]{\subsecname}{几何对象(geometric object))}
+\begin{itemize}
+\item 几何对象简称geom，负责执行图形的实际渲染，控制生成的图形类型，通过函数\emphText{geom\_XXX}实现
+\end{itemize}
+\begin{table} \centering \scriptsize
+    \renewcommand\arraystretch{0.8}
+    \begin{tabular}{>{\centering\arraybackslash} m{0.3\columnwidth} >{\centering\arraybackslash} m{0.6\columnwidth}}
+      \toprule
+      \rowcolor{LightCyan}
+      \multicolumn{1}{c}{\textbf{函数}} & \multicolumn{1}{c}{\textbf{描述}} \\\hline
+      geom\_abline & 由斜率和截距确定的线图\\
+      geom\_bar & 条形图\\
+      geom\_blank & 空对象，即什么都不绘制\\
+      geom\_boxplot & 箱线图\\
+      geom\_contour & 等高线图\\
+      geom\_density & 核密度图\\
+      geom\_histogram & 直方图\\
+      geom\_hline & 水平线\\
+      geom\_line & 线\\
+      geom\_point & 点\\
+      geom\_polygon & 多边形\\
+      geom\_quantile & 分位数线\\
+      geom\_rect & 矩形\\
+      geom\_segment & 线段\\
+      geom\_smooth & 平滑条件均值图\\
+      geom\_text & 文本\\
+      \bottomrule
+    \end{tabular}
+    \caption{部分几何对象快捷函数，详见ggplot帮助}
+\end{table}
+\end{frame}
+
+\begin{frame}[t,fragile]{\subsecname}{统计变换(statistical transformations)}
+\begin{itemize}
+\item 统计变换简称stat，负责通过某种方式对数据进行统计汇总，通过函数\emphText{stat\_XXX}实现
+\end{itemize}
+\begin{table} \centering \scriptsize
+    \renewcommand\arraystretch{0.8}
+    \begin{tabular}{>{\centering\arraybackslash} m{0.3\columnwidth} >{\centering\arraybackslash} m{0.6\columnwidth}}
+      \toprule
+      \rowcolor{LightCyan}
+      \multicolumn{1}{c}{\textbf{函数}} & \multicolumn{1}{c}{\textbf{描述}} \\\hline
+      stat\_abline & 添加由斜率和截距确定的线\\
+      stat\_bin & 计算封箱数据\\
+      stat\_boxplot & 计算组成箱线图的各种元素值\\
+      stat\_contour & 绘制三维等高线图\\
+      stat\_density & 绘制核密度图\\
+      stat\_function & 添加函数曲线\\
+      stat\_hline & 添加水平线\\
+      stat\_identity & 不做任何变换，添加原始数据\\
+      stat\_qq & 计算QQ图的相关值\\
+      stat\_quantile & 计算连续分位数\\
+      stat\_smooth & 添加平滑曲线\\
+      stat\_sum & 计算每个单一值的频数\\
+      stat\_summary & 对每个x对应的y值做统计描述\\
+      \bottomrule
+    \end{tabular}
+    \caption{部分统计变换函数，详见ggplot帮助}
+\end{table}
+\end{frame}
+
+\begin{frame}[t,fragile]{\subsecname}{分面(faceting)}
+\begin{itemize}
+\item 统计变换简称stat，负责通过某种方式对数据进行统计汇总，通过函数\emphText{stat\_XXX}实现
+\end{itemize}
+\end{frame}
+
+\begin{frame}[t,fragile]{\subsecname}{绘图语法}
+\begin{overlayarea}{\textwidth}{\textheight}
+\begin{onlyenv}<1>
+\begin{rcode}
+# ggplot2的绘图语法 
+ggplot(data = , aes(x = , y = )) + geom_XXX(...) + ... + stat_XXX(...) + ... + annotate(...) + ... + labs(...) + scale_XXX(...) + coord_XXX(...) + guides(...) + theme(...) + facet_XXX(...)
+\end{rcode}
+\end{onlyenv}
+
+\begin{onlyenv}<2>
+\begin{minipage}{\textwidth}
+\begin{rcode}
+> ggplot(mpg, aes(x=cty, y=hwy))+   
+  geom_point(aes(colour=class,size=displ),alpha=0.6,position = "jitter")+  
+  stat_smooth()+  
+  scale_size_continuous(range = c(4, 10))+  
+  facet_wrap(~ year,ncol=1)+  
+  ggtitle("汽车油耗与型号")+  
+  labs(y='每加仑高速公路行驶距离',  
+       x='每加仑城市公路行驶距离')+  
+  guides(size=guide_legend(title='排量'), colour = guide_legend(title='车型', override.aes=list(size=5))) 
+\end{rcode} 
+\end{minipage}
+
+\begin{minipage}{\textwidth}
+\centering
+\includegraphics[width=0.8\columnwidth]{ggplot_first_example.png}
+\end{minipage}
+\end{onlyenv}
+\end{overlayarea}
+\end{frame}
+
 
