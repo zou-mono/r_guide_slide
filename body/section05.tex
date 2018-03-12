@@ -518,7 +518,7 @@
 \begin{itemize}
 \item<1-> 将绘图与数据分离，数据相关绘图与数据无关绘图分离
 \item<2-> 按照\emphText{图层(layer)}概念绘图，图层之间的叠加通过“+”符号实现，越往后的图层越高
-\item<2-> 有明确的起始(ggplot、qplot函数)与终止，\emphText{一条语句绘制一张图}
+\item<2-> 有明确的起始(ggplot函数)与终止，\emphText{一条语句绘制一张图}
 \item<3-> 和lattice包一样，所有绘图内容都保存在一个绘图对象中
 \item<4-> 保留标准绘图系统的命令式调整函数，对图形做个性化修改
 \item<4-> 将常见的统计变换融入到了绘图过程中
@@ -811,8 +811,64 @@
 
 \begin{frame}[t,fragile]{\subsecname}{分面(faceting)}
 \begin{itemize}
-\item 统计变换简称stat，负责通过某种方式对数据进行统计汇总，通过函数\emphText{stat\_XXX}实现
+\item<1-> 分面即在同一图幅上自动摆放多个图形的绘图概念(同lattice)
+\item<1-> 提供两种分面类型：\emphText{网格型}(facet\_grid)和\emphText{封装型}(facet\_wrap)
+\item<2-> 分面有\emphText{分面变量和控制标度}两个属性；分面变量定义网格的排列，控制标度对分面的坐标进行控制
 \end{itemize}
+
+\begin{overlayarea}{\textwidth}{\textheight}
+\only<1>{
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.7\columnwidth]{ggplot_facet1.png}
+    \caption{左图的网格型分面生成一个二维面板网格，面板的行和列通过变量定义；右图的封装型是一个一维面板网格，
+按照空间范围封装成二维，这和lattice的网格生成方式是一样的}
+\end{figure}}
+
+\only<2>{
+\begin{table} \centering \scriptsize
+    \renewcommand\arraystretch{1}
+    \begin{tabular}{>{\centering\arraybackslash} m{0.1\columnwidth} >{\centering\arraybackslash} m{0.2\columnwidth} >{\centering\arraybackslash} m{0.6\columnwidth}}
+      \toprule
+      \rowcolor{LightCyan}
+      \multicolumn{1}{c}{\textbf{分面变量}} & \multicolumn{1}{c}{\textbf{表达方式}} & \multicolumn{1}{c}{\textbf{描述}}\\\hline
+      一行多列 & $.\sim a$ & 按变量a分面,行为1,列为length(a),即横向分面\\
+      一列多行 & $a\sim .$ & 按变量a分面,列为1,行为length(a),即纵向分面\\
+      多行多列 & $a\sim b$ & 按照变量a和b分面,行为length(a),列为length(b)\\
+      额外参数 & space=“free” & 按照图形y轴,或x轴比例,自由分配空间\\
+      \bottomrule
+    \end{tabular}
+    \caption{网格型分面变量属性}
+\end{table}
+\begin{table} \centering \scriptsize
+    \renewcommand\arraystretch{1}
+    \begin{tabular}{>{\centering\arraybackslash} m{0.3\columnwidth} >{\centering\arraybackslash} m{0.6\columnwidth}}
+      \toprule
+      \rowcolor{LightCyan}
+      \multicolumn{1}{c}{\textbf{表达方式}} & \multicolumn{1}{c}{\textbf{描述}}\\\hline
+       $\sim a+b+c,ncol,nrow$ & 类似lattice,按照变量自定义设置行列网格数\\
+      \bottomrule
+    \end{tabular}
+    \caption{封装型分面变量属性}
+\end{table}}
+
+\only<3>{
+\begin{table} \centering \scriptsize
+    \renewcommand\arraystretch{1}
+    \begin{tabular}{>{\centering\arraybackslash} m{0.3\columnwidth} >{\centering\arraybackslash} m{0.6\columnwidth}}
+      \toprule
+      \rowcolor{LightCyan}
+      \multicolumn{1}{c}{\textbf{参数}} & \multicolumn{1}{c}{\textbf{描述}}\\\hline
+       scales=“fixed” & x和y的标度在所有分面中都相同\\
+       scales=“free” & x和y的标度在每个分面中都可变\\
+       scales=“free\_x” & 固定y标度,x标度可变\\
+       scales=“free\_y” & 固定x标度,y标度可变\\
+      \bottomrule
+    \end{tabular}
+    \caption{控制标度属性}
+\end{table}}
+
+\end{overlayarea}
 \end{frame}
 
 \begin{frame}[t,fragile]{\subsecname}{绘图语法}
