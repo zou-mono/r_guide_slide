@@ -851,3 +851,50 @@ CairoPNG("ggplot_facet4_2.png",width=500,height=500,res=72)
 ggplot(mpg,aes(cty, hwy)) + geom_point() +
     facet_wrap(~ cyl, scales = "free")
 dev.off()
+
+
+CairoPNG("ggplot_position1_1.png",width=500,height=500,res=72)
+ggplot(diamonds, aes(clarity, fill = cut)) +
+    geom_bar(position = "stack")
+dev.off()
+CairoPNG("ggplot_position1_2.png",width=500,height=500,res=72)
+ggplot(diamonds, aes(clarity, fill = cut)) +
+    geom_bar(position = "fill")
+dev.off()
+CairoPNG("ggplot_position1_3.png",width=500,height=500,res=72)
+ggplot(diamonds, aes(clarity, fill = cut)) +
+    geom_bar(position = "dodge")
+dev.off()
+
+rect <- data.frame(x = 50, y = 50)
+line <- data.frame(x = c(1, 200), y = c(100, 1))
+CairoPNG("ggplot_coord1_1.png",width=500,height=500,res=72)
+ggplot(mapping = aes(x, y)) + 
+  geom_tile(data = rect, aes(width = 50, height = 50)) + 
+  geom_line(data = line)
+dev.off()
+CairoPNG("ggplot_coord1_2.png",width=500,height=500,res=72)
+ggplot(mapping = aes(x, y)) + 
+  geom_tile(data = rect, aes(width = 50, height = 50)) + 
+    geom_line(data = line) + coord_polar("x")
+dev.off()
+CairoPNG("ggplot_coord1_3.png",width=500,height=500,res=72)
+ggplot(mapping = aes(x, y)) + 
+  geom_tile(data = rect, aes(width = 50, height = 50)) + 
+    geom_line(data = line) + coord_polar("y")
+dev.off()
+CairoPNG("ggplot_coord1_4.png",width=500,height=500,res=72)
+ggplot(mapping = aes(x, y)) + 
+  geom_tile(data = rect, aes(width = 50, height = 50)) + 
+    geom_line(data = line) + coord_flip()
+dev.off()
+CairoPNG("ggplot_coord1_5.png",width=500,height=500,res=72)
+ggplot(mapping = aes(x, y)) + 
+  geom_tile(data = rect, aes(width = 50, height = 50)) + 
+    geom_line(data = line) + coord_trans(y = "log10")
+dev.off()
+CairoPNG("ggplot_coord1_6.png",width=500,height=500,res=72)
+ggplot(mapping = aes(x, y)) + 
+  geom_tile(data = rect, aes(width = 50, height = 50)) + 
+    geom_line(data = line) + coord_equal()
+dev.off()

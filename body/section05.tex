@@ -615,7 +615,7 @@
       统计变换(statistical transformations) & 对原始数据进行统计变换计算 & stat\_XXX()\\\hline
       标度(scales) & 变量映射到图形要素的标度，体现为图例和坐标刻度 & scale\_XXX()、labs()、guides()\\\hline
       坐标系(coordinate system) & 绘图坐标系统 & coord\_XXX()\\\hline
-      位置调整(position adjustments) & 对图形位置做精细控制 & position\_XXX()\\\hline
+      位置调整(position adjustments) & 对图形元素位置做精细控制 & position\_XXX()\\\hline
       分面(faceting) & 在不同网格中绘制图形，类似lattice & facet\_XXX()\\
       \bottomrule
     \end{tabular}
@@ -750,7 +750,8 @@
 
 \begin{frame}[t,fragile]{\subsecname}{几何对象(geometric object))}
 \begin{itemize}
-\item 几何对象简称geom，负责执行图形的实际渲染，控制生成的图形类型，通过函数\emphText{geom\_XXX}实现
+\item 几何对象简称geom，负责执行图形的实际渲染，控制生成的图形类型，
+几何对象函数的命名规则是\emphText{geom\_加上几何对象名字}
 \end{itemize}
 \begin{table} \centering \scriptsize
     \renewcommand\arraystretch{0.8}
@@ -782,7 +783,7 @@
 
 \begin{frame}[t,fragile]{\subsecname}{统计变换(statistical transformations)}
 \begin{itemize}
-\item 统计变换简称stat，负责通过某种方式对数据进行统计汇总，通过函数\emphText{stat\_XXX}实现
+\item 统计变换简称stat，负责通过某种方式对数据进行统计汇总，统计变换函数的命名规则是\emphText{stat\_加上统计变换名字}
 \end{itemize}
 \begin{table} \centering \scriptsize
     \renewcommand\arraystretch{0.8}
@@ -897,21 +898,100 @@
     \end{tabular}
     \caption{控制标度属性,fixed为默认值}
 \end{table}}
-% \only<6>{
-%     \begin{figure}\centering
-%       \includegraphics[width=0.45\columnwidth]{ggplot_facet4_1.png}
-%     \end{figure}}
 
-\only<6>{
-\vspace{-15pt}
+\only<6>{\vspace{-20pt}
     \begin{figure}
       \captionsetup[subfigure]{labelformat=empty} 
       \subfloat[scales=``fixed'']
-      {\includegraphics[width=0.45\columnwidth]{ggplot_facet4_1.png}} \vspace{1pt}
+      {\includegraphics[width=0.45\columnwidth]{ggplot_facet4_1.png}} \hspace{1pt}
       \subfloat[scales=``free'']
       {\includegraphics[width=0.45\columnwidth]{ggplot_facet4_2.png}}
-    \end{figure}
-\vspace{15pt}}
+      \caption{控制标度属性的示例}
+    \end{figure}\vspace{20pt}}
+\end{overlayarea}
+\end{frame}
+
+\begin{frame}[t,fragile]{\subsecname}{位置调整(position adjustments)}
+\begin{itemize}
+\item 位置调整就是对图层中的元素位置进行微调
+\item 位置调整\emphText{通常用于离散型数据}，通过对位置的微调来比较数据
+\end{itemize}
+
+\begin{overlayarea}{\textwidth}{\textheight}
+\only<1>{
+\begin{table} \centering \scriptsize
+    \renewcommand\arraystretch{1}
+    \begin{tabular}{>{\centering\arraybackslash} m{0.3\columnwidth} >{\centering\arraybackslash} m{0.5\columnwidth}}
+      \toprule
+      \rowcolor{LightCyan}
+      \multicolumn{1}{c}{\textbf{参数名称}} & \multicolumn{1}{c}{\textbf{描述}} \\\hline
+      dodge & 避免重叠,并排放置\\
+      fill & 堆叠图形元素并将高度标准化为1\\
+      identity & 不做任何调整\\
+      jitter & 给点要素添加扰动避免重合\\
+      stack & 将图形堆叠起来\\
+      \bottomrule
+    \end{tabular}
+    \caption{ggplot2中提供的5种位置调整参数}
+\end{table}}
+
+\only<2>{
+    \vspace{15pt}
+    \begin{figure} \centering
+      \captionsetup[subfigure]{labelformat=empty} 
+      \subfloat[position=``stack'']
+      {\includegraphics[width=0.3\columnwidth]{ggplot_position1_1.png}} \hspace{1pt}
+      \subfloat[position=``fill'']
+      {\includegraphics[width=0.3\columnwidth]{ggplot_position1_2.png}} \hspace{1pt}
+      \subfloat[position=``dodge'']
+      {\includegraphics[width=0.3\columnwidth]{ggplot_position1_3.png}} 
+      \caption{位置调整参数在条形图中应用的示例}
+    \end{figure}\vspace{-15pt}}
+\end{overlayarea}
+\end{frame}
+
+\begin{frame}[t,fragile]{\subsecname}{坐标系(coordinate system)}
+\begin{itemize}
+\item 坐标系是将两种位置标度结合在一起组成的二维定位系统，坐标系函数命名规则是\emphText{coord\_加上坐标系名字}
+\item \emphText{ggplot2包仅支持二维坐标系}，要实现三维绘图必须依赖其他第三方包，例如plotly和rgl
+\end{itemize}
+
+\begin{overlayarea}{\textwidth}{\textheight}
+\only<1>{
+\begin{table} \centering \scriptsize
+    \renewcommand\arraystretch{1}
+    \begin{tabular}{>{\centering\arraybackslash} m{0.3\columnwidth} >{\centering\arraybackslash} m{0.5\columnwidth}}
+      \toprule
+      \rowcolor{LightCyan}
+      \multicolumn{1}{c}{\textbf{坐标系名字}} & \multicolumn{1}{c}{\textbf{描述}} \\\hline
+      cartesian & 笛卡尔坐标系\\
+      equal & 同尺度笛卡尔坐标系\\
+      flip & 翻转的笛卡尔坐标系\\
+      trans & 变换的笛卡尔坐标系\\
+      map & 地图投影\\
+      polar & 极坐标系\\
+      \bottomrule
+    \end{tabular}
+    \caption{ggplot2中可用的坐标系}
+\end{table}}
+
+\only<2>{
+    \begin{figure} \centering
+      \captionsetup[subfigure]{labelformat=empty,textfont=scriptsize} 
+      \subfloat[cartesian()]
+      {\includegraphics[width=0.2\columnwidth]{ggplot_coord1_1.png}} \hspace{20pt}
+      \subfloat[polar(``x'')]
+      {\includegraphics[width=0.2\columnwidth]{ggplot_coord1_2.png}} \hspace{20pt}
+      \subfloat[polar(``y'')]
+      {\includegraphics[width=0.2\columnwidth]{ggplot_coord1_3.png}} \hspace{20pt}
+      \subfloat[flip()]
+      {\includegraphics[width=0.2\columnwidth]{ggplot_coord1_4.png}} \hspace{20pt}
+      \subfloat[trans(y=``log10'')]
+      {\includegraphics[width=0.2\columnwidth]{ggplot_coord1_5.png}} \hspace{20pt}
+      \subfloat[equal()]
+      {\includegraphics[width=0.2\columnwidth]{ggplot_coord1_6.png}} 
+      \caption{直线与矩形在不同坐标系的变换}
+    \end{figure}}
 \end{overlayarea}
 \end{frame}
 
