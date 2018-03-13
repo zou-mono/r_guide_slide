@@ -852,22 +852,66 @@
     \caption{封装型分面变量属性}
 \end{table}}
 
-\only<3>{
+\begin{onlyenv}<3>
+\begin{minipage}{\textwidth}
+\begin{rcode}
+> mpg2 <- subset(mpg, cyl != 5 & drv %in% c("4", "f"))
+# 网格型分面变量，行为dry变量，包括4和f两个值；列为cyl变量，包括4,6,8三个值
+> ggplot(mpg2, aes(cty,hwy)) + geom_point() + |\colorbox{green}{facet\_grid(drv ~ cyl)}|
+\end{rcode}
+\end{minipage}
+\begin{minipage}{\textwidth}
+\centering
+\includegraphics[width=0.9\columnwidth]{ggplot_facet2.png}
+\end{minipage}
+\end{onlyenv}
+
+\begin{onlyenv}<4>
+\begin{minipage}{\textwidth}
+\begin{rcode}
+> movies$decade <- round_any(movies$year, 10, floor)
+# 封装型分面变量，网格按照decade变量的11个值从左到右排列，如果到达页面边缘则自动从下一行开始排列
+> ggplot(subset(movies, decade > 1890),aes(rating))+
+     geom_histogram(aes(y=..density..),binwidth=0.5) + 
+     |\colorbox{green}{facet\_wrap(~ decade, ncol = 6)}|
+\end{rcode}
+\end{minipage}
+\begin{minipage}{\textwidth}
+\centering
+\includegraphics[width=0.9\columnwidth]{ggplot_facet3.png}
+\end{minipage}
+\end{onlyenv}
+
+\only<5>{
 \begin{table} \centering \scriptsize
     \renewcommand\arraystretch{1}
     \begin{tabular}{>{\centering\arraybackslash} m{0.3\columnwidth} >{\centering\arraybackslash} m{0.6\columnwidth}}
       \toprule
       \rowcolor{LightCyan}
       \multicolumn{1}{c}{\textbf{参数}} & \multicolumn{1}{c}{\textbf{描述}}\\\hline
-       scales=“fixed” & x和y的标度在所有分面中都相同\\
+       \textbf{scales=“fixed”} & x和y的标度在所有分面中都相同\\
        scales=“free” & x和y的标度在每个分面中都可变\\
        scales=“free\_x” & 固定y标度,x标度可变\\
        scales=“free\_y” & 固定x标度,y标度可变\\
       \bottomrule
     \end{tabular}
-    \caption{控制标度属性}
+    \caption{控制标度属性,fixed为默认值}
 \end{table}}
+% \only<6>{
+%     \begin{figure}\centering
+%       \includegraphics[width=0.45\columnwidth]{ggplot_facet4_1.png}
+%     \end{figure}}
 
+\only<6>{
+\vspace{-15pt}
+    \begin{figure}
+      \captionsetup[subfigure]{labelformat=empty} 
+      \subfloat[scales=``fixed'']
+      {\includegraphics[width=0.45\columnwidth]{ggplot_facet4_1.png}} \vspace{1pt}
+      \subfloat[scales=``free'']
+      {\includegraphics[width=0.45\columnwidth]{ggplot_facet4_2.png}}
+    \end{figure}
+\vspace{15pt}}
 \end{overlayarea}
 \end{frame}
 

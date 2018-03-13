@@ -1,6 +1,8 @@
 setwd("~/Documents/tex_projects/r_guide_slide")
 library(ggplot2)
 library(Cairo)
+library(ggplot2movies)
+library(plyr)
 
 png("expression-example.png",width=1000,height=1000,res=300,pointsize=6)
 par(mar=c(2,2,0,0)+0.1)
@@ -775,4 +777,77 @@ p <- qplot(sleep_total, sleep_cycle, data = msleep, colour = vore)
 p + scale_colour_hue("What does\nit eat?",
 breaks = c("herbi", "carni", "omni", NA),
 labels = c("plants", "meat", "both", "don’t know"))
+dev.off()
+
+CairoPNG("ggplot_facet2.png",width=1000,height=500,res=72)
+mpg2 <- subset(mpg, cyl != 5 & drv %in% c("4", "f"))
+ggplot(mpg2, aes(cty,hwy)) + geom_point() + facet_grid(drv ~ cyl)
+dev.off()
+
+CairoPNG("ggplot_facet3.png",width=1000,height=500,res=72)
+movies$decade <- round_any(movies$year, 10, floor)
+ggplot(subset(movies, decade > 1890),aes(rating))+
+    geom_histogram(aes(y=..density..),binwidth=0.5) + 
+    facet_wrap(~ decade, ncol = 6)
+dev.off()
+
+
+# Multiple plot function
+#
+# ggplot objects can be passed in ..., or to plotlist (as a list of ggplot objects)
+# - cols:   Number of columns in layout
+# - layout: A matrix specifying the layout. If present, 'cols' is ignored.
+#
+# If the layout is something like matrix(c(1,2,3,3), nrow=2, byrow=TRUE),
+# then plot 1 will go in the upper left, 2 will go in the upper right, and
+# 3 will go all the way across the bottom.
+#
+multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
+  library(grid)
+
+  # Make a list from the ... arguments and plotlist
+  plots <- c(list(...), plotlist)
+
+  numPlots = length(plots)
+
+  # If layout is NULL, then use 'cols' to determine layout
+  if (is.null(layout)) {
+    # Make the panel
+    # ncol: Number of columns of plots
+    # nrow: Number of rows needed, calculated from # of cols
+    layout <- matrix(seq(1, cols * ceiling(numPlots/cols)),
+                    ncol = cols, nrow = ceiling(numPlots/cols))
+  }
+
+ if (numPlots==1) {
+    print(plots[[1]])
+
+  } else {
+    # Set up the page
+    grid.newpage()
+    pushViewport(viewport(layout = grid.layout(nrow(layout), ncol(layout))))
+
+    # Make each plot, in the correct location
+    for (i in 1:numPlots) {
+      # Get the i,j matrix positions of the regions that contain this subplot
+      matchidx <- as.data.frame(which(layout == i, arr.ind = TRUE))
+
+      print(plots[[i]], vp = viewport(layout.pos.row = matchidx$row,
+                                      layout.pos.col = matchidx$col))
+    }
+  }
+}
+
+## p1 <- ggplot(mpg,aes(cty, hwy)) + geom_point() +
+##     facet_wrap(~ cyl) 
+## p2 <- ggplot(mpg,aes(cty, hwy)) + geom_point() +
+##     facet_wrap(~ cyl, scales = "free")
+## multiplot(p1,p2,cols=2)
+CairoPNG("ggplot_facet4_1.png",width=500,height=500,res=72)
+ggplot(mpg,aes(cty, hwy)) + geom_point() +
+    facet_wrap(~ cyl, scales="fixed")
+dev.off()
+CairoPNG("ggplot_facet4_2.png",width=500,height=500,res=72)
+ggplot(mpg,aes(cty, hwy)) + geom_point() +
+    facet_wrap(~ cyl, scales = "free")
 dev.off()
