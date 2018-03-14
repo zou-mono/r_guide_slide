@@ -748,7 +748,7 @@
 \end{overlayarea}
 \end{frame}
 
-\begin{frame}[t,fragile]{\subsecname}{几何对象(geometric object))}
+\begin{frame}[t,fragile]{\subsecname}{几何对象(geometric object)}
 \begin{itemize}
 \item 几何对象简称geom，负责执行图形的实际渲染，控制生成的图形类型，
 几何对象函数的命名规则是\emphText{geom\_加上几何对象名字}
@@ -990,16 +990,22 @@
       {\includegraphics[width=0.2\columnwidth]{ggplot_coord1_5.png}} \hspace{20pt}
       \subfloat[equal()]
       {\includegraphics[width=0.2\columnwidth]{ggplot_coord1_6.png}} 
-      \caption{直线与矩形在不同坐标系的变换}
+      \caption{直线与矩形在不同坐标系的变换示例}
     \end{figure}}
 \end{overlayarea}
 \end{frame}
 
-\begin{frame}[t,fragile]{\subsecname}{绘图语法}
+%%% https://www.plob.org/article/7665.html
+\begin{frame}[t,fragile]{\subsecname}{图层}
+\begin{itemize}
+\item 图层是ggplot2特有的概念，其作用是生成在图像上能够被人感知的\emphText{对象}
+\item 图层由五个语法要素组成：数据、映射、统计变换、几何对象和位置调整
+\end{itemize}
+
 \begin{overlayarea}{\textwidth}{\textheight}
 \begin{onlyenv}<1>
 \begin{rcode}
-# ggplot2的绘图语法 
+# ggplot2的绘图语法就是多个图层的叠加 
 ggplot(data = , aes(x = , y = )) + geom_XXX(...) + ... + stat_XXX(...) + ... + annotate(...) + ... + labs(...) + scale_XXX(...) + coord_XXX(...) + guides(...) + theme(...) + facet_XXX(...)
 \end{rcode}
 \end{onlyenv}
@@ -1008,13 +1014,12 @@ ggplot(data = , aes(x = , y = )) + geom_XXX(...) + ... + stat_XXX(...) + ... + a
 \begin{minipage}{\textwidth}
 \begin{rcode}
 > ggplot(mpg, aes(x=cty, y=hwy))+   
-  geom_point(aes(colour=class,size=displ),alpha=0.6,position = "jitter")+  
-  stat_smooth()+  
-  scale_size_continuous(range = c(4, 10))+  
-  facet_wrap(~ year,ncol=1)+  
-  ggtitle("汽车油耗与型号")+  
-  labs(y='每加仑高速公路行驶距离',  
-       x='每加仑城市公路行驶距离')+  
+  geom_point(aes(colour=class,size=displ),alpha=0.6,position = "jitter") +  
+  stat_smooth() +  
+  scale_size_continuous(range = c(4, 10)) +  
+  facet_wrap(~ year,ncol=1) +  
+  ggtitle("汽车油耗与型号") +  
+  labs(y='每加仑高速公路行驶距离', x='每加仑城市公路行驶距离') +  
   guides(size=guide_legend(title='排量'), colour = guide_legend(title='车型', override.aes=list(size=5))) 
 \end{rcode} 
 \end{minipage}
