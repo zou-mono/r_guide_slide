@@ -490,42 +490,41 @@
 %%%https://www.zhihu.com/question/24779017
 
 \subsection{ggplot2程序包}
-\begin{frame}{\subsecname}{}
+\begin{frame}[t]{\subsecname}{}
 \begin{itemize}
-\item<1-> ggplot2是grid绘图系统的另一个广泛使用的实现包，由\href{http://hadley.nz/}{\uline{Hadley Wickham}}开发维护，\emphText{目前该包尚未纳入base包，需要单独下载} 
-\item<2-> ggplot2的设计理念来自Leland Wilkinson的\emphText{《The Grammar of Graphics》}一书，其吸取了书中提出的绘图理论和优雅的绘图语法：\emphText{将绘图与数据分离，数据相关绘图与数据无关绘图分离}
+\item ggplot2是grid绘图系统的另一个广泛使用的实现包，由\href{http://hadley.nz/}{\uline{Hadley Wickham}}开发维护，\emphText{目前该包尚未纳入base包，需要单独下载} 
 \end{itemize}
-
-%\vspace{-5pt}
-\begin{overlayarea}{\textwidth}{\textheight}
-\only<1>{
 \begin{figure}[ht]
   \centering
-  \includegraphics[width=0.8\columnwidth]{hadley_wickham.png}
-  \caption{ggplot2程序包的作者Hadley Wickham，目前是RStudio公司首席科学家}
-\end{figure}}
+  \includegraphics[width=0.9\columnwidth]{hadley_wickham.png}
+  \caption{ggplot2程序包的作者Hadley Wickham(简称H.W.).他是R领域最知名的开发者之一,贡献了许多
+重要的基础程序包,推进了R在世界上的广泛应用;目前担任RStudio公司首席科学家一职}
+\end{figure}
+\end{frame}
 
-\only<2->{
+\begin{frame}[t]{\subsecname}{}
+\begin{itemize}
+\item ggplot2的设计理念来自Leland Wilkinson的\emphText{《The Grammar of Graphics》}一书，其吸取了书中提出的绘图理论和优雅的绘图语法：\emphText{将绘图与数据分离，数据相关绘图与数据无关绘图分离}
+\end{itemize}
 \begin{figure}[ht]
   \centering
-  \includegraphics[width=0.55\columnwidth]{the_grammar_of_graphics.png}
+  \includegraphics[width=0.65\columnwidth]{the_grammar_of_graphics.png}
   \caption{统计图形领域经典著作《The Grammar of Graphics》的第一版(1999)和第二版(2005)，ggplot2的命名就取自这本书的首字母缩写再加上plot}
-\end{figure}}
-\end{overlayarea}
+\end{figure}
 \end{frame}
 
 \begin{frame}[t,fragile]{\subsecname}{绘图原理}
 \begin{itemize}
 \item<1-> 将绘图与数据分离，数据相关绘图与数据无关绘图分离
-\item<2-> 按照\emphText{图层(layer)}概念绘图，图层之间的叠加通过“+”符号实现，越往后的图层越高
+\item<2-> 按照\emphText{图层(layer)}概念绘图，图层之间的叠加通过“+”符号实现，越往后的图层越在上层
 \item<2-> 有明确的起始(ggplot函数)与终止，\emphText{一条语句绘制一张图}
-\item<3-> 和lattice包一样，所有绘图内容都保存在一个绘图对象中
-\item<4-> 保留标准绘图系统的命令式调整函数，对图形做个性化修改
-\item<4-> 将常见的统计变换融入到了绘图过程中
+\item<3-> 和lattice包一样，所有绘图内容都保存在\emphText{一个绘图对象}中
+\item<4-> 保留标准绘图系统的\emphText{命令式调整函数}，对图形做微调
+\item<4-> 将\emphText{统计变换}设计成绘图过程中必不可少的步骤
 \end{itemize}
 
 \begin{overlayarea}{\textwidth}{\textheight}
-\begin{onlyenv}<2>
+\begin{onlyenv}<5>
 \begin{minipage}{\textwidth}
 \begin{rcode}
 # graphics中的实现
@@ -544,9 +543,9 @@
 # 2、图层之间的叠加是靠“+”号实现的，越往后的图层越高
 > x <- rnorm(100,10,5) 
 > y <- x + rnorm(100,0,1) 
-> |\colorbox{green}{ggplot}|(data= NULL, aes(x = x, y = y)) +  #开始绘图
+> |\colorbox{green}{ggplot}|(data = NULL, aes(x = x, y = y)) +  #开始绘图
   |\colorbox{green}{geom\_point}|(color = "darkred") +  #添加点
-  |\colorbox{green}{annotate}|("text",x =15, y = 20,parse = T,label = "x[1] == x[2]") #添加注释
+  |\colorbox{green}{annotate}|("text",x = 15, y = 20,parse = T,label = "x[1]==x[2]") #添加注释
 \end{rcode}
 \end{minipage}
 \end{onlyenv}
@@ -646,13 +645,14 @@
 \end{onlyenv}
 \end{frame}
 
-\begin{frame}[t,fragile]{\subsecname}{映射(mapping))}
+\begin{frame}[t,fragile]{\subsecname}{映射(mapping)}
 \begin{itemize}
 \item<1-> \emphText{aes()}函数用来将数据变量映射到图形中，使变量成为可以被感知的图形属性
 \item<1-> \emphText{最好不要使用指定数据集之外的变量}，这不利于将绘图所需数据都封装到一个对象中
 \item<3-> 通过\emphText{group}参数将数据按照变量映射到不同分组进行绘图
 \end{itemize}
 
+\begin{overlayarea}{\textwidth}{\textheight}
 \begin{onlyenv}<1>
 \begin{rcode}
 > p <- ggplot(mtcars)
@@ -679,7 +679,7 @@
 
 \begin{minipage}{\textwidth}
 \centering
-\includegraphics[width=0.8\columnwidth]{ggplot_mapping1.pdf}
+\includegraphics[width=0.9\columnwidth]{ggplot_mapping1.pdf}
 \end{minipage}
 \end{onlyenv}
 
@@ -694,9 +694,10 @@
 
 \begin{minipage}{\textwidth}
 \centering
-\includegraphics[width=0.8\columnwidth]{ggplot_mapping2.pdf}
+\includegraphics[width=0.9\columnwidth]{ggplot_mapping2.pdf}
 \end{minipage}
 \end{onlyenv}
+\end{overlayarea}
 \end{frame}
 
 \begin{frame}[t,fragile]{\subsecname}{标度(scales)}
@@ -786,7 +787,7 @@
 \item 统计变换简称stat，负责通过某种方式对数据进行统计汇总，统计变换函数的命名规则是\emphText{stat\_加上统计变换名字}
 \end{itemize}
 \begin{table} \centering \scriptsize
-    \renewcommand\arraystretch{0.8}
+    \renewcommand\arraystretch{0.9}
     \begin{tabular}{>{\centering\arraybackslash} m{0.3\columnwidth} >{\centering\arraybackslash} m{0.6\columnwidth}}
       \toprule
       \rowcolor{LightCyan}
@@ -858,12 +859,15 @@
 \begin{rcode}
 > mpg2 <- subset(mpg, cyl != 5 & drv %in% c("4", "f"))
 # 网格型分面变量，行为dry变量，包括4和f两个值；列为cyl变量，包括4,6,8三个值
-> ggplot(mpg2, aes(cty,hwy)) + geom_point() + |\colorbox{green}{facet\_grid(drv ~ cyl)}|
+> ggplot(mpg2, aes(cty,hwy)) + geom_point() + |\colorbox{green}{facet\_grid}|(drv ~ cyl)
 \end{rcode}
 \end{minipage}
 \begin{minipage}{\textwidth}
+\begin{figure}
 \centering
-\includegraphics[width=0.9\columnwidth]{ggplot_facet2.pdf}
+\includegraphics[width=0.85\columnwidth]{ggplot_facet2.pdf}
+\caption{网格型分面变量的示例}
+\end{figure}
 \end{minipage}
 \end{onlyenv}
 
@@ -872,14 +876,16 @@
 \begin{rcode}
 > movies$decade <- round_any(movies$year, 10, floor)
 # 封装型分面变量，网格按照decade变量的11个值从左到右排列，如果到达页面边缘则自动从下一行开始排列
-> ggplot(subset(movies, decade > 1890),aes(rating))+
-     geom_histogram(aes(y=..density..),binwidth=0.5) + 
-     |\colorbox{green}{facet\_wrap(~ decade, ncol = 6)}|
+> ggplot(subset(movies, decade>1890),aes(rating))+geom_histogram(aes(y=..density..),binwidth=0.5)+ 
+     |\colorbox{green}{facet\_wrap}|(~ decade, ncol = 6)
 \end{rcode}
 \end{minipage}
 \begin{minipage}{\textwidth}
+\begin{figure}
 \centering
-\includegraphics[width=0.9\columnwidth]{ggplot_facet3.pdf}
+\includegraphics[width=0.8\columnwidth]{ggplot_facet3.pdf}
+\caption{封装型分面变量的示例}
+\end{figure}
 \end{minipage}
 \end{onlyenv}
 
@@ -899,26 +905,39 @@
     \caption{控制标度属性,fixed为默认值}
 \end{table}}
 
-\only<6>{\vspace{-20pt}
-    \begin{figure}
-      \captionsetup[subfigure]{labelformat=empty} 
-      \subfloat[scales=``fixed'']
-      {\includegraphics[width=0.45\columnwidth]{ggplot_facet4_1.pdf}} \hspace{1pt}
-      \subfloat[scales=``free'']
-      {\includegraphics[width=0.45\columnwidth]{ggplot_facet4_2.pdf}}
-      \caption{控制标度属性的示例}
-    \end{figure}\vspace{20pt}}
+\only<6>{\vspace{-15pt}
+\begin{figure}[ht]
+  \begin{columns}
+    \begin{column}{.5\textwidth}\centering
+       \includegraphics[width=\columnwidth]{ggplot_facet4_1.pdf}
+    \end{column}
+
+    \begin{column}[c]{.5\textwidth}\centering
+       \includegraphics[width=\columnwidth]{ggplot_facet4_2.pdf}
+    \end{column}
+  \end{columns}
+\caption{控制标度的示例.左边是scales=``fixed'',右边是scales=``free''}
+\end{figure}}
+
+    % \begin{figure}
+    %   \captionsetup[subfigure]{labelformat=empty} 
+    %   \subfloat[]
+    %   {\includegraphics[width=0.48\columnwidth]{ggplot_facet4_1.pdf}} \hspace{1pt}
+    %   \subfloat[]
+    %   {\includegraphics[width=0.48\columnwidth]{ggplot_facet4_2.pdf}}
+    %   \caption{控制标度的示例.左边是scales=``fixed'',右边是scales=``free''}
+    % \end{figure}\vspace{25pt}}
 \end{overlayarea}
 \end{frame}
 
-\begin{frame}[t,fragile]{\subsecname}{位置调整(position adjustments)}
+\begin{frame}[t]{\subsecname}{位置调整(position adjustments)}
 \begin{itemize}
-\item 位置调整就是对图层中的元素位置进行微调
+\item 位置调整指的是对图层中\emphText{元素的位置}进行调整
 \item 位置调整\emphText{通常用于离散型数据}，通过对位置的微调来比较数据
 \end{itemize}
 
 \begin{overlayarea}{\textwidth}{\textheight}
-\only<1>{
+\only<1>{\vspace{15pt}
 \begin{table} \centering \scriptsize
     \renewcommand\arraystretch{1}
     \begin{tabular}{>{\centering\arraybackslash} m{0.3\columnwidth} >{\centering\arraybackslash} m{0.5\columnwidth}}
@@ -939,11 +958,11 @@
     \vspace{15pt}
     \begin{figure} \centering
       \captionsetup[subfigure]{labelformat=empty} 
-      \subfloat[position=``stack'']
+      \subfloat[position="stack'']
       {\includegraphics[width=0.3\columnwidth]{ggplot_position1_1.pdf}} \hspace{1pt}
-      \subfloat[position=``fill'']
+      \subfloat[position="fill'']
       {\includegraphics[width=0.3\columnwidth]{ggplot_position1_2.pdf}} \hspace{1pt}
-      \subfloat[position=``dodge'']
+      \subfloat[position="dodge'']
       {\includegraphics[width=0.3\columnwidth]{ggplot_position1_3.pdf}} 
       \caption{位置调整参数在条形图中应用的示例}
     \end{figure}\vspace{-15pt}}
@@ -980,13 +999,13 @@
       \captionsetup[subfigure]{labelformat=empty,textfont=scriptsize} 
       \subfloat[cartesian()]
       {\includegraphics[width=0.2\columnwidth]{ggplot_coord1_1.pdf}} \hspace{20pt}
-      \subfloat[polar(``x'')]
+      \subfloat[polar("x'')]
       {\includegraphics[width=0.2\columnwidth]{ggplot_coord1_2.pdf}} \hspace{20pt}
-      \subfloat[polar(``y'')]
+      \subfloat[polar("y'')]
       {\includegraphics[width=0.2\columnwidth]{ggplot_coord1_3.pdf}} \hspace{20pt}
       \subfloat[flip()]
       {\includegraphics[width=0.2\columnwidth]{ggplot_coord1_4.pdf}} \hspace{20pt}
-      \subfloat[trans(y=``log10'')]
+      \subfloat[trans(y="log10'')]
       {\includegraphics[width=0.2\columnwidth]{ggplot_coord1_5.pdf}} \hspace{20pt}
       \subfloat[equal()]
       {\includegraphics[width=0.2\columnwidth]{ggplot_coord1_6.pdf}} 
@@ -998,38 +1017,137 @@
 %%% https://www.plob.org/article/7665.html
 \begin{frame}[t,fragile]{\subsecname}{图层}
 \begin{itemize}
-\item 图层是ggplot2特有的概念，其作用是生成在图像上能够被人感知的\emphText{对象}
-\item 图层由五个语法要素组成：数据、映射、统计变换、几何对象和位置调整
+\item<1-> 图层是ggplot2特有的概念，其作用是生成在图像上能够被人感知的\emphText{对象}
+\item<1-> 图层由五个语法要素组成：数据、映射、统计变换、几何对象和位置调整，可以用\emphText{layer函数}定义
+\item<2-> ggplot2的\emphText{快捷函数}(stat\_和geom\_开头)也可以定义图层，简化layer函数的复杂性；
+任何图层\emphText{必须包括geom和stat两部分}
 \end{itemize}
 
 \begin{overlayarea}{\textwidth}{\textheight}
-\begin{onlyenv}<1>
+\begin{onlyenv}<1-2>
 \begin{rcode}
-# ggplot2的绘图语法就是多个图层的叠加 
-ggplot(data = , aes(x = , y = )) + geom_XXX(...) + ... + stat_XXX(...) + ... + annotate(...) + ... + labs(...) + scale_XXX(...) + coord_XXX(...) + guides(...) + theme(...) + facet_XXX(...)
+# layer函数定义， 其中data和mapping可以从ggplot函数定义的默认值中继承
+layer(geom = NULL, stat = NULL, data = NULL, mapping = NULL,
+  position = NULL, params = list(), inherit.aes = TRUE,
+  check.aes = TRUE, check.param = TRUE, subset = NULL, show.legend = NA)
+
+# ggplot定义数据集(data)和图形属性映射(mapping)
+> p <- ggplot(diamonds,aes(x=carat))
+# 添加一个自定义图层，并指定相应参数，其中数据集和图形属性映射继承默认值
+> p <- p + |\colorbox{green}{layer}|(geom = "bar",stat = "bin",position = "identity"
+    params = list(fill = "steelblue", binwidth=0.5))
 \end{rcode}
+\end{onlyenv}
+
+\begin{onlyenv}<2>
+\begin{rcode}
+# 任何ggpplot2图层必须包含stat和geom两部分
+geom_XXX(data, mapping, ..., stat, position)
+stat_XXX(data, mapping, ..., geom, position)
+
+# 以下两条绘图语句得到的结果是完全一样的
+ggplot(diamonds,aes(x=carat)) + |\colorbox{green}{geom\_histogram}|(fill="steelblue",|\colorbox{green}{stat}|="bin", binwidth=0.5)
+ggplot(diamonds,aes(x=carat)) + |\colorbox{green}{stat\_bin}|(fill="steelblue",|\colorbox{green}{geom}|="bar", binwidth=0.5)
+\end{rcode} 
+\end{onlyenv}
+\end{overlayarea}
+\end{frame}
+
+\begin{frame}{\subsecname}{绘图过程}
+\begin{figure}[ht]
+  \begin{columns}
+    \begin{column}{.6\textwidth}\centering
+  \includegraphics[width=0.75\columnwidth]{ggplot_flow.png}
+    \end{column}
+
+    \begin{column}[c]{.4\textwidth}
+  \caption{ggplot2中处理图形绘制的全过程,本图中每个方框表示一个图层,包含三个图层和三个分面.除了train scales之外，其他步骤都对每个小数据集做变换.}
+    \end{column}
+  \end{columns}
+\end{figure}
+\end{frame}
+
+\begin{frame}[c,fragile]{\subsecname}{绘图过程}
+
+\begin{onlyenv}<1>
+\begin{minipage}{\textwidth}
+\begin{rcode}
+# 第一步：初始化,载入数据并进行图形属性映射
+> ggplot(mpg, aes(x=cty, y=hwy))
+\end{rcode}
+\end{minipage}
+\begin{minipage}{\textwidth}
+\centering
+\includegraphics[width=\columnwidth]{ggplot_example1.pdf}
+\end{minipage}
 \end{onlyenv}
 
 \begin{onlyenv}<2>
 \begin{minipage}{\textwidth}
 \begin{rcode}
-> ggplot(mpg, aes(x=cty, y=hwy))+   
-  geom_point(aes(colour=class,size=displ),alpha=0.6,position = "jitter") +  
-  stat_smooth() +  
-  scale_size_continuous(range = c(4, 10)) +  
-  facet_wrap(~ year,ncol=1) +  
-  ggtitle("汽车油耗与型号") +  
-  labs(y='每加仑高速公路行驶距离', x='每加仑城市公路行驶距离') +  
-  guides(size=guide_legend(title='排量'), colour = guide_legend(title='车型', override.aes=list(size=5))) 
-\end{rcode} 
+# 第二步：分面,按年份
+> ggplot(mpg, aes(x=cty, y=hwy))+
+      facet_wrap(~ year,ncol=2)
+\end{rcode}
 \end{minipage}
-
 \begin{minipage}{\textwidth}
 \centering
-\includegraphics[width=0.8\columnwidth]{ggplot_first_example.pdf}
+\includegraphics[width=\columnwidth]{ggplot_example2.pdf}
 \end{minipage}
 \end{onlyenv}
-\end{overlayarea}
+
+\begin{onlyenv}<3>
+\begin{minipage}{\textwidth}
+\begin{rcode}
+# 第三步：绘制图层,包括几何对象图层、经过统计变换后的图层和位置调整
+> ggplot(mpg, aes(x=cty, y=hwy))+
+      facet_wrap(~ year,ncol=2)+
+      geom_point(aes(colour=class,size=displ),alpha=0.6,position = "jitter")+  
+      stat_smooth()
+\end{rcode}
+\end{minipage}
+\begin{minipage}{\textwidth}
+\centering
+\includegraphics[width=\columnwidth]{ggplot_example3.pdf}
+\end{minipage}
+\end{onlyenv}
+
+\begin{onlyenv}<4>
+\begin{minipage}{\textwidth}
+\begin{rcode}
+# 第四步：训练标度,表现为散点的大小
+> ggplot(mpg, aes(x=cty, y=hwy))+
+      facet_wrap(~ year,ncol=2)+
+      geom_point(aes(colour=class,size=displ),alpha=0.6,position = "jitter")+  
+      stat_smooth()+  
+      scale_size(range = c(5, 10))
+\end{rcode}
+\end{minipage}
+\begin{minipage}{\textwidth}
+\centering
+\includegraphics[width=\columnwidth]{ggplot_example4.pdf}
+\end{minipage}
+\end{onlyenv}
+
+\begin{onlyenv}<5>
+\begin{minipage}{\textwidth}
+\begin{rcode}
+# 第五步：图形微调,调整与图形无关要素,例如添加标题、坐标轴标签、图例标签、注释等
+> ggplot(mpg, aes(x=cty, y=hwy))+
+     geom_point(aes(colour=class,size=displ),alpha=0.6,position = "jitter")+  
+     stat_smooth()+  
+     scale_size(range = c(5, 10))+
+     facet_wrap(~ year,ncol=2)+
+     ggtitle("汽车油耗与型号")+  
+     labs(y='每加仑高速公路行驶距离',x='每加仑城市公路行驶距离')+  
+     guides(size=guide_legend(title='排量'),colour=guide_legend(title='车型',override.aes=
+            list(size=5)))
+\end{rcode}
+\end{minipage}
+\begin{minipage}{\textwidth}
+\centering
+\includegraphics[width=\columnwidth]{ggplot_example5.pdf}
+\end{minipage}
+\end{onlyenv}
+
 \end{frame}
-
-

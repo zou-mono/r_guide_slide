@@ -893,13 +893,32 @@ ggplot(mapping = aes(x, y)) +
     geom_line(data = line) + coord_equal()
 dev.off()
 
-
-CairoPDF("ggplot_first_example.pdf",10, 5)
+CairoPDF("ggplot_example1.pdf",10, 5)
+ggplot(mpg, aes(x=cty, y=hwy))
+dev.off()
+CairoPDF("ggplot_example2.pdf",10, 5)
+ggplot(mpg, aes(x=cty, y=hwy))+
+    facet_wrap(~ year,ncol=2)
+dev.off()
+CairoPDF("ggplot_example3.pdf",10, 5)
+ggplot(mpg, aes(x=cty, y=hwy))+
+    facet_wrap(~ year,ncol=2)+
+    geom_point(aes(colour=class,size=displ),alpha=0.6,position = "jitter")+  
+    stat_smooth()
+dev.off()
+CairoPDF("ggplot_example4.pdf",10, 5)
+ggplot(mpg, aes(x=cty, y=hwy))+
+    facet_wrap(~ year,ncol=2)+
+    geom_point(aes(colour=class,size=displ),alpha=0.6,position = "jitter")+  
+    stat_smooth()+  
+    scale_size(range = c(5, 10))
+dev.off()
+CairoPDF("ggplot_example5.pdf",10, 5)
 CairoFonts(regular = "WenQuanYi Micro Hei", bold = "WenQuanYi Micro Hei")
 ggplot(mpg, aes(x=cty, y=hwy))+   
   geom_point(aes(colour=class,size=displ),alpha=0.6,position = "jitter")+  
   stat_smooth()+  
-  scale_size_continuous(range = c(4, 10))+  
+  scale_size(range = c(5, 10))+  
   facet_wrap(~ year,ncol=2)+  
   ggtitle("汽车油耗与型号")+  
   labs(y='每加仑高速公路行驶距离',  
@@ -908,3 +927,9 @@ ggplot(mpg, aes(x=cty, y=hwy))+
          colour = guide_legend(title='车型',  
                                override.aes=list(size=5)))
 dev.off()
+
+ggplot(mpg, aes(x=cty, y=hwy))+
+    #geom_point(aes(colour=class,size=displ),alpha=0.6,position = "jitter")+  
+    #stat_smooth()+  
+    #scale_size(range = c(5, 10))+
+    facet_wrap(~ year,ncol=2)

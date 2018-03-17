@@ -294,6 +294,7 @@
 }
 
 % tcolorbox和minted混合
+\RequirePackage{upquote}
 \tcbuselibrary{minted,skins}
 \newtcblisting{rcode}{
     %boxsep=0mm,
@@ -307,12 +308,13 @@
     minted style=colorful,
     minted language=R,
     minted options={
-         fontfamily=Monaco,
+         fontfamily=tt, %Monaco
          style=emacs,
          fontsize=\tiny,
          linenos=true,
          breaklines=true,
          escapeinside=||,
+         %curlyquotes=true,
          %breakanywhere=true, 
          mathescape=true,
          numbersep=2mm,
