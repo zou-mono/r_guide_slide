@@ -556,7 +556,7 @@ Levels: g1 g2 g3
 \begin{frame}[t,fragile]{\subsecname}{数据结构}
   \frametitle{}{列表(list)}
   \begin{itemize}
-  \item 列表是一种灵活的数据结构，\emphText{用于生成包含不同类型对象的集合}
+  \item 列表是一种非常灵活的数据结构，作用是\emphText{生成包含不同类型对象的集合}
   \end{itemize}  
 
 \begin{rcode}
@@ -567,7 +567,7 @@ $A
 
 $B
 [1] 2 3 4
-# list元素的引用
+# list元素的索引
 > L1[[1]]
 [1] 1 2 3 4
 > L1["A"]
@@ -592,12 +592,17 @@ $A
 # 创建数据框
 # 数据框中的向量必须有相同的长度,如果其中有一个比其它的短,它将“循环”整数次(以使得其长度与其它向量相同)
 > x <- 1:4; M <- c(10, 35); y <- 2:4
-> data.frame(x, M)
+> (d <- data.frame(x, M))
   x  M
 1 1 10
 2 2 35
 3 3 10
 4 4 35
+# data.frame按列进行索引的两种等价的方法
+> d$x
+[1] 1 2 3 4
+> d[["M"]]
+[1] 10 35 10 35
 > data.frame(x, y)
 Error in data.frame(x, y) :
    arguments imply differing number of rows: 4, 3
@@ -612,7 +617,7 @@ Error in data.frame(x, y) :
 % 有效命令默认都是求值表达式}；但是有些情况，需要构造非求值表达式，比如将公式作为函数参数进行传递，
 % 或者在图形绘制数学公式等
   \item \emphText{R中有效命令默认都是求值表达式}，可以在终端直接输入，
-也可以用\emphText{eval()函数}执行；而非求值表达式通过\emphText{expression()函数}执行
+也可以用\emphText{eval函数}执行；而非求值表达式通过\emphText{expression函数}执行
   \end{itemize}  
 
 \begin{overlayarea}{\textwidth}{\textheight}
@@ -630,21 +635,20 @@ expression(x/(y + exp(z)))
 \end{onlyenv}
 
 \begin{onlyenv}<3>
+\vspace{-10pt}
 \begin{columns}
-  \begin{column}[c]{.5\textwidth}
-\begin{figure}
-  \includegraphics[width=0.8\columnwidth]{expression-example.png}
-\end{figure}
+  \begin{column}[c]{.5\textwidth} \centering
+      \includegraphics[width=0.8\columnwidth]{expression-example.png}
   \end{column}
 
   \begin{column}[c]{.5\textwidth}
-\begin{rcode}
-> plot(1:10, 1:10)
-> text(4, 9, expression(hat(beta) == (X^t * X)^{-1} * X^t * y))
-> text(4, 8.4, "expression(hat(beta) == (X^t * X)^{-1} * X^t * y)", cex = .8)
-> text(4, 7, expression(bar(x) == sum(frac(x[i], n), i==1, n)))
-> text(4, 6.4, "expression(bar(x) == sum(frac(x[i], n), i==1, n))", cex = .8)
-> text(8, 5, expression(paste(frac(1, sigma*sqrt(2*pi)), " ", plain(e)^{frac(-(x-mu)^2, 2*sigma^2)})), cex = 1.2)
+     \begin{rcode}
+     > plot(1:10, 1:10)
+     > text(4, 9, expression(hat(beta) == (X^t * X)^{-1} * X^t * y))
+     > text(4, 8.4, "expression(hat(beta) == (X^t * X)^{-1} * X^t * y)", cex = .8)
+     > text(4, 7, expression(bar(x) == sum(frac(x[i], n), i==1, n)))
+     > text(4, 6.4, "expression(bar(x) == sum(frac(x[i], n), i==1, n))", cex = .8)
+     > text(8, 5, expression(paste(frac(1, sigma*sqrt(2*pi)), " ", plain(e)^{frac(-(x-mu)^2, 2*sigma^2)})), cex = 1.2)
 \end{rcode}  
   \end{column}
 \end{columns}

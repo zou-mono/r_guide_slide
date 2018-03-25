@@ -933,3 +933,23 @@ ggplot(mpg, aes(x=cty, y=hwy))+
     #stat_smooth()+  
     #scale_size(range = c(5, 10))+
     facet_wrap(~ year,ncol=2)
+
+bb <- matrix(c(114.25, 22.45, 114.85, 23.16), ncol = 2, dimnames = list(NULL, c("min", "max")))
+Spatial(bb, proj4string = CRS("+proj=longlat"))
+
+bb <- matrix(c(350, 85, 370, 95), ncol = 2, dimnames = list(NULL,c("min", "max")))
+Spatial(bb, proj4string = CRS("+proj=longlat +datum=WGS84"))
+
+
+CRAN_df <- read.table("data/CRAN051001a.txt", header = TRUE)
+CRAN_mat <- cbind(CRAN_df$long, CRAN_df$lat)
+llCRS <- CRS("+proj=longlat +ellps=WGS84")
+CRAN_sp <- SpatialPoints(CRAN_mat, proj4string = llCRS)
+
+# 将matrix的序号作为行名
+row.names(CRAN_mat) <- 1:nrow(CRAN_mat)
+CRAN_spdf1 <- SpatialPointsDataFrame(CRAN_mat, CRAN_df, proj4string = llCRS, match.ID = TRUE)
+coords <- CRAN_mat[3,]
+
+
+

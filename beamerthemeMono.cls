@@ -142,8 +142,8 @@
 \newcommand*{\emphTextStep}[2]{\textcolor<#1>{red}{\kaishu{#2}}}
 
 \setCJKmainfont[BoldFont={SimHei}]{KaiTi}  
-\setmainfont{CMU Serif}
-%\usefonttheme{professionalfonts}
+%\setmainfont{Serif}
+\usefonttheme{serif}
         
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % 设置字号
