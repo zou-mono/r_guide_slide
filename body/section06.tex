@@ -81,9 +81,10 @@ data in R}. R News, 5(2):9–13.}
 \begin{frame}[t,fragile]{\subsecname}{}
 \begin{itemize}
 \item<1-> sp包提供的空间类是\emphText{基于S4方法编写的}，其\emphText{基类是Spatial}
-\item<2-> Spatial类包括两个slot，一个是matrix类型的\emphText{约束盒}(bounding box)，另一个是定义了参考坐标系的\emphText{CRS类对象}
+\item<2-> Spatial类包括两个属性(slot)，一个是matrix类型的\emphText{约束盒}(bbox)，
+另一个是CRS类型的\emphText{坐标参考系统}(proj4string)
 \item<3-> 约束盒是列名为\emphText{c('min','max')}的坐标矩阵，至少有两列，一列指向东（x轴），一列
-指向北（y轴）；CRS类只有一个slot，其值是一个\emphText{\href{http://proj4.org/}{\uline{PROJ.4}}开源格式的字符串}
+指向北（y轴）；CRS类只有一个属性，其值是一个\emphText{\href{http://proj4.org/}{\uline{PROJ.4}}开源CRS格式的字符串}
 \end{itemize}
 
 \begin{overlayarea}{\textwidth}{\textheight}
@@ -135,8 +136,8 @@ CRS arguments: +proj=longlat
 
 \begin{frame}[t,fragile]{\subsecname}{SpatialPoints类}
 \begin{itemize}
-\item<1-> SpatialPoints是sp包中用来\emphText{表达空间点的类}
-\item<2-> 相比Spatial类，SpatialPoints类扩展了一个matrix类型的slot——\emphText{coords}来存储点坐标矩阵
+\item<1-> \emphText{SpatialPoints}是sp包中用来表达空间点的类
+\item<2-> 相比Spatial类，SpatialPoints类扩展了一个matrix类型的属性\emphText{coords}来存储点坐标矩阵
 \end{itemize}
 
 \begin{overlayarea}{\textwidth}{\textheight}
@@ -256,6 +257,57 @@ Formal class 'SpatialPointsDataFrame' [package "sp"] with 5 slots
  Factor w/ 30 levels "Australia","Austria",..: 1 1 2 3 3 3 3 3 4 19 ...
 > str(CRAN_spdf1[["loc"]])
 Factor w/ 30 levels "Australia","Austria",..: 1 1 2 3 3 ...
+\end{rcode}
+\end{onlyenv}
+\end{overlayarea}
+\end{frame}
+
+\begin{frame}[t,fragile]{\subsecname}{SpatialLines类}
+\begin{itemize}
+\item<1-> 普通线对象在sp包中用\emphText{Line}类来表达，并且一系列Line构成\emphText{Lines}类
+\item<2-> 但是Line和Lines不包含约束盒和坐标系统，所以sp包提供\emphText{SpatialLines}类用来专门表达空间线对象
+\item<2-> SpatialLines类继承自Spatial类，除bbox和CRS之外，
+还扩展了一个list类型的属性\emphText{lines}用来存储Lines对象
+\end{itemize}
+
+\begin{overlayarea}{\textwidth}{\textheight}
+\begin{onlyenv}<1>
+\begin{rcode}
+# Line类包含属性coords用来存储构成线的连续点坐标矩阵
+> getClass("Line")
+Class "Line" [package "sp"]
+
+Slots:
+             
+Name:  |\colorbox{green}{coords}|
+Class: matrix
+
+Known Subclasses: "Polygon"
+
+# Lines类包含一个属性Lines用来存储一系列Line对象，另一个slot ID用来标识Lines对象的唯一性
+> getClass("Lines")
+Class "Lines" [package "sp"]
+
+Slots:
+                          
+Name:      |\colorbox{green}{Lines}|        |\colorbox{green}{ID}|
+Class:      list character
+\end{rcode}
+\end{onlyenv}
+
+\begin{onlyenv}<2>
+\begin{rcode}
+> getClass("SpatialLines")
+Class "SpatialLines" [package "sp"]
+
+Slots:
+                                          
+Name:        |\colorbox{green}{lines}|        bbox proj4string
+Class:        list      matrix         CRS
+
+Extends: "Spatial"
+
+Known Subclasses: "SpatialLinesDataFrame"
 \end{rcode}
 \end{onlyenv}
 \end{overlayarea}
