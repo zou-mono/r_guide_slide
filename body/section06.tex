@@ -200,7 +200,7 @@ Class "SpatialPoints", directly
 Class "Spatial", by class "SpatialPoints", distance 2
 \end{rcode}
 \begin{figure}[ht]\vspace{-10pt}
-  \includegraphics[width=0.6\columnwidth]{SpatialPointsDataFrame_class.png}
+  \includegraphics[width=0.6\columnwidth]{spatialpointsdataframe_class.png}
 \end{figure}
 \end{onlyenv}
 
@@ -311,6 +311,29 @@ Known Subclasses: "SpatialLinesDataFrame"
 \end{rcode}
 \end{onlyenv}
 \end{overlayarea}
+\end{frame}
+
+\begin{frame}[t,fragile]{\subsecname}{SpatialLines类}
+\begin{itemize}
+\item<1-> sp包也提供了\emphText{SpatialLinesDataFrame}类将SpatialLines对象转换为类似data.frame数据结构
+\end{itemize}
+
+\begin{rcode}
+> getClass("SpatialLinesDataFrame")
+Class "SpatialLinesDataFrame" [package "sp"]
+
+Slots:
+                                                      
+Name:         data       lines        bbox proj4string
+Class:  data.frame        list      matrix         CRS
+
+Extends: 
+Class "SpatialLines", directly
+Class "Spatial", by class "SpatialLines", distance 2
+\end{rcode}
+\begin{figure}[ht]
+  \includegraphics[width=0.7\columnwidth]{spatiallinesdataframe_class.png}
+\end{figure}
 \end{frame}
 \subsection{空间数据的导入导出}
 
