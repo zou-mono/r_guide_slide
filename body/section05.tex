@@ -36,7 +36,7 @@
 
 \begin{frame}[t,fragile]{\subsecname}{}
 \begin{itemize}
-\item<1-> 前面介绍的graphics程序包是R的标准绘图系统，也称为\emphText{graphics绘图系统}，
+\item<1-> 前面介绍的graphics包是R的标准绘图系统，
   除此之外R中还有另一套截然不同的\emphText{grid绘图系统}
 \item<1-> 使用grid绘图系统前需要先用\emphText{library(grid)}加载grid程序包，
 该程序包由\href{https://www.stat.auckland.ac.nz/~paul/}{\uline{Paul Murrell}}开发维护
@@ -52,7 +52,7 @@
   \subfloat[]
   {\includegraphics[height=0.4\textheight]{paul_murrell.jpg}} \vspace{1pt}
   \subfloat[]
-  {\includegraphics[height=0.4\textheight]{R_graphics_cover.jpg}} \vspace{-10pt}
+  {\includegraphics[height=0.4\textheight]{R_graphics_cover.jpg}} \vspace{-15pt}
   \caption{左图是grid作者Paul Murrell，目前是奥克兰大学统计系副教授；右图是他在2005年写的
 书—《R Graphics》,现在已成为R领域的经典入门书籍}  
 \end{figure}}
@@ -520,7 +520,7 @@ xyplot(y ~ x |\textbar| gl(1, length(types)),
 
 \begin{frame}[t]{\subsecname}{}
 \begin{itemize}
-\item ggplot2的设计理念来自Leland Wilkinson的\emphText{《The Grammar of Graphics》}一书，其吸取了书中提出的绘图理论和优雅的绘图语法：\emphText{将绘图与数据分离，数据相关绘图与数据无关绘图分离}
+\item ggplot2的设计理念来自Leland Wilkinson的\emphText{《The Grammar of Graphics》}一书，其吸取书中提出的绘图理论和优雅的绘图语法：\emphText{将绘图与数据分离，数据相关绘图与数据无关绘图分离}
 \end{itemize}
 \begin{figure}[ht]
   \centering
