@@ -134,7 +134,8 @@ CRS arguments: +proj=longlat
 \end{overlayarea}
 \end{frame}
 
-\begin{frame}[t,fragile]{\subsecname}{SpatialPoints类}
+\subsubsection{SpatialPoints类}
+\begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
 \begin{itemize}
 \item<1-> \emphText{SpatialPoints}是sp包中用来表达空间点的类
 \item<2-> 相比Spatial类，SpatialPoints类扩展了一个matrix类型的属性\emphText{coords}来存储点坐标矩阵
@@ -176,7 +177,7 @@ CRAN_sp <- |\colorbox{green}{SpatialPoints}|(CRAN_mat, proj4string = llCRS)
 \end{overlayarea}
 \end{frame}
 
-\begin{frame}[t,fragile]{\subsecname}{SpatialPoints类}
+\begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
 \begin{itemize}
 \item<1-> \emphText{SpatialPointsDataFrame}类将SpatialPoints对象转换为类似data.frame数据结构
 \item<2-> SpatialPointsDataFrame类通过coords行名和data.frame行名的对应顺序来构建，
@@ -262,7 +263,65 @@ Factor w/ 30 levels "Australia","Austria",..: 1 1 2 3 3 ...
 \end{overlayarea}
 \end{frame}
 
-\begin{frame}[t,fragile]{\subsecname}{SpatialLines类}
+\begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
+\begin{overlayarea}{\textwidth}{\textheight}
+\begin{onlyenv}<1>
+\begin{minipage}{\textwidth}
+\begin{rcode}
+> str(turtle_sp)
+Formal class 'SpatialPointsDataFrame' [package "sp"] with 5 slots
+  ..@ data       :'data.frame': 394 obs. of  3 variables:
+  .. ..$ id       : int [1:394] 1 2 3 4 5 6 7 8 9 10 ...
+  .. ..$ obs_date : Factor w/ 394 levels "01/02/1997 04:16:53",..: 216 225 226 227 228 229 230 231 232 233 ...
+  .. ..$ timestamp: POSIXct[1:394], format: "1996-08-11 01:15:00" "1996-08-17 15:18:23" ...
+  ..@ coords.nrs : int [1:2] 3 2
+  ..@ coords     : num [1:394, 1:2] 246 244 244 244 244 ...
+  .. ..- attr(*, "dimnames")=List of 2
+  .. .. ..$ : chr [1:394] "366" "367" "368" "369" ...
+  .. .. ..$ : chr [1:2] "lon" "lat"
+  ..@ bbox       : num [1:2, 1:2] 140.9 21.6 245.8 39.8
+  .. ..- attr(*, "dimnames")=List of 2
+  .. .. ..$ : chr [1:2] "lon" "lat"
+  .. .. ..$ : chr [1:2] "min" "max"
+  ..@ proj4string:Formal class 'CRS' [package "sp"] with 1 slot
+  .. .. ..@ projargs: chr "+proj=longlat +ellps=WGS84"
+\end{rcode}
+\end{minipage}
+\end{onlyenv}
+
+\begin{onlyenv}<2>
+\begin{minipage}{\textwidth}
+\begin{rcode}
+> head(turtle_sp,15)
+          coordinates id            obs_date           timestamp
+366 (245.763, 28.668)  1 08/11/1996 01:15:00 1996-08-11 01:15:00
+367 (244.427, 28.365)  2 08/17/1996 15:18:23 1996-08-17 15:18:23
+368   (244.38, 28.26)  3 08/18/1996 14:57:44 1996-08-18 14:57:44
+369 (244.323, 28.252)  4 08/18/1996 16:34:26 1996-08-18 16:34:26
+370 (244.441, 28.185)  5 08/19/1996 14:31:33 1996-08-19 14:31:33
+371 (244.235, 28.168)  6 08/19/1996 16:14:17 1996-08-19 16:14:17
+372 (244.074, 28.171)  7 08/20/1996 14:12:10 1996-08-20 14:12:10
+373 (244.104, 28.133)  8 08/20/1996 15:54:27 1996-08-20 15:54:27
+374 (243.578, 27.361)  9 08/22/1996 15:11:14 1996-08-22 15:11:14
+375 (243.282, 27.004) 10 08/23/1996 16:28:05 1996-08-23 16:28:05
+237 (242.991, 26.876) 11 08/24/1996 14:28:13 1996-08-24 14:28:13
+238  (242.947, 26.84) 12 08/24/1996 16:05:20 1996-08-24 16:05:20
+239  (242.919, 26.83) 13 08/24/1996 20:00:25 1996-08-24 20:00:25
+240 (242.874, 26.781) 14 08/25/1996 03:18:47 1996-08-25 03:18:47
+241 (242.676, 26.762) 15 08/25/1996 15:41:11 1996-08-25 15:41:11
+\end{rcode}
+\end{minipage}
+\end{onlyenv}
+
+\begin{minipage}{\textwidth}
+\centering
+\includegraphics[width=0.7\columnwidth]{spatial_points_example.pdf}
+\end{minipage}
+\end{overlayarea}
+\end{frame}
+
+\subsubsection{SpatialLines类}
+\begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
 \begin{itemize}
 \item<1-> 普通线对象是一系列点的集合，在sp包中用\emphText{Line}类来表达，
 而一系列Line的集合构成\emphText{Lines}类
@@ -314,11 +373,13 @@ Known Subclasses: "SpatialLinesDataFrame"
 \end{overlayarea}
 \end{frame}
 
-\begin{frame}[t,fragile]{\subsecname}{SpatialLines类}
+\begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
 \begin{itemize}
 \item<1-> sp包也提供了\emphText{SpatialLinesDataFrame}类将SpatialLines对象转换为类似data.frame数据结构
 \end{itemize}
 
+\begin{overlayarea}{\textwidth}{\textheight}
+\begin{onlyenv}<1>
 \begin{rcode}
 > getClass("SpatialLinesDataFrame")
 Class "SpatialLinesDataFrame" [package "sp"]
@@ -335,6 +396,22 @@ Class "Spatial", by class "SpatialLines", distance 2
 \begin{figure}[ht]
   \includegraphics[width=0.7\columnwidth]{spatiallinesdataframe_class.png}
 \end{figure}
+\end{onlyenv}
+
+\begin{onlyenv}<2>
+\begin{rcode}
+# maptools包中的ContourLines2SLDF函数将contourLines返回值转换为SpatialLinesDataFrame对象
+> volcano_sl <- ContourLines2SLDF(contourLines(volcano))
+# volcano\_sl的data slot包含10个不同的等高线水平标签
+> t(slot(volcano_sl, "data"))
+      C_1   C_2   C_3   C_4   C_5   C_6   C_7   C_8   C_9   C_10 
+level "100" "110" "120" "130" "140" "150" "160" "170" "180" "190"
+\end{rcode}
+\begin{figure}[ht]\centering
+  \includegraphics[width=0.8\columnwidth]{spatial_lines_example2.pdf}
+\end{figure}
+\end{onlyenv}
+\end{overlayarea}
 \end{frame}
 \subsection{空间数据的导入导出}
 

@@ -952,7 +952,7 @@ CRAN_spdf1 <- SpatialPointsDataFrame(CRAN_mat, CRAN_df, proj4string = llCRS, mat
 coords <- CRAN_mat[3,]
 
 
-CairoPDF("spatial_points_example.pdf",10, 10)
+CairoPDF("spatial_points_example.pdf",10, 5)
 library(sp)
 turtle_df <- read.csv("data/seamap105_mod.csv")
 summary(turtle_df)
@@ -971,6 +971,7 @@ pac <- Rgshhs(gshhs.c.b, level=1, xlim=c(130,250), ylim=c(15,60), verbose=FALSE)
 ###################################################
 ### code chunk number 56: cm.Rnw:1039-1051
 ###################################################
+par(mar=c(2,2,0.3,0.1))
 plot(pac$SP, axes=TRUE, col="khaki2", xaxs="i", yaxs="i")
 plot(turtle_sp, add=TRUE)
 m_rle <- rle(months(turtle_sp$timestamp))
@@ -979,3 +980,33 @@ crds <- coordinates(turtle_sp)
 text(crds[clen,], labels=m_rle$values[-1], pos=3, offset=1.5, srt=45)
 dev.off()
 
+
+library(maps)
+china<- map("world", "china", plot=FALSE)
+tw <- map("world","taiwan",plot=FALSE)
+china$x <- c(china$x,NA,tw$x)
+china$y <- c(china$y,NA,tw$y)
+china$range <- c(range(china$range[1:2],tw$range[1:2]),range(china$range[3:4],tw$range[3:4]))
+china$names <- c(china$names,tw$names)
+p4s <- CRS("+proj=longlat +ellps=WGS84")
+library(maptools)
+SLchina <- map2SpatialLines(china, proj4string=p4s)
+SLchina <- map2SpatialLines(china, IDs=sapply(slot(SLchina,"lines"), function(x) slot(x,"ID")),proj4string=p4s)
+attr <- data.frame(num=sapply(slot(SLchina,"lines"), function(x) slot(x,"ID")))
+res <- SpatialLinesDataFrame(SLchina,attr)
+
+
+CairoPDF("spatial_lines_example2.pdf",10, 6)
+volcano_sl <- ContourLines2SLDF(contourLines(volcano))
+t(slot(volcano_sl, "data"))
+par(mar=c(0.1,0.1,0.1,0.1))
+plot(volcano_sl)
+dev.off()
+
+CairoPDF("spatial_polygons_example1.pdf",5, 10)
+par(mar=c(0.1,0.1,0.1,0.1))
+llCRS <- CRS("+proj=longlat +ellps=WGS84")
+auck_shore <- MapGen2SL("data/auckland_mapgen.dat", llCRS)
+summary(auck_shore)
+plot(auck_shore)
+dev.off()
