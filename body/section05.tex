@@ -143,7 +143,8 @@ grid.edit("rect0", gp = gpar(fill = "blue"))
 \end{overlayarea}  
 \end{frame} 
 
-\begin{frame}[t]{\subsecname}{公式参数}
+\subsubsection{公式参数}
+\begin{frame}[t]{\subsecname}{\subsubsecname}
 \begin{itemize}
 \item lattice的绘图函数都会\emphText{用公式作为第一位置参数}
 \item<2-> 如果在不同panel中绘制多元数据，公式参数根据\emphText{“|”}符号后的变量对数据进行分类
@@ -171,7 +172,7 @@ grid.edit("rect0", gp = gpar(fill = "blue"))
 \end{overlayarea}
 \end{frame} 
 
-\begin{frame}[t,fragile]{\subsecname}{公式参数}
+\begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
 \begin{onlyenv}<1>
 \begin{rcode}
 > densityplot(|\colorbox{green}{$\sim$mpg}|, data=mtcars)
@@ -214,7 +215,8 @@ grid.edit("rect0", gp = gpar(fill = "blue"))
 \end{onlyenv}
 \end{frame} 
 
-\begin{frame}[t]{\subsecname}{标准高级绘图函数}
+\subsubsection{标准高级绘图函数}
+\begin{frame}[t]{\subsecname}{\subsubsecname}
 \begin{itemize}
 \item lattice包中提供了大量标准高级绘图函数用于直接绘制常用的统计图形
 \end{itemize}
@@ -225,7 +227,7 @@ grid.edit("rect0", gp = gpar(fill = "blue"))
 \end{figure}
 \end{frame} 
 
-\begin{frame}[t]{\subsecname}{标准高级绘图函数}
+\begin{frame}[t]{\subsecname}{\subsubsecname}
   \begin{table} \centering \scriptsize
     \begin{tabular}{|>{\centering\arraybackslash} m{0.2\columnwidth}|>{\centering\arraybackslash} m{0.2\columnwidth}|>{\centering\arraybackslash} m{0.2\columnwidth} |>{\centering\arraybackslash} m{0.2\columnwidth}|}
       \toprule
@@ -252,7 +254,8 @@ grid.edit("rect0", gp = gpar(fill = "blue"))
   \end{table}
 \end{frame} 
 
-\begin{frame}[t,fragile]{\subsecname}{panel函数和strip函数}
+\subsubsection{panel函数和strip函数}
+\begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
 \begin{itemize}
 \item lattice中每个高级绘图函数都有默认的panel参数和strip参数，
 实质上对应的是两个匿名函数：\emphText{panel()和strip()}
@@ -262,7 +265,7 @@ grid.edit("rect0", gp = gpar(fill = "blue"))
 \end{itemize}
 \end{frame} 
 
-\begin{frame}[c,fragile]{\subsecname}{panel函数和strip函数}
+\begin{frame}[c,fragile]{\subsecname}{\subsubsecname}
 \begin{onlyenv}<1>
 \begin{rcode}
 # 在高级绘图函数中自定义panel和strip的示例
@@ -307,7 +310,7 @@ xyplot(y ~ x |\textbar| gl(1, length(types)),
 \end{onlyenv} 
 \end{frame}
 
-\begin{frame}[c,fragile]{\subsecname}{panel函数和strip函数}
+\begin{frame}[c,fragile]{\subsecname}{\subsubsecname}
 \begin{figure}
  \begin{columns}
     \begin{column}[c]{.45\textwidth}
@@ -343,7 +346,8 @@ xyplot(y ~ x |\textbar| gl(1, length(types)),
 \end{figure}
 \end{frame} 
 
-\begin{frame}[t,fragile]{\subsecname}{主题和图形参数设置}
+\subsubsection{主题和图形参数设置}
+\begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
 \begin{itemize}
 \item 在lattice中，所有的trellis对象都有一个主题(theme)，theme中包含完整的图形要素：颜色、线宽、字体等
 \item 当前theme的参数可以直接通过\emphText{trellis.par.get()}函数获取，通过
@@ -438,7 +442,8 @@ xyplot(y ~ x |\textbar| gl(1, length(types)),
 \end{overlayarea}
 \end{frame}
 
-\begin{frame}[t,fragile]{\subsecname}{主题和图形参数设置}
+\subsubsection{主题和图形参数设置}
+\begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
 \begin{itemize}
 \item 除了设置theme参数之外，还可以通过\emphText{par.settings参数}仅对当前图形进行图形参数调整，
 这比较类似par()函数的作用
@@ -529,7 +534,8 @@ xyplot(y ~ x |\textbar| gl(1, length(types)),
 \end{figure}
 \end{frame}
 
-\begin{frame}[t,fragile]{\subsecname}{绘图原理}
+\subsubsection{绘图原理}
+\begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
 \begin{itemize}
 \item<1-> 将绘图与数据分离，数据相关绘图与数据无关绘图分离
 \item<2-> 按照\emphText{图层(layer)}概念绘图，图层之间的叠加通过“+”符号实现，越往后的图层越在上层
@@ -568,7 +574,8 @@ xyplot(y ~ x |\textbar| gl(1, length(types)),
 \end{overlayarea}
 \end{frame}
 
-\begin{frame}[t,fragile]{\subsecname}{数据无关的图形要素}
+\subsubsection{数据无关的图形要素}
+\begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
 \begin{itemize}
 \item 数据无关的图形要素\emphText{负责实现图形的结构化外观}
 \item 通过\emphText{theme()}函数对数据无关的图形要素进行统一设置，包括四个基础类型：文本、线、矩形和空白
@@ -611,7 +618,7 @@ xyplot(y ~ x |\textbar| gl(1, length(types)),
 \end{overlayarea}
 \end{frame}
 
-\begin{frame}[t,fragile]{\subsecname}{数据相关的图形要素}
+\begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
 \begin{itemize}
 \item 数据相关的图形要素\emphText{负责构造统计数据的绘制图形}，大致可以分为数据层、几何图形层和美学层三类
 \end{itemize}
@@ -639,7 +646,8 @@ xyplot(y ~ x |\textbar| gl(1, length(types)),
 \end{overlayarea}
 \end{frame}
 
-\begin{frame}[t,fragile]{\subsecname}{数据(data)}
+\subsubsection{数据(data)}
+\begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
 \begin{itemize}
 \item ggplot2对数据的要求是\emphText{必须是data.frame类型}
 \item ggplot2从给定的data.frame中提取绘图所需变量\emphText{生成新的数据集}，而不是直接在原数据上进行变换
@@ -661,7 +669,8 @@ xyplot(y ~ x |\textbar| gl(1, length(types)),
 \end{onlyenv}
 \end{frame}
 
-\begin{frame}[t,fragile]{\subsecname}{映射(mapping)}
+\subsubsection{映射(mapping)}
+\begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
 \begin{itemize}
 \item<1-> \emphText{aes()}函数用来将数据变量映射到图形中，使变量成为可以被感知的图形属性
 \item<1-> \emphText{最好不要使用指定数据集之外的变量}，这不利于将绘图所需数据都封装到一个对象中
@@ -716,7 +725,8 @@ xyplot(y ~ x |\textbar| gl(1, length(types)),
 \end{overlayarea}
 \end{frame}
 
-\begin{frame}[t,fragile]{\subsecname}{标度(scales)}
+\subsubsection{标度(scales)}
+\begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
 \begin{itemize}
 \item 标度是\emphText{从数据空间的定义域到图形属性空间值域的映射}，
 将数据转化为视觉上可以感知的颜色、大小、位置和形状
@@ -765,7 +775,8 @@ xyplot(y ~ x |\textbar| gl(1, length(types)),
 \end{overlayarea}
 \end{frame}
 
-\begin{frame}[t,fragile]{\subsecname}{几何对象(geometric object)}
+\subsubsection{几何对象(geometric object)}
+\begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
 \begin{itemize}
 \item 几何对象简称geom，负责执行图形的实际渲染，控制生成的图形类型，
 几何对象函数的命名规则是\emphText{geom\_加上几何对象名字}
@@ -798,7 +809,8 @@ xyplot(y ~ x |\textbar| gl(1, length(types)),
 \end{table}
 \end{frame}
 
-\begin{frame}[t,fragile]{\subsecname}{统计变换(statistical transformations)}
+\subsubsection{统计变换(statistical transformations)}
+\begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
 \begin{itemize}
 \item 统计变换简称stat，负责通过某种方式对数据进行统计汇总，统计变换函数的命名规则是\emphText{stat\_加上统计变换名字}
 \end{itemize}
@@ -827,7 +839,8 @@ xyplot(y ~ x |\textbar| gl(1, length(types)),
 \end{table}
 \end{frame}
 
-\begin{frame}[t,fragile]{\subsecname}{分面(faceting)}
+\subsubsection{分面(faceting)}
+\begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
 \begin{itemize}
 \item<1-> 分面即在同一图幅上自动摆放多个图形的绘图概念(同lattice)
 \item<1-> 提供两种分面类型：\emphText{网格型}(facet\_grid)和\emphText{封装型}(facet\_wrap)
@@ -946,7 +959,8 @@ xyplot(y ~ x |\textbar| gl(1, length(types)),
 \end{overlayarea}
 \end{frame}
 
-\begin{frame}[t]{\subsecname}{位置调整(position adjustments)}
+\subsubsection{位置调整(position adjustments)}
+\begin{frame}[t]{\subsecname}{\subsubsecname}
 \begin{itemize}
 \item 位置调整指的是对图层中\emphText{元素的位置}进行调整
 \item 位置调整\emphText{通常用于离散型数据}，通过对位置的微调来比较数据
@@ -985,7 +999,8 @@ xyplot(y ~ x |\textbar| gl(1, length(types)),
 \end{overlayarea}
 \end{frame}
 
-\begin{frame}[t,fragile]{\subsecname}{坐标系(coordinate system)}
+\subsubsection{坐标系(coordinate system)}
+\begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
 \begin{itemize}
 \item 坐标系是将两种位置标度结合在一起组成的二维定位系统，坐标系函数命名规则是\emphText{coord\_加上坐标系名字}
 \item \emphText{ggplot2包仅支持二维坐标系}，要实现三维绘图必须依赖其他第三方包，例如plotly和rgl
@@ -1031,7 +1046,8 @@ xyplot(y ~ x |\textbar| gl(1, length(types)),
 \end{frame}
 
 %%% https://www.plob.org/article/7665.html
-\begin{frame}[t,fragile]{\subsecname}{图层}
+\subsubsection{图层}
+\begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
 \begin{itemize}
 \item<1-> 图层是ggplot2特有的概念，其作用是生成在图像上能够被人感知的\emphText{对象}
 \item<1-> 图层由五个语法要素组成：数据、映射、统计变换、几何对象和位置调整，可以用\emphText{layer函数}定义
@@ -1069,7 +1085,8 @@ ggplot(diamonds,aes(x=carat)) + |\colorbox{green}{stat\_bin}|(fill="steelblue",|
 \end{overlayarea}
 \end{frame}
 
-\begin{frame}{\subsecname}{绘图过程}
+\subsubsection{绘图过程}
+\begin{frame}{\subsecname}{\subsubsecname}
 \begin{figure}[ht]
   \begin{columns}
     \begin{column}{.6\textwidth}\centering
@@ -1083,8 +1100,7 @@ ggplot(diamonds,aes(x=carat)) + |\colorbox{green}{stat\_bin}|(fill="steelblue",|
 \end{figure}
 \end{frame}
 
-\begin{frame}[c,fragile]{\subsecname}{绘图过程}
-
+\begin{frame}[c,fragile]{\subsecname}{\subsubsecname}
 \begin{onlyenv}<1>
 \begin{minipage}{\textwidth}
 \begin{rcode}

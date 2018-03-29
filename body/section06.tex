@@ -264,7 +264,8 @@ Factor w/ 30 levels "Australia","Austria",..: 1 1 2 3 3 ...
 
 \begin{frame}[t,fragile]{\subsecname}{SpatialLines类}
 \begin{itemize}
-\item<1-> 普通线对象在sp包中用\emphText{Line}类来表达，并且一系列Line构成\emphText{Lines}类
+\item<1-> 普通线对象是一系列点的集合，在sp包中用\emphText{Line}类来表达，
+而一系列Line的集合构成\emphText{Lines}类
 \item<2-> 但是Line和Lines不包含约束盒和坐标系统，所以sp包提供\emphText{SpatialLines}类用来专门表达空间线对象
 \item<2-> SpatialLines类继承自Spatial类，除bbox和CRS之外，
 还扩展了一个list类型的属性\emphText{lines}用来存储Lines对象

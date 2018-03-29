@@ -952,4 +952,30 @@ CRAN_spdf1 <- SpatialPointsDataFrame(CRAN_mat, CRAN_df, proj4string = llCRS, mat
 coords <- CRAN_mat[3,]
 
 
+CairoPDF("spatial_points_example.pdf",10, 10)
+library(sp)
+turtle_df <- read.csv("data/seamap105_mod.csv")
+summary(turtle_df)
+###################################################
+### code chunk number 54: cm.Rnw:1021-1027
+###################################################
+timestamp <- as.POSIXlt(strptime(as.character(turtle_df$obs_date), "%m/%d/%Y %H:%M:%S"), "GMT")
+turtle_df1 <- data.frame(turtle_df, timestamp=timestamp)
+turtle_df1$lon <- ifelse(turtle_df1$lon < 0, turtle_df1$lon+360, turtle_df1$lon)
+turtle_sp <- turtle_df1[order(turtle_df1$timestamp),]
+coordinates(turtle_sp) <- c("lon", "lat")
+proj4string(turtle_sp) <- CRS("+proj=longlat +ellps=WGS84")
+library(maptools)
+gshhs.c.b <- system.file("share/gshhs_c.b", package="maptools")
+pac <- Rgshhs(gshhs.c.b, level=1, xlim=c(130,250), ylim=c(15,60), verbose=FALSE)
+###################################################
+### code chunk number 56: cm.Rnw:1039-1051
+###################################################
+plot(pac$SP, axes=TRUE, col="khaki2", xaxs="i", yaxs="i")
+plot(turtle_sp, add=TRUE)
+m_rle <- rle(months(turtle_sp$timestamp))
+clen <- cumsum(m_rle$lengths[-length(m_rle$lengths)])-1
+crds <- coordinates(turtle_sp)
+text(crds[clen,], labels=m_rle$values[-1], pos=3, offset=1.5, srt=45)
+dev.off()
 
