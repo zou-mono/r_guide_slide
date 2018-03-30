@@ -299,7 +299,8 @@ X11cairo      pdf     jpeg
 \end{overlayarea}  
 \end{frame}
 
-\begin{frame}[t]{\subsecname}{区域}
+\subsubsection{区域}
+\begin{frame}[t]{\subsecname}{\subsubsecname}
 \begin{itemize}
 \item R的绘图设备分为三块区域：\emphText{绘图区域(Plot Region)、图形区域(Figure Region)和设备区域(Device Region)}
 \item 这三个区域对应两个边界：\emphText{图形边界(Figure Margin)和外边界(Outer Margin)}；图形边界由par函数的\emphText{mar参数}设置，外边界由\emphText{oma参数}设置
@@ -313,7 +314,8 @@ X11cairo      pdf     jpeg
 \end{figure}
 \end{frame}
 
-\begin{frame}[t]{\subsecname}{颜色}
+\subsubsection{颜色}
+\begin{frame}[t]{\subsecname}{\subsubsecname}
 \begin{itemize}
 \item<1-> 颜色元素由\emphText{grDevices包}支持，其内部编写了大量颜色函数
 \item<2-> 颜色函数分为\emphTextStep{2}{固定颜色选择函数、颜色生成函数和特定颜色主题调色板}
@@ -326,7 +328,7 @@ X11cairo      pdf     jpeg
 \end{figure}  
 \end{frame}
 
-\begin{frame}[t,fragile]{\subsecname}{颜色}
+\begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
 \begin{itemize}
 \item<1-> 固定颜色选择函数：\emphText{colors()}、\emphText{palette()}
 \item<2-> colors()函数直接通过英文名称来调取预设颜色
@@ -382,7 +384,7 @@ X11cairo      pdf     jpeg
 \end{overlayarea}  
 \end{frame}
 
-\begin{frame}[t,fragile]{\subsecname}{颜色}
+\begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
 \begin{itemize}
 \item R中还提供利用颜色生成原理构造颜色，如RGB模型(红绿蓝三原色)、
           HSV色彩模型(色调、饱和度和纯度)、HCL色彩模型(色调、色度和亮度)等
@@ -422,7 +424,7 @@ X11cairo      pdf     jpeg
 \end{overlayarea}  
 \end{frame}
 
-\begin{frame}[t,fragile]{\subsecname}{颜色}
+\begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
 \begin{itemize}
 \item 由于基于颜色生成原理构造颜色过于专业，因此R中还提供了一种比较简单的\emphText{特定颜色主题调试板}
 \item 特定颜色主题调试板用\emphText{渐变的颜色}来表现特定的主题
@@ -534,7 +536,7 @@ X11cairo      pdf     jpeg
 \end{overlayarea}  
 \end{frame}
 
-\begin{frame}[t]{\subsecname}{颜色}
+\begin{frame}[t]{\subsecname}{\subsubsecname}
 \begin{itemize}
 \item 另外，\emphText{RColorBrewer}包还提供了更简化的颜色生成函数，只需要指定调色板名称，
 再通过brewer.pal()函数就可以自动生成符合色彩科学的预设组合
@@ -576,7 +578,8 @@ X11cairo      pdf     jpeg
 \end{overlayarea}  
 \end{frame}
 
-\begin{frame}[t,fragile]{\subsecname}{点}
+\subsubsection{点}
+\begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
 \begin{itemize}
 \item 点元素可以通过部分高级绘图函数中的pch参数绘制，也可以通过低级绘图函数\emphText{points()}绘制
 \item points函数有两个重要参数\emphText{pch}和\emphText{col}，前者用于设置点的
@@ -707,7 +710,8 @@ X11cairo      pdf     jpeg
 \end{overlayarea}  
 \end{frame}
 
-\begin{frame}[t,fragile]{\subsecname}{线}
+\subsubsection{线}
+\begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
 \begin{itemize}
 \item<1-> R中的线元素包括\emphText{直线、线段、多段线、箭头和样条曲线}
 \item<2-> 直线：\emphText{abline()}函数
@@ -770,7 +774,7 @@ xspline(x, y = NULL, shape = 0, open = TRUE, repEnds = TRUE, draw = TRUE, border
 \end{onlyenv}  
 \end{frame}
 
-\begin{frame}[c,fragile]{\subsecname}{线}
+\begin{frame}[c,fragile]{\subsecname}{\subsubsecname}
 \begin{onlyenv}<1>
     \begin{figure}
  \begin{columns}
@@ -834,7 +838,7 @@ xspline(x, y = NULL, shape = 0, open = TRUE, repEnds = TRUE, draw = TRUE, border
 \end{onlyenv}  
 \end{frame}
 
-\begin{frame}[c,fragile]{\subsecname}{线}
+\begin{frame}[c,fragile]{\subsecname}{\subsubsecname}
 \begin{onlyenv}<1>
 \begin{figure}
   \begin{columns}
@@ -917,7 +921,8 @@ xspline(x, y = NULL, shape = 0, open = TRUE, repEnds = TRUE, draw = TRUE, border
 \end{onlyenv}
 \end{frame}
 
-\begin{frame}[t,fragile]{\subsecname}{面}
+\subsubsection{面}
+\begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
 \begin{itemize}
 \item \emphText{polygon()}函数用于绘制多边形
 \item 矩形是多边形的特例，有专门绘制矩形的函数\emphText{rect()}
@@ -968,7 +973,8 @@ polygon(x, y = NULL, density = NULL, angle = 45, border = NULL, col = NA, lty = 
 \end{onlyenv}  
 \end{frame}
 
-\begin{frame}[t,fragile]{\subsecname}{网格线}
+\subsubsection{网格线}
+\begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
 \begin{itemize}
 \item 网格线用\emphText{对齐坐标轴的横纵直线}来辅助获取更精确的元素位置
 \item \emphText{grid()}函数是专门用于绘制网格线的函数
@@ -1004,7 +1010,8 @@ grid(nx = NULL, ny = nx, col = "lightgray", lty = "dotted", lwd = par("lwd"), eq
 \end{onlyenv} 
 \end{frame} 
 
-\begin{frame}[t,fragile]{\subsecname}{文本}
+\subsubsection{文本}
+\begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
 \begin{itemize}
 \item R中把统计图形中的文本分为三类：\emphText{标题}、\emphText{任意文本}和\emphText{图形周边文本}
 \item 对应的函数分别为：\emphText{title()}、\emphText{text()}和\emphText{mtext()}
@@ -1050,7 +1057,8 @@ mtext(text, side = 3, line = 0, outer = FALSE, at = NA, adj = NA, padj = NA, cex
 \end{onlyenv}
 \end{frame}
 
-\begin{frame}[t,fragile]{\subsecname}{图例}
+\subsubsection{图例}
+\begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
 \begin{itemize}
 \item 图例是统计图形中很重要的辅助解释信息，其作用将不同的对象分组为不同的样式
 \item R中绘制图例的函数是\emphText{legend()}
@@ -1092,7 +1100,8 @@ legend(x, y = NULL, legend, fill = NULL, col = par("col"), border = "black", lty
 \end{onlyenv}
 \end{frame}
 
-\begin{frame}[t,fragile]{\subsecname}{坐标轴}
+\subsubsection{坐标轴}
+\begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
 \begin{itemize}
 \item 坐标轴是统计图形中元素数值大小的参照物
 \item R中绘制图例的函数是\emphText{axis()}
