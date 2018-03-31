@@ -625,8 +625,8 @@ Error in data.frame(x, y) :
   % \item 当命令从被键盘输入后，它就将被R求值，如果是有效命令则会被R解释器执行，因此\emphText{R中
 % 有效命令默认都是求值表达式}；但是有些情况，需要构造非求值表达式，比如将公式作为函数参数进行传递，
 % 或者在图形绘制数学公式等
-  \item \emphText{R中有效命令默认都是求值表达式}，可以在终端直接输入，
-也可以用\emphText{eval函数}执行；而非求值表达式通过\emphText{expression函数}执行
+  \item \emphText{R中的命令默认都是求值表达式}，可以在终端直接输入，
+也可以用\emphText{eval函数}执行；而非求值表达式用\emphText{expression函数}执行
   \end{itemize}  
 
 \begin{overlayarea}{\textwidth}{\textheight}
@@ -644,20 +644,20 @@ expression(x/(y + exp(z)))
 \end{onlyenv}
 
 \begin{onlyenv}<3>
-\vspace{-10pt}
+\vspace{-5pt}
 \begin{columns}
   \begin{column}[c]{.5\textwidth} \centering
       \includegraphics[width=0.8\columnwidth]{expression-example.png}
   \end{column}
 
   \begin{column}[c]{.5\textwidth}
-     \begin{rcode}
-     > plot(1:10, 1:10)
-     > text(4, 9, expression(hat(beta) == (X^t * X)^{-1} * X^t * y))
-     > text(4, 8.4, "expression(hat(beta) == (X^t * X)^{-1} * X^t * y)", cex = .8)
-     > text(4, 7, expression(bar(x) == sum(frac(x[i], n), i==1, n)))
-     > text(4, 6.4, "expression(bar(x) == sum(frac(x[i], n), i==1, n))", cex = .8)
-     > text(8, 5, expression(paste(frac(1, sigma*sqrt(2*pi)), " ", plain(e)^{frac(-(x-mu)^2, 2*sigma^2)})), cex = 1.2)
+\begin{rcode}
+> plot(1:10, 1:10)
+> text(4, 9, expression(hat(beta) == (X^t * X)^{-1} * X^t * y))
+> text(4, 8.4, "expression(hat(beta) == (X^t * X)^{-1} * X^t * y)", cex = .8)
+> text(4, 7, expression(bar(x) == sum(frac(x[i], n), i==1, n)))
+> text(4, 6.4, "expression(bar(x) == sum(frac(x[i], n), i==1, n))", cex = .8)
+> text(8, 5, expression(paste(frac(1, sigma*sqrt(2*pi)), " ", plain(e)^{frac(-(x-mu)^2, 2*sigma^2)})), cex = 1.2)
 \end{rcode}  
   \end{column}
 \end{columns}

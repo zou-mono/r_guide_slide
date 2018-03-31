@@ -1,8 +1,12 @@
 setwd("~/Documents/tex_projects/r_guide_slide")
 library(ggplot2)
 library(Cairo)
+library(maptools)
+library(sp)
+library(rgdal)
 library(ggplot2movies)
 library(plyr)
+library(maps)
 
 png("expression-example.png",width=1000,height=1000,res=300,pointsize=6)
 par(mar=c(2,2,0,0)+0.1)
@@ -980,7 +984,7 @@ crds <- coordinates(turtle_sp)
 text(crds[clen,], labels=m_rle$values[-1], pos=3, offset=1.5, srt=45)
 dev.off()
 
-
+CairoPDF("spatial_lines_example1.pdf",10, 6)
 library(maps)
 china<- map("world", "china", plot=FALSE)
 tw <- map("world","taiwan",plot=FALSE)
@@ -990,11 +994,12 @@ china$range <- c(range(china$range[1:2],tw$range[1:2]),range(china$range[3:4],tw
 china$names <- c(china$names,tw$names)
 p4s <- CRS("+proj=longlat +ellps=WGS84")
 library(maptools)
-SLchina <- map2SpatialLines(china, proj4string=p4s)
 SLchina <- map2SpatialLines(china, IDs=sapply(slot(SLchina,"lines"), function(x) slot(x,"ID")),proj4string=p4s)
-attr <- data.frame(num=sapply(slot(SLchina,"lines"), function(x) slot(x,"ID")))
-res <- SpatialLinesDataFrame(SLchina,attr)
-
+#attr <- data.frame(num=sapply(slot(SLchina,"lines"), function(x) slot(x,"ID")))
+#res <- SpatialLinesDataFrame(SLchina,attr)
+par(mar=c(0.1,0.1,0.1,0.1))
+plot(SLchina)
+dev.off()
 
 CairoPDF("spatial_lines_example2.pdf",10, 6)
 volcano_sl <- ContourLines2SLDF(contourLines(volcano))
@@ -1003,10 +1008,38 @@ par(mar=c(0.1,0.1,0.1,0.1))
 plot(volcano_sl)
 dev.off()
 
-CairoPDF("spatial_polygons_example1.pdf",5, 10)
-par(mar=c(0.1,0.1,0.1,0.1))
-llCRS <- CRS("+proj=longlat +ellps=WGS84")
-auck_shore <- MapGen2SL("data/auckland_mapgen.dat", llCRS)
-summary(auck_shore)
-plot(auck_shore)
+library(maps)
+state.map <- map("state", plot=FALSE, fill=TRUE)
+IDs <- sapply(strsplit(state.map$names, ":"), function(x) x[1])
+library(maptools)
+state.sp <- map2SpatialPolygons(state.map, IDs=IDs,
+  proj4string=CRS("+proj=longlat +ellps=WGS84"))
+###################################################
+### code chunk number 74: cm.Rnw:1491-1499
+###################################################
+sat <- read.table("data/state.sat.data_mod.txt", row.names=5, header=TRUE)
+str(sat)
+id <- match(row.names(sat), row.names(state.sp))
+row.names(sat)[is.na(id)]
+sat1 <- sat[!is.na(id),]
+state.spdf <- SpatialPolygonsDataFrame(state.sp, sat1)
+str(slot(state.spdf, "data"))
+str(state.spdf, max.level=2)
+#CairoPDF("spatial_polygons_example1.pdf",4,5)
+CairoPDF("spatial_polygons_example1.pdf")
+california <- state.spdf[state.spdf$oname== "calif",]
+par(mar=c(0,0,0,0))
+plot(california)
 dev.off()
+
+CairoPDF("spatial_polygons_example2.pdf",5,3.5)
+load("data/high.RData")
+manitoulin_sp <- high$SP
+sapply(manitoulin_sp@polygons[[1]]@Polygons, function(x) slot(x, "hole"))
+sapply(manitoulin_sp@polygons[[1]]@Polygons, function(x) slot(x, "ringDir"))
+par(mar=c(0,0,0,0))
+plot(manitoulin_sp, pbg="lightsteelblue2", col="khaki2", usePolypath=FALSE)
+text(t(sapply(manitoulin_sp@polygons[[1]]@Polygons, function(x) slot(x, "labpt")))[-c(1,2),],
+     label=high$polydata$level[-c(1,2)], col="black", font=2, cex=1)
+dev.off()
+

@@ -137,7 +137,7 @@ CRS arguments: +proj=longlat
 \subsubsection{SpatialPoints类}
 \begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
 \begin{itemize}
-\item<1-> \emphText{SpatialPoints}是sp包中用来表达空间点的类
+\item<1-> 空间点在GIS中是一个坐标向量，sp包中定义\emphText{SpatialPoints}类来表达空间点
 \item<2-> 相比Spatial类，SpatialPoints类扩展了一个matrix类型的属性\emphText{coords}来存储点坐标矩阵
 \end{itemize}
 
@@ -323,8 +323,8 @@ Formal class 'SpatialPointsDataFrame' [package "sp"] with 5 slots
 \subsubsection{SpatialLines类}
 \begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
 \begin{itemize}
-\item<1-> 普通线对象是一系列点的集合，在sp包中用\emphText{Line}类来表达，
-而一系列Line的集合构成\emphText{Lines}类
+\item<1-> GIS中线对象是一系列点对象的集合，在sp包中用\emphText{Line}类来表达；
+而一系列Line的集合构成\emphText{Lines}类，其中不同Line通过NA值来区分
 \item<2-> 但是Line和Lines不包含约束盒和坐标系统，所以sp包提供\emphText{SpatialLines}类用来专门表达空间线对象
 \item<2-> SpatialLines类继承自Spatial类，除bbox和CRS之外，
 还扩展了一个list类型的属性\emphText{lines}用来存储Lines对象
@@ -344,7 +344,7 @@ Class: matrix
 
 Known Subclasses: "Polygon"
 
-# Lines类包含一个属性Lines用来存储一系列Line对象，另一个slot ID用来标识Lines对象的唯一性
+# Lines类包含一个属性Lines用来存储一系列Line对象，另一个属性ID用来标识Line对象的唯一性
 > getClass("Lines")
 Class "Lines" [package "sp"]
 
@@ -370,12 +370,42 @@ Extends: "Spatial"
 Known Subclasses: "SpatialLinesDataFrame"
 \end{rcode}
 \end{onlyenv}
+
+\begin{onlyenv}<3>
+\begin{rcode}
+> library(maps)
+# 获取中国地图
+> china<- map("world", "china", plot=FALSE)
+# 台湾是中国领土不可分割的一部分！
+> tw <- map("world","taiwan",plot=FALSE)
+> china$x <- c(china$x,NA,tw$x)
+> china$y <- c(china$y,NA,tw$y)
+> china$range <- c(range(china$range[1:2],tw$range[1:2]),range(china$range[3:4],tw$range[3:4]))
+> china$names <- c(china$names,tw$names)
+> p4s <- CRS("+proj=longlat +ellps=WGS84")
+> library(maptools)
+# 用map2SpatialLines将地图数据转换为SpatialLines对象
+> SLchina <- |\colorbox{green}{map2SpatialLines}|(china,proj4string=p4s)
+> str(SLchina, max.level=2)
+Formal class 'SpatialLines' [package "sp"] with 3 slots
+  ..@ lines      :List of 41  # 由41个line对象组成
+  ..@ bbox       : num [1:2, 1:2] 73.6 18.2 134.8 53.6
+  .. ..- attr(*, "dimnames")=List of 2
+  ..@ proj4string:Formal class 'CRS' [package "sp"] with 1 slot
+\end{rcode}
+\end{onlyenv}
+
+\begin{onlyenv}<4>
+\begin{figure}[ht] \vspace{-15pt}
+  \includegraphics[width=0.8\columnwidth]{spatial_lines_example1.pdf}
+\end{figure}
+\end{onlyenv}
 \end{overlayarea}
 \end{frame}
 
 \begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
 \begin{itemize}
-\item<1-> sp包也提供了\emphText{SpatialLinesDataFrame}类将SpatialLines对象转换为类似data.frame数据结构
+\item<1-> 类似空间点，sp包提供\emphText{SpatialLinesDataFrame}类将SpatialLines对象转换为类似data.frame数据结构，用于挂载属性数据
 \end{itemize}
 
 \begin{overlayarea}{\textwidth}{\textheight}
@@ -393,7 +423,7 @@ Extends:
 Class "SpatialLines", directly
 Class "Spatial", by class "SpatialLines", distance 2
 \end{rcode}
-\begin{figure}[ht]
+\begin{figure}[ht] 
   \includegraphics[width=0.7\columnwidth]{spatiallinesdataframe_class.png}
 \end{figure}
 \end{onlyenv}
@@ -403,16 +433,228 @@ Class "Spatial", by class "SpatialLines", distance 2
 # maptools包中的ContourLines2SLDF函数将contourLines返回值转换为SpatialLinesDataFrame对象
 > volcano_sl <- ContourLines2SLDF(contourLines(volcano))
 # volcano\_sl的data slot包含10个不同的等高线水平标签
-> t(slot(volcano_sl, "data"))
+> t(volcano_sl@data)
       C_1   C_2   C_3   C_4   C_5   C_6   C_7   C_8   C_9   C_10 
 level "100" "110" "120" "130" "140" "150" "160" "170" "180" "190"
 \end{rcode}
-\begin{figure}[ht]\centering
+\begin{figure}[ht] \vspace{-10pt}
   \includegraphics[width=0.8\columnwidth]{spatial_lines_example2.pdf}
 \end{figure}
 \end{onlyenv}
 \end{overlayarea}
 \end{frame}
+
+\subsubsection{SpatialPolygons类}
+\begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
+\begin{itemize}
+\item<1-> 在GIS中面是一个封闭的环(ring)，用起始和终止坐标相同的点集存储，sp包定义\emphText{Polygon}类来表示面；一系列面对象构成\emphText{Polygons}类，其中不同Polygon通过NA值来区分
+\item<2-> 在面对象基础上，sp包继承Spatial类定义\emphText{SpatialPolygons}类来表达空间面对象，使其具有bbox和CRS
+\end{itemize}
+
+\begin{overlayarea}{\textwidth}{\textheight}
+\begin{onlyenv}<1>
+\begin{rcode}
+# Polygon类包含属性coords用来存储起始和终止坐标相同的点坐标矩阵
+> getClass("Polygon")
+Class "Polygon" [package "sp"]
+
+Slots:
+                                              
+Name:    labpt    area    hole ringDir  |\colorbox{green}{coords}|
+Class: numeric numeric logical integer  matrix
+
+Extends: "Line"
+
+# Polygons类包含一个属性Polygons用来存储一系列Polygon对象，另一个属性ID用来标识Polygon对象的唯一性
+> getClass("Polygons")
+Class "Polygons" [package "sp"]
+
+Slots:
+                                                        
+Name:   Polygons plotOrder     labpt        ID      area
+Class:      list   integer   numeric character   numeric
+\end{rcode}
+\end{onlyenv}
+
+\begin{onlyenv}<2>
+\begin{rcode}
+> getClass("SpatialPolygons")
+Class "SpatialPolygons" [package "sp"]
+
+Slots:
+                                                      
+Name:     polygons   plotOrder        bbox proj4string
+Class:        list     integer      matrix         CRS
+
+Extends: "Spatial", "SpatialPolygonsNULL"
+
+Known Subclasses: 
+Class "SpatialPolygonsDataFrame", directly, with explicit coerce
+\end{rcode}
+\end{onlyenv}
+\end{overlayarea}
+\end{frame}
+
+\begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
+\begin{itemize}
+\item<1-> sp包提供\emphText{SpatialPolygonsDataFrame}类将SpatialPolygons对象转换为类似data.frame数据结构，用于挂载属性数据
+\end{itemize}
+
+\begin{overlayarea}{\textwidth}{\textheight}
+\begin{onlyenv}<1>
+\begin{rcode}
+> getClass("SpatialPolygonsDataFrame")
+Class "SpatialPolygonsDataFrame" [package "sp"]
+
+Slots:
+                                                                  
+Name:         data    polygons   plotOrder        bbox proj4string
+Class:  data.frame        list     integer      matrix         CRS
+
+Extends: 
+Class "SpatialPolygons", directly
+Class "Spatial", by class "SpatialPolygons", distance 2
+Class "SpatialPolygonsNULL", by class "SpatialPolygons", distance 2, with explicit coerce
+\end{rcode}
+\begin{figure}[ht] \vspace{-10pt}
+  \includegraphics[width=0.7\columnwidth]{spatialpolygonsdataframe_class.png}
+\end{figure}
+\end{onlyenv}
+
+\begin{onlyenv}<2>
+\begin{rcode}
+# 从maps包中读取美国州边界地图
+> library(maps)
+> state.map <- map("state", plot=FALSE, fill=TRUE)
+> IDs <- sapply(strsplit(state.map$names, ":"), function(x) x[1])
+> library(maptools)
+> state.sp <- map2SpatialPolygons(state.map, IDs=IDs,
+      proj4string=CRS("+proj=longlat +ellps=WGS84"))
+
+# 读取属性数据文件
+> sat <- read.table("data/state.sat.data_mod.txt", row.names=5, header=TRUE)
+# 属性数据包括四个字段
+> str(sat)
+'data.frame':   52 obs. of  4 variables:
+ $ oname : Factor w/ 52 levels "ala","alaska",..: 1 2 3 4 5 6 7 9 8 10 ...
+ $ vscore: int  561 516 524 563 497 536 510 503 494 499 ...
+ $ mscore: int  555 514 525 556 514 540 509 497 478 498 ...
+ $ pc    : int  9 50 34 6 49 32 80 67 77 53 ...
+# 为属性数据添加ID字段，用于和空间对象进行关联
+> id <- match(row.names(sat), row.names(state.sp))
+> row.names(sat)[is.na(id)]
+> sat1 <- sat[!is.na(id),]
+# 创建SpatialPolygonsDataFrame对象
+> state.spdf <- SpatialPolygonsDataFrame(state.sp, sat1)
+> str(state.spdf, max.level=2)
+Formal class 'SpatialPolygonsDataFrame' [package "sp"] with 5 slots
+  ..@ data       :'data.frame': 49 obs. of  4 variables:
+  ..@ polygons   :List of 49
+  ..@ plotOrder  : int [1:49] 42 25 4 30 27 2 5 49 36 22 ...
+  ..@ bbox       : num [1:2, 1:2] -124.7 25.1 -67 49.4
+  .. ..- attr(*, "dimnames")=List of 2
+  ..@ proj4string:Formal class 'CRS' [package "sp"] with 1 slot
+\end{rcode}
+\end{onlyenv}
+
+\begin{onlyenv}<3> \centering
+\begin{columns} 
+    \begin{column}{.4\textwidth} 
+        \includegraphics[width=\columnwidth]{spatial_polygons_example1.pdf}
+    \end{column}
+
+    \begin{column}{.6\textwidth}
+\begin{rcode} 
+# 从SpatialPolygonsDataFrame对象中取得特定的数据
+> california <- state.spdf[state.spdf$oname== "calif",]
+> str(california,max.level=2)
+Formal class 'SpatialPolygonsDataFrame' [package "sp"] with 5 slots
+  ..@ data       :'data.frame': 1 obs. of  4 variables:
+  ..@ polygons   :List of 1
+  ..@ plotOrder  : int 1
+  ..@ bbox       : num [1:2, 1:2] -124.4 32.5 -114.1 42
+  .. ..- attr(*, "dimnames")=List of 2
+  ..@ proj4string:Formal class 'CRS' [package "sp"] with 1 slot
+> california@data
+           oname vscore mscore pc
+california calif    497    514 49
+\end{rcode}
+    \end{column}
+  \end{columns}
+\end{onlyenv}
+\end{overlayarea}
+\end{frame}
+
+\begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
+\begin{itemize}
+\item<1-> 在地理实体中，除了岛(island)这种简单的面对象之外，还存在洞(hole)这种特殊的面对象，在sp包中
+简单通过\emphText{逻辑标记hole}定义面对象是否是洞
+\item<1-> 如果hole没有指定，那么可以通过\emphText{ringDir}属性来判定环的方向，1表示顺时针则是岛，-1表示逆时针是洞
+\item<3-> Polygons类的\emphText{plotOrder}属性用来处理复杂面集合的绘制顺序
+\end{itemize}
+
+\begin{overlayarea}{\textwidth}{\textheight}
+\begin{onlyenv}<1>
+\begin{rcode}
+> getClass("Polygon")
+Class "Polygon" [package "sp"]
+
+Slots:
+                                              
+Name:    labpt    area    |\colorbox{green}{hole}| |\colorbox{green}{ringDir}|  coords
+Class: numeric numeric logical integer  matrix
+
+Extends: "Line"
+> getClass("Polygons")
+Class "Polygons" [package "sp"]
+
+Slots:
+                                                        
+Name:   Polygons |\colorbox{green}{plotOrder}     labpt        ID      area
+Class:      list   integer   numeric character   numeric
+\end{rcode}
+\end{onlyenv}
+
+\begin{onlyenv}<2>
+\begin{rcode}
+# 加载一个包含洞对象和岛对象的数据
+> load("data/high.RData")
+> manitoulin_sp <- high$SP
+# 数据只有一个Polygons
+> length(manitoulin_sp@polygons)
+> 1
+# Polygons中包含19个Polygon
+> str(manitoulin_sp@polygons[[1]],max.level=2)
+Formal class 'Polygons' [package "sp"] with 5 slots
+  ..@ Polygons :List of 19
+  ..@ plotOrder: int [1:19] 1 2 3 4 18 17 19 5 6 7 ...
+  ..@ labpt    : num [1:2] 278 46
+  ..@ ID       : chr "2"
+  ..@ area     : num 0.694
+# 19个Polygon中有4个洞，15个岛
+> sapply(manitoulin_sp@polygons[[1]]@Polygons, function(x) slot(x, "hole"))
+ [1] FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[13] FALSE FALSE FALSE FALSE  TRUE  TRUE  TRUE
+> sapply(manitoulin_sp@polygons[[1]]@Polygons, function(x) slot(x, "ringDir"))
+ [1]  1 -1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 -1 -1 -1
+\end{rcode}
+\end{onlyenv}
+
+\begin{onlyenv}<3>
+\begin{figure}[ht] \vspace{-20pt}
+  \includegraphics[width=0.6\columnwidth]{spatial_polygons_example2.pdf}
+  \caption{先绘制大陆，接着是湖，然后是岛，最后是岛上的湖.}
+\end{figure}
+\end{onlyenv}
+\end{overlayarea}
+\end{frame}
+
+\subsubsection{SpatialGrid和SpatialPixel类}
+\begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
+\begin{itemize}
+\item<1-> 前面几个类都是用于表达矢量数据，sp包中还提供了\emphText{SpatialGrid}类和
+\emphText{SpatialPixel}类
+\end{itemize}
 \subsection{空间数据的导入导出}
 
 \subsection{空间数据可视化}
