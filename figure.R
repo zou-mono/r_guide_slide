@@ -7,6 +7,7 @@ library(rgdal)
 library(ggplot2movies)
 library(plyr)
 library(maps)
+library(raster)
 
 png("expression-example.png",width=1000,height=1000,res=300,pointsize=6)
 par(mar=c(2,2,0,0)+0.1)
@@ -960,9 +961,6 @@ CairoPDF("spatial_points_example.pdf",10, 5)
 library(sp)
 turtle_df <- read.csv("data/seamap105_mod.csv")
 summary(turtle_df)
-###################################################
-### code chunk number 54: cm.Rnw:1021-1027
-###################################################
 timestamp <- as.POSIXlt(strptime(as.character(turtle_df$obs_date), "%m/%d/%Y %H:%M:%S"), "GMT")
 turtle_df1 <- data.frame(turtle_df, timestamp=timestamp)
 turtle_df1$lon <- ifelse(turtle_df1$lon < 0, turtle_df1$lon+360, turtle_df1$lon)
@@ -972,9 +970,6 @@ proj4string(turtle_sp) <- CRS("+proj=longlat +ellps=WGS84")
 library(maptools)
 gshhs.c.b <- system.file("share/gshhs_c.b", package="maptools")
 pac <- Rgshhs(gshhs.c.b, level=1, xlim=c(130,250), ylim=c(15,60), verbose=FALSE)
-###################################################
-### code chunk number 56: cm.Rnw:1039-1051
-###################################################
 par(mar=c(2,2,0.3,0.1))
 plot(pac$SP, axes=TRUE, col="khaki2", xaxs="i", yaxs="i")
 plot(turtle_sp, add=TRUE)
@@ -994,9 +989,11 @@ china$range <- c(range(china$range[1:2],tw$range[1:2]),range(china$range[3:4],tw
 china$names <- c(china$names,tw$names)
 p4s <- CRS("+proj=longlat +ellps=WGS84")
 library(maptools)
-SLchina <- map2SpatialLines(china, IDs=sapply(slot(SLchina,"lines"), function(x) slot(x,"ID")),proj4string=p4s)
+SLchina <- map2SpatialLines(china, proj4string=p4s)
 #attr <- data.frame(num=sapply(slot(SLchina,"lines"), function(x) slot(x,"ID")))
-#res <- SpatialLinesDataFrame(SLchina,attr)
+                                        #res <- SpatialLinesDataFrame(SLchina,attr)
+china<- map("world", "china", fill=TRUE,plot=FALSE)
+SPchina <- map2SpatialPolygons(china, IDs=sapply(china$names,"[",1L),proj4string=p4s)
 par(mar=c(0.1,0.1,0.1,0.1))
 plot(SLchina)
 dev.off()
@@ -1007,16 +1004,16 @@ t(slot(volcano_sl, "data"))
 par(mar=c(0.1,0.1,0.1,0.1))
 plot(volcano_sl)
 dev.off()
+SPchina <- map2SpatialPolygons(china,IDs=sapply(slot(SPchina,"polygons"), function(x) slot(x,"ID")), proj4string=p4s)
+SLchina <- map2SpatialLines(china, proj4string=p4s)
 
+CairoPDF("spatial_polygons_example1.pdf")
 library(maps)
 state.map <- map("state", plot=FALSE, fill=TRUE)
 IDs <- sapply(strsplit(state.map$names, ":"), function(x) x[1])
 library(maptools)
 state.sp <- map2SpatialPolygons(state.map, IDs=IDs,
   proj4string=CRS("+proj=longlat +ellps=WGS84"))
-###################################################
-### code chunk number 74: cm.Rnw:1491-1499
-###################################################
 sat <- read.table("data/state.sat.data_mod.txt", row.names=5, header=TRUE)
 str(sat)
 id <- match(row.names(sat), row.names(state.sp))
@@ -1026,10 +1023,9 @@ state.spdf <- SpatialPolygonsDataFrame(state.sp, sat1)
 str(slot(state.spdf, "data"))
 str(state.spdf, max.level=2)
 #CairoPDF("spatial_polygons_example1.pdf",4,5)
-CairoPDF("spatial_polygons_example1.pdf")
 california <- state.spdf[state.spdf$oname== "calif",]
 par(mar=c(0,0,0,0))
-plot(california)
+plot(california,col="khaki2")
 dev.off()
 
 CairoPDF("spatial_polygons_example2.pdf",5,3.5)
@@ -1042,4 +1038,64 @@ plot(manitoulin_sp, pbg="lightsteelblue2", col="khaki2", usePolypath=FALSE)
 text(t(sapply(manitoulin_sp@polygons[[1]]@Polygons, function(x) slot(x, "labpt")))[-c(1,2),],
      label=high$polydata$level[-c(1,2)], col="black", font=2, cex=1)
 dev.off()
+
+CairoPDF("spatial_lines_example3.pdf",10, 6)
+library(maps)
+china<- map("world", "china", fill=TRUE, plot=FALSE)
+tw <- map("world","taiwan",fill=TRUE, plot=FALSE)
+china$x <- c(china$x,NA,tw$x)
+china$y <- c(china$y,NA,tw$y)
+china$range <- c(range(china$range[1:2],tw$range[1:2]),range(china$range[3:4],tw$range[3:4]))
+china$names <- c(china$names,tw$names)
+p4s <- CRS("+proj=longlat +ellps=WGS84")
+library(maptools)
+SPchina <- map2SpatialPolygons(china, IDs=sapply(china$names, function(x) x[1]),proj4string=p4s)
+par(mar=c(0.1,0.1,0.1,0.1))
+plot(SPchina, col="khaki2")
+dev.off()
+
+CairoPDF("spatial_grid_example1.pdf",10, 5)
+load("data/high.RData")
+manitoulin_sp <- high$SP
+bb <- bbox(manitoulin_sp)
+cs <- c(0.01, 0.01)
+cc <- bb[,1]+(cs/2)
+cd <- ceiling(diff(t(bb))/cs)
+manitoulin_grd <- GridTopology(cellcentre.offset=cc, cellsize=cs, cells.dim=cd)
+p4s <- CRS(proj4string(manitoulin_sp))
+manitoulin_SG <- SpatialGrid(manitoulin_grd, proj4string=p4s)
+par(mar=c(2,2,0.5,0.5))
+plot(manitoulin_SG,axes=TRUE)
+dev.off()
+
+
+CairoPDF("spatial_raster_example1.pdf",18,5)
+data <- system.file("external/test.grd", package="raster")
+r1 <- raster(data)
+r2 <- r1 * r1
+r3 <- sqrt(r1)
+s <- stack(r1,r2,r3)
+## op <- par(mfrow=c(1,3),mar=c(2,2,0.1,0.1))
+## plot(r1,asp=1)
+## plot(r2,asp=1)
+## plot(r3,asp=1)
+## par(op)
+op <- par()
+par(oma=c(0,2,0.1,0.1),cex.main=2)
+plot(s,nc=3,nr=1)
+par(op)
+dev.off()
+
+r <- raster("data/70042108.tif")
+out <- raster(r)
+bs <- blockSize(out)
+out <- writeStart(out, filename=tempfile(), overwrite=TRUE)
+for (i in 1:bs$n) {
+    v <- getValues(r, row=bs$row[i], nrows=bs$nrows[i])
+    v[v <= 0] <- NA
+    writeValues(out, v, bs$row[i])
+}
+out <- writeStop(out)
+
+              
 
