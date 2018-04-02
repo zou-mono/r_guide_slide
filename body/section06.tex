@@ -248,7 +248,7 @@ Formal class 'SpatialPointsDataFrame' [package "sp"] with 5 slots
 
 \begin{onlyenv}<4>
 \begin{rcode}
-# 根据序号进行空间对象索引
+% # 根据序号进行空间对象索引
 > CRAN_spdf1[10, ]
           coordinates   place   north    east           loc      long   lat
 10 (-79.38333, 43.65) Toronto 43d39'N 79d23'W Ontario (CAN) -79.38333 43.65
@@ -268,7 +268,7 @@ Factor w/ 30 levels "Australia","Austria",..: 1 1 2 3 3 ...
 \begin{onlyenv}<1>
 \begin{minipage}{\textwidth}
 \begin{rcode}
-> str(turtle_sp)
+% > str(turtle_sp)
 Formal class 'SpatialPointsDataFrame' [package "sp"] with 5 slots
   ..@ data       :'data.frame': 394 obs. of  3 variables:
   .. ..$ id       : int [1:394] 1 2 3 4 5 6 7 8 9 10 ...
@@ -292,7 +292,7 @@ Formal class 'SpatialPointsDataFrame' [package "sp"] with 5 slots
 \begin{onlyenv}<2>
 \begin{minipage}{\textwidth}
 \begin{rcode}
-> head(turtle_sp,15)
+% > head(turtle_sp,15)
           coordinates id            obs_date           timestamp
 366 (245.763, 28.668)  1 08/11/1996 01:15:00 1996-08-11 01:15:00
 367 (244.427, 28.365)  2 08/17/1996 15:18:23 1996-08-17 15:18:23
@@ -333,7 +333,7 @@ Formal class 'SpatialPointsDataFrame' [package "sp"] with 5 slots
 \begin{overlayarea}{\textwidth}{\textheight}
 \begin{onlyenv}<1>
 \begin{rcode}
-# Line类包含属性coords用来存储构成线的连续点坐标矩阵
+% # Line类包含属性coords用来存储构成线的连续点坐标矩阵
 > getClass("Line")
 Class "Line" [package "sp"]
 
@@ -357,7 +357,7 @@ Class:      list character
 
 \begin{onlyenv}<2>
 \begin{rcode}
-> getClass("SpatialLines")
+% > getClass("SpatialLines")
 Class "SpatialLines" [package "sp"]
 
 Slots:
@@ -373,7 +373,7 @@ Known Subclasses: "SpatialLinesDataFrame"
 
 \begin{onlyenv}<3>
 \begin{rcode}
-> library(maps)
+% > library(maps)
 # 获取中国地图
 > china<- map("world", "china", plot=FALSE)
 # 台湾是中国领土不可分割的一部分！
@@ -411,7 +411,7 @@ Formal class 'SpatialLines' [package "sp"] with 3 slots
 \begin{overlayarea}{\textwidth}{\textheight}
 \begin{onlyenv}<1>
 \begin{rcode}
-> getClass("SpatialLinesDataFrame")
+% > getClass("SpatialLinesDataFrame")
 Class "SpatialLinesDataFrame" [package "sp"]
 
 Slots:
@@ -430,7 +430,7 @@ Class "Spatial", by class "SpatialLines", distance 2
 
 \begin{onlyenv}<2>
 \begin{rcode}
-# maptools包中的ContourLines2SLDF函数将contourLines返回值转换为SpatialLinesDataFrame对象
+% # maptools包中的ContourLines2SLDF函数将contourLines返回值转换为SpatialLinesDataFrame对象
 > volcano_sl <- ContourLines2SLDF(contourLines(volcano))
 # volcano\_sl的data slot包含10个不同的等高线水平标签
 > t(volcano_sl@data)
@@ -454,7 +454,7 @@ level "100" "110" "120" "130" "140" "150" "160" "170" "180" "190"
 \begin{overlayarea}{\textwidth}{\textheight}
 \begin{onlyenv}<1>
 \begin{rcode}
-# Polygon类包含属性coords用来存储起始和终止坐标相同的点坐标矩阵
+% # Polygon类包含属性coords用来存储起始和终止坐标相同的点坐标矩阵
 > getClass("Polygon")
 Class "Polygon" [package "sp"]
 
@@ -478,7 +478,7 @@ Class:      list   integer   numeric character   numeric
 
 \begin{onlyenv}<2>
 \begin{rcode}
-> getClass("SpatialPolygons")
+% > getClass("SpatialPolygons")
 Class "SpatialPolygons" [package "sp"]
 
 Slots:
@@ -503,7 +503,7 @@ Class "SpatialPolygonsDataFrame", directly, with explicit coerce
 \begin{overlayarea}{\textwidth}{\textheight}
 \begin{onlyenv}<1>
 \begin{rcode}
-> getClass("SpatialPolygonsDataFrame")
+% > getClass("SpatialPolygonsDataFrame")
 Class "SpatialPolygonsDataFrame" [package "sp"]
 
 Slots:
@@ -523,7 +523,7 @@ Class "SpatialPolygonsNULL", by class "SpatialPolygons", distance 2, with explic
 
 \begin{onlyenv}<2>
 \begin{rcode}
-# 从maps包中读取美国州边界地图
+% # 从maps包中读取美国州边界地图
 > library(maps)
 > state.map <- map("state", plot=FALSE, fill=TRUE)
 > IDs <- sapply(strsplit(state.map$names, ":"), function(x) x[1])
@@ -565,7 +565,7 @@ Formal class 'SpatialPolygonsDataFrame' [package "sp"] with 5 slots
 
     \begin{column}{.6\textwidth}
 \begin{rcode} 
-# 从SpatialPolygonsDataFrame对象中取得特定的数据
+% # 从SpatialPolygonsDataFrame对象中取得特定的数据
 > california <- state.spdf[state.spdf$oname== "calif",]
 > str(california,max.level=2)
 Formal class 'SpatialPolygonsDataFrame' [package "sp"] with 5 slots
@@ -730,7 +730,7 @@ y            45.705     0.01        50
 
 \begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
 \begin{itemize}
-\item<1-> sp包提供\emphText{SpatialGridDataFrame}类将SpatialGrid对象转换为类似data.frame数据结构，用于挂载网格上的属性，例如高程、温度、风力等
+\item<1-> sp包提供\emphText{SpatialGridDataFrame}类将SpatialGrid对象转换为类似data.frame数据结构，用于挂载网格上的属性，例如高程、温度、风力、颜色等
 \item<1-> SpatialGridDataFrame类的data属性\emphText{存储完整网格的全部属性数据}，包括NA值的
 \end{itemize}
 
@@ -989,7 +989,49 @@ names       : layer
 values      : NA, NA  (min, max)
 \end{rcode}
 \end{onlyenv}
+
+\begin{onlyenv}<3>
+\begin{figure}[ht] \vspace{-15pt}
+  \includegraphics[width=0.65\columnwidth]{spatial_raster_example2.pdf}
+\end{figure}
+\end{onlyenv}
 \end{overlayarea}
+\end{frame}
+
+\begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
+\begin{itemize}
+\item<1-> sp包和raster包的栅格数据类可以互相转换，例如RasterLayer对象可以强制转换为SpatialGridDataFrame对象，
+反之亦可
+\end{itemize}
+
+\begin{rcode}
+> # RasterLayer对象转换为SpatialGridDataFrame对象
+> r1 <- as(out, "SpatialGridDataFrame")
+> str(r1, max.level=2)
+Formal class 'SpatialGridDataFrame' [package "sp"] with 4 slots
+  ..@ data       :'data.frame': 1584000 obs. of  1 variable:
+  ..@ grid       :Formal class 'GridTopology' [package "sp"] with 3 slots
+  ..@ bbox       : num [1:2, 1:2] 174.2 -37.5 175.3 -36.5
+  .. ..- attr(*, "dimnames")=List of 2
+  ..@ proj4string:Formal class 'CRS' [package "sp"] with 1 slot
+
+> # SpatialGridDataFrame转换为RasterLayer对象
+> r2 <- as(r1, "RasterLayer")
+> str(r2, max.level=2)
+Formal class 'RasterLayer' [package "raster"] with 12 slots
+  ..@ file    :Formal class '.RasterFile' [package "raster"] with 13 slots
+  ..@ data    :Formal class '.SingleLayerData' [package "raster"] with 13 slots
+  ..@ legend  :Formal class '.RasterLegend' [package "raster"] with 5 slots
+  ..@ title   : chr(0) 
+  ..@ extent  :Formal class 'Extent' [package "raster"] with 4 slots
+  ..@ rotated : logi FALSE
+  ..@ rotation:Formal class '.Rotation' [package "raster"] with 2 slots
+  ..@ ncols   : int 1320
+  ..@ nrows   : int 1200
+  ..@ crs     :Formal class 'CRS' [package "sp"] with 1 slot
+  ..@ history : list()
+  ..@ z       : list()
+\end{rcode}
 \end{frame}
 \subsection{空间数据的导入导出}
 

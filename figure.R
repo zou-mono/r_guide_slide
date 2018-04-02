@@ -1086,6 +1086,7 @@ plot(s,nc=3,nr=1)
 par(op)
 dev.off()
 
+CairoPDF("spatial_raster_example2.pdf",12,10)
 r <- raster("data/70042108.tif")
 out <- raster(r)
 bs <- blockSize(out)
@@ -1096,6 +1097,15 @@ for (i in 1:bs$n) {
     writeValues(out, v, bs$row[i])
 }
 out <- writeStop(out)
+par(mar=c(2,2,0.1,2))
+plot(out, col = terrain.colors(100))
+dev.off()
 
+# RasterLayer对象转换为SpatialGridDataFrame对象
+r1 <- as(out, "SpatialGridDataFrame")
+str(r1, max.level=2)
+# SpatialGridDataFrame转换为RasterLayer对象
+r2 <- as(r1, "RasterLayer")
+str(r2, max.level=2)
               
 
