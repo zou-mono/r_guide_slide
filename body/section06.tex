@@ -44,7 +44,7 @@
 % data in R}. R News, 5(2):9–13.}
 % \end{frame}
 
-\subsection{R的空间数据类}
+% \subsection{R的空间数据类}
 % \begin{frame}[t]{\subsecname}{}
 % \begin{itemize}
 % \item<1-> sp包从2005年开始提交CRAN，主要创始人是挪威经济学院教授
@@ -649,418 +649,468 @@
 % \end{overlayarea}
 % \end{frame}
 
-\subsubsection{栅格数据类}
-\begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
-\begin{itemize}
-\item<1-> sp包除了矢量数据，还提供了SpatialGrid类和SpatialPixel类用于表达栅格数据
-\item<2-> \emphText{GridTopology}类用于表达基本的网格对象，\emphText{SpatialGrid}类在此基础上继承了Spatial类，使其具有bbox和CRS属性
-\end{itemize}
+% \subsubsection{栅格数据类}
+% \begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
+% \begin{itemize}
+% \item<1-> sp包除了矢量数据，还提供了SpatialGrid类和SpatialPixel类用于表达栅格数据
+% \item<2-> \emphText{GridTopology}类用于表达基本的网格对象，\emphText{SpatialGrid}类在此基础上继承了Spatial类，使其具有bbox和CRS属性
+% \end{itemize}
 
-\begin{overlayarea}{\textwidth}{\textheight}
-\begin{onlyenv}<2>
-\begin{rcode}
-# 通过左下角网格中心点坐标、网格尺寸和网格数目三个属性来定义基本网格
-> getClass("GridTopology")
-Class "GridTopology" [package "sp"]
+% \begin{overlayarea}{\textwidth}{\textheight}
+% \begin{onlyenv}<2>
+% \begin{rcode}
+% # 通过左下角网格中心点坐标、网格尺寸和网格数目三个属性来定义基本网格
+% > getClass("GridTopology")
+% Class "GridTopology" [package "sp"]
 
-Slots:
+% Slots:
                                                             
-Name:  |\colorbox{green}{cellcentre.offset}|          |\colorbox{green}{cellsize}|         |\colorbox{green}{cells.dim}|
-Class:           numeric           numeric           integer
-# 定义一个bbox范围
-> b <- bbox(manitoulin_sp)
-> bb
-    min   max
-x 277.0 278.0
-y  45.7  46.2
-# 定义左小角中心点坐标和网格尺寸
-> cs <- c(0.01, 0.01)
-> cc <- bb[,1]+(cs/2)
-# 定义x和y两个方向的网格数目
-> cd <- ceiling(diff(t(bb))/cs)
-# 创建一个GridTopology对象
-> manitoulin_grd <- GridTopology(cellcentre.offset=cc, cellsize=cs, cells.dim=cd)
-> manitoulin_grd
-                        x      y
-cellcentre.offset 277.005 45.705
-cellsize            0.010  0.010
-cells.dim         100.000 50.000
-\end{rcode}
-\end{onlyenv}
+% Name:  |\colorbox{green}{cellcentre.offset}|          |\colorbox{green}{cellsize}|         |\colorbox{green}{cells.dim}|
+% Class:           numeric           numeric           integer
+% # 定义一个bbox范围
+% > b <- bbox(manitoulin_sp)
+% > bb
+%     min   max
+% x 277.0 278.0
+% y  45.7  46.2
+% # 定义左小角中心点坐标和网格尺寸
+% > cs <- c(0.01, 0.01)
+% > cc <- bb[,1]+(cs/2)
+% # 定义x和y两个方向的网格数目
+% > cd <- ceiling(diff(t(bb))/cs)
+% # 创建一个GridTopology对象
+% > manitoulin_grd <- GridTopology(cellcentre.offset=cc, cellsize=cs, cells.dim=cd)
+% > manitoulin_grd
+%                         x      y
+% cellcentre.offset 277.005 45.705
+% cellsize            0.010  0.010
+% cells.dim         100.000 50.000
+% \end{rcode}
+% \end{onlyenv}
 
-\begin{onlyenv}<3>
-\begin{rcode}
-> getClass("SpatialGrid")
-Class "SpatialGrid" [package "sp"]
+% \begin{onlyenv}<3>
+% \begin{rcode}
+% > getClass("SpatialGrid")
+% Class "SpatialGrid" [package "sp"]
 
-Slots:
+% Slots:
                                              
-Name:          grid         bbox  proj4string
-Class: GridTopology       matrix          CRS
+% Name:          grid         bbox  proj4string
+% Class: GridTopology       matrix          CRS
 
-Extends: "Spatial"
+% Extends: "Spatial"
 
-Known Subclasses: "SpatialGridDataFrame"
-> p4s <- CRS(proj4string(manitoulin_sp))
-# 创建SpatialGrid对象
-> manitoulin_SG <- SpatialGrid(manitoulin_grd, proj4string=p4s)
-> summary(manitoulin_SG)
-Object of class SpatialGrid
-Coordinates:
-    min   max
-x 277.0 278.0
-y  45.7  46.2
-Is projected: FALSE 
-proj4string :
-[+proj=longlat +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0]
-Grid attributes:
-  cellcentre.offset cellsize cells.dim
-x           277.005     0.01       100
-y            45.705     0.01        50
-\end{rcode}
-\end{onlyenv}
+% Known Subclasses: "SpatialGridDataFrame"
+% > p4s <- CRS(proj4string(manitoulin_sp))
+% # 创建SpatialGrid对象
+% > manitoulin_SG <- SpatialGrid(manitoulin_grd, proj4string=p4s)
+% > summary(manitoulin_SG)
+% Object of class SpatialGrid
+% Coordinates:
+%     min   max
+% x 277.0 278.0
+% y  45.7  46.2
+% Is projected: FALSE 
+% proj4string :
+% [+proj=longlat +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0]
+% Grid attributes:
+%   cellcentre.offset cellsize cells.dim
+% x           277.005     0.01       100
+% y            45.705     0.01        50
+% \end{rcode}
+% \end{onlyenv}
 
-\begin{onlyenv}<4>
-\begin{figure}[ht] \vspace{-10pt}
-  \includegraphics[width=\columnwidth]{spatial_grid_example1.pdf}
-\end{figure}
-\end{onlyenv}
-\end{overlayarea}
-\end{frame}
+% \begin{onlyenv}<4>
+% \begin{figure}[ht] \vspace{-10pt}
+%   \includegraphics[width=\columnwidth]{spatial_grid_example1.pdf}
+% \end{figure}
+% \end{onlyenv}
+% \end{overlayarea}
+% \end{frame}
 
-\begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
-\begin{itemize}
-\item<1-> sp包提供\emphText{SpatialGridDataFrame}类将SpatialGrid对象转换为类似data.frame数据结构，用于挂载网格上的属性，例如高程、温度、风力、颜色等
-\item<1-> SpatialGridDataFrame类的data属性\emphText{存储完整网格的全部属性数据}，包括NA值的
-\end{itemize}
+% \begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
+% \begin{itemize}
+% \item<1-> sp包提供\emphText{SpatialGridDataFrame}类将SpatialGrid对象转换为类似data.frame数据结构，用于挂载网格上的属性，例如高程、温度、风力、颜色等
+% \item<1-> SpatialGridDataFrame类的data属性\emphText{存储完整网格的全部属性数据}，包括NA值的
+% \end{itemize}
 
-\begin{overlayarea}{\textwidth}{\textheight}
-\begin{onlyenv}<1>
-\begin{rcode}
-# 读取一个Geotiff格式栅格数据数据到SpatialGridDataFrame对象auck\_el1
-> library(rgdal)
-> auck_el1 <- readGDAL("data/70042108.tif")
-# 对象是由1320*1200的维度构成
-> auck_el1@grid
-                             x             y
-cellcentre.offset 1.742004e+02 -3.749958e+01
-cellsize          8.333333e-04  8.333333e-04
-cells.dim         1.320000e+03  1.200000e+03
-# data存储了完整的1584000个网格的属性数据
-> str(auck_el1,max.level=2)
-Formal class 'SpatialGridDataFrame' [package "sp"] with 4 slots
-  ..@ data       :'data.frame': 1584000 obs. of  1 variable:
-  ..@ grid       :Formal class 'GridTopology' [package "sp"] with 3 slots
-  ..@ bbox       : num [1:2, 1:2] 174.2 -37.5 175.3 -36.5
-  .. ..- attr(*, "dimnames")=List of 2
-  ..@ proj4string:Formal class 'CRS' [package "sp"] with 1 slot
-# data属性只有一个band1字段,表示海拔高程;将高程等于或者小于0米的网格设置为NA
-> str(auck_el1@data)
-'data.frame':   1584000 obs. of  1 variable:
- $ band1: num  40 45 42 34 42 59 79 99 113 127 ... 
-> is.na(auck_el1$band1) <- auck_el1$band1 <= 0
-> summary(auck_el1$band1)
-   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
-    1.0    23.0    53.0    78.1   106.0   686.0  791938 
-\end{rcode}
-\end{onlyenv}
-\end{overlayarea}
-\end{frame}
+% \begin{overlayarea}{\textwidth}{\textheight}
+% \begin{onlyenv}<1>
+% \begin{rcode}
+% # 读取一个Geotiff格式栅格数据数据到SpatialGridDataFrame对象auck\_el1
+% > library(rgdal)
+% > auck_el1 <- readGDAL("data/70042108.tif")
+% # 对象是由1320*1200的维度构成
+% > auck_el1@grid
+%                              x             y
+% cellcentre.offset 1.742004e+02 -3.749958e+01
+% cellsize          8.333333e-04  8.333333e-04
+% cells.dim         1.320000e+03  1.200000e+03
+% # data存储了完整的1584000个网格的属性数据
+% > str(auck_el1,max.level=2)
+% Formal class 'SpatialGridDataFrame' [package "sp"] with 4 slots
+%   ..@ data       :'data.frame': 1584000 obs. of  1 variable:
+%   ..@ grid       :Formal class 'GridTopology' [package "sp"] with 3 slots
+%   ..@ bbox       : num [1:2, 1:2] 174.2 -37.5 175.3 -36.5
+%   .. ..- attr(*, "dimnames")=List of 2
+%   ..@ proj4string:Formal class 'CRS' [package "sp"] with 1 slot
+% # data属性只有一个band1字段,表示海拔高程;将高程等于或者小于0米的网格设置为NA
+% > str(auck_el1@data)
+% 'data.frame':   1584000 obs. of  1 variable:
+%  $ band1: num  40 45 42 34 42 59 79 99 113 127 ... 
+% > is.na(auck_el1$band1) <- auck_el1$band1 <= 0
+% > summary(auck_el1$band1)
+%    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+%     1.0    23.0    53.0    78.1   106.0   686.0  791938 
+% \end{rcode}
+% \end{onlyenv}
+% \end{overlayarea}
+% \end{frame}
 
-\begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
-\begin{itemize}
-\item<1-> sp包还提供了\emphText{SpatialPixels}类实现另一种栅格数据表达；与SpatialGrid相比，SpatialPixels
-增加了\emphText{grid.index}和\emphText{coords}属性，分别用于存储网格索引和中心点坐标
-\item<2-> 一个好处是在\emphText{SpatialPixelsDataFrame}类中\emphText{只存储非NA值的网格属性}，
-可以减小data属性的存储空间和处理时间
-\item<2-> 另一个好处是可以\emphText{将栅格数据以空间点存储在外部数据库中}，也可以由空间点类创建栅格数据
-\end{itemize}
+% \begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
+% \begin{itemize}
+% \item<1-> sp包还提供了\emphText{SpatialPixels}类实现另一种栅格数据表达；与SpatialGrid相比，SpatialPixels
+% 增加了\emphText{grid.index}和\emphText{coords}属性，分别用于存储网格索引和中心点坐标
+% \item<2-> 一个好处是在\emphText{SpatialPixelsDataFrame}类中\emphText{只存储非NA值的网格属性}，
+% 可以减小data属性的存储空间和处理时间
+% \item<2-> 另一个好处是可以\emphText{将栅格数据以空间点存储在外部数据库中}，也可以由空间点类创建栅格数据
+% \end{itemize}
 
-\begin{overlayarea}{\textwidth}{\textheight}
-\begin{onlyenv}<1>
-\begin{rcode}
-> getClass("SpatialPixels")
-Class "SpatialPixels" [package "sp"]
+% \begin{overlayarea}{\textwidth}{\textheight}
+% \begin{onlyenv}<1>
+% \begin{rcode}
+% > getClass("SpatialPixels")
+% Class "SpatialPixels" [package "sp"]
 
-Slots:
+% Slots:
                                                                        
-Name:          grid   |\colorbox{green}{grid.index}|       |\colorbox{green}{coords}|         bbox  proj4string
-Class: GridTopology      integer       matrix       matrix          CRS
+% Name:          grid   |\colorbox{green}{grid.index}|       |\colorbox{green}{coords}|         bbox  proj4string
+% Class: GridTopology      integer       matrix       matrix          CRS
 
-Extends: 
-Class "SpatialPoints", directly
-Class "Spatial", by class "SpatialPoints", distance 2
+% Extends: 
+% Class "SpatialPoints", directly
+% Class "Spatial", by class "SpatialPoints", distance 2
 
-Known Subclasses: "SpatialPixelsDataFrame"
-\end{rcode}
-\end{onlyenv}
+% Known Subclasses: "SpatialPixelsDataFrame"
+% \end{rcode}
+% \end{onlyenv}
 
-\begin{onlyenv}<2>
-\begin{rcode}
-# 转换为SpatialPixelsDataFrame类
-> auck_el2 <- as(auck_el1, "SpatialPixelsDataFrame")
-# 由于data属性只存储非NA值,因此只有792062维度
-# grid.index属性用于网格索引,只存储非NA值网格的序号
-# coords属性可以和SpatialPoints类互相转换适合在外部数据库中存储
-> str(auck_el2, max.level=2)
-Formal class 'SpatialPixelsDataFrame' [package "sp"] with 7 slots
-  ..@ data       :'data.frame': 792062 obs. of  1 variable:
-  ..@ coords.nrs : num(0) 
-  ..@ grid       :Formal class 'GridTopology' [package "sp"] with 3 slots
-  ..@ |\colorbox{green}{grid.index}| : int [1:792062] 1 2 3 4 5 6 7 8 9 10 ...
-  ..@ |\colorbox{green}{coords}|     : num [1:792062, 1:2] 174 174 174 174 174 ...
-  .. ..- attr(*, "dimnames")=List of 2
-  ..@ bbox       : num [1:2, 1:2] 174.2 -37.5 175.3 -36.5
-  .. ..- attr(*, "dimnames")=List of 2
-  ..@ proj4string:Formal class 'CRS' [package "sp"] with 1 slot
-\end{rcode}
-\end{onlyenv}
+% \begin{onlyenv}<2>
+% \begin{rcode}
+% # 转换为SpatialPixelsDataFrame类
+% > auck_el2 <- as(auck_el1, "SpatialPixelsDataFrame")
+% # 由于data属性只存储非NA值,因此只有792062维度
+% # grid.index属性用于网格索引,只存储非NA值网格的序号
+% # coords属性可以和SpatialPoints类互相转换适合在外部数据库中存储
+% > str(auck_el2, max.level=2)
+% Formal class 'SpatialPixelsDataFrame' [package "sp"] with 7 slots
+%   ..@ data       :'data.frame': 792062 obs. of  1 variable:
+%   ..@ coords.nrs : num(0) 
+%   ..@ grid       :Formal class 'GridTopology' [package "sp"] with 3 slots
+%   ..@ |\colorbox{green}{grid.index}| : int [1:792062] 1 2 3 4 5 6 7 8 9 10 ...
+%   ..@ |\colorbox{green}{coords}|     : num [1:792062, 1:2] 174 174 174 174 174 ...
+%   .. ..- attr(*, "dimnames")=List of 2
+%   ..@ bbox       : num [1:2, 1:2] 174.2 -37.5 175.3 -36.5
+%   .. ..- attr(*, "dimnames")=List of 2
+%   ..@ proj4string:Formal class 'CRS' [package "sp"] with 1 slot
+% \end{rcode}
+% \end{onlyenv}
 
-\begin{onlyenv}<3>
-\begin{rcode}
-# SpatialPixelsDataFrame减少了data属性存储空间
-> object.size(auck_el1@data)
-12672672 bytes
-> object.size(auck_el2@data)
-9505408 bytes
+% \begin{onlyenv}<3>
+% \begin{rcode}
+% # SpatialPixelsDataFrame减少了data属性存储空间
+% > object.size(auck_el1@data)
+% 12672672 bytes
+% > object.size(auck_el2@data)
+% 9505408 bytes
 
-# 虽然data不用存储NA值,但是SpatialPixelsDataFrame需要额外存储coords和gird.index,
-# 所以如果属性很少,而且非NA值比例不高的情况下,反而占的空间比较大
-> object.size(auck_el1) # SpatialGridDataFrame不用存储coords和grid.index
-12676296 bytes
-> object.size(auck_el2@grid.index) # grid.index另外占用空间
-3168288 bytes
-> object.size(auck_el2@coords) # coords另外占用空间
-12673512 bytes
-# 占用空间几乎是SpatialGridDataFrame的二倍,但是在处理速度上由于有grid.index索引,
-# 因此比SpatialGridDataFrame要快
-> object.size(auck_el2) 
-25351272 bytes
-\end{rcode}
-\end{onlyenv}
+% # 虽然data不用存储NA值,但是SpatialPixelsDataFrame需要额外存储coords和gird.index,
+% # 所以如果属性很少,而且非NA值比例不高的情况下,反而占的空间比较大
+% > object.size(auck_el1) # SpatialGridDataFrame不用存储coords和grid.index
+% 12676296 bytes
+% > object.size(auck_el2@grid.index) # grid.index另外占用空间
+% 3168288 bytes
+% > object.size(auck_el2@coords) # coords另外占用空间
+% 12673512 bytes
+% # 占用空间几乎是SpatialGridDataFrame的二倍,但是在处理速度上由于有grid.index索引,
+% # 因此比SpatialGridDataFrame要快
+% > object.size(auck_el2) 
+% 25351272 bytes
+% \end{rcode}
+% \end{onlyenv}
 
-\begin{onlyenv}<4>
-\begin{figure}[ht] \vspace{-20pt}
-  \includegraphics[width=\columnwidth]{spatialpixelsdataframe_class.png}
-\end{figure}
-\end{onlyenv}
-\end{overlayarea}
-\end{frame}
+% \begin{onlyenv}<4>
+% \begin{figure}[ht] \vspace{-20pt}
+%   \includegraphics[width=\columnwidth]{spatialpixelsdataframe_class.png}
+% \end{figure}
+% \end{onlyenv}
+% \end{overlayarea}
+% \end{frame}
 
-\begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
-\begin{itemize}
-\item<1-> sp包处理栅格数据的方式是将所有数据一次性读入内存，但是这样对于大数据量可能会导致内存溢出，因此
-从2010年开始CRAN发布了\emphText{raster包}，可以将栅格数据分块读入内存
-\item<2-> raster包提供\emphText{raster函数}值将参数读入内存创建\emphText{RasterLayer}对象，而并不读入网格数据；
-当需要读取数据到内存时，则调用\emphText{getValues}或\emphText{extract}函数
+% \begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
+% \begin{itemize}
+% \item<1-> sp包处理栅格数据的方式是将所有数据一次性读入内存，但是这样对于大数据量可能会导致内存溢出，因此
+% 从2010年开始CRAN发布了\emphText{raster包}，可以将栅格数据分块读入内存
+% \item<2-> raster包提供\emphText{raster函数}值将参数读入内存创建\emphText{RasterLayer}对象，而并不读入网格数据；
+% 当需要读取数据到内存时，则调用\emphText{getValues}或\emphText{extract}函数
 
-\end{itemize}
+% \end{itemize}
 
-\begin{overlayarea}{\textwidth}{\textheight}
-\begin{onlyenv}<2>
-\begin{rcode}
-> library(raster)
-# 读取栅格文件数据到RasterLayer对象
-> r <- raster("data/70042108.tif")
-# RasterLayer对象只存储数据的参数，包括维度、分辨率、范围、CRS、文件路径和名称
-> r
-class       : RasterLayer 
-dimensions  : 1200, 1320, 1584000  (nrow, ncol, ncell)
-resolution  : 0.0008333333, 0.0008333333  (x, y)
-extent      : 174.2, 175.3, -37.5, -36.5  (xmin, xmax, ymin, ymax)
-coord. ref. : +proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0 
-data source : /home/mono/Documents/tex_projects/r_guide_slide/data/70042108.tif 
-names       : X70042108
-# 并没有将网格数据读入内存，因此只占用很小的空间
-> inMemory(r)
-[1] FALSE
-> object.size(r)
-12032 bytes
-# 用getValues函数将所有网格数据读入内存
-> rs <- getValues(r)
-> object.size(rs)
-12672040 bytes
-\end{rcode}
-\end{onlyenv}
-\end{overlayarea}
-\end{frame}
+% \begin{overlayarea}{\textwidth}{\textheight}
+% \begin{onlyenv}<2>
+% \begin{rcode}
+% > library(raster)
+% # 读取栅格文件数据到RasterLayer对象
+% > r <- raster("data/70042108.tif")
+% # RasterLayer对象只存储数据的参数，包括维度、分辨率、范围、CRS、文件路径和名称
+% > r
+% class       : RasterLayer 
+% dimensions  : 1200, 1320, 1584000  (nrow, ncol, ncell)
+% resolution  : 0.0008333333, 0.0008333333  (x, y)
+% extent      : 174.2, 175.3, -37.5, -36.5  (xmin, xmax, ymin, ymax)
+% coord. ref. : +proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0 
+% data source : /home/mono/Documents/tex_projects/r_guide_slide/data/70042108.tif 
+% names       : X70042108
+% # 并没有将网格数据读入内存，因此只占用很小的空间
+% > inMemory(r)
+% [1] FALSE
+% > object.size(r)
+% 12032 bytes
+% # 用getValues函数将所有网格数据读入内存
+% > rs <- getValues(r)
+% > object.size(rs)
+% 12672040 bytes
+% \end{rcode}
+% \end{onlyenv}
+% \end{overlayarea}
+% \end{frame}
 
-\begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
-\begin{itemize}
-\item<1-> RasterLayer只能表达一个属性的栅格数据，而有多个属性时，则可以在相同的空间范围和分辨率网格中叠加存储数据，raster包提供了\emphText{brick}和\emphText{stack}两个函数来实现
-\item<2-> brick函数读入一个包含多层栅格数据的文件，而stack函数读入多个只包含一层栅格数据的文件；brick函数创建
-\emphText{RasterBrick}对象，而stack函数创建\emphText{RasterStack}对象
-\end{itemize}
+% \begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
+% \begin{itemize}
+% \item<1-> RasterLayer只能表达一个属性的栅格数据，而有多个属性时，则可以在相同的空间范围和分辨率网格中叠加存储数据，raster包提供了\emphText{brick}和\emphText{stack}两个函数来实现
+% \item<2-> brick函数读入一个包含多层栅格数据的文件，而stack函数读入多个只包含一层栅格数据的文件；brick函数创建
+% \emphText{RasterBrick}对象，而stack函数创建\emphText{RasterStack}对象
+% \end{itemize}
 
-\begin{overlayarea}{\textwidth}{\textheight}
-\begin{onlyenv}<2>
-\begin{rcode}
-> library(raster)
-# 读取并创建一个RasterLayer对象
-> data <- system.file("external/test.grd", package="raster")
-> r1 <- raster(data) 
-> nlayers(r1)  # r1对象只包含一层数据，也就是一个属性
-[1] 1
-# 创建第二个RasterLayer对象
-> r2 <- r1 * r1
-# 创建第三个RasterLayer对象
-> r3 <- sqrt(r1)
-# 三个具有相同空间范围和分辨率的RasterLayer对象通过stack函数叠加后创建RasterStack对象
-> s <- |\colorbox{green}{stack}|(r1,r2,r3)
-> s # 创建的RasterStack对象包括三个数据层
-class       : RasterStack 
-dimensions  : 115, 80, 9200, 3  (nrow, ncol, ncell, nlayers)
-resolution  : 40, 40  (x, y)
-extent      : 178400, 181600, 329400, 334000  (xmin, xmax, ymin, ymax)
-coord. ref. : +init=epsg:28992 +towgs84=565.237,50.0087,465.658,-0.406857,0.350733,-1.87035,4.0812 +proj=sterea +lat_0=52.15616055555555 +lon_0=5.38763888888889 +k=0.9999079 +x_0=155000 +y_0=463000 +ellps=bessel +units=m +no_defs 
-names       :         |\colorbox{green}{test}|,      |\colorbox{green}{layer.1}|,      |\colorbox{green}{layer.2}| 
-min values  :    128.43401,  16495.29383,     11.33287 
-max values  : 1.805780e+03, 3.260842e+06, 4.249447e+01 
-\end{rcode}
-\end{onlyenv}
+% \begin{overlayarea}{\textwidth}{\textheight}
+% \begin{onlyenv}<2>
+% \begin{rcode}
+% > library(raster)
+% # 读取并创建一个RasterLayer对象
+% > data <- system.file("external/test.grd", package="raster")
+% > r1 <- raster(data) 
+% > nlayers(r1)  # r1对象只包含一层数据，也就是一个属性
+% [1] 1
+% # 创建第二个RasterLayer对象
+% > r2 <- r1 * r1
+% # 创建第三个RasterLayer对象
+% > r3 <- sqrt(r1)
+% # 三个具有相同空间范围和分辨率的RasterLayer对象通过stack函数叠加后创建RasterStack对象
+% > s <- |\colorbox{green}{stack}|(r1,r2,r3)
+% > s # 创建的RasterStack对象包括三个数据层
+% class       : RasterStack 
+% dimensions  : 115, 80, 9200, 3  (nrow, ncol, ncell, nlayers)
+% resolution  : 40, 40  (x, y)
+% extent      : 178400, 181600, 329400, 334000  (xmin, xmax, ymin, ymax)
+% coord. ref. : +init=epsg:28992 +towgs84=565.237,50.0087,465.658,-0.406857,0.350733,-1.87035,4.0812 +proj=sterea +lat_0=52.15616055555555 +lon_0=5.38763888888889 +k=0.9999079 +x_0=155000 +y_0=463000 +ellps=bessel +units=m +no_defs 
+% names       :         |\colorbox{green}{test}|,      |\colorbox{green}{layer.1}|,      |\colorbox{green}{layer.2}| 
+% min values  :    128.43401,  16495.29383,     11.33287 
+% max values  : 1.805780e+03, 3.260842e+06, 4.249447e+01 
+% \end{rcode}
+% \end{onlyenv}
 
-\begin{onlyenv}<3>
-\begin{figure}[ht] 
-  \includegraphics[width=\columnwidth]{spatial_raster_example1.pdf}
-\end{figure}
-\end{onlyenv}
+% \begin{onlyenv}<3>
+% \begin{figure}[ht] 
+%   \includegraphics[width=\columnwidth]{spatial_raster_example1.pdf}
+% \end{figure}
+% \end{onlyenv}
 
-\begin{onlyenv}<4>
-\begin{rcode}
-# 读取一个包含多层数据的栅格文件
-> b <- |\colorbox{green}{brick}|(system.file("external/rlogo.grd", package="raster"))
-# brick函数创建的RasterBrick对象
-> b
-class       : RasterBrick 
-dimensions  : 77, 101, 7777, 3  (nrow, ncol, ncell, nlayers)
-resolution  : 1, 1  (x, y)
-extent      : 0, 101, 0, 77  (xmin, xmax, ymin, ymax)
-coord. ref. : +proj=merc +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0 
-data source : /home/mono/Softwares/R/3.4/raster/external/rlogo.grd 
-names       : red, green, blue 
-min values  :   0,     0,    0 
-max values  : 255,   255,  255 
-# RasterBrick对象包含三层数据
-> nlayers(b)
-[1] 3
-# 三层数据对应的三个属性
-> names(b)
-[1] "red"   "green" "blue" 
-\end{rcode}
-\end{onlyenv}
-\end{overlayarea}
-\end{frame}
+% \begin{onlyenv}<4>
+% \begin{rcode}
+% # 读取一个包含多层数据的栅格文件
+% > b <- |\colorbox{green}{brick}|(system.file("external/rlogo.grd", package="raster"))
+% # brick函数创建的RasterBrick对象
+% > b
+% class       : RasterBrick 
+% dimensions  : 77, 101, 7777, 3  (nrow, ncol, ncell, nlayers)
+% resolution  : 1, 1  (x, y)
+% extent      : 0, 101, 0, 77  (xmin, xmax, ymin, ymax)
+% coord. ref. : +proj=merc +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0 
+% data source : /home/mono/Softwares/R/3.4/raster/external/rlogo.grd 
+% names       : red, green, blue 
+% min values  :   0,     0,    0 
+% max values  : 255,   255,  255 
+% # RasterBrick对象包含三层数据
+% > nlayers(b)
+% [1] 3
+% # 三层数据对应的三个属性
+% > names(b)
+% [1] "red"   "green" "blue" 
+% \end{rcode}
+% \end{onlyenv}
+% \end{overlayarea}
+% \end{frame}
 
-\begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
-\begin{itemize}
-\item<1-> raster包提供\emphText{blockSize}函数对栅格数据进行分块，分块按照整行读取，根据行数确定分块大小
-\item<1-> \emphText{writeValues}函数将分块数据写入文件，
-\emphText{writeStart}和\emphText{writeStop}函数则控制此写入过程的起始和终止
-\end{itemize}
+% \begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
+% \begin{itemize}
+% \item<1-> raster包提供\emphText{blockSize}函数对栅格数据进行分块，分块按照整行读取，根据行数确定分块大小
+% \item<1-> \emphText{writeValues}函数将分块数据写入文件，
+% \emphText{writeStart}和\emphText{writeStop}函数则控制此写入过程的起始和终止
+% \end{itemize}
 
-\begin{overlayarea}{\textwidth}{\textheight}
-\begin{onlyenv}<2>
-\begin{rcode}
-> out <- raster("data/70042108.tif")
-> bs <- |\colorbox{green}{blockSize}|(out)
-> bs # 默认分块数为4,row是每块起始的行号,nrows是每个分块的行数
-$row
-[1]   1 301 601 901
-$nrows
-[1] 300 300 300 300
-$n
-[1] 4
-# 开始写入操作,创建一个临时文件
-> out <- |\colorbox{green}{writeStart}|(out, filename=tempfile(), overwrite=TRUE)
-> for (i in 1:bs$n) {
-+     v <- getValues(r, row=bs$row[i], nrows=bs$nrows[i]) # 读取分块数据
-+     v[v <= 0] <- NA # 分块中高程小于或等于0米的数据设置为NA值
-+     |\colorbox{green}{writeValues}|(out, v, bs$row[i])} # 将分块数据写入临时文件
-# 结束写入操作,释放文件锁
-> out <- |\colorbox{green}{writeStop}|(out) 
-> out  # 从data source可以看到写入文件的位置
-class       : RasterLayer 
-dimensions  : 1200, 1320, 1584000  (nrow, ncol, ncell)
-resolution  : 0.0008333333, 0.0008333333  (x, y)
-extent      : 174.2, 175.3, -37.5, -36.5  (xmin, xmax, ymin, ymax)
-coord. ref. : +proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0 
-|\colorbox{green}{data source}| : /tmp/RtmpNPhsrD/file177423e63b141.grd 
-names       : layer 
-values      : NA, NA  (min, max)
-\end{rcode}
-\end{onlyenv}
+% \begin{overlayarea}{\textwidth}{\textheight}
+% \begin{onlyenv}<2>
+% \begin{rcode}
+% > out <- raster("data/70042108.tif")
+% > bs <- |\colorbox{green}{blockSize}|(out)
+% > bs # 默认分块数为4,row是每块起始的行号,nrows是每个分块的行数
+% $row
+% [1]   1 301 601 901
+% $nrows
+% [1] 300 300 300 300
+% $n
+% [1] 4
+% # 开始写入操作,创建一个临时文件
+% > out <- |\colorbox{green}{writeStart}|(out, filename=tempfile(), overwrite=TRUE)
+% > for (i in 1:bs$n) {
+% +     v <- getValues(r, row=bs$row[i], nrows=bs$nrows[i]) # 读取分块数据
+% +     v[v <= 0] <- NA # 分块中高程小于或等于0米的数据设置为NA值
+% +     |\colorbox{green}{writeValues}|(out, v, bs$row[i])} # 将分块数据写入临时文件
+% # 结束写入操作,释放文件锁
+% > out <- |\colorbox{green}{writeStop}|(out) 
+% > out  # 从data source可以看到写入文件的位置
+% class       : RasterLayer 
+% dimensions  : 1200, 1320, 1584000  (nrow, ncol, ncell)
+% resolution  : 0.0008333333, 0.0008333333  (x, y)
+% extent      : 174.2, 175.3, -37.5, -36.5  (xmin, xmax, ymin, ymax)
+% coord. ref. : +proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0 
+% |\colorbox{green}{data source}| : /tmp/RtmpNPhsrD/file177423e63b141.grd 
+% names       : layer 
+% values      : NA, NA  (min, max)
+% \end{rcode}
+% \end{onlyenv}
 
-\begin{onlyenv}<3>
-\begin{figure}[ht] \vspace{-15pt}
-  \includegraphics[width=0.65\columnwidth]{spatial_raster_example2.pdf}
-\end{figure}
-\end{onlyenv}
-\end{overlayarea}
-\end{frame}
+% \begin{onlyenv}<3>
+% \begin{figure}[ht] \vspace{-15pt}
+%   \includegraphics[width=0.65\columnwidth]{spatial_raster_example2.pdf}
+% \end{figure}
+% \end{onlyenv}
+% \end{overlayarea}
+% \end{frame}
 
-\begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
-\begin{itemize}
-\item<1-> sp包和raster包的栅格数据类可以互相转换，例如RasterLayer对象可以强制转换为SpatialGridDataFrame对象，
-反之亦可
-\end{itemize}
+% \begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
+% \begin{itemize}
+% \item<1-> sp包和raster包的栅格数据类可以互相转换，例如RasterLayer对象可以强制转换为SpatialGridDataFrame对象，
+% 反之亦可
+% \end{itemize}
 
-\begin{rcode}
-> # RasterLayer对象转换为SpatialGridDataFrame对象
-> r1 <- as(out, "SpatialGridDataFrame")
-> str(r1, max.level=2)
-Formal class 'SpatialGridDataFrame' [package "sp"] with 4 slots
-  ..@ data       :'data.frame': 1584000 obs. of  1 variable:
-  ..@ grid       :Formal class 'GridTopology' [package "sp"] with 3 slots
-  ..@ bbox       : num [1:2, 1:2] 174.2 -37.5 175.3 -36.5
-  .. ..- attr(*, "dimnames")=List of 2
-  ..@ proj4string:Formal class 'CRS' [package "sp"] with 1 slot
+% \begin{rcode}
+% > # RasterLayer对象转换为SpatialGridDataFrame对象
+% > r1 <- as(out, "SpatialGridDataFrame")
+% > str(r1, max.level=2)
+% Formal class 'SpatialGridDataFrame' [package "sp"] with 4 slots
+%   ..@ data       :'data.frame': 1584000 obs. of  1 variable:
+%   ..@ grid       :Formal class 'GridTopology' [package "sp"] with 3 slots
+%   ..@ bbox       : num [1:2, 1:2] 174.2 -37.5 175.3 -36.5
+%   .. ..- attr(*, "dimnames")=List of 2
+%   ..@ proj4string:Formal class 'CRS' [package "sp"] with 1 slot
 
-> # SpatialGridDataFrame转换为RasterLayer对象
-> r2 <- as(r1, "RasterLayer")
-> str(r2, max.level=2)
-Formal class 'RasterLayer' [package "raster"] with 12 slots
-  ..@ file    :Formal class '.RasterFile' [package "raster"] with 13 slots
-  ..@ data    :Formal class '.SingleLayerData' [package "raster"] with 13 slots
-  ..@ legend  :Formal class '.RasterLegend' [package "raster"] with 5 slots
-  ..@ title   : chr(0) 
-  ..@ extent  :Formal class 'Extent' [package "raster"] with 4 slots
-  ..@ rotated : logi FALSE
-  ..@ rotation:Formal class '.Rotation' [package "raster"] with 2 slots
-  ..@ ncols   : int 1320
-  ..@ nrows   : int 1200
-  ..@ crs     :Formal class 'CRS' [package "sp"] with 1 slot
-  ..@ history : list()
-  ..@ z       : list()
-\end{rcode}
-\end{frame}
+% > # SpatialGridDataFrame转换为RasterLayer对象
+% > r2 <- as(r1, "RasterLayer")
+% > str(r2, max.level=2)
+% Formal class 'RasterLayer' [package "raster"] with 12 slots
+%   ..@ file    :Formal class '.RasterFile' [package "raster"] with 13 slots
+%   ..@ data    :Formal class '.SingleLayerData' [package "raster"] with 13 slots
+%   ..@ legend  :Formal class '.RasterLegend' [package "raster"] with 5 slots
+%   ..@ title   : chr(0) 
+%   ..@ extent  :Formal class 'Extent' [package "raster"] with 4 slots
+%   ..@ rotated : logi FALSE
+%   ..@ rotation:Formal class '.Rotation' [package "raster"] with 2 slots
+%   ..@ ncols   : int 1320
+%   ..@ nrows   : int 1200
+%   ..@ crs     :Formal class 'CRS' [package "sp"] with 1 slot
+%   ..@ history : list()
+%   ..@ z       : list()
+% \end{rcode}
+% \end{frame}
 
-\subsection{空间数据的导入导出}
+\subsection{空间数据交换}
 \subsubsection{开源GIS的世界}
 
-\begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
+\begin{frame}[t]{\subsecname}{\subsubsecname}
 \begin{itemize}
-\item<1-> R属于开源生态圈，因此外部GIS对象和sp对象的转换也主要采用开源GIS的解决方案，一方面可以导入外部GIS数据到R中，另一方面也可以将sp对象导出到外部GIS格式文件
-\item<2-> 除了商业的GIS软件(如ESRI ArcGIS)之外，还有一些\emphText{非营利性组织负责维护和管理大量的开源GIS项目}，其中比较著名的是\href{https://www.osgeo.org/}{\uline{地理空间开源基金会}}(Open Source Geospatial Foundation)
+\item<1-> R属于开源生态圈，因此外部GIS文件和sp对象的相互转换也主要\emphText{采用开源GIS的解决方案}
+\item<2-> 除了商业的GIS软件产品(如 ArcGIS、SuperMap等)之外，世界上还有一些\emphText{非营利性组织负责维护和管理大量的开源GIS项目}，其中比较著名的是\href{https://www.osgeo.org/}{\uline{地理空间开源基金会}}(Open Source Geospatial Foundation)
 \end{itemize}
 
+\begin{overlayarea}{\textwidth}{\textheight}
 \only<2>{
-\begin{table} \centering \scriptsize
-    \renewcommand\arraystretch{0.8}
-    \begin{tabular}{>{\centering\arraybackslash} m{0.3\columnwidth} >{\centering\arraybackslash} m{0.1\columnwidth} >{\centering\arraybackslash} m{0.5\columnwidth}}
+  \begin{table} \centering \small
+    \renewcommand\arraystretch{0.8} 
+    \begin{tabular}{|>{\centering\arraybackslash} m{0.2\columnwidth} |>{\centering\arraybackslash} m{0.3\columnwidth} |>{\centering\arraybackslash} m{0.35\columnwidth}|}
       \toprule
       \rowcolor{LightCyan}
-      \multicolumn{1}{c}{\textbf{GIS技术线}} & \multicolumn{1}{c}{\textbf{商业解决方案}} &
-\multicolumn{1}{c}{\textbf{开源解决方案}} \\\hline
-      桌面GIS & ArcMap & QGIS、GRASS GIS \\
-      webGIS & element\_text & x,y轴标签\\
-      空间数据库 & element\_line & axis刻度线 \\
-      地图服务 & element\_text & axis刻度标签\\
-      二次开发包 & element\_rect & legend背景\\
-      元数据管理 & element\_rect & legend标示背景\\
+      \multicolumn{1}{|c|}{\textbf{GIS技术线}} & \multicolumn{1}{c|}{\textbf{商业产品}} & \multicolumn{1}{c|}{\textbf{开源解决方案}}\\\hline
+      桌面GIS & ArcMap & QGIS、GRASS GIS \\\hline
+      webGIS & ArcGIS Server & Geoserver\\\hline
+      空间数据库 & ArcSDE、Oracle Spatial & PostGIS \\\hline
+      地图服务 &  Google Maps & OpenStreetMap\\\hline
+      二次开发包 & ArcEngine & GDAL、GeoTools、proj.4\\\hline
+      元数据管理 & ArcCatalog & GeoNetwork\\
       \bottomrule
     \end{tabular}
-    \caption{theme要素(详见?theme帮助)}
-\end{table}}
+    \caption{商业和开源GIS解决方案对比}
+  \end{table}}
+\end{overlayarea}
 \end{frame}
 
+\subsubsection{坐标参考系统}
+
+\begin{frame}[t]{\subsecname}{\subsubsecname}
+\begin{itemize}
+\item<1->坐标参考系统(CRS)是测量学和制图学的核心理论，其目标是解决\emphText{“如何在平面中表示一个不规则椭球”}
+的问题，这也是GIS系统和其他计算机系统最大的区别之一
+\item<2-> CRS的一种定义是\emphText{地理坐标系统}(GCS)，用三维椭球模型来定义地球表面位置，
+以经纬度为坐标对地球表面进行数学描述
+\end{itemize}
+
+\begin{overlayarea}{\textwidth}{\textheight}
+\only<2>{
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.55\columnwidth]{GCS.png}
+  \caption{地理坐标系统包括参考椭球体、本初子午线和经纬度单位三个要素}
+\end{figure}}
+\end{overlayarea}
+\end{frame}
+
+\begin{frame}[t]{\subsecname}{\subsubsecname}
+\begin{itemize}
+\item<1-> CRS的另一种定义是\emphText{投影坐标系统}(PCS)，将地球表面按照某种投影类型投射到一个二维平面，以笛卡尔坐标系对地球表面进行数学描述
+\item<2-> \emphText{所有投影坐标系统都只能是对地球表面的近似描述}，可以保证在某些测度(角度、距离、面积等)上是准确的，但是必然会牺牲其他方面的测度
+\end{itemize}
+
+\begin{overlayarea}{\textwidth}{\textheight}
+\only<1>{
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.55\columnwidth]{PCS.png}
+  \caption{投影坐标系统，常见的投影类型包括方位(左)、圆锥(中)和圆柱(右)}
+\end{figure}}
+
+\only<3>{
+\begin{figure}[ht] \vspace{-10pt}
+  \includegraphics[width=0.55\columnwidth]{等角投影.jpg}
+  \caption{等角投影的世界地图,保证角度测度是准确的，但是面积变形严重}
+\end{figure}}
+
+\only<4>{
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.55\columnwidth]{等面积投影.jpg}
+  \caption{等面积投影的世界地图,保证面积测度是准确的,但是角度变形严重}
+\end{figure}}
+
+\end{overlayarea}
+\end{frame}
 \subsection{空间数据可视化}
