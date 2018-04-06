@@ -1109,3 +1109,25 @@ r2 <- as(r1, "RasterLayer")
 str(r2, max.level=2)
               
 
+> library(rgdal)
+Loading required package: sp
+rgdal: version: 1.2-18, (SVN revision 718)
+ Geospatial Data Abstraction Library extensions to R successfully loaded
+ Loaded GDAL runtime: GDAL 2.1.3, released 2017/20/01
+ Path to GDAL shared files: /usr/share/gdal/2.1
+ GDAL binary built with GEOS: TRUE 
+ Loaded PROJ.4 runtime: Rel. 4.9.2, 08 September 2015, [PJ_VERSION: 492]
+ Path to PROJ.4 shared files: (autodetected)
+Linking to sp version: 1.2-7
+
+## cs2cs +proj=latlong +datum=WGS84 +to +proj=utm +zone=17 -r <<EOF
+## 43d38'33.24"N 79d23'13.7"W
+## EOF
+
+y <- as.numeric(char2dms("43d38'33.24\"N"))
+x <- as.numeric(char2dms("79d23'13.7\"W"))
+xy<- SpatialPoints(cbind(x,y),proj4string=CRS("+proj=longlat +datum=WGS84"))
+spTransform(xy,CRS("+proj=utm +zone=17 +datum=WGS84"))
+
+SP <- SpatialPoints(cbind(126.59,-14.30), proj4string=CRS("+proj=longlat +datum=WGS84")) 
+coordinatesUTM <- spTransform(SP, CRS("+proj=utm +south +zone=52 +datum=WGS84")) 

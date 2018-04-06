@@ -1035,16 +1035,40 @@
 % \end{frame}
 
 \subsection{空间数据交换}
-\subsubsection{开源GIS的世界}
+\subsubsection{开源GIS生态圈}
 
 \begin{frame}[t]{\subsecname}{\subsubsecname}
 \begin{itemize}
-\item<1-> R属于开源生态圈，因此外部GIS文件和sp对象的相互转换也主要\emphText{采用开源GIS的解决方案}
-\item<2-> 除了商业的GIS软件产品(如 ArcGIS、SuperMap等)之外，世界上还有一些\emphText{非营利性组织负责维护和管理大量的开源GIS项目}，其中比较著名的是\href{https://www.osgeo.org/}{\uline{地理空间开源基金会}}(Open Source Geospatial Foundation)
+%\item<1-> R属于开源生态圈，因此外部GIS文件和sp对象的交换也主要\emphText{采用开源GIS的解决方案}
+\item<1-> 除了商业的GIS软件产品(如 ArcGIS、SuperMap等)之外，世界上还有一些由\emphText{非营利性组织负责维护和管理大量的开源GIS项目}，其中最著名的是由\href{https://www.osgeo.org/}{\uline{地理空间开源基金会}}(OSGeo,\emphText{O}pen \emphText{S}ource \emphText{Geo}spatial Foundation)维护的项目
+\item<1-> OSGeo维护的项目都遵循其制定的X/MIT开源许可协议，是许多GIS软件的基础，推动了开源GIS生态圈的
+良性发展
 \end{itemize}
 
 \begin{overlayarea}{\textwidth}{\textheight}
 \only<2>{
+\begin{figure}[ht] \vspace{-5pt}
+  \centering
+  \includegraphics[width=0.3\columnwidth]{osgeo-logo.png}\\
+  \includegraphics[width=0.8\columnwidth]{foss4g.png}
+  \caption{OSGeo及其从2006年开始主办的开源GIS年度会议—FOSS4G(\emphText{F}ree and \emphText{O}pen \emphText{S}ource \emphText{S}oftware \emphText{for} \emphText{G}eoinformatics)}
+\end{figure}}
+
+\only<3>{
+\begin{figure}[ht] 
+  \centering
+  \includegraphics[width=\columnwidth]{osgeo_contributors2.jpg}
+  \caption{开源GIS的贡献者们}
+\end{figure}}
+
+\only<4>{
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.85\columnwidth]{open_source_GIS.png}
+   \caption{开源GIS生态圈} 
+\end{figure}}
+
+\only<5>{
   \begin{table} \centering \small
     \renewcommand\arraystretch{0.8} 
     \begin{tabular}{|>{\centering\arraybackslash} m{0.2\columnwidth} |>{\centering\arraybackslash} m{0.3\columnwidth} |>{\centering\arraybackslash} m{0.35\columnwidth}|}
@@ -1055,7 +1079,7 @@
       webGIS & ArcGIS Server & Geoserver\\\hline
       空间数据库 & ArcSDE、Oracle Spatial & PostGIS \\\hline
       地图服务 &  Google Maps & OpenStreetMap\\\hline
-      二次开发包 & ArcEngine & GDAL、GeoTools、proj.4\\\hline
+      程序开发库 & ArcEngine & GDAL、GeoTools、proj.4\\\hline
       元数据管理 & ArcCatalog & GeoNetwork\\
       \bottomrule
     \end{tabular}
@@ -1063,6 +1087,54 @@
   \end{table}}
 \end{overlayarea}
 \end{frame}
+
+\subsubsection{rgdal包}
+
+\begin{frame}[t]{\subsecname}{\subsubsecname}
+\begin{itemize}
+\item<1-> \href{http://www.gdal.org/}{\uline{GDAL}}(Geospatial Data Abstraction Library)是Frank Warmerdam从1998年开发的空间数据转换库，从1.3.2版本开始移交给OSGeo维护，
+成为在X/MIT许可协议下的开源库
+\item<2-> GDAL是\emphText{GIS领域最重要的底层库之一}，它利用抽象数据模型来表达所支持的各种文件格式，
+并提供一系列命令行工具来进行数据转换和处理，目前支持多达\emphText{154种栅格数据格式和93种矢量数据格式}
+\end{itemize}
+\vspace{-10pt}
+\begin{figure}\centering
+  \captionsetup[subfigure]{labelformat=empty} 
+  \subfloat[Frank Warmerdam]
+  {\includegraphics[width=0.35\columnwidth]{frank_warmerdam.png}} \hspace{15pt}
+  \subfloat[GDAL logo]
+  {\includegraphics[width=0.35\columnwidth]{gdal-logo.png}} 
+\end{figure}
+\end{frame}
+
+\begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
+\begin{itemize}
+\item<1-> 许多著名的开源和商业的GIS软件都
+\emphText{在底层数据转换模块中使用GDAL库}，包括ESRI ArcGIS、Google Earth、GRASS GIS等；而R本身属于开源生态圈，因此自然也选择采用
+\emphText{GDAL库作为外部GIS数据和内部sp对象相互转换的底层库}
+\item<2-> 由于原生GDAL库由ANSI C和C++开发，所以Roger Bivand等人又开发了
+\emphText{rgdal包}用于在R中调用GDAL库函数
+\item<3-> rgdal包只是实现了在R中调用GDAL库中的C或C++函数，本质上还是要依赖GDAL，
+因此\emphText{在载入rgdal包之前要先安装好原生的GDAL库}
+\end{itemize}
+
+\begin{onlyenv}<3>
+\begin{rcode}
+# rgdal包不但依赖sp包，而且依赖外部的GDAL库和proj.4库，在使用rgdal包前要确保这两个库正确安装！
+> library(rgdal)
+|\colorbox{green}{Loading required package: sp}|
+rgdal: version: 1.2-18, (SVN revision 718)
+ Geospatial Data Abstraction Library extensions to R successfully loaded
+ |\colorbox{green}{Loaded GDAL runtime}|: GDAL 2.1.3, released 2017/20/01
+ Path to GDAL shared files: /usr/share/gdal/2.1
+ GDAL binary built with GEOS: TRUE 
+ |\colorbox{green}{Loaded PROJ.4 runtime}|: Rel. 4.9.2, 08 September 2015, [PJ_VERSION: 492]
+ Path to PROJ.4 shared files: (autodetected)
+ Linking to sp version: 1.2-7 
+\end{rcode}
+\end{onlyenv}
+\end{frame}
+
 
 \subsubsection{坐标参考系统}
 
@@ -1110,7 +1182,126 @@
   \includegraphics[width=0.55\columnwidth]{等面积投影.jpg}
   \caption{等面积投影的世界地图,保证面积测度是准确的,但是角度变形严重}
 \end{figure}}
-
 \end{overlayarea}
 \end{frame}
+
+\begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
+\begin{itemize}
+\item<1-> GDAL包底层CRS采用的是\href{http://proj4.org/}{\uline{proj.4库}}，
+因此在安装GDAL和rgdal之前要先安装proj.4
+\item<2-> proj.4是一个历史悠久的CRS库，最早是由\emphText{Gerald Evenden}开发维护，第一个版本是80年代初期用Fortran语言开发的，1985年发布了Unix系统下的C语言版本，1990发布的
+第三个版本被命名为\emphText{proj.3}，1995年发布的4.3版是Evenden开发的最后一个版本，命名为\emphText{proj.4}；从2000年开始，Frank Warmerdam接管了项目的维护工作直到2008年被OSGeo接纳，
+\emphText{成为OSGeo基础开发库并由其负责维护}；2018年3月proj的第5个版本发布，目前支持的地图投影已经超过\emphText{138个}
+\end{itemize}
+
+\begin{onlyenv}<3>
+\begin{rcode}
+# rgdal包载入前要先做proj.4库依赖性检查
+> library(rgdal)
+Loading required package: sp
+rgdal: version: 1.2-18, (SVN revision 718)
+ Geospatial Data Abstraction Library extensions to R successfully loaded
+ Loaded GDAL runtime: GDAL 2.1.3, released 2017/20/01
+ Path to GDAL shared files: /usr/share/gdal/2.1
+ GDAL binary built with GEOS: TRUE 
+ |\colorbox{green}{Loaded PROJ.4 runtime}|: Rel. 4.9.2, 08 September 2015, [PJ_VERSION: 492]
+ Path to PROJ.4 shared files: (autodetected)
+ Linking to sp version: 1.2-7 
+\end{rcode}
+\end{onlyenv}
+\end{frame}
+
+\begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
+\begin{itemize}
+\item<1-> proj.4库有一套CRS定义的规范，表示方法是CRS中的“参数标签=值”(不能有空格)，每个参数标签以“+”开始并且用空格
+区分不同的标签/值对，\emphText{最终形成一个字符串}
+\end{itemize}
+
+\begin{overlayarea}{\textwidth}{\textheight}
+\only<1>{ 
+  \begin{table} \centering \small
+    \renewcommand\arraystretch{0.7} 
+    \begin{tabular}{|>{\centering\arraybackslash} m{0.2\columnwidth} |>{\centering\arraybackslash} m{0.65\columnwidth} |}
+      \toprule
+      \rowcolor{LightCyan}
+      \multicolumn{1}{|c|}{\textbf{参数标签}} & \multicolumn{1}{c|}{\textbf{含义}} \\\hline
+      proj & 投影名称，定义PCS;当=longlat时定义GCS \\\hline
+      ellps & 椭球体名称\\\hline
+      datum & 基准面名称\\\hline
+      pm & 备用本初子午线(通常是一个城市名称) \\\hline
+      lon\_0,lat\_0 & 中央经线和纬度原点\\\hline
+      towgs84 & 三参数或七参数基准面转换\\\hline
+      x\_0,y\_0 & 东伪偏移和北伪偏移\\\hline
+      k\_0 & 比例因子\\\hline
+      a,b & 椭球体长短轴长度\\\hline
+      axis & 轴方向\\\hline
+      zone & UTM时区\\\hline
+      init & CRS定义文件存放路径和关键字\\\hline
+      no\_defs & 不使用默认的定义文件\\
+      \bottomrule
+    \end{tabular}
+    \caption{proj.4主要的参数标签}
+  \end{table}}
+
+\begin{onlyenv}<2>
+\begin{rcode}
+# 定义深圳西安1980坐标系3度带投影：投影名称横轴墨卡托，中央经线东经114度，比例因子1，东伪偏移500000，椭球体长轴
+长度6378140米，短轴长度6356755.288157528米，单位米
+> CRS("+proj=tmerc +lat_0=0 +lon_0=114 +k=1 +x_0=500000 +y_0=0 +a=6378140 +b=6356755.288157528 +units=m +no_defs") 
+CRS arguments:
+ +proj=tmerc +lat_0=0 +lon_0=114 +k=1 +x_0=500000 +y_0=0 +a=6378140 +b=6356755.288157528 +units=m +no_defs 
+
+# 定义深圳北京1954坐标系3度带投影：投影名称横轴墨卡托，中央经线东经114度，比例因子1，东伪偏移500000，
+椭球体为苏联克拉索夫斯基椭球体，单位米
+> CRS("+proj=tmerc +lat_0=0 +lon_0=114 +k=1 +x_0=500000 +y_0=0 +ellps=krass +units=m +no_defs") 
+CRS arguments:
+ +proj=tmerc +lat_0=0 +lon_0=114 +k=1 +x_0=500000 +y_0=0 +ellps=krass +units=m +no_defs 
+
+# 定义北京1954GCS:椭球体为苏联克拉索夫斯基
+> CRS("+proj=longlat +ellps=krass +no_defs")
+CRS arguments: +proj=longlat +ellps=krass +no_defs 
+
+# 定义美国田纳西州PCS:投影名称兰勃特等角圆锥投影，椭球体是Clarke 1866椭球，基准面为北美1927基准面
+> CRS("+proj=lcc +lat_1=35.25 +lat_2=36.41666666666666 +lat_0=34.66666666666666 +lon_0=-86 +x_0=609601.2192024384 +y_0=30480.06096012192 +datum=NAD27 +units=us-ft +no_defs")
+CRS arguments:
+ +proj=lcc +lat_1=35.25 +lat_2=36.41666666666666 +lat_0=34.66666666666666 +lon_0=-86 +x_0=609601.2192024384 +y_0=30480.06096012192 +datum=NAD27 +units=us-ft +no_defs +ellps=clrk66 +nadgrids=@conus,@alaska,@ntv2_0.gsb,@ntv1_can.dat 
+\end{rcode}
+\end{onlyenv}
+\end{overlayarea}
+\end{frame}
+
+\begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
+\begin{itemize}
+\item<1-> 欧洲石油调查组(\emphText{EPSG},European Petroleum Survey Group)为了能够更好地调查世界石油储量，从1986年开始收集各地区CRS参数，
+并且给每个CRS进行统一编号管理，最终形成并发布\href{http://www.epsg.org/}{\uline{EPSG标准数据集}}
+\item<1-> 目前EPSG数据集已经成为世界标准CRS数据集之一，proj.4库可以用
+\emphText{init标签参数}调用指定编号的CRS参数
+\end{itemize}
+
+\begin{onlyenv}<2>
+\begin{rcode}
+# WGS84 GCS的编号是4326
+> CRS("+init=epsg:4326")
+CRS arguments:
+ +init=epsg:4326 +proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0 
+
+# 3857是一个重要的编号，因为各大互联网地图都以它为基准，例如Google Maps，Bing Maps、OpenStreetMap等
+> CRS("+init=epsg:3857")
+CRS arguments:
+ +init=epsg:3857 +proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs
+
+# 北京1954 GCS的编号是4214
+> CRS("+init=epsg:4214")
+CRS arguments:
+ +init=epsg:4214 +proj=longlat +ellps=krass +towgs84=15.8,-154.4,-82.3,0,0,0,0 +no_defs
+
+# 北京1954在深圳的三度分带PCS编号是2435
+> CRS("+init=epsg:2435")
+CRS arguments:
+ +init=epsg:2435 +proj=tmerc +lat_0=0 +lon_0=114 +k=1 +x_0=500000 +y_0=0 +ellps=krass +towgs84=15.8,-154.4,-82.3,0,0,0,0 +units=m +no_defs 
+\end{rcode}
+\end{onlyenv}
+\end{frame}
+% \item<3-> GDAL最初只是为栅格数据转换而设计的，后来又引入了OGR模型用于矢量数据转换，
+% 因此又被成为GDAL/OGR库；但是从2.0版本开始，两者已经进行了紧密整合，所以可以统称为GDAL库
 \subsection{空间数据可视化}
