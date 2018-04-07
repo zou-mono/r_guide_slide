@@ -17,7 +17,7 @@
       \end{ornamentblock}
 \end{frame}
 
-% \subsection{GIS和R}
+\subsection{GIS和R}
 % \begin{frame}[t]{\subsecname}{}
 % \begin{itemize}
 % \item GIS的非正式定义\footnotemark[1]：一组强大的工具集，可以用来收集、存储、任意检索、转换和
@@ -1034,274 +1034,542 @@
 % \end{rcode}
 % \end{frame}
 
-\subsection{空间数据交换}
-\subsubsection{开源GIS生态圈}
+% \subsection{空间数据交换}
+% \subsubsection{开源GIS生态圈}
 
-\begin{frame}[t]{\subsecname}{\subsubsecname}
-\begin{itemize}
-%\item<1-> R属于开源生态圈，因此外部GIS文件和sp对象的交换也主要\emphText{采用开源GIS的解决方案}
-\item<1-> 除了商业的GIS软件产品(如 ArcGIS、SuperMap等)之外，世界上还有一些由\emphText{非营利性组织负责维护和管理大量的开源GIS项目}，其中最著名的是由\href{https://www.osgeo.org/}{\uline{地理空间开源基金会}}(OSGeo,\emphText{O}pen \emphText{S}ource \emphText{Geo}spatial Foundation)维护的项目
-\item<1-> OSGeo维护的项目都遵循其制定的X/MIT开源许可协议，是许多GIS软件的基础，推动了开源GIS生态圈的
-良性发展
+% \begin{frame}[t]{\subsecname}{\subsubsecname}
+% \begin{itemize}
+% %\item<1-> R属于开源生态圈，因此外部GIS文件和sp对象的交换也主要\emphText{采用开源GIS的解决方案}
+% \item<1-> 除了商业的GIS软件产品(如 ArcGIS、SuperMap等)之外，世界上还有一些由\emphText{非营利性组织负责维护和管理大量的开源GIS项目}，其中最著名的是由\href{https://www.osgeo.org/}{\uline{地理空间开源基金会}}(OSGeo,\emphText{O}pen \emphText{S}ource \emphText{Geo}spatial Foundation)维护的项目
+% \item<1-> OSGeo维护的项目都遵循其制定的X/MIT开源许可协议，是许多GIS软件的基础，推动了开源GIS生态圈的
+% 良性发展
+% \end{itemize}
+
+% \begin{overlayarea}{\textwidth}{\textheight}
+% \only<2>{
+% \begin{figure}[ht] \vspace{-5pt}
+%   \centering
+%   \includegraphics[width=0.3\columnwidth]{osgeo-logo.png}\\
+%   \includegraphics[width=0.8\columnwidth]{foss4g.png}
+%   \caption{OSGeo及其从2006年开始主办的开源GIS年度会议—FOSS4G(\emphText{F}ree and \emphText{O}pen \emphText{S}ource \emphText{S}oftware \emphText{for} \emphText{G}eoinformatics)}
+% \end{figure}}
+
+% \only<3>{
+% \begin{figure}[ht] 
+%   \centering
+%   \includegraphics[width=\columnwidth]{osgeo_contributors2.jpg}
+%   \caption{开源GIS的贡献者们}
+% \end{figure}}
+
+% \only<4>{
+% \begin{figure}[ht]
+%   \centering
+%   \includegraphics[width=0.85\columnwidth]{open_source_GIS.png}
+%    \caption{开源GIS生态圈} 
+% \end{figure}}
+
+% \only<5>{
+%   \begin{table} \centering \small
+%     \renewcommand\arraystretch{0.8} 
+%     \begin{tabular}{|>{\centering\arraybackslash} m{0.2\columnwidth} |>{\centering\arraybackslash} m{0.3\columnwidth} |>{\centering\arraybackslash} m{0.35\columnwidth}|}
+%       \toprule
+%       \rowcolor{LightCyan}
+%       \multicolumn{1}{|c|}{\textbf{GIS技术线}} & \multicolumn{1}{c|}{\textbf{商业产品}} & \multicolumn{1}{c|}{\textbf{开源解决方案}}\\\hline
+%       桌面GIS & ArcMap & QGIS、GRASS GIS \\\hline
+%       webGIS & ArcGIS Server & Geoserver\\\hline
+%       空间数据库 & ArcSDE、Oracle Spatial & PostGIS \\\hline
+%       地图服务 &  Google Maps & OpenStreetMap\\\hline
+%       程序开发库 & ArcEngine & GDAL、GeoTools、proj.4\\\hline
+%       元数据管理 & ArcCatalog & GeoNetwork\\
+%       \bottomrule
+%     \end{tabular}
+%     \caption{商业和开源GIS解决方案对比}
+%   \end{table}}
+% \end{overlayarea}
+% \end{frame}
+
+% \subsubsection{rgdal包}
+
+% \begin{frame}[t]{\subsecname}{\subsubsecname}
+% \begin{itemize}
+% \item<1-> \href{http://www.gdal.org/}{\uline{GDAL}}(Geospatial Data Abstraction Library)是Frank Warmerdam从1998年开发的空间数据转换库，从1.3.2版本开始移交给OSGeo维护，
+% 成为在X/MIT许可协议下的开源库
+% \item<2-> GDAL是\emphText{GIS领域最重要的底层库之一}，它利用抽象数据模型来表达所支持的各种文件格式，
+% 并提供一系列命令行工具来进行数据转换和处理，目前支持多达\emphText{154种栅格数据格式和93种矢量数据格式}
+% \end{itemize}
+% \vspace{-10pt}
+% \begin{figure}\centering
+%   \captionsetup[subfigure]{labelformat=empty} 
+%   \subfloat[Frank Warmerdam]
+%   {\includegraphics[width=0.35\columnwidth]{frank_warmerdam.png}} \hspace{15pt}
+%   \subfloat[GDAL logo]
+%   {\includegraphics[width=0.35\columnwidth]{gdal-logo.png}} 
+% \end{figure}
+% \end{frame}
+
+% \begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
+% \begin{itemize}
+% \item<1-> 许多著名的开源和商业的GIS软件都
+% \emphText{在底层数据转换模块中使用GDAL库}，包括ESRI ArcGIS、Google Earth、GRASS GIS等；而R本身属于开源生态圈，因此自然也选择采用
+% \emphText{GDAL库作为外部GIS数据和内部sp对象相互转换的底层库}
+% \item<2-> 由于原生GDAL库是ANSI C和C++开发的，所以Roger Bivand等人开发了
+% \emphText{rgdal包}用于封装了GDAL库，从而可以在R中调用GDAL库函数
+% \item<3-> rgdal包只是实现了在R中调用GDAL库中的C或C++函数，本质上还是要依赖GDAL，
+% 因此\emphText{在载入rgdal包之前要先安装好原生的GDAL库}
+% \end{itemize}
+
+% \begin{onlyenv}<3>
+% \begin{rcode}
+% # rgdal包不但依赖sp包，而且依赖外部的GDAL库和proj.4库，在使用rgdal包前要确保这两个库正确安装！
+% > library(rgdal)
+% |\colorbox{green}{Loading required package: sp}|
+% rgdal: version: 1.2-18, (SVN revision 718)
+%  Geospatial Data Abstraction Library extensions to R successfully loaded
+%  |\colorbox{green}{Loaded GDAL runtime}|: GDAL 2.1.3, released 2017/20/01
+%  Path to GDAL shared files: /usr/share/gdal/2.1
+%  GDAL binary built with GEOS: TRUE 
+%  |\colorbox{green}{Loaded PROJ.4 runtime}|: Rel. 4.9.2, 08 September 2015, [PJ_VERSION: 492]
+%  Path to PROJ.4 shared files: (autodetected)
+%  Linking to sp version: 1.2-7 
+% \end{rcode}
+% \end{onlyenv}
+% \end{frame}
+
+
+% \subsubsection{坐标参考系统}
+
+% \begin{frame}[t]{\subsecname}{\subsubsecname}
+% \begin{itemize}
+% \item<1->坐标参考系统(CRS)是测量学和制图学的核心理论，其目标是解决\emphText{“如何在平面中表示一个不规则椭球”}
+% 的问题，这也是GIS系统和其他计算机系统最大的区别之一
+% \item<2-> CRS的一种定义是\emphText{地理坐标系统}(GCS)，用三维椭球模型来定义地球表面位置，
+% 以经纬度为坐标对地球表面进行数学描述
+% \end{itemize}
+
+% \begin{overlayarea}{\textwidth}{\textheight}
+% \only<2>{
+% \begin{figure}[ht]
+%   \centering
+%   \includegraphics[width=0.55\columnwidth]{GCS.png}
+%   \caption{地理坐标系统包括参考椭球体、本初子午线和经纬度单位三个要素}
+% \end{figure}}
+% \end{overlayarea}
+% \end{frame}
+
+% \begin{frame}[t]{\subsecname}{\subsubsecname}
+% \begin{itemize}
+% \item<1-> CRS的另一种定义是\emphText{投影坐标系统}(PCS)，将地球表面按照某种投影类型投射到一个二维平面，以笛卡尔坐标系对地球表面进行数学描述
+% \item<2-> \emphText{所有投影坐标系统都只能是对地球表面的近似描述}，可以保证在某些测度(角度、距离、面积等)上是准确的，但是必然会牺牲其他方面的测度
+% \end{itemize}
+
+% \begin{overlayarea}{\textwidth}{\textheight}
+% \only<1>{
+% \begin{figure}[ht]
+%   \centering
+%   \includegraphics[width=0.55\columnwidth]{PCS.png}
+%   \caption{投影坐标系统，常见的投影类型包括方位(左)、圆锥(中)和圆柱(右)}
+% \end{figure}}
+
+% \only<3>{
+% \begin{figure}[ht] \vspace{-10pt}
+%   \includegraphics[width=0.55\columnwidth]{等角投影.jpg}
+%   \caption{等角投影的世界地图,保证角度测度是准确的，但是面积变形严重}
+% \end{figure}}
+
+% \only<4>{
+% \begin{figure}[ht]
+%   \centering
+%   \includegraphics[width=0.55\columnwidth]{等面积投影.jpg}
+%   \caption{等面积投影的世界地图,保证面积测度是准确的,但是角度变形严重}
+% \end{figure}}
+% \end{overlayarea}
+% \end{frame}
+
+% \begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
+% \begin{itemize}
+% \item<1-> GDAL包底层CRS采用的是\href{http://proj4.org/}{\uline{proj.4库}}，
+% 因此在安装GDAL和rgdal之前要先安装proj.4
+% \item<2-> proj.4是一个历史悠久的CRS库，最早是由\emphText{Gerald Evenden}开发维护，第一个版本是80年代初期用Fortran语言开发的，1985年发布了Unix系统下的C语言版本，1990发布的
+% 第三个版本被命名为\emphText{proj.3}，1995年发布的4.3版是Evenden开发的最后一个版本，命名为\emphText{proj.4}；从2000年开始，Frank Warmerdam接管了项目的维护工作直到2008年被OSGeo接纳，
+% \emphText{成为OSGeo基础开发库并由其负责维护}；2018年3月proj的第5个版本发布，目前支持的地图投影已经超过\emphText{138个}
+% \end{itemize}
+
+% \begin{onlyenv}<3>
+% \begin{rcode}
+% # rgdal包载入前要先做proj.4库依赖性检查
+% > library(rgdal)
+% Loading required package: sp
+% rgdal: version: 1.2-18, (SVN revision 718)
+%  Geospatial Data Abstraction Library extensions to R successfully loaded
+%  Loaded GDAL runtime: GDAL 2.1.3, released 2017/20/01
+%  Path to GDAL shared files: /usr/share/gdal/2.1
+%  GDAL binary built with GEOS: TRUE 
+%  |\colorbox{green}{Loaded PROJ.4 runtime}|: Rel. 4.9.2, 08 September 2015, [PJ_VERSION: 492]
+%  Path to PROJ.4 shared files: (autodetected)
+%  Linking to sp version: 1.2-7 
+% \end{rcode}
+% \end{onlyenv}
+% \end{frame}
+
+% \begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
+% \begin{itemize}
+% \item<1-> proj.4库有一套CRS定义的规范，表示方法是CRS中的“参数标签=值”(不能有空格)，每个参数标签以“+”开始并且用空格
+% 区分不同的标签/值对，\emphText{最终形成一个字符串}
+% \end{itemize}
+
+% \begin{overlayarea}{\textwidth}{\textheight}
+% \only<1>{ 
+%   \begin{table} \centering \small
+%     \renewcommand\arraystretch{0.7} 
+%     \begin{tabular}{|>{\centering\arraybackslash} m{0.2\columnwidth} |>{\centering\arraybackslash} m{0.65\columnwidth} |}
+%       \toprule
+%       \rowcolor{LightCyan}
+%       \multicolumn{1}{|c|}{\textbf{参数标签}} & \multicolumn{1}{c|}{\textbf{含义}} \\\hline
+%       proj & 投影名称，定义PCS;当=longlat时定义GCS \\\hline
+%       ellps & 椭球体名称\\\hline
+%       datum & 基准面名称\\\hline
+%       pm & 备用本初子午线(通常是一个城市名称) \\\hline
+%       lon\_0,lat\_0 & 中央经线和纬度原点\\\hline
+%       towgs84 & 三参数或七参数基准面转换\\\hline
+%       x\_0,y\_0 & 东伪偏移和北伪偏移\\\hline
+%       k\_0 & 比例因子\\\hline
+%       a,b & 椭球体长短轴长度\\\hline
+%       axis & 轴方向\\\hline
+%       zone & UTM时区\\\hline
+%       init & CRS定义文件存放路径和关键字\\\hline
+%       no\_defs & 不使用默认的定义文件\\
+%       \bottomrule
+%     \end{tabular}
+%     \caption{proj.4主要的参数标签}
+%   \end{table}}
+
+% \begin{onlyenv}<2>
+% \begin{rcode}
+% # 定义深圳西安1980坐标系3度带投影：投影名称横轴墨卡托，中央经线东经114度，比例因子1，东伪偏移500000，椭球体长轴
+% 长度6378140米，短轴长度6356755.288157528米，单位米
+% > CRS("+proj=tmerc +lat_0=0 +lon_0=114 +k=1 +x_0=500000 +y_0=0 +a=6378140 +b=6356755.288157528 +units=m +no_defs") 
+% CRS arguments:
+%  +proj=tmerc +lat_0=0 +lon_0=114 +k=1 +x_0=500000 +y_0=0 +a=6378140 +b=6356755.288157528 +units=m +no_defs 
+
+% # 定义深圳北京1954坐标系3度带投影：投影名称横轴墨卡托，中央经线东经114度，比例因子1，东伪偏移500000，
+% 椭球体为苏联克拉索夫斯基椭球体，单位米
+% > CRS("+proj=tmerc +lat_0=0 +lon_0=114 +k=1 +x_0=500000 +y_0=0 +ellps=krass +units=m +no_defs") 
+% CRS arguments:
+%  +proj=tmerc +lat_0=0 +lon_0=114 +k=1 +x_0=500000 +y_0=0 +ellps=krass +units=m +no_defs 
+
+% # 定义北京1954GCS:椭球体为苏联克拉索夫斯基
+% > CRS("+proj=longlat +ellps=krass +no_defs")
+% CRS arguments: +proj=longlat +ellps=krass +no_defs 
+
+% # 定义美国田纳西州PCS:投影名称兰勃特等角圆锥投影，椭球体是Clarke 1866椭球，基准面为北美1927基准面
+% > CRS("+proj=lcc +lat_1=35.25 +lat_2=36.41666666666666 +lat_0=34.66666666666666 +lon_0=-86 +x_0=609601.2192024384 +y_0=30480.06096012192 +datum=NAD27 +units=us-ft +no_defs")
+% CRS arguments:
+%  +proj=lcc +lat_1=35.25 +lat_2=36.41666666666666 +lat_0=34.66666666666666 +lon_0=-86 +x_0=609601.2192024384 +y_0=30480.06096012192 +datum=NAD27 +units=us-ft +no_defs +ellps=clrk66 +nadgrids=@conus,@alaska,@ntv2_0.gsb,@ntv1_can.dat 
+% \end{rcode}
+% \end{onlyenv}
+% \end{overlayarea}
+% \end{frame}
+
+% \begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
+% \begin{itemize}
+% \item<1-> 欧洲石油调查组(\emphText{EPSG},European Petroleum Survey Group)为了能够更好地调查世界石油储量，从1986年开始收集各地区CRS参数，
+% 并且给每个CRS进行统一编号管理，最终形成并发布\href{http://www.epsg.org/}{\uline{EPSG标准数据集}}
+% \item<1-> 目前EPSG数据集已经成为世界标准CRS数据集之一，proj.4库可以用
+% \emphText{init标签参数}调用指定编号的CRS参数
+% \end{itemize}
+
+% \begin{onlyenv}<2>
+% \begin{rcode}
+% # WGS84 GCS的编号是4326
+% > CRS("+init=epsg:4326")
+% CRS arguments:
+%  +init=epsg:4326 +proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0 
+
+% # 3857是一个重要的编号，因为各大互联网地图都以它为基准，例如Google Maps，Bing Maps、OpenStreetMap等
+% > CRS("+init=epsg:3857")
+% CRS arguments:
+%  +init=epsg:3857 +proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs
+
+% # 北京1954 GCS的编号是4214
+% > CRS("+init=epsg:4214")
+% CRS arguments:
+%  +init=epsg:4214 +proj=longlat +ellps=krass +towgs84=15.8,-154.4,-82.3,0,0,0,0 +no_defs
+
+% # 北京1954在深圳的三度分带PCS编号是2435
+% > CRS("+init=epsg:2435")
+% CRS arguments:
+%  +init=epsg:2435 +proj=tmerc +lat_0=0 +lon_0=114 +k=1 +x_0=500000 +y_0=0 +ellps=krass +towgs84=15.8,-154.4,-82.3,0,0,0,0 +units=m +no_defs 
+% \end{rcode}
+% \end{onlyenv}
+% \end{frame}
+
+% \begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
+% \begin{itemize}
+% \item<1-> 由于各地区CRS都不尽相同，因此为了坐标能在统一CRS中表达，
+% 坐标转换成为空间数据处理的常规操作，通常包括\emphText{GCS和PCS互转(投影与反投影)}、\emphText{基准面互转}
+% 和\emphText{PCS互转}
+% \item<2-> proj.4库中提供了\emphText{cs2cs}函数用于坐标的CRS转换，rgdal包中也提供了类似的
+% \emphText{spTransform函数}，可以将一个sp对象定义的CRS转换到另一个CRS
+% \end{itemize}
+
+% \begin{overlayarea}{\textwidth}{\textheight}
+% \begin{onlyenv}<3>
+% \begin{rcode}
+% # 定义GCS坐标的x和y位置
+% > y <- as.numeric(char2dms("43d38'33.24\"N"))
+% > x <- as.numeric(char2dms("79d23'13.7\"W"))
+% # 将坐标转换为空间点对象,并定义CRS为基准面wgs84的GCS
+% > xy <- SpatialPoints(cbind(x,y),proj4string=CRS("+proj=longlat +datum=WGS84"))
+% > xy@coords
+%              x        y
+% [1,] -79.38714 43.64257
+% > spTransform(xy,CRS("+proj=utm +zone=17 +datum=WGS84"))@coords
+%             x       y
+% [1,] 630084.3 4833439
+% \end{rcode}
+% \end{onlyenv}
+
+% \begin{onlyenv}<4>
+% \begin{rcode}
+% # 读取中国地图边界
+% > library(maps)
+% > library(maptools)
+% > china<- map("world", "china", fill=TRUE,plot=FALSE)
+% > tw <- map("world","taiwan",fill=TRUE,plot=FALSE)
+% > china$x <- c(china$x,NA,tw$x)
+% > china$y <- c(china$y,NA,tw$y)
+% > china$range <- c(range(china$range[1:2],tw$range[1:2]),range(china$range[3:4],tw$range[3:4]))
+% > china$names <- c(china$names,tw$names)
+% # 定义GCS为WGS84，并创建空间面对象
+% > p4s <- CRS("+proj=longlat +datum=WGS84")
+% > SPchina <- map2SpatialPolygons(china,IDs=sapply(china$names, function(x) x[1]),proj4string=p4s)
+% # 将WGS84坐标投影到UTM投影坐标系统
+% > SPchina2 <-spTransform(SPchina,CRS("+proj=utm +zone=49 +datum=WGS84"))
+% \end{rcode}
+% \end{onlyenv}
+
+% \only<5>{ \vspace{-15pt}
+% \begin{figure}[ht]
+%   \centering
+%   \includegraphics[width=0.8\columnwidth]{spTransform_example.pdf}
+%   \caption{中国地图的坐标转换：左图为WGS84地理坐标系，右图是UTM投影坐标系}
+% \end{figure}}
+% \end{overlayarea}
+% \end{frame}
+
+% \subsubsection{矢量格式文件交换}
+% \begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
+% \begin{itemize} 
+% \item<1-> GDAL库最初不支持矢量数据，因此引入了参考OGC开源简单要素规范设计的\emphText{OGR库}，
+% 实现了外部矢量数据交换功能
+% \item<2-> OGR全称是\emphText{OGR简单要素库}(OGR Simple Feature Library)，是用C++编写的开源矢量数据格式交换库，
+% 其架构是建立统一的简单要素抽象模型，并在此基础\emphText{通过外部驱动程序扩展各种数据交换的功能}，
+% 这对于复杂多样的矢量数据交换具有极大的灵活性
+% \item<3-> 从设计上\emphText{OGR库和sp包都是采用简单要素规范对矢量数据建模}，因此外部数据可以
+% 通过rgdal包调用OGR库函数来读取，并转换为sp对象；同样sp对象也可以通过逆操作写入外部文件，
+% 从而实现在R体系中的矢量数据格式交换
+% \end{itemize}
+% \end{frame}
+
+% \begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
+% \begin{itemize} 
+% \item<1-> rgdal包中提供了\emphText{readOGR}函数和\emphText{writeOGR}函数分别实现OGR库读取的外部数据
+% 转换sp对象以及sp对象导出到外部文件
+% \item<2-> readOGR函数至少需要两个参数：\emphText{dsn参数用于指定外部数据源的位置}，\emphText{layer参数用于指定要素图层名称}；例如，对于shapefile格式文件，dsn是文件存放的目录，layer是文件名
+% \item<3-> writeOGR除了dsn和layer两个必需参数之外，还至少需要一个参数用于\emphText{指定要导出的sp对象}，
+% 以及一个参数\emphText{用于指定外部驱动程序}
+% \end{itemize}
+
+% \begin{overlayarea}{\textwidth}{\textheight}
+% \begin{onlyenv}<1>
+% \begin{rcode}
+% # 用ogrInfo函数获取shapefile格式文件scot的信息
+% > ogrInfo("./data","scot")
+% Source: "/home/mono/Documents/tex_projects/r_guide_slide/data", layer: "scot"
+% Driver: ESRI Shapefile; number of rows: 56 
+% Feature type: wkbPolygon with 2 dimensions
+% Extent: (-8.621389 54.62722) - (-0.7530556 60.84444)
+% LDID: 0 
+% Number of fields: 2 
+%   name type length  typeName
+% 1 NAME    4     16    String
+% 2   ID   12     16 Integer64
+% \end{rcode}
+% \end{onlyenv}
+
+% \begin{onlyenv}<2>
+% \begin{rcode}
+% # 用readOGR文件读取shapefile格式文件,该函数会根据文件格式自动调用对应驱动程序
+% # 读取后的数据被转换为sp对象scot\_LL,从而进入R系统,可以继续后续的数据操作
+% > scot_LL <- |\colorbox{green}{readOGR}|(dsn="data/scot.shp", layer="scot", integer64="allow.loss")
+% OGR data source with driver: ESRI Shapefile 
+% Source: "/home/mono/Documents/tex_projects/r_guide_slide/data/scot.shp", layer: "scot"
+% with 56 features
+% It has 2 fields
+% Integer64 fields read as signed 32-bit integers:  ID 
+% > proj4string(scot_LL) # 原始shapefile文件缺失prj文件，因此CRS为NA值
+% [1] NA
+% > proj4string(scot_LL) <- CRS("+proj=longlat +ellps=WGS84") # 为sp对象定义CRS
+% > str(scot_LL,max.level=2)
+% Formal class 'SpatialPolygonsDataFrame' [package "sp"] with 5 slots
+%   ..@ data       :'data.frame': 56 obs. of  2 variables:
+%   ..@ polygons   :List of 56
+%   ..@ plotOrder  : int [1:56] 55 51 12 49 1 50 52 3 6 53 ...
+%   ..@ bbox       : num [1:2, 1:2] -8.621 54.627 -0.753 60.844
+%   .. ..- attr(*, "dimnames")=List of 2
+%   ..@ proj4string:Formal class 'CRS' [package "sp"] with 1 slot
+% \end{rcode}
+% \end{onlyenv}
+
+% \begin{onlyenv}<3>
+% \begin{rcode}
+% # 定义外部驱动程序，驱动程序名称可以用ogrDrivers()函数查看
+% > drv <- "ESRI Shapefile"
+% # 将sp对象写出到一个外部文件scot\_LL
+% > |\colorbox{green}{writeOGR}|(scot_LL, dsn = ".", layer = "scot_LL", driver = drv)
+% # 由于scot\_LL包含CRS,因此导出的shapefile文件中还包括prj文件
+% > list.files("./data",pattern = "^scot_LL")
+% [1] "scot_LL.dbf" "scot_LL.prj" "scot_LL.shp" "scot_LL.shx"
+% \end{rcode}
+% \end{onlyenv}
+% \end{overlayarea}
+\end{frame}
+
+\subsubsection{栅格格式文件交换}
+\begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
+\begin{itemize} 
+\item<1-> 与矢量数据类似，GDAL也是通过调用外部驱动程序实现不同格式栅格数据的读取；而rgdal包也专门提供了
+\emphText{readGDAL}函数和\emphText{writeGDAL}函数用于外部栅格格式文件和sp对象的交换
+\item<2-> 由于栅格文件体积较大，而且可能存储在不同波段，因此除了直接读取之外，
+readGDAL和writeGDAL函数还可以用\emphText{band}、\emphText{offset}、\emphText{region.dim}、
+\emphText{output.dim}等参数\emphText{控制数据的局部读写}
 \end{itemize}
 
 \begin{overlayarea}{\textwidth}{\textheight}
-\only<2>{
-\begin{figure}[ht] \vspace{-5pt}
-  \centering
-  \includegraphics[width=0.3\columnwidth]{osgeo-logo.png}\\
-  \includegraphics[width=0.8\columnwidth]{foss4g.png}
-  \caption{OSGeo及其从2006年开始主办的开源GIS年度会议—FOSS4G(\emphText{F}ree and \emphText{O}pen \emphText{S}ource \emphText{S}oftware \emphText{for} \emphText{G}eoinformatics)}
-\end{figure}}
+\begin{onlyenv}<1>
+\begin{rcode}
+> fn <- system.file("pictures/erdas_spnad83.tif", package = "rgdal")[1]
+# 读取tif格式文件,readGDAL自动调用外部驱动程序GTiff
+> x <- readGDAL(fn)
+/home/mono/Softwares/R/3.4/rgdal/pictures/erdas_spnad83.tif has GDAL driver GTiff 
+and has 658 rows and 571 columns
+# 读取的数据被转换成sp对象，从而将外部数据导入R系统
+> str(x,max.level=2)
+Formal class 'SpatialGridDataFrame' [package "sp"] with 4 slots
+  ..@ data       :'data.frame': 375718 obs. of  1 variable:
+  ..@ grid       :Formal class 'GridTopology' [package "sp"] with 3 slots
+  ..@ bbox       : num [1:2, 1:2] 78999 1412948 101839 1439268
+  .. ..- attr(*, "dimnames")=List of 2
+  ..@ proj4string:Formal class 'CRS' [package "sp"] with 1 slot
+\end{rcode}
+\end{onlyenv}
 
-\only<3>{
-\begin{figure}[ht] 
-  \centering
-  \includegraphics[width=\columnwidth]{osgeo_contributors2.jpg}
-  \caption{开源GIS的贡献者们}
-\end{figure}}
+\begin{onlyenv}<2>
+\begin{rcode}
+> y <- readGDAL(fn, offset=c(50, 100), region.dim=c(400, 400))
+/home/mono/Softwares/R/3.4/rgdal/pictures/erdas_spnad83.tif has GDAL driver GTiff 
+and has 658 rows and 571 columns
+> str(y,max.level=2)
+Formal class 'SpatialGridDataFrame' [package "sp"] with 4 slots
+  ..@ data       :'data.frame': |\colorbox{green}{160000}| obs. of  1 variable:
+  ..@ grid       :Formal class 'GridTopology' [package "sp"] with 3 slots
+  ..@ bbox       : num [1:2, 1:2] 82999 1421268 98999 1437268
+  .. ..- attr(*, "dimnames")=List of 2
+  ..@ proj4string:Formal class 'CRS' [package "sp"] with 1 slot
+\end{rcode}
+\end{onlyenv}
 
-\only<4>{
+\only<3>{ \vspace{-20pt}
 \begin{figure}[ht]
   \centering
-  \includegraphics[width=0.85\columnwidth]{open_source_GIS.png}
-   \caption{开源GIS生态圈} 
+  \includegraphics[width=0.85\columnwidth]{readgdal_example1.pdf}
+  \caption{读取外部栅格文件：左图是读取全部数据，右图是读取局部数据}
 \end{figure}}
 
-\only<5>{
-  \begin{table} \centering \small
-    \renewcommand\arraystretch{0.8} 
-    \begin{tabular}{|>{\centering\arraybackslash} m{0.2\columnwidth} |>{\centering\arraybackslash} m{0.3\columnwidth} |>{\centering\arraybackslash} m{0.35\columnwidth}|}
-      \toprule
-      \rowcolor{LightCyan}
-      \multicolumn{1}{|c|}{\textbf{GIS技术线}} & \multicolumn{1}{c|}{\textbf{商业产品}} & \multicolumn{1}{c|}{\textbf{开源解决方案}}\\\hline
-      桌面GIS & ArcMap & QGIS、GRASS GIS \\\hline
-      webGIS & ArcGIS Server & Geoserver\\\hline
-      空间数据库 & ArcSDE、Oracle Spatial & PostGIS \\\hline
-      地图服务 &  Google Maps & OpenStreetMap\\\hline
-      程序开发库 & ArcEngine & GDAL、GeoTools、proj.4\\\hline
-      元数据管理 & ArcCatalog & GeoNetwork\\
-      \bottomrule
-    \end{tabular}
-    \caption{商业和开源GIS解决方案对比}
-  \end{table}}
-\end{overlayarea}
-\end{frame}
+\begin{onlyenv}<4>
+\begin{rcode}
+# 读取原始tiff格式文件到sp对象
+> auck_el1 <- readGDAL("data/70042108.tif")
+data/70042108.tif has GDAL driver GTiff 
+and has 1200 rows and 1320 columns
+> is.na(auck_el1$band1) <- auck_el1$band1 <= 0 |$\mid{}$|auck_el1$band1 > 1e+4
+> # 自定义数据分类
+> brks <- c(0,10,20,50,100,150,200,300,400,500,600,700)
+> # 自定义渐变颜色方案
+> pal <- terrain.colors(11)
+> length(pal) == length(brks)-1
+[1] TRUE
+> # 将数据按照等级进行划分
+> auck_el1$band1 <- findInterval(auck_el1$band1, vec=brks, all.inside=TRUE)-1
+> # 将sp对象导出到外部栅格文件，其中栅格要素按照自定义等级配色
+> writeGDAL(auck_el1, "data/demIndex.tif", drivername="GTiff", type="Byte", colorTable=list(pal), mvFlag=length(brks)-1)
+\end{rcode}
+\end{onlyenv}
 
-\subsubsection{rgdal包}
-
-\begin{frame}[t]{\subsecname}{\subsubsecname}
-\begin{itemize}
-\item<1-> \href{http://www.gdal.org/}{\uline{GDAL}}(Geospatial Data Abstraction Library)是Frank Warmerdam从1998年开发的空间数据转换库，从1.3.2版本开始移交给OSGeo维护，
-成为在X/MIT许可协议下的开源库
-\item<2-> GDAL是\emphText{GIS领域最重要的底层库之一}，它利用抽象数据模型来表达所支持的各种文件格式，
-并提供一系列命令行工具来进行数据转换和处理，目前支持多达\emphText{154种栅格数据格式和93种矢量数据格式}
-\end{itemize}
+\begin{onlyenv}<5>
 \vspace{-10pt}
-\begin{figure}\centering
-  \captionsetup[subfigure]{labelformat=empty} 
-  \subfloat[Frank Warmerdam]
-  {\includegraphics[width=0.35\columnwidth]{frank_warmerdam.png}} \hspace{15pt}
-  \subfloat[GDAL logo]
-  {\includegraphics[width=0.35\columnwidth]{gdal-logo.png}} 
-\end{figure}
-\end{frame}
+\begin{columns} 
+        \begin{column}{.38\textwidth}
+          \begin{figure}
+            \centering
+            \includegraphics[width=\columnwidth]{demIndex.png}
+          \end{figure}
+        \end{column}
 
-\begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
-\begin{itemize}
-\item<1-> 许多著名的开源和商业的GIS软件都
-\emphText{在底层数据转换模块中使用GDAL库}，包括ESRI ArcGIS、Google Earth、GRASS GIS等；而R本身属于开源生态圈，因此自然也选择采用
-\emphText{GDAL库作为外部GIS数据和内部sp对象相互转换的底层库}
-\item<2-> 由于原生GDAL库由ANSI C和C++开发，所以Roger Bivand等人又开发了
-\emphText{rgdal包}用于在R中调用GDAL库函数
-\item<3-> rgdal包只是实现了在R中调用GDAL库中的C或C++函数，本质上还是要依赖GDAL，
-因此\emphText{在载入rgdal包之前要先安装好原生的GDAL库}
-\end{itemize}
-
-\begin{onlyenv}<3>
+        \begin{column}{.65\textwidth}
+\centering
 \begin{rcode}
-# rgdal包不但依赖sp包，而且依赖外部的GDAL库和proj.4库，在使用rgdal包前要确保这两个库正确安装！
-> library(rgdal)
-|\colorbox{green}{Loading required package: sp}|
-rgdal: version: 1.2-18, (SVN revision 718)
- Geospatial Data Abstraction Library extensions to R successfully loaded
- |\colorbox{green}{Loaded GDAL runtime}|: GDAL 2.1.3, released 2017/20/01
- Path to GDAL shared files: /usr/share/gdal/2.1
- GDAL binary built with GEOS: TRUE 
- |\colorbox{green}{Loaded PROJ.4 runtime}|: Rel. 4.9.2, 08 September 2015, [PJ_VERSION: 492]
- Path to PROJ.4 shared files: (autodetected)
- Linking to sp version: 1.2-7 
+# GDALinfo封装了GDAL库函数gdalinfo，用于读取文件的信息
+> |\colorbox{green}{GDALinfo}|("figures/demIndex.tif")
+rows        1200 
+columns     1320 
+bands       1 
+lower left origin.x        174.2 
+lower left origin.y        -37.5 
+res.x       0.0008333333 
+res.y       0.0008333333 
+ysign       -1 
+oblique.x   0 
+oblique.y   0 
+driver      GTiff 
+projection  +proj=longlat +datum=WGS84 +no_defs 
+file        data/demIndex.tif 
+apparent band summary:
+  GDType hasNoDataValue NoDataValue blockSize1 blockSize2
+1   Byte           TRUE          11          6       1320
+apparent band statistics:
+  Bmin Bmax Bmean Bsd
+1    0  255    NA  NA
+Metadata:
+AREA_OR_POINT=Area 
 \end{rcode}
+        \end{column}
+      \end{columns}
 \end{onlyenv}
-\end{frame}
-
-
-\subsubsection{坐标参考系统}
-
-\begin{frame}[t]{\subsecname}{\subsubsecname}
-\begin{itemize}
-\item<1->坐标参考系统(CRS)是测量学和制图学的核心理论，其目标是解决\emphText{“如何在平面中表示一个不规则椭球”}
-的问题，这也是GIS系统和其他计算机系统最大的区别之一
-\item<2-> CRS的一种定义是\emphText{地理坐标系统}(GCS)，用三维椭球模型来定义地球表面位置，
-以经纬度为坐标对地球表面进行数学描述
-\end{itemize}
-
-\begin{overlayarea}{\textwidth}{\textheight}
-\only<2>{
-\begin{figure}[ht]
-  \centering
-  \includegraphics[width=0.55\columnwidth]{GCS.png}
-  \caption{地理坐标系统包括参考椭球体、本初子午线和经纬度单位三个要素}
-\end{figure}}
 \end{overlayarea}
 \end{frame}
 
-\begin{frame}[t]{\subsecname}{\subsubsecname}
-\begin{itemize}
-\item<1-> CRS的另一种定义是\emphText{投影坐标系统}(PCS)，将地球表面按照某种投影类型投射到一个二维平面，以笛卡尔坐标系对地球表面进行数学描述
-\item<2-> \emphText{所有投影坐标系统都只能是对地球表面的近似描述}，可以保证在某些测度(角度、距离、面积等)上是准确的，但是必然会牺牲其他方面的测度
+\begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
+\begin{itemize} 
+\item<1-> readGDAL函数底层实际上是创建了一个能够被GDAL库中\emphText{GDALDriver}类对象识别的Dataset类
+\item<2-> rgdal包完整封装了GDAL库的\emphText{GDALMajorObject}抽象基类，
+并且在S4系统下派生出只读的\emphText{GDALReadOnlyDataset}以及可读写的\emphText{GDALDataset}等具体实现类
 \end{itemize}
-
-\begin{overlayarea}{\textwidth}{\textheight}
-\only<1>{
-\begin{figure}[ht]
-  \centering
-  \includegraphics[width=0.55\columnwidth]{PCS.png}
-  \caption{投影坐标系统，常见的投影类型包括方位(左)、圆锥(中)和圆柱(右)}
-\end{figure}}
 
 \only<3>{
-\begin{figure}[ht] \vspace{-10pt}
-  \includegraphics[width=0.55\columnwidth]{等角投影.jpg}
-  \caption{等角投影的世界地图,保证角度测度是准确的，但是面积变形严重}
-\end{figure}}
-
-\only<4>{
 \begin{figure}[ht]
   \centering
-  \includegraphics[width=0.55\columnwidth]{等面积投影.jpg}
-  \caption{等面积投影的世界地图,保证面积测度是准确的,但是角度变形严重}
+  \includegraphics[width=\columnwidth]{rgdal_class.png}
+  \caption{rgdal包的栅格数据类结构图}
 \end{figure}}
-\end{overlayarea}
 \end{frame}
 
 \begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
-\begin{itemize}
-\item<1-> GDAL包底层CRS采用的是\href{http://proj4.org/}{\uline{proj.4库}}，
-因此在安装GDAL和rgdal之前要先安装proj.4
-\item<2-> proj.4是一个历史悠久的CRS库，最早是由\emphText{Gerald Evenden}开发维护，第一个版本是80年代初期用Fortran语言开发的，1985年发布了Unix系统下的C语言版本，1990发布的
-第三个版本被命名为\emphText{proj.3}，1995年发布的4.3版是Evenden开发的最后一个版本，命名为\emphText{proj.4}；从2000年开始，Frank Warmerdam接管了项目的维护工作直到2008年被OSGeo接纳，
-\emphText{成为OSGeo基础开发库并由其负责维护}；2018年3月proj的第5个版本发布，目前支持的地图投影已经超过\emphText{138个}
+\begin{itemize} 
+\item<1-> 除了高阶的readGDAL函数之外，rgdal包还提供了\emphText{GDAL.open}函数，这个函数不会和
+readGDAL那样直接读取数据到R的工作区，而是读取到底层GDAL对象中，这个对象存储了外部文件句柄，可以对文件进行操作和信息读取；当真正需要读取数据的时候再通过\emphText{asSGDF\_GROD}函数将GDAL对象转换成sp对象
+\item<1-> 由于GDAL.open函数存储了文件句柄，因此在用完后要调用\emphText{GDAL.close}函数释放掉
 \end{itemize}
-
-\begin{onlyenv}<3>
-\begin{rcode}
-# rgdal包载入前要先做proj.4库依赖性检查
-> library(rgdal)
-Loading required package: sp
-rgdal: version: 1.2-18, (SVN revision 718)
- Geospatial Data Abstraction Library extensions to R successfully loaded
- Loaded GDAL runtime: GDAL 2.1.3, released 2017/20/01
- Path to GDAL shared files: /usr/share/gdal/2.1
- GDAL binary built with GEOS: TRUE 
- |\colorbox{green}{Loaded PROJ.4 runtime}|: Rel. 4.9.2, 08 September 2015, [PJ_VERSION: 492]
- Path to PROJ.4 shared files: (autodetected)
- Linking to sp version: 1.2-7 
-\end{rcode}
-\end{onlyenv}
 \end{frame}
 
-\begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
-\begin{itemize}
-\item<1-> proj.4库有一套CRS定义的规范，表示方法是CRS中的“参数标签=值”(不能有空格)，每个参数标签以“+”开始并且用空格
-区分不同的标签/值对，\emphText{最终形成一个字符串}
-\end{itemize}
-
-\begin{overlayarea}{\textwidth}{\textheight}
-\only<1>{ 
-  \begin{table} \centering \small
-    \renewcommand\arraystretch{0.7} 
-    \begin{tabular}{|>{\centering\arraybackslash} m{0.2\columnwidth} |>{\centering\arraybackslash} m{0.65\columnwidth} |}
-      \toprule
-      \rowcolor{LightCyan}
-      \multicolumn{1}{|c|}{\textbf{参数标签}} & \multicolumn{1}{c|}{\textbf{含义}} \\\hline
-      proj & 投影名称，定义PCS;当=longlat时定义GCS \\\hline
-      ellps & 椭球体名称\\\hline
-      datum & 基准面名称\\\hline
-      pm & 备用本初子午线(通常是一个城市名称) \\\hline
-      lon\_0,lat\_0 & 中央经线和纬度原点\\\hline
-      towgs84 & 三参数或七参数基准面转换\\\hline
-      x\_0,y\_0 & 东伪偏移和北伪偏移\\\hline
-      k\_0 & 比例因子\\\hline
-      a,b & 椭球体长短轴长度\\\hline
-      axis & 轴方向\\\hline
-      zone & UTM时区\\\hline
-      init & CRS定义文件存放路径和关键字\\\hline
-      no\_defs & 不使用默认的定义文件\\
-      \bottomrule
-    \end{tabular}
-    \caption{proj.4主要的参数标签}
-  \end{table}}
-
-\begin{onlyenv}<2>
-\begin{rcode}
-# 定义深圳西安1980坐标系3度带投影：投影名称横轴墨卡托，中央经线东经114度，比例因子1，东伪偏移500000，椭球体长轴
-长度6378140米，短轴长度6356755.288157528米，单位米
-> CRS("+proj=tmerc +lat_0=0 +lon_0=114 +k=1 +x_0=500000 +y_0=0 +a=6378140 +b=6356755.288157528 +units=m +no_defs") 
-CRS arguments:
- +proj=tmerc +lat_0=0 +lon_0=114 +k=1 +x_0=500000 +y_0=0 +a=6378140 +b=6356755.288157528 +units=m +no_defs 
-
-# 定义深圳北京1954坐标系3度带投影：投影名称横轴墨卡托，中央经线东经114度，比例因子1，东伪偏移500000，
-椭球体为苏联克拉索夫斯基椭球体，单位米
-> CRS("+proj=tmerc +lat_0=0 +lon_0=114 +k=1 +x_0=500000 +y_0=0 +ellps=krass +units=m +no_defs") 
-CRS arguments:
- +proj=tmerc +lat_0=0 +lon_0=114 +k=1 +x_0=500000 +y_0=0 +ellps=krass +units=m +no_defs 
-
-# 定义北京1954GCS:椭球体为苏联克拉索夫斯基
-> CRS("+proj=longlat +ellps=krass +no_defs")
-CRS arguments: +proj=longlat +ellps=krass +no_defs 
-
-# 定义美国田纳西州PCS:投影名称兰勃特等角圆锥投影，椭球体是Clarke 1866椭球，基准面为北美1927基准面
-> CRS("+proj=lcc +lat_1=35.25 +lat_2=36.41666666666666 +lat_0=34.66666666666666 +lon_0=-86 +x_0=609601.2192024384 +y_0=30480.06096012192 +datum=NAD27 +units=us-ft +no_defs")
-CRS arguments:
- +proj=lcc +lat_1=35.25 +lat_2=36.41666666666666 +lat_0=34.66666666666666 +lon_0=-86 +x_0=609601.2192024384 +y_0=30480.06096012192 +datum=NAD27 +units=us-ft +no_defs +ellps=clrk66 +nadgrids=@conus,@alaska,@ntv2_0.gsb,@ntv1_can.dat 
-\end{rcode}
-\end{onlyenv}
-\end{overlayarea}
-\end{frame}
-
-\begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
-\begin{itemize}
-\item<1-> 欧洲石油调查组(\emphText{EPSG},European Petroleum Survey Group)为了能够更好地调查世界石油储量，从1986年开始收集各地区CRS参数，
-并且给每个CRS进行统一编号管理，最终形成并发布\href{http://www.epsg.org/}{\uline{EPSG标准数据集}}
-\item<1-> 目前EPSG数据集已经成为世界标准CRS数据集之一，proj.4库可以用
-\emphText{init标签参数}调用指定编号的CRS参数
-\end{itemize}
-
-\begin{onlyenv}<2>
-\begin{rcode}
-# WGS84 GCS的编号是4326
-> CRS("+init=epsg:4326")
-CRS arguments:
- +init=epsg:4326 +proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0 
-
-# 3857是一个重要的编号，因为各大互联网地图都以它为基准，例如Google Maps，Bing Maps、OpenStreetMap等
-> CRS("+init=epsg:3857")
-CRS arguments:
- +init=epsg:3857 +proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs
-
-# 北京1954 GCS的编号是4214
-> CRS("+init=epsg:4214")
-CRS arguments:
- +init=epsg:4214 +proj=longlat +ellps=krass +towgs84=15.8,-154.4,-82.3,0,0,0,0 +no_defs
-
-# 北京1954在深圳的三度分带PCS编号是2435
-> CRS("+init=epsg:2435")
-CRS arguments:
- +init=epsg:2435 +proj=tmerc +lat_0=0 +lon_0=114 +k=1 +x_0=500000 +y_0=0 +ellps=krass +towgs84=15.8,-154.4,-82.3,0,0,0,0 +units=m +no_defs 
-\end{rcode}
-\end{onlyenv}
-\end{frame}
-% \item<3-> GDAL最初只是为栅格数据转换而设计的，后来又引入了OGR模型用于矢量数据转换，
-% 因此又被成为GDAL/OGR库；但是从2.0版本开始，两者已经进行了紧密整合，所以可以统称为GDAL库
 \subsection{空间数据可视化}

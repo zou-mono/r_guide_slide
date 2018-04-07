@@ -1130,4 +1130,93 @@ xy<- SpatialPoints(cbind(x,y),proj4string=CRS("+proj=longlat +datum=WGS84"))
 spTransform(xy,CRS("+proj=utm +zone=17 +datum=WGS84"))
 
 SP <- SpatialPoints(cbind(126.59,-14.30), proj4string=CRS("+proj=longlat +datum=WGS84")) 
-coordinatesUTM <- spTransform(SP, CRS("+proj=utm +south +zone=52 +datum=WGS84")) 
+coordinatesUTM <- spTransform(SP, CRS("+proj=utm +south +zone=52 +datum=WGS84"))
+
+data(meuse)
+coordinates(meuse) <- c("x", "y")
+proj4string(meuse) <- CRS(paste("+init=epsg:28992", "+towgs84=565.237,50.0087,465.658,-0.406857,0.350733,-1.87035,4.0812"))
+
+CairoPDF("spTransform_example.pdf",10,5)
+library(maps)
+library(maptools)
+china<- map("world", "china", fill=TRUE,plot=FALSE)
+tw <- map("world","taiwan",fill=TRUE,plot=FALSE)
+china$x <- c(china$x,NA,tw$x)
+china$y <- c(china$y,NA,tw$y)
+china$range <- c(range(china$range[1:2],tw$range[1:2]),range(china$range[3:4],tw$range[3:4]))
+china$names <- c(china$names,tw$names)
+p4s <- CRS("+proj=longlat +datum=WGS84")
+SPchina <- map2SpatialPolygons(china,IDs=sapply(china$names, function(x) x[1]),proj4string=p4s)
+SPchina2 <-spTransform(SPchina,CRS("+proj=utm +zone=49 +datum=WGS84"))
+
+op <- par()
+par(mfrow=c(1,2),mar=c(2,2,1,0.1))
+plot(SPchina,axes=TRUE,col="khaki2")
+par(mar=c(2,4,1,0.1))
+plot(SPchina2,axes=TRUE,col="khaki2")
+par(op)
+dev.off()
+    
+ogrInfo(./data,scot)
+scot_LL <- readOGR(dsn="data/scot.shp", layer="scot", integer64="allow.loss")
+proj4string(scot_LL)
+proj4string(scot_LL) <- CRS("+proj=longlat +ellps=WGS84")
+
+drv <- "ESRI Shapefile"
+writeOGR(scot_LL, dsn=".", layer="data/scot_LL", driver=drv, overwrite_layer=TRUE)
+list.files("./data",pattern = "^scot_LL")
+
+auck_el1 <- readGDAL("data/70042108.tif")
+str(auck_el1,max.level=2)
+
+
+CairoPDF("readgdal_example1.pdf",10,5)
+fn <- system.file("pictures/erdas_spnad83.tif", package = "rgdal")[1]
+x <- readGDAL(fn)
+str(x,max.level=2)
+#y <- readGDAL(fn, offset=c(50, 100), region.dim=c(400, 400), output.dim=c(100,100))
+y <- readGDAL(fn, offset=c(50, 100), region.dim=c(400, 400))
+str(y,max.level=2)
+
+op <- par()
+par(mar = c(2,2,2,2))
+layout(matrix(c(1,2),1,2),widths = c(5,5))
+#layout.show(2)
+image(x, col=grey(1:99/100),axes=TRUE)
+image(y, col=grey(1:99/100),axes=TRUE)
+par(op)
+dev.off()
+
+## layout(matrix(1:3, 1, 3), widths = c(6,4,1))
+## plot(meuse.grid, what = "image", zlim = c(0,1))
+## plot(meuse.grid["dist"], what = "image", zlim = c(0,1))
+## plot(meuse.grid["dist"], what = "scale", zlim = c(0,1))
+
+## layout(matrix(c(1,2,3),1,3),widths = c(5,5,1))
+## plot(x, what="image",col=grey(1:99/100),axes=TRUE)
+## plot(y, what="image",col=grey(1:99/100),axes=TRUE)
+## plot(y,what="scale")
+
+
+# 读取原始tiff格式文件到sp对象
+auck_el1 <- readGDAL("data/70042108.tif")
+is.na(auck_el1$band1) <- auck_el1$band1 <= 0 | auck_el1$band1 > 1e+4
+# 自定义数据分类
+brks <- c(0,10,20,50,100,150,200,300,400,500,600,700)
+# 自定义渐变颜色方案
+pal <- terrain.colors(11)
+length(pal) == length(brks)-1
+# 将数据按照等级进行划分
+auck_el1$band1 <- findInterval(auck_el1$band1, vec=brks, all.inside=TRUE)-1
+# 将sp对象导出到外部栅格文件，其中栅格要素按照自定义等级配色
+writeGDAL(auck_el1, "figures/demIndex.tif", drivername="GTiff", type="Byte", colorTable=list(pal), mvFlag=length(brks)-1)
+GDALinfo("data/demIndex.tif")
+
+x <- GDAL.open("data/70042108.tif")
+xx <- getDriver(x)
+#xx #do not show pointer
+getDriverLongName(xx)
+#x #do not show pointer
+dim(x)
+GDAL.close(x)
+
