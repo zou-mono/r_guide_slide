@@ -1212,11 +1212,15 @@ auck_el1$band1 <- findInterval(auck_el1$band1, vec=brks, all.inside=TRUE)-1
 writeGDAL(auck_el1, "figures/demIndex.tif", drivername="GTiff", type="Byte", colorTable=list(pal), mvFlag=length(brks)-1)
 GDALinfo("data/demIndex.tif")
 
-x <- GDAL.open("data/70042108.tif")
+fn <- system.file("pictures/erdas_spnad83.tif", package = "rgdal")[1]
+x <- GDAL.open(fn)
 xx <- getDriver(x)
 #xx #do not show pointer
 getDriverLongName(xx)
 #x #do not show pointer
 dim(x)
+y <- asSGDF_GROD(x,output.dim=c(400, 400))
 GDAL.close(x)
+
+
 

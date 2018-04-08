@@ -1433,7 +1433,7 @@
 % \end{rcode}
 % \end{onlyenv}
 % \end{overlayarea}
-\end{frame}
+% \end{frame}
 
 \subsubsection{栅格格式文件交换}
 \begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
@@ -1566,10 +1566,40 @@ AREA_OR_POINT=Area
 
 \begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
 \begin{itemize} 
-\item<1-> 除了高阶的readGDAL函数之外，rgdal包还提供了\emphText{GDAL.open}函数，这个函数不会和
-readGDAL那样直接读取数据到R的工作区，而是读取到底层GDAL对象中，这个对象存储了外部文件句柄，可以对文件进行操作和信息读取；当真正需要读取数据的时候再通过\emphText{asSGDF\_GROD}函数将GDAL对象转换成sp对象
-\item<1-> 由于GDAL.open函数存储了文件句柄，因此在用完后要调用\emphText{GDAL.close}函数释放掉
+\item<1-> \sloppy rgdal包提供\emphText{GDAL.open}函数用于打开外部数据，
+这个函数不会直接读取数据到内存，而是通过底层GDAL对象\emphText{GDALReadOnlyDataset}存储文件句柄
+\item<1-> 当需要数据时调用\emphText{asSGDF\_GROD}函数，该函数会根据句柄和数据大小分配内存空间，
+并转换为R中能够识别的sp对象；另外，在文件使用完后必须要调用\emphText{GDAL.close}函数，
+用来释放内存空间并销毁文件句柄
 \end{itemize}
+
+\begin{overlayarea}{\textwidth}{\textheight}
+\begin{onlyenv}<2>
+\begin{rcode}
+fn <- system.file("pictures/erdas_spnad83.tif", package = "rgdal")[1]
+# GDAL.open函数读取文件数据到GDALReadOnlyDataset对象，而不是直接转换为sp对象，
+x <- |\colorbox{green}{GDAL.open}|(fn)
+# 这个GDAL对象存储了外部文件句柄
+> str(x)
+Formal class 'GDALReadOnlyDataset' [package "rgdal"] with 1 slot
+  ..|\colorbox{green}{@ handle:<externalptr>}|
+# rgdal包提供一系列函数根据文件句柄读取文件信息
+> dim(x)  # 栅格数据维度
+[1] 658 571
+> xx <- |\colorbox{green}{getDriver}|(x) # 转换为驱动程序类
+> |\colorbox{green}{getDriverLongName}|(xx) # 驱动程序完整名称
+[1] "GeoTIFF"
+# 将GDAL对象转换为sp对象，从而进入R系统
+> y <- |\colorbox{green}{asSGDF\_GROD}|(x,output.dim=c(400, 400)) # 这里也可以局部读取数据
+> class(y)
+[1] "SpatialGridDataFrame"
+attr(,"package")
+[1] "sp"
+# 释放GDAL对象，解除对外部文件的锁定
+> |\colorbox{green}{GDAL.close}|(x)
+\end{rcode}
+\end{onlyenv}
+\end{overlayarea}
 \end{frame}
 
 \subsection{空间数据可视化}
