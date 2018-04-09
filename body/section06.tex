@@ -1556,12 +1556,14 @@ AREA_OR_POINT=Area
 并且在S4系统下派生出只读的\emphText{GDALReadOnlyDataset}以及可读写的\emphText{GDALDataset}等具体实现类
 \end{itemize}
 
+\begin{overlayarea}{\textwidth}{\textheight}
 \only<3>{
 \begin{figure}[ht]
   \centering
   \includegraphics[width=\columnwidth]{rgdal_class.png}
   \caption{rgdal包的栅格数据类结构图}
 \end{figure}}
+\end{overlayarea}
 \end{frame}
 
 \begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
@@ -1600,6 +1602,20 @@ attr(,"package")
 \end{rcode}
 \end{onlyenv}
 \end{overlayarea}
+\end{frame}
+
+\subsubsection{其他空间数据交换包}
+\begin{frame}[t]{\subsecname}{\subsubsecname}
+\begin{itemize} 
+\item \emphText{maptools}：提供ESRI ArcGIS格式数据文件的读写函数；
+相比其他包最大的优势是不依赖外部程序，\emphText{但是该包部分函数已经不再维护}
+\item \emphText{RQIS,rgrass7,RSAGA}：这些包分别是主流开源GIS软件\href{https://www.qgis.org/}{\uline{QGIS}}、\href{https://grass.osgeo.org/}{\uline{GRASS GIS}}和\href{http://www.saga-gis.org/}{\uline{SAGA}}的封装包，都是通过R内部的\emphText{system函数}把命令传至外部程序实现对接口的调用，因此具体功能实现都依赖外部程序，在使用前要先安装相应的GIS软件；由于这些软件本身具有完整的GIS功能，所以除了可以读写外部文件之外，这些包还具有丰富的GIS数据管理和分析功能
+\item \emphText{sf}：近几年CRAN发布的简单空间要素包，
+相比sp包，sf对OGC简单要素标准的支持更完整，定义了全部17种简单要素，甚至包括三维对象和线性参考对象；sf包依赖GDAL库提供对矢量数据文件的交换功能
+\item \emphText{RgoogleMaps,OpenStreetMap,ggmap,baidumap}：这些包通过互联网地图API实现了对地图数据的调用
+\item Roger Bivand目前维护着空间数据相关包信息的整理工作，CRAN上有\href{https://cran.r-project.org/web/views/Spatial.html}{\uline{专门的文章}}会定期更新这些信息
+\end{itemize}
+
 \end{frame}
 
 \subsection{空间数据可视化}
