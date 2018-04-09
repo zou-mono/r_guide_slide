@@ -1615,7 +1615,21 @@ attr(,"package")
 \item \emphText{RgoogleMaps,OpenStreetMap,ggmap,baidumap}：这些包通过互联网地图API实现了对地图数据的调用
 \item Roger Bivand目前维护着空间数据相关包信息的整理工作，CRAN上有\href{https://cran.r-project.org/web/views/Spatial.html}{\uline{专门的文章}}会定期更新这些信息
 \end{itemize}
-
 \end{frame}
 
 \subsection{空间数据可视化}
+\begin{frame}[t]{\subsecname}
+\begin{itemize} 
+\item<1-> R的两套绘图系统都提供对基础绘图要素的绘制功能，包括点、线、面、网格和颜色等，
+而通过sp包可以将空间数据转换为这些绘图要素能够识别的底层对象，
+因此\emphText{空间数据绘图要素和普通数据绘图要素并没有本质区别}
+\item<2-> 在基础绘图系统graphics包和grid绘图系统lattice包基础上，sp包针对空间数据对象的特点继承并重写了
+两个包的主要绘图函数，并充分考虑了空间可视化的特点，添加了诸如指北针、比例尺等专业地图要素的绘制，\emphText{使得空间数据可视化在方法尽量与普通数据绘图一致的基础上又体现出专业性}，这样用户可以把更多的精力放在处理和分析空间数据上，而不需要再专门花时间学习一套新的绘图系统
+\end{itemize}
+\end{frame}
+
+\subsubsection{空间数据基础绘图}
+
+\subsubsection{空间数据lattice绘图}
+
+\subsubsection{空间数据其他绘图方式}
