@@ -1620,15 +1620,50 @@ attr(,"package")
 \subsection{空间数据可视化}
 \begin{frame}[t]{\subsecname}
 \begin{itemize} 
-\item<1-> R的两套绘图系统都提供对基础绘图要素的绘制功能，包括点、线、面、网格和颜色等，
+\item<1-> R的两套绘图系统都提供对基础绘图要素的绘制功能，包括点、线、面、栅格和颜色等，
 而通过sp包可以将空间数据转换为这些绘图要素能够识别的底层对象，
 因此\emphText{空间数据绘图要素和普通数据绘图要素并没有本质区别}
-\item<2-> 在基础绘图系统graphics包和grid绘图系统lattice包基础上，sp包针对空间数据对象的特点继承并重写了
-两个包的主要绘图函数，并充分考虑了空间可视化的特点，添加了诸如指北针、比例尺等专业地图要素的绘制，\emphText{使得空间数据可视化在方法尽量与普通数据绘图一致的基础上又体现出专业性}，这样用户可以把更多的精力放在处理和分析空间数据上，而不需要再专门花时间学习一套新的绘图系统
-\end{itemize}
+\item<2-> 在基础绘图系统graphics包和grid绘图系统lattice包基础上，sp包针对空间数据对象的特点重载了
+两个包的主要绘图函数，并充分考虑了空间可视化的特点，添加了诸如指北针、比例尺等专业地图要素的绘制，\emphText{使得空间数据可视化在方法尽量与普通数据绘图一致的基础上又体现出专业性}，这样用户可以把更多的精力放在处理和分析空间数据上，而不需要再专门花时间学习一套新的绘图系统b\end{itemize}
 \end{frame}
 
 \subsubsection{空间数据基础绘图}
+\begin{frame}[t,fragile]{\subsecname}
+\begin{itemize} 
+\item<1-> sp包重载了graphics包的绘图泛型函数plot和image，因此用sp包绘制空间数据的函数名称也是\emphText{plot}
+和\emphText{image}，分别用于绘制矢量数据和栅格数据
+\end{itemize}
+
+\begin{overlayarea}{\textwidth}{\textheight}
+\begin{onlyenv}<1>
+\begin{rcode}
+# 查看sp包重载泛型函数plot的方法,每种空间数据类都有相应的plot函数用于绘制;而且这些重载方法都是S4类方法
+> attr(methods(plot),"info")
+                                           visible  from  generic  isS4  
+plot,SpatialGridDataFrame,missing-method      TRUE    sp  plot     TRUE 
+plot,SpatialGrid,missing-method               TRUE    sp  plot     TRUE
+plot,SpatialLines,missing-method              TRUE    sp  plot     TRUE
+plot,Spatial,missing-method                   TRUE    sp  plot     TRUE
+plot,SpatialMultiPoints,missing-method        TRUE    sp  plot     TRUE
+plot,SpatialPixelsDataFrame,missing-method    TRUE    sp  plot     TRUE
+plot,SpatialPixels,missing-method             TRUE    sp  plot     TRUE
+plot,SpatialPoints,missing-method             TRUE    sp  plot     TRUE
+plot,SpatialPolygons,missing-method           TRUE    sp  plot     TRUE
+
+# 查看image重载的方法,每种栅格数据类都有相应的image函数用于绘制;和plot不同,image的重载方法是S3类方法
+> attr(methods(image),"info")
+                              visible                          from generic  isS4
+image,ANY-method                 TRUE                      graphics   image  TRUE
+image.default                    TRUE                      graphics   image FALSE
+image,RasterLayer-method         TRUE                        raster   image  TRUE
+image,RasterStackBrick-method    TRUE                        raster   image  TRUE
+image.SpatialGridDataFrame      FALSE registered S3method for image   image FALSE
+image.SpatialPixels             FALSE registered S3method for image   image FALSE
+image.SpatialPixelsDataFrame    FALSE registered S3method for image   image FALSE
+\end{rcode}
+\end{onlyenv}
+\end{overlayarea}
+\end{frame}
 
 \subsubsection{空间数据lattice绘图}
 
