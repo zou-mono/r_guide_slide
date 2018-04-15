@@ -17,7 +17,7 @@
       \end{ornamentblock}
 \end{frame}
 
-\subsection{GIS和R}
+% \subsection{GIS和R}
 % \begin{frame}[t]{\subsecname}{}
 % \begin{itemize}
 % \item GIS的非正式定义\footnotemark[1]：一组强大的工具集，可以用来收集、存储、任意检索、转换和
@@ -1435,203 +1435,204 @@
 % \end{overlayarea}
 % \end{frame}
 
-\subsubsection{栅格格式文件交换}
-\begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
-\begin{itemize} 
-\item<1-> 与矢量数据类似，GDAL也是通过调用外部驱动程序实现不同格式栅格数据的读取；而rgdal包也专门提供了
-\emphText{readGDAL}函数和\emphText{writeGDAL}函数用于外部栅格格式文件和sp对象的交换
-\item<2-> 由于栅格文件体积较大，而且可能存储在不同波段，因此除了直接读取之外，
-readGDAL和writeGDAL函数还可以用\emphText{band}、\emphText{offset}、\emphText{region.dim}、
-\emphText{output.dim}等参数\emphText{控制数据的局部读写}
-\end{itemize}
+% \subsubsection{栅格格式文件交换}
+% \begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
+% \begin{itemize} 
+% \item<1-> 与矢量数据类似，GDAL也是通过调用外部驱动程序实现不同格式栅格数据的读取；而rgdal包也专门提供了
+% \emphText{readGDAL}函数和\emphText{writeGDAL}函数用于外部栅格格式文件和sp对象的交换
+% \item<2-> 由于栅格文件体积较大，而且可能存储在不同波段，因此除了直接读取之外，
+% readGDAL和writeGDAL函数还可以用\emphText{band}、\emphText{offset}、\emphText{region.dim}、
+% \emphText{output.dim}等参数\emphText{控制数据的局部读写}
+% \end{itemize}
 
-\begin{overlayarea}{\textwidth}{\textheight}
-\begin{onlyenv}<1>
-\begin{rcode}
-> fn <- system.file("pictures/erdas_spnad83.tif", package = "rgdal")[1]
-# 读取tif格式文件,readGDAL自动调用外部驱动程序GTiff
-> x <- readGDAL(fn)
-/home/mono/Softwares/R/3.4/rgdal/pictures/erdas_spnad83.tif has GDAL driver GTiff 
-and has 658 rows and 571 columns
-# 读取的数据被转换成sp对象，从而将外部数据导入R系统
-> str(x,max.level=2)
-Formal class 'SpatialGridDataFrame' [package "sp"] with 4 slots
-  ..@ data       :'data.frame': 375718 obs. of  1 variable:
-  ..@ grid       :Formal class 'GridTopology' [package "sp"] with 3 slots
-  ..@ bbox       : num [1:2, 1:2] 78999 1412948 101839 1439268
-  .. ..- attr(*, "dimnames")=List of 2
-  ..@ proj4string:Formal class 'CRS' [package "sp"] with 1 slot
-\end{rcode}
-\end{onlyenv}
+% \begin{overlayarea}{\textwidth}{\textheight}
+% \begin{onlyenv}<1>
+% \begin{rcode}
+% > fn <- system.file("pictures/erdas_spnad83.tif", package = "rgdal")[1]
+% # 读取tif格式文件,readGDAL自动调用外部驱动程序GTiff
+% > x <- readGDAL(fn)
+% /home/mono/Softwares/R/3.4/rgdal/pictures/erdas_spnad83.tif has GDAL driver GTiff 
+% and has 658 rows and 571 columns
+% # 读取的数据被转换成sp对象，从而将外部数据导入R系统
+% > str(x,max.level=2)
+% Formal class 'SpatialGridDataFrame' [package "sp"] with 4 slots
+%   ..@ data       :'data.frame': 375718 obs. of  1 variable:
+%   ..@ grid       :Formal class 'GridTopology' [package "sp"] with 3 slots
+%   ..@ bbox       : num [1:2, 1:2] 78999 1412948 101839 1439268
+%   .. ..- attr(*, "dimnames")=List of 2
+%   ..@ proj4string:Formal class 'CRS' [package "sp"] with 1 slot
+% \end{rcode}
+% \end{onlyenv}
 
-\begin{onlyenv}<2>
-\begin{rcode}
-> y <- readGDAL(fn, offset=c(50, 100), region.dim=c(400, 400))
-/home/mono/Softwares/R/3.4/rgdal/pictures/erdas_spnad83.tif has GDAL driver GTiff 
-and has 658 rows and 571 columns
-> str(y,max.level=2)
-Formal class 'SpatialGridDataFrame' [package "sp"] with 4 slots
-  ..@ data       :'data.frame': |\colorbox{green}{160000}| obs. of  1 variable:
-  ..@ grid       :Formal class 'GridTopology' [package "sp"] with 3 slots
-  ..@ bbox       : num [1:2, 1:2] 82999 1421268 98999 1437268
-  .. ..- attr(*, "dimnames")=List of 2
-  ..@ proj4string:Formal class 'CRS' [package "sp"] with 1 slot
-\end{rcode}
-\end{onlyenv}
+% \begin{onlyenv}<2>
+% \begin{rcode}
+% > y <- readGDAL(fn, offset=c(50, 100), region.dim=c(400, 400))
+% /home/mono/Softwares/R/3.4/rgdal/pictures/erdas_spnad83.tif has GDAL driver GTiff 
+% and has 658 rows and 571 columns
+% > str(y,max.level=2)
+% Formal class 'SpatialGridDataFrame' [package "sp"] with 4 slots
+%   ..@ data       :'data.frame': |\colorbox{green}{160000}| obs. of  1 variable:
+%   ..@ grid       :Formal class 'GridTopology' [package "sp"] with 3 slots
+%   ..@ bbox       : num [1:2, 1:2] 82999 1421268 98999 1437268
+%   .. ..- attr(*, "dimnames")=List of 2
+%   ..@ proj4string:Formal class 'CRS' [package "sp"] with 1 slot
+% \end{rcode}
+% \end{onlyenv}
 
-\only<3>{ \vspace{-20pt}
-\begin{figure}[ht]
-  \centering
-  \includegraphics[width=0.85\columnwidth]{readgdal_example1.pdf}
-  \caption{读取外部栅格文件：左图是读取全部数据，右图是读取局部数据}
-\end{figure}}
+% \only<3>{ \vspace{-20pt}
+% \begin{figure}[ht]
+%   \centering
+%   \includegraphics[width=0.85\columnwidth]{readgdal_example1.pdf}
+%   \caption{读取外部栅格文件：左图是读取全部数据，右图是读取局部数据}
+% \end{figure}}
 
-\begin{onlyenv}<4>
-\begin{rcode}
-# 读取原始tiff格式文件到sp对象
-> auck_el1 <- readGDAL("data/70042108.tif")
-data/70042108.tif has GDAL driver GTiff 
-and has 1200 rows and 1320 columns
-> is.na(auck_el1$band1) <- auck_el1$band1 <= 0 |$\mid{}$|auck_el1$band1 > 1e+4
-> # 自定义数据分类
-> brks <- c(0,10,20,50,100,150,200,300,400,500,600,700)
-> # 自定义渐变颜色方案
-> pal <- terrain.colors(11)
-> length(pal) == length(brks)-1
-[1] TRUE
-> # 将数据按照等级进行划分
-> auck_el1$band1 <- findInterval(auck_el1$band1, vec=brks, all.inside=TRUE)-1
-> # 将sp对象导出到外部栅格文件，其中栅格要素按照自定义等级配色
-> writeGDAL(auck_el1, "data/demIndex.tif", drivername="GTiff", type="Byte", colorTable=list(pal), mvFlag=length(brks)-1)
-\end{rcode}
-\end{onlyenv}
+% \begin{onlyenv}<4>
+% \begin{rcode}
+% # 读取原始tiff格式文件到sp对象
+% > auck_el1 <- readGDAL("data/70042108.tif")
+% data/70042108.tif has GDAL driver GTiff 
+% and has 1200 rows and 1320 columns
+% > is.na(auck_el1$band1) <- auck_el1$band1 <= 0 |$\mid{}$|auck_el1$band1 > 1e+4
+% > # 自定义数据分类
+% > brks <- c(0,10,20,50,100,150,200,300,400,500,600,700)
+% > # 自定义渐变颜色方案
+% > pal <- terrain.colors(11)
+% > length(pal) == length(brks)-1
+% [1] TRUE
+% > # 将数据按照等级进行划分
+% > auck_el1$band1 <- findInterval(auck_el1$band1, vec=brks, all.inside=TRUE)-1
+% > # 将sp对象导出到外部栅格文件，其中栅格要素按照自定义等级配色
+% > writeGDAL(auck_el1, "data/demIndex.tif", drivername="GTiff", type="Byte", colorTable=list(pal), mvFlag=length(brks)-1)
+% \end{rcode}
+% \end{onlyenv}
 
-\begin{onlyenv}<5>
-\vspace{-10pt}
-\begin{columns} 
-        \begin{column}{.38\textwidth}
-          \begin{figure}
-            \centering
-            \includegraphics[width=\columnwidth]{demIndex.png}
-          \end{figure}
-        \end{column}
+% \begin{onlyenv}<5>
+% \vspace{-10pt}
+% \begin{columns} 
+%         \begin{column}{.38\textwidth}
+%           \begin{figure}
+%             \centering
+%             \includegraphics[width=\columnwidth]{demIndex.png}
+%           \end{figure}
+%         \end{column}
 
-        \begin{column}{.65\textwidth}
-\centering
-\begin{rcode}
-# GDALinfo封装了GDAL库函数gdalinfo，用于读取文件的信息
-> |\colorbox{green}{GDALinfo}|("figures/demIndex.tif")
-rows        1200 
-columns     1320 
-bands       1 
-lower left origin.x        174.2 
-lower left origin.y        -37.5 
-res.x       0.0008333333 
-res.y       0.0008333333 
-ysign       -1 
-oblique.x   0 
-oblique.y   0 
-driver      GTiff 
-projection  +proj=longlat +datum=WGS84 +no_defs 
-file        data/demIndex.tif 
-apparent band summary:
-  GDType hasNoDataValue NoDataValue blockSize1 blockSize2
-1   Byte           TRUE          11          6       1320
-apparent band statistics:
-  Bmin Bmax Bmean Bsd
-1    0  255    NA  NA
-Metadata:
-AREA_OR_POINT=Area 
-\end{rcode}
-        \end{column}
-      \end{columns}
-\end{onlyenv}
-\end{overlayarea}
-\end{frame}
+%         \begin{column}{.65\textwidth}
+% \centering
+% \begin{rcode}
+% # GDALinfo封装了GDAL库函数gdalinfo，用于读取文件的信息
+% > |\colorbox{green}{GDALinfo}|("figures/demIndex.tif")
+% rows        1200 
+% columns     1320 
+% bands       1 
+% lower left origin.x        174.2 
+% lower left origin.y        -37.5 
+% res.x       0.0008333333 
+% res.y       0.0008333333 
+% ysign       -1 
+% oblique.x   0 
+% oblique.y   0 
+% driver      GTiff 
+% projection  +proj=longlat +datum=WGS84 +no_defs 
+% file        data/demIndex.tif 
+% apparent band summary:
+%   GDType hasNoDataValue NoDataValue blockSize1 blockSize2
+% 1   Byte           TRUE          11          6       1320
+% apparent band statistics:
+%   Bmin Bmax Bmean Bsd
+% 1    0  255    NA  NA
+% Metadata:
+% AREA_OR_POINT=Area 
+% \end{rcode}
+%         \end{column}
+%       \end{columns}
+% \end{onlyenv}
+% \end{overlayarea}
+% \end{frame}
 
-\begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
-\begin{itemize} 
-\item<1-> readGDAL函数底层实际上是创建了一个能够被GDAL库中\emphText{GDALDriver}类对象识别的Dataset类
-\item<2-> rgdal包完整封装了GDAL库的\emphText{GDALMajorObject}抽象基类，
-并且在S4系统下派生出只读的\emphText{GDALReadOnlyDataset}以及可读写的\emphText{GDALDataset}等具体实现类
-\end{itemize}
+% \begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
+% \begin{itemize} 
+% \item<1-> readGDAL函数底层实际上是创建了一个能够被GDAL库中\emphText{GDALDriver}类对象识别的Dataset类
+% \item<2-> rgdal包完整封装了GDAL库的\emphText{GDALMajorObject}抽象基类，
+% 并且在S4系统下派生出只读的\emphText{GDALReadOnlyDataset}以及可读写的\emphText{GDALDataset}等具体实现类
+% \end{itemize}
 
-\begin{overlayarea}{\textwidth}{\textheight}
-\only<3>{
-\begin{figure}[ht]
-  \centering
-  \includegraphics[width=\columnwidth]{rgdal_class.png}
-  \caption{rgdal包的栅格数据类结构图}
-\end{figure}}
-\end{overlayarea}
-\end{frame}
+% \begin{overlayarea}{\textwidth}{\textheight}
+% \only<3>{
+% \begin{figure}[ht]
+%   \centering
+%   \includegraphics[width=\columnwidth]{rgdal_class.png}
+%   \caption{rgdal包的栅格数据类结构图}
+% \end{figure}}
+% \end{overlayarea}
+% \end{frame}
 
-\begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
-\begin{itemize} 
-\item<1-> \sloppy rgdal包提供\emphText{GDAL.open}函数用于打开外部数据，
-这个函数不会直接读取数据到内存，而是通过底层GDAL对象\emphText{GDALReadOnlyDataset}存储文件句柄
-\item<1-> 当需要数据时调用\emphText{asSGDF\_GROD}函数，该函数会根据句柄和数据大小分配内存空间，
-并转换为R中能够识别的sp对象；另外，在文件使用完后必须要调用\emphText{GDAL.close}函数，
-用来释放内存空间并销毁文件句柄
-\end{itemize}
+% \begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
+% \begin{itemize} 
+% \item<1-> \sloppy rgdal包提供\emphText{GDAL.open}函数用于打开外部数据，
+% 这个函数不会直接读取数据到内存，而是通过底层GDAL对象\emphText{GDALReadOnlyDataset}存储文件句柄
+% \item<1-> 当需要数据时调用\emphText{asSGDF\_GROD}函数，该函数会根据句柄和数据大小分配内存空间，
+% 并转换为R中能够识别的sp对象；另外，在文件使用完后必须要调用\emphText{GDAL.close}函数，
+% 用来释放内存空间并销毁文件句柄
+% \end{itemize}
 
-\begin{overlayarea}{\textwidth}{\textheight}
-\begin{onlyenv}<2>
-\begin{rcode}
-fn <- system.file("pictures/erdas_spnad83.tif", package = "rgdal")[1]
-# GDAL.open函数读取文件数据到GDALReadOnlyDataset对象，而不是直接转换为sp对象，
-x <- |\colorbox{green}{GDAL.open}|(fn)
-# 这个GDAL对象存储了外部文件句柄
-> str(x)
-Formal class 'GDALReadOnlyDataset' [package "rgdal"] with 1 slot
-  ..|\colorbox{green}{@ handle:<externalptr>}|
-# rgdal包提供一系列函数根据文件句柄读取文件信息
-> dim(x)  # 栅格数据维度
-[1] 658 571
-> xx <- |\colorbox{green}{getDriver}|(x) # 转换为驱动程序类
-> |\colorbox{green}{getDriverLongName}|(xx) # 驱动程序完整名称
-[1] "GeoTIFF"
-# 将GDAL对象转换为sp对象，从而进入R系统
-> y <- |\colorbox{green}{asSGDF\_GROD}|(x,output.dim=c(400, 400)) # 这里也可以局部读取数据
-> class(y)
-[1] "SpatialGridDataFrame"
-attr(,"package")
-[1] "sp"
-# 释放GDAL对象，解除对外部文件的锁定
-> |\colorbox{green}{GDAL.close}|(x)
-\end{rcode}
-\end{onlyenv}
-\end{overlayarea}
-\end{frame}
+% \begin{overlayarea}{\textwidth}{\textheight}
+% \begin{onlyenv}<2>
+% \begin{rcode}
+% fn <- system.file("pictures/erdas_spnad83.tif", package = "rgdal")[1]
+% # GDAL.open函数读取文件数据到GDALReadOnlyDataset对象，而不是直接转换为sp对象，
+% x <- |\colorbox{green}{GDAL.open}|(fn)
+% # 这个GDAL对象存储了外部文件句柄
+% > str(x)
+% Formal class 'GDALReadOnlyDataset' [package "rgdal"] with 1 slot
+%   ..|\colorbox{green}{@ handle:<externalptr>}|
+% # rgdal包提供一系列函数根据文件句柄读取文件信息
+% > dim(x)  # 栅格数据维度
+% [1] 658 571
+% > xx <- |\colorbox{green}{getDriver}|(x) # 转换为驱动程序类
+% > |\colorbox{green}{getDriverLongName}|(xx) # 驱动程序完整名称
+% [1] "GeoTIFF"
+% # 将GDAL对象转换为sp对象，从而进入R系统
+% > y <- |\colorbox{green}{asSGDF\_GROD}|(x,output.dim=c(400, 400)) # 这里也可以局部读取数据
+% > class(y)
+% [1] "SpatialGridDataFrame"
+% attr(,"package")
+% [1] "sp"
+% # 释放GDAL对象，解除对外部文件的锁定
+% > |\colorbox{green}{GDAL.close}|(x)
+% \end{rcode}
+% \end{onlyenv}
+% \end{overlayarea}
+% \end{frame}
 
-\subsubsection{其他空间数据交换包}
-\begin{frame}[t]{\subsecname}{\subsubsecname}
-\begin{itemize} 
-\item \emphText{maptools}：提供ESRI ArcGIS格式数据文件的读写函数；
-相比其他包最大的优势是不依赖外部程序，\emphText{但是该包部分函数已经不再维护}
-\item \emphText{RQIS,rgrass7,RSAGA}：这些包分别是主流开源GIS软件\href{https://www.qgis.org/}{\uline{QGIS}}、\href{https://grass.osgeo.org/}{\uline{GRASS GIS}}和\href{http://www.saga-gis.org/}{\uline{SAGA}}的封装包，都是通过R内部的\emphText{system函数}把命令传至外部程序实现对接口的调用，因此具体功能实现都依赖外部程序，在使用前要先安装相应的GIS软件；由于这些软件本身具有完整的GIS功能，所以除了可以读写外部文件之外，这些包还具有丰富的GIS数据管理和分析功能
-\item \emphText{sf}：近几年CRAN发布的简单空间要素包，
-相比sp包，sf对OGC简单要素标准的支持更完整，定义了全部17种简单要素，甚至包括三维对象和线性参考对象；sf包依赖GDAL库提供对矢量数据文件的交换功能
-\item \emphText{RgoogleMaps,OpenStreetMap,ggmap,baidumap}：这些包通过互联网地图API实现了对地图数据的调用
-\item Roger Bivand目前维护着空间数据相关包信息的整理工作，CRAN上有\href{https://cran.r-project.org/web/views/Spatial.html}{\uline{专门的文章}}会定期更新这些信息
-\end{itemize}
-\end{frame}
+% \subsubsection{其他空间数据交换包}
+% \begin{frame}[t]{\subsecname}{\subsubsecname}
+% \begin{itemize} 
+% \item \emphText{maptools}：提供ESRI ArcGIS格式数据文件的读写函数；
+% 相比其他包最大的优势是不依赖外部程序，\emphText{但是该包部分函数已经不再维护}
+% \item \emphText{RQIS,rgrass7,RSAGA}：这些包分别是主流开源GIS软件\href{https://www.qgis.org/}{\uline{QGIS}}、\href{https://grass.osgeo.org/}{\uline{GRASS GIS}}和\href{http://www.saga-gis.org/}{\uline{SAGA}}的封装包，都是通过R内部的\emphText{system函数}把命令传至外部程序实现对接口的调用，因此具体功能实现都依赖外部程序，在使用前要先安装相应的GIS软件；由于这些软件本身具有完整的GIS功能，所以除了可以读写外部文件之外，这些包还具有丰富的GIS数据管理和分析功能
+% \item \emphText{sf}：近几年CRAN发布的简单空间要素包，
+% 相比sp包，sf对OGC简单要素标准的支持更完整，定义了全部17种简单要素，甚至包括三维对象和线性参考对象；sf包依赖GDAL库提供对矢量数据文件的交换功能
+% \item \emphText{RgoogleMaps,OpenStreetMap,ggmap,baidumap}：这些包通过互联网地图API实现了对地图数据的调用
+% \item Roger Bivand目前维护着空间数据相关包信息的整理工作，CRAN上有\href{https://cran.r-project.org/web/views/Spatial.html}{\uline{专门的文章}}会定期更新这些信息
+% \end{itemize}
+% \end{frame}
 
-\subsection{空间数据可视化}
+\subsection{空间数据基础绘图}
 \begin{frame}[t]{\subsecname}
 \begin{itemize} 
 \item<1-> R的两套绘图系统都提供对基础绘图要素的绘制功能，包括点、线、面、栅格和颜色等，
 而通过sp包可以将空间数据转换为这些绘图要素能够识别的底层对象，
 因此\emphText{空间数据绘图要素和普通数据绘图要素并没有本质区别}
 \item<2-> 在基础绘图系统graphics包和grid绘图系统lattice包基础上，sp包针对空间数据对象的特点重载了
-两个包的主要绘图函数，并充分考虑了空间可视化的特点，添加了诸如指北针、比例尺等专业地图要素的绘制，\emphText{使得空间数据可视化在方法尽量与普通数据绘图一致的基础上又体现出专业性}，这样用户可以把更多的精力放在处理和分析空间数据上，而不需要再专门花时间学习一套新的绘图系统b\end{itemize}
+两个包的主要绘图函数，并充分考虑了空间可视化的特点，添加了诸如指北针、比例尺等专业地图要素的绘制，\emphText{使得空间数据可视化在方法尽量与普通数据绘图一致的基础上又体现出专业性}，这样用户可以把更多的精力放在处理和分析空间数据上，而不需要再专门花时间学习一套新的绘图系统\end{itemize}
 \end{frame}
 
-\subsubsection{空间数据基础绘图}
-\begin{frame}[t,fragile]{\subsecname}
+\subsubsection{绘制空间对象}
+\begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
 \begin{itemize} 
 \item<1-> sp包重载了graphics包的绘图泛型函数plot和image，因此用sp包绘制空间数据的函数名称也是\emphText{plot}
 和\emphText{image}，分别用于绘制矢量数据和栅格数据
+\item<3-> 设置\emphText{add=TRUE}参数不刷新绘图设备，而是叠加当前绘图对象
 \end{itemize}
 
 \begin{overlayarea}{\textwidth}{\textheight}
@@ -1662,9 +1663,241 @@ image.SpatialPixels             FALSE registered S3method for image   image FALS
 image.SpatialPixelsDataFrame    FALSE registered S3method for image   image FALSE
 \end{rcode}
 \end{onlyenv}
+
+\begin{onlyenv}<2>
+\begin{rcode}
+> data(meuse); coordinates(meuse) <- c("x", "y") # 创建空间点对象
+> |\colorbox{green}{plot}|(meuse); title("points") # 绘制空间点对象
+> cc <- coordinates(meuse);
+> m.sl <- SpatialLines(list(Lines(list(Line(cc)), "line1"))) # 创建空间线对象
+> |\colorbox{green}{plot}|(m.sl); title("lines") #绘制空间线对象
+> data(meuse.riv); meuse.lst <- list(Polygons(list(Polygon(meuse.riv)), "meuse.riv"))
+> meuse.pol <- SpatialPolygons(meuse.lst) # 创建空间面对象
+> |\colorbox{green}{plot}|(meuse.pol, col = "grey"); title("polygons") # 绘制空间面对象
+> data(meuse.grid); coordinates(meuse.grid) <- c("x", "y")
+> meuse.grid <- as(meuse.grid, "SpatialPixels") # 创建空间网格对象
+> |\colorbox{green}{image}|(meuse.grid, col = "grey"); title("grid") # 绘制空间网格对象
+\end{rcode}
+\begin{figure}[ht] \vspace{-10pt}
+  \centering 
+  \includegraphics[width=0.7\columnwidth]{sp_plot1.pdf}
+\end{figure}
+\end{onlyenv}
+
+\begin{onlyenv}<3>
+\begin{columns} 
+\begin{column}{.4\textwidth}
+\begin{figure}[ht] \vspace{-10pt}
+  \centering 
+  \includegraphics[width=\columnwidth]{sp_plot2.pdf}
+\end{figure}
+\end{column}
+
+\begin{column}{.6\textwidth}
+\centering
+\begin{rcode}
+# 创建一个绘图对象用于绘制空间网格对象
+> image(meuse.grid, col = "khaki2")
+# 在已有绘图对象上叠加空间面对象
+> plot(meuse.pol, col = "lightsteelblue2", |\colorbox{green}{add = TRUE}|)
+# 在已有绘图对象上叠加空间点对象
+> plot(meuse, col = "brown", cex = .5, |\colorbox{green}{add = TRUE}|)
+\end{rcode}
+\end{column}
+\end{columns}
+\end{onlyenv}
 \end{overlayarea}
 \end{frame}
 
-\subsubsection{空间数据lattice绘图}
+\subsubsection{绘制坐标轴和布局控制}
+\begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
+\begin{itemize} 
+\item<1-> 地图制图习惯不添加坐标轴，但是在\emphText{为了空间数据能够更易于阅读和统计分析}，plot函数可以设置参数
+\emphText{axes=TRUE}绘制默认坐标轴，坐标取值范围即bbbox值
+\item<2-> 基础绘图系统\emphText{par}函数的参数也同样可以控制空间对象绘图
+\end{itemize}
 
-\subsubsection{空间数据其他绘图方式}
+\begin{overlayarea}{\textwidth}{\textheight}
+\begin{onlyenv}<1>
+\begin{rcode}
+# axes=TRUE绘制默认坐标轴
+> plot(meuse.pol, |\colorbox{green}{axes = TRUE}|)
+> title("add=TRUE",cex.main=2)
+> plot(meuse.pol, |\colorbox{green}{axes = FALSE}|)
+# axes=FALSE，可以用axis函数设置自定义坐标轴，包括刻度取值、刻度位置和字体大小等
+> |\colorbox{green}{axis}|(1, at = c(178000 + 0:2 * 2000), cex.axis = .7) # 设置x轴
+> |\colorbox{green}{axis}|(2, at = c(326000 + 0:3 * 4000), cex.axis = .7) # 设置y轴
+> title("自定义坐标轴",cex.main=2); box()
+\end{rcode}
+\begin{figure}[ht] \vspace{-10pt}
+  \centering 
+  \includegraphics[width=0.75\columnwidth]{sp_axis1.pdf}
+\end{figure}
+\end{onlyenv}
+
+\begin{onlyenv}<2>
+\begin{rcode}
+> oldpar = par(no.readonly = TRUE) # 保存par的默认参数
+> layout(matrix(c(1,2),1,2))
+> plot(meuse, axes = TRUE, cex = 0.6)
+> plot(meuse.pol, add = TRUE)
+> title("示例位置",cex.main=2)
+# 用par函数mar参数控制绘图边框
+> |\colorbox{green}{par(mar=c(0,0,0,0)+.1)}|
+> plot(meuse, axes = FALSE, cex = 0.6)
+> plot(meuse.pol, add = TRUE); box()
+> par(oldpar) # 绘图完成后恢复默认参数
+\end{rcode}
+\begin{figure}[ht] \vspace{-10pt}
+  \centering 
+  \includegraphics[width=0.7\columnwidth]{sp_axis2.pdf}
+\end{figure}
+\end{onlyenv}
+\end{overlayarea}
+\end{frame}
+
+\subsubsection{绘制地图元素}
+\begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
+\begin{itemize} 
+\item<1-> \emphText{SpatialPolygonsRescale}函数用于绘制指北针和比例尺
+\item<2-> \emphText{degAxis}函数用于显示带N/S/E/W标记的十进制度坐标刻度
+\item<3-> \emphText{gridlines}函数用于绘制辅助网格线
+\end{itemize}
+
+\begin{overlayarea}{\textwidth}{\textheight}
+\begin{onlyenv}<1>
+\begin{rcode}
+> plot(meuse); plot(meuse.pol, add=TRUE); box()
+# 绘制比例尺：offset参数设置比例尺位置,scale设置比例尺尺度,fill设置填充颜色
+> |\colorbox{green}{SpatialPolygonsRescale}|(|\colorbox{green}{layout.scale.bar()}|, offset = c(180200,329600), scale = 1000, fill = c("transparent","black"), plot.grid = FALSE)
+> text(x = c(180200,181200), y = rep(329750, 2), c("0", "1 km")) # 比例尺显示文字
+# 绘制指北针
+> |\colorbox{green}{SpatialPolygonsRescale}|(|\colorbox{green}{layout.north.arrow()}|,offset=c(178750,332500),scale = 400,plot.grid = FALSE)
+\end{rcode}
+\begin{figure}[ht] \vspace{-5pt}
+  \centering 
+  \includegraphics[width=0.4\columnwidth]{sp_mapelement1.pdf}
+\end{figure}
+\end{onlyenv}
+
+\begin{onlyenv}<2>
+\begin{rcode}
+# 读取外部矢量地图数据
+> nc <- readOGR(dsn=system.file("shapes",package="maptools"),layer="sids")
+> proj4string(nc) <- CRS("+proj=longlat +datum=NAD27")
+> rrt <- nc$SID74/nc$BIR74
+> brks <- quantile(rrt, seq(0,1,1/5))
+> library(RColorBrewer)
+> cols <- brewer.pal(5, "Reds")
+> plot(nc, col=cols[findInterval(rrt, brks, all.inside=TRUE)], axes = FALSE); box()
+> |\colorbox{green}{degAxis}|(1) # 设置x轴
+> |\colorbox{green}{degAxis}|(2, at=34:37) # 设置y轴
+\end{rcode}
+\begin{figure}[ht] \vspace{-10pt}
+  \centering 
+  \includegraphics[width=0.75\columnwidth]{sp_mapelement2.pdf}
+\end{figure}
+\end{onlyenv}
+
+\begin{onlyenv}<3>
+\begin{rcode}
+# 绘制世界地图和辅助网格线
+> wrld <- map("world", interior=FALSE, xlim=c(-179,179), 
++    ylim=c(-89,89), plot=FALSE)
+> wrld_p <- pruneMap(wrld, xlim=c(-179,179))
+> llCRS <- CRS("+proj=longlat +ellps=WGS84")
+> wrld_sp <- map2SpatialLines(wrld_p, proj4string=llCRS)
+> prj_new <- CRS("+proj=moll +ellps=WGS84")
+# 空间数据地图投影
+> wrld_proj <- spTransform(wrld_sp, prj_new)
+# 绘制GCS下的网格线: easts和norths设置东西和南北向坐标取值,ndiscr设置网格线离散点的数量
+> wrld_grd <- |\colorbox{green}{gridlines}|(wrld_sp, easts=c(-179,seq(-150,150,50), 179.5),        norths=seq(-75,75,15), ndiscr=100)
+# 网格线地图投影
+> wrld_grd_proj <- spTransform(wrld_grd, prj_new)
+# 显示GCS下网格线刻度文字:side参数可以设置显示文字的侧面,默认只在西侧和南侧显示文字
+> at_sp <- |\colorbox{green}{gridat}|(wrld_sp, easts=0, norths=seq(-75,75,15), offset=0.3)
+# 网格线刻度文字地图投影
+> at_proj <- spTransform(at_sp, prj_new)
+> plot(wrld_proj, col="grey60")
+> plot(wrld_grd_proj, add=TRUE, lty=3, col="grey70")
+# 使用投影计算后的位置显示文字
+> text(coordinates(at_proj), |\colorbox{green}{pos=at\_proj\$pos}|, offset=at_proj$offset,labels=parse(text=as.character(at_proj$labels)), cex=1)
+\end{rcode}
+\end{onlyenv}
+
+\only<4>{
+\begin{figure}[ht] \vspace{-5pt}
+  \centering 
+  \includegraphics[width=\columnwidth]{sp_mapelement3.pdf}
+\end{figure}}
+\end{overlayarea}
+\end{frame}
+
+\begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
+\begin{itemize} 
+\item<1-> 绘图函数的\emphText{pch}、\emphText{lwd}等参数用于绘制空间图形要素的颜色、样式等属性，用法和对应的普通图形要素绘制类似
+\item<2-> \emphText{legend}函数用于绘制地图图例
+\end{itemize}
+
+\begin{overlayarea}{\textwidth}{\textheight}
+\only<1>{ 
+  \begin{table} \centering \small
+    \renewcommand\arraystretch{0.6} 
+    \begin{tabular}{|>{\centering\arraybackslash} m{0.4\columnwidth} |>{\centering\arraybackslash} m{0.1\columnwidth} |>{\centering\arraybackslash} m{0.2\columnwidth} |>{\centering\arraybackslash} m{0.15\columnwidth}|}
+      \toprule
+      \rowcolor{LightCyan}
+      \multicolumn{1}{|c|}{\textbf{空间类}} & \multicolumn{1}{c|}{\textbf{参数}} 
+& \multicolumn{1}{c|}{\textbf{含义}} & \multicolumn{1}{c|}{\textbf{帮助}} \\\hline
+
+\multirowcell{4}{SpatialPointsDataFrame} & pch & 样式 & \multirowcell{4}{?points} \\
+& col & 颜色 & \\
+& bg & 填充色 & \\
+& cex & 大小 & \\\hline
+\multirowcell{3}{SpatialLinesDataFrame} & col & 颜色 & \multirowcell{3}{?lines} \\
+& lwd & 线宽 & \\
+& lty & 线型 & \\\hline
+\multirowcell{5}{SpatialPolygonsDataFrame} & border & 边框颜色 & \multirowcell{5}{?polygon} \\
+& lty & 线类型 & \\
+& pbg & 孔类型 & \\
+& density & 填充线密度 & \\
+& angle & 填充线角度 & \\\hline
+\multirowcell{3}{SpatialGridsDataFrame\\ SpatialPixelsDataframe} & zlim & 属性值范围 & \multirowcell{3}{?image} \\
+& col & 颜色 & \\
+& breaks & 分级断点 & \\\hline
+      \bottomrule
+    \end{tabular}
+    \caption{基础绘图系统绘图函数中用于绘制空间图形要素的主要参数}
+  \end{table}}
+
+\begin{onlyenv}<2>
+\begin{columns} 
+\begin{column}{.4\textwidth}
+\begin{figure}[ht] \vspace{-10pt}
+  \centering 
+  \includegraphics[width=\columnwidth]{sp_mapelement4.pdf}
+\end{figure}
+\end{column}
+
+\begin{column}{.6\textwidth}
+\centering
+\begin{rcode}
+> library(RColorBrewer)
+> cols <- brewer.pal(4, "Accent") # 分四个等级
+# 设置空间图形要素
+> image(zn.idw, |\colorbox{green}{col}| = cols, |\colorbox{green}{breaks}|=log(c(100,200,400,800,1800)))
+> plot(meuse.pol, add = TRUE)
+> plot(meuse,|\colorbox{green}{pch}|=1,|\colorbox{green}{cex}|=sqrt(meuse$zinc)/20,add=TRUE)
+# 绘制空间要素的图例
+> |\colorbox{green}{legend}|("left", legend=c(100, 200, 500, 1000, 2000), pch = 1, pt.cex = sqrt(legVals)/20, bty = "n", title="measured, ppm", cex=1.2, y.inter=1)
+> |\colorbox{green}{legend}|("topleft", fill = cols, legend=c("100-200","200-400","400-800","800-1800"), bty = "n", title = "interpolated, ppm", cex=1.2, y.inter=1)
+\end{rcode}
+\end{column}
+\end{columns}
+\end{onlyenv}
+\end{overlayarea}
+\end{frame}
+
+\subsection{空间数据lattice绘图}
+\subsubsection{spplot函数}
+
+\subsection{空间数据其他绘图方式}
