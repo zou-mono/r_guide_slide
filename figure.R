@@ -1,5 +1,6 @@
 setwd("~/Documents/tex_projects/r_guide_slide")
 library(ggplot2)
+library(lattice)
 library(Cairo)
 library(maptools)
 library(sp)
@@ -8,6 +9,8 @@ library(ggplot2movies)
 library(plyr)
 library(maps)
 library(raster)
+#library(trelliscope)
+library(RColorBrewer)
 
 png("expression-example.png",width=1000,height=1000,res=300,pointsize=6)
 par(mar=c(2,2,0,0)+0.1)
@@ -1334,7 +1337,6 @@ dev.off()
 
 CairoPDF("sp_mapelement4.pdf",5,5)
 par(mar=c(0,0,0,0)+.1)
-library(RColorBrewer)
 cols <- brewer.pal(4, "Accent")
 image(zn.idw, col = cols, breaks=log(c(100,200,400,800,1800)))
 plot(meuse.pol, add = TRUE)
@@ -1344,4 +1346,32 @@ legend("left", legend=legVals, pch = 1, pt.cex = sqrt(legVals)/20, bty = "n",
   title="measured, ppm", cex=1.2, y.inter=1)
 legend("topleft", fill = cols, legend=c("100-200","200-400","400-800","800-1800"),
        bty = "n", title = "interpolated, ppm", cex=1.2, y.inter=1)
+dev.off()
+
+CairoPDF("spplot1.pdf",10,10.5)
+CairoFonts(regular = "WenQuanYi Micro Hei", bold = "WenQuanYi Micro Hei")
+data(meuse)
+coordinates(meuse) <- ~x+y
+## lattice.options(
+##   layout.heights=list(bottom.padding=list(x=0, top.padding=list(x=-0.5)),
+##   layout.widths=list(left.padding=list(x=0), right.padding=list(x=0))
+## )
+cuts=c(0,20,50,200,500,2000)
+grys <- brewer.pal(7, "Reds")
+meuse$lead.st = as.vector(scale(meuse$lead))
+meuse$zinc.st = as.vector(scale(meuse$zinc))
+meuse$copper.st = as.vector(scale(meuse$copper))
+meuse$cadmium.st = as.vector(scale(meuse$cadmium))
+l2 = list("SpatialPolygonsRescale", layout.north.arrow(), offset = c(178750,332500), 
+	scale = 400)
+l3 = list("SpatialPolygonsRescale", layout.scale.bar(), offset = c(180500,329800), 
+	scale = 500, fill=c("transparent","black"))
+l4 = list("sp.text", c(180500,329950), "0")
+l5 = list("sp.text", c(181000,329950), "500 m")
+cuts=c(-1.2,0,1,2,3,5)
+spplot(meuse, c("cadmium.st", "copper.st", "lead.st", "zinc.st"),
+       sp.layout=list(l2,l3,l4,l5), layout=c(2,2), aspect=1,
+       key.space="right", main=list("标准差",cex=2),
+       par.strip.text=list(cex=2),
+       cuts = cuts,col.regions=grys)
 dev.off()

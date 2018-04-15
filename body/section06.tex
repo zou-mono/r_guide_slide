@@ -1899,5 +1899,50 @@ image.SpatialPixelsDataFrame    FALSE registered S3method for image   image FALS
 
 \subsection{空间数据lattice绘图}
 \subsubsection{spplot函数}
+\begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
+\begin{itemize} 
+\item<1-> sp包基于Spatial类封装了lattice包的绘图函数，实现在grid绘图系统中绘制空间数据，对应的绘图函数是
+\emphText{spplot}函数
+\item<1-> spplot的返回值是trellis对象，\emphText{大部分参数和xyplot函数通用}
+\item<2-> spplot函数通过\emphText{接收GIS属性数据}实现便捷的绘图方式，
+每个panel绘制一个属性，多个属性则自动生成多个panel
+\end{itemize}
+
+\begin{overlayarea}{\textwidth}{\textheight}
+\begin{onlyenv}<2>
+\begin{rcode}
+# 为meuse数据集挂载四个属性
+> data(meuse)
+> coordinates(meuse) <- ~x+y
+> meuse$lead.st = as.vector(scale(meuse$lead))
+> meuse$zinc.st = as.vector(scale(meuse$zinc))
+> meuse$copper.st = as.vector(scale(meuse$copper))
+> meuse$cadmium.st = as.vector(scale(meuse$cadmium))
+# 设置指北针和比例尺
+> l2 = list("SpatialPolygonsRescale", layout.north.arrow(), offset = c(178750,332500), scale = 400)
+> l3 = list("SpatialPolygonsRescale", layout.scale.bar(), offset = c(180500,329800), scale = 500, fill=c("transparent","black"))
+> l4 = list("sp.text", c(180500,329900), "0")
+> l5 = list("sp.text", c(181000,329900), "500 m")
+# 定义分级断点
+> cuts=c(-1.2,0,1,2,3,5)
+# 设置颜色等级
+> grys <- brewer.pal(7, "Reds")
+# spplot函数绘制meuse数据集的四个属性:第一个参数是空间数据集,第二个参数是需要绘制的属性,sp.layout参数设置地图要素,col.regions参数设置颜色等级,其他参数和xyplot函数通用
+> |\colorbox{green}{spplot}|(meuse, c("cadmium.st", "copper.st", "lead.st", "zinc.st"),
+        |\colorbox{green}{sp.layout}|=list(l2,l3,l4,l5), layout=c(2,2),
+        key.space="right", main=list("标准差",), 
+        par.strip.text=list(cex=2), aspect=1,
+        cuts = cuts,|\colorbox{green}{col.regions}|=grys)
+\end{rcode}
+\end{onlyenv}
+
+\begin{onlyenv}<3>
+\begin{figure}[ht] \vspace{-20pt}
+  \centering 
+  \includegraphics[width=0.5\columnwidth]{spplot1.pdf}
+\end{figure}
+\end{onlyenv}
+\end{overlayarea}
+\end{frame}
 
 \subsection{空间数据其他绘图方式}
