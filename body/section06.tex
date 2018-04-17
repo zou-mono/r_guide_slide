@@ -1617,7 +1617,7 @@
 % \end{itemize}
 % \end{frame}
 
-\subsection{空间数据基础绘图}
+\subsection{基础绘图方法}
 \begin{frame}[t]{\subsecname}
 \begin{itemize} 
 \item<1-> R的两套绘图系统都提供对基础绘图要素的绘制功能，包括点、线、面、栅格和颜色等，
@@ -1897,7 +1897,33 @@ image.SpatialPixelsDataFrame    FALSE registered S3method for image   image FALS
 \end{overlayarea}
 \end{frame}
 
-\subsection{空间数据lattice绘图}
+\subsubsection{绘图交互}
+\begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
+\begin{itemize} 
+\item<1-> 地图要素在绘图区域的定位可以在程序中设置绝对数值来完成，也可以用R的交互函数通过鼠标点击手动完成
+\item<2-> 相比GIS软件，R的交互功能比较弱，只提供了两个交互函数\emphText{locator}和\emphText{identify}，两者
+都会等待鼠标输入，单击左键开始，单击右键结束
+\item<2-> locator函数返回单击的坐标位置，identify函数在一个指定距离范围内绘制并返回离点击位置
+最近的标签值
+\end{itemize}
+
+\begin{overlayarea}{\textwidth}{\textheight}
+\begin{onlyenv}<2>
+\begin{rcode}
+> plot(meuse,axes=FALSE)
+> plot(meuse.pol, add=TRUE)
+> box()
+# 通过鼠标点击来定位比例尺、指北针以及说明文字的位置;相对绝对数值,这种定位方式不够精准,但是比较直观
+> SpatialPolygonsRescale(layout.scale.bar(), offset = |\colorbox{green}{locator(1)}|, scale = 1000, fill=c("transparent","black"), plot.grid = FALSE)
+> text(|\colorbox{green}{locator(1)}|, "0")
+> text(|\colorbox{green}{locator(1)}|, "1 km")
+> SpatialPolygonsRescale(layout.north.arrow(), offset = |\colorbox{green}{locator(1)}|, scale = 400, plot.grid = FALSE)
+\end{rcode}
+\end{onlyenv}
+\end{overlayarea}
+\end{frame}
+
+\subsection{lattice绘图方法}
 \subsubsection{spplot函数}
 \begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
 \begin{itemize} 
@@ -1945,4 +1971,80 @@ image.SpatialPixelsDataFrame    FALSE registered S3method for image   image FALS
 \end{overlayarea}
 \end{frame}
 
-\subsection{空间数据其他绘图方式}
+\subsubsection{添加布局项}
+\begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
+\begin{itemize} 
+\item<1-> \emphText{sp.layout}参数用来添加点、线、面、文本等基本绘图要素以及地图要素，
+这个参数\emphText{接收一个由布局项构成的list对象}，其中布局项本身也是一个list对象且第一个参数是函数名称
+\end{itemize}
+
+\begin{overlayarea}{\textwidth}{\textheight}
+\only<1>{
+\begin{table} \centering \scriptsize
+    \renewcommand\arraystretch{1}
+    \begin{tabular}{>{\centering\arraybackslash} m{0.3\columnwidth} >{\centering\arraybackslash} m{0.2\columnwidth} >{\centering\arraybackslash} m{0.3\columnwidth}}
+      \toprule
+      \rowcolor{LightCyan}
+      \multicolumn{1}{c}{\textbf{sp布局函数}} & \multicolumn{1}{c}{\textbf{类型}} & \multicolumn{1}{c}{\textbf{主要参数}}\\\hline
+      sp.points & SpatialPoints & pch,cex.col \\
+      sp.polygons & SpatialPolygons & lty,lwd,col\\
+      sp.lines & SpatialLines & lty,lwd,col\\
+      sp.text & text & col,cex,srt\\\hline
+      \bottomrule
+    \end{tabular}
+    \caption{sp包的布局函数，其作为list对象的一部分被sp.layout参数接收，
+函数参数与par相同，可以用?par查看相关参数说明}
+\end{table}}
+
+\begin{onlyenv}<2>
+\begin{rcode}
+# 布局函数list对象按类型组成需要添加的绘图要素，这与基本绘图系统是类似的，但是实现上更为优雅
+> river <- list("sp.polygons", meuse.pol)
+# 这里除了基本绘图要素外，还可以添加地图要素
+> north <- list("SpatialPolygonsRescale", layout.north.arrow(), offset = c(178750,332500), scale = 400)
+> scale <- list("SpatialPolygonsRescale", layout.scale.bar(), offset = c(180200, 329800), scale = 1000, fill=c("transparent","black"))
+> txt1 <- list("sp.text", c(180200, 329950), "0")
+> txt2 <- list("sp.text", c(181200, 329950), "1 km")
+> pts <- list("sp.points", meuse, pch = 3, col = "black")
+# 最后所有布局项组成一个list对象传入sp.layout参数，并用于最终的绘图
+> |\colorbox{green}{meuse.layout <- list(river, north, scale, txt1, txt2, pts)}|
+> grys <- brewer.pal(7, "Reds")
+> spplot(zn["log"], |\colorbox{green}{sp.layout = meuse.layout}|, cuts=5, col.regions=grys)
+\end{rcode}
+\end{onlyenv}
+
+\begin{onlyenv}<3>
+\begin{figure}[ht] \vspace{-20pt}
+  \centering 
+  \includegraphics[width=0.5\columnwidth]{spplot2.pdf}
+\end{figure}
+\end{onlyenv}
+\end{overlayarea}
+\end{frame}
+
+\subsubsection{panel排列布局}
+\begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
+\begin{itemize} 
+\item<1-> 相比plot函数，spplot函数最大的优势是可以
+\emphText{在同一绘图区域不同panel对多个属性绘图}，从而实现分析结果的比较
+\item<1-> panel的排列布局通过\emphText{layout}和\emphText{skip}参数实现；layout设置panel排列的行列数，skip则设置需要留白的panel
+\end{itemize}
+
+\begin{overlayarea}{\textwidth}{\textheight}
+\begin{onlyenv}<2>
+  \begin{figure} \vspace{-10pt}
+    \begin{columns}
+      \begin{column}{.6\textwidth}
+        \includegraphics[width=0.8\columnwidth]{spplot3.pdf}
+      \end{column}
+       \hspace{-40pt}    
+      \begin{column}{.4\textwidth}
+ \caption{协克里金方差矩阵的统计图形展示，参数为layout=c(4,4),\\skip=c(F,T,T,T,F,F,T,T,F,\\F,F,T,T,T,T,T)}
+      \end{column}
+    \end{columns}
+  \end{figure}
+\end{onlyenv}
+\end{overlayarea}
+\end{frame}
+
+\subsection{其他绘图方法}

@@ -1348,6 +1348,19 @@ legend("topleft", fill = cols, legend=c("100-200","200-400","400-800","800-1800"
        bty = "n", title = "interpolated, ppm", cex=1.2, y.inter=1)
 dev.off()
 
+CairoPDF("sp_mapelement5.pdf",5,5)
+par(mar=c(0,0,0,0)+.1)
+plot(meuse,axes=FALSE)
+plot(meuse.pol, add=TRUE)
+box()
+SpatialPolygonsRescale(layout.scale.bar(), offset = locator(1),
+    scale = 1000, fill=c("transparent","black"), plot.grid = FALSE)
+text(locator(1), "0")
+text(locator(1), "1 km")
+SpatialPolygonsRescale(layout.north.arrow(), offset = locator(1),
+                       scale = 400, plot.grid = FALSE)
+dev.off()
+
 CairoPDF("spplot1.pdf",10,10.5)
 CairoFonts(regular = "WenQuanYi Micro Hei", bold = "WenQuanYi Micro Hei")
 data(meuse)
@@ -1374,4 +1387,45 @@ spplot(meuse, c("cadmium.st", "copper.st", "lead.st", "zinc.st"),
        key.space="right", main=list("标准差",cex=2),
        par.strip.text=list(cex=2),
        cuts = cuts,col.regions=grys)
+dev.off()
+
+
+CairoPDF("spplot2.pdf",9,11)
+data(meuse)
+coordinates(meuse) <- ~x+y
+data(meuse.grid)
+coordinates(meuse.grid) <- ~x+y
+gridded(meuse.grid) <- T
+zn <- krige(zinc~1,meuse,meuse.grid)
+zn$direct <- zn$var1.pred
+zn$log <- exp(krige(log(zinc)~1,meuse,meuse.grid)$var1.pred)
+data(meuse.riv)
+meuse.lst <- list(Polygons(list(Polygon(meuse.riv)), "meuse.riv"))
+meuse.pol <- SpatialPolygons(meuse.lst)
+river <- list("sp.polygons", meuse.pol)
+north <- list("SpatialPolygonsRescale", layout.north.arrow(), offset = 
+  c(178750,332500),
+    scale = 400)
+scale <- list("SpatialPolygonsRescale", layout.scale.bar(), offset = 
+  c(180200, 329800), scale = 1000, fill=c("transparent","black"))
+txt1 <- list("sp.text", c(180200, 329950), "0")
+txt2 <- list("sp.text", c(181200, 329950), "1 km")
+pts <- list("sp.points", meuse, pch = 3, col = "black")
+meuse.layout <- list(river, north, scale, txt1, txt2, pts)
+grys <- brewer.pal(7, "Reds")
+spplot(zn["log"], sp.layout = meuse.layout, cuts=5, aspect=4/3, col.regions=grys)
+dev.off()
+
+CairoPDF("spplot3.pdf",9,11)
+g <- gstat(NULL, "logCd", log(cadmium)~1, meuse)
+g <- gstat(g, "logCu", log(copper)~1, meuse)
+g <- gstat(g, "logPb", log(lead)~1, meuse)
+g <- gstat(g, "logZn", log(zinc)~1, meuse)
+g
+vm <- variogram(g)
+vm.fit <- fit.lmc(vm, g, vgm(1, "Sph", 800, 1))
+cok.maps <- predict(vm.fit, meuse.grid)
+names(cok.maps)
+pal = function(n = 9) brewer.pal(n, "BrBG")
+print(spplot.vcov(cok.maps, cuts=6, col.regions=pal(7)))
 dev.off()
