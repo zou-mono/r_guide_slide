@@ -1923,7 +1923,7 @@ image.SpatialPixelsDataFrame    FALSE registered S3method for image   image FALS
 \end{overlayarea}
 \end{frame}
 
-\subsection{lattice绘图方法}
+\subsection{基于lattice的绘图方法}
 \subsubsection{spplot函数}
 \begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
 \begin{itemize} 
@@ -2047,4 +2047,375 @@ image.SpatialPixelsDataFrame    FALSE registered S3method for image   image FALS
 \end{overlayarea}
 \end{frame}
 
-\subsection{其他绘图方法}
+\subsection{基于ggplot2的绘图方法}
+\subsubsection{绘制矢量空间数据}
+\begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
+\begin{itemize} 
+\item<1-> sp包没有重新编写基于ggplot2包的绘图函数，但是空间点对象可以直接转换为data.frame，线和面则利用ggplot2包的\emphText{fortify}函数转换为data.frame，然后再用绘图函数绘图
+\item<5-> 利用ggplot2的\emphText{分面函数}在同一图幅中展示数据的不同类别
+\end{itemize}
+
+\begin{overlayarea}{\textwidth}{\textheight}
+\begin{onlyenv}<1>
+\begin{rcode}
+# ggplot2包提供fortify函数将线和面空间对象转换为data.frame
+> methods(fortify)
+ [1] fortify.cld*                      fortify.confint.glht*            
+ [3] fortify.data.frame*               fortify.default*                 
+ [5] fortify.function*                 fortify.glht*                    
+ [7] fortify.Line*                     fortify.Lines*                   
+ [9] fortify.lm*                       fortify.map*                     
+[11] fortify.NULL*                     fortify.Polygon*                 
+[13] fortify.Polygons*                 |\colorbox{green}{fortify.SpatialLinesDataFrame*}|   
+[15] |\colorbox{green}{fortify.SpatialPolygons*}|          |\colorbox{green}{fortify.SpatialPolygonsDataFrame*}|
+[17] fortify.summary.glht*            
+see '?methods' for accessing help and source code
+\end{rcode}
+\end{onlyenv}
+
+\begin{onlyenv}<2>
+\begin{columns} 
+\begin{column}{.4\textwidth}
+\begin{figure}[ht] \vspace{-10pt}
+  \centering 
+  \includegraphics[width=\columnwidth]{spggplot1.pdf}
+\end{figure}
+\end{column}
+
+\begin{column}{.6\textwidth}
+\centering
+\begin{rcode}
+> data(meuse)
+> coordinates(meuse) <- ~x+y
+# 将空间点对象转换为data.frame对象
+> m <- |\colorbox{green}{as}|(meuse,"data.frame")
+# 用ggplot函数绘图
+> ggplot(m, aes(x, y))+geom_point()+coord_equal()
+\end{rcode}
+\end{column}
+\end{columns}
+\end{onlyenv}
+
+\begin{onlyenv}<3>
+\begin{rcode}
+# 读取一个面状shp图层,属性数据包括四个字段
+> sport <- readOGR(dsn = "./data/", "london_sport")
+> str(sport,max.level=2)
+Formal class 'SpatialPolygonsDataFrame' [package "sp"] with 5 slots
+  ..@ data       :'data.frame': 33 obs. of  4 variables:
+  ..@ polygons   :List of 33
+  ..@ plotOrder  : int [1:33] 1 3 4 19 10 25 28 2 7 27 ...
+  ..@ bbox       : num [1:2, 1:2] 503571 155851 561941 200932
+  .. ..- attr(*, "dimnames")=List of 2
+  ..@ proj4string:Formal class 'CRS' [package "sp"] with 1 slot  
+> str(sport@data,max.level=2)
+'data.frame':   33 obs. of  4 variables:
+ $ ons_label : Factor w/ 33 levels "00AA","00AB",..: 6 27 17 16 21 29 18 24 32 8 ...
+ $ name      : Factor w/ 33 levels "Barking and Dagenham",..: 5 27 17 16 21 29 18 24 32 8 ...
+ $ Partic_Per: num  21.7 26.6 21.5 17.9 24.4 19.3 16.9 20.7 26 17.6 ...
+ $ Pop_2001  : Factor w/ 33 levels "147271","158921",..: 29 5 21 19 1 7 14 9 25 32 ...
+
+# fortify函数将空间面对象转换为data.frame
+> sport.f <- |\colorbox{green}{fortify}|(sport, region = "ons_label")
+> sport.f <- merge(sport.f, sport@data, by.x = "id", by.y = "ons_label") # 挂载属性信息
+> Map <- |\colorbox{green}{ggplot}|(sport.f, aes(long, lat, group = group, fill = Partic_Per)) + |\colorbox{green}{geom\_polygon}|() + |\colorbox{green}{geom\_path}|(colour="white",lwd=0.3) + coord_equal() + labs(x = "Easting (m)", y = "Northing (m)", fill = "% Sport Partic.") + ggtitle("London Sports Participation")
+> Map + scale_fill_gradient(low = "green", high = "red")
+\end{rcode}
+\end{onlyenv}
+
+\begin{onlyenv}<4>
+\begin{figure}[ht] \vspace{-20pt}
+  \centering 
+  \includegraphics[width=0.8\columnwidth]{spggplot2.pdf}
+\end{figure}
+\end{onlyenv}
+
+\begin{onlyenv}<5>
+\begin{rcode}
+> library(reshape2)
+# 读取伦敦市各行政区历年人口数据
+> london.data <- read.csv("data/census-historic-population-borough.csv")
+# 将人口数据全部融合到data.frame的一列variable
+> london.data.melt <- melt(london.data, id = c("Area.Code", "Area.Name"))
+> plot.data <- merge(sport.f, london.data.melt, by.x = "id", by.y = "Area.Code")
+# 用分面函数facet_wrap根据变量variable的不同类别绘图
+> ggplot(data = plot.data, aes(x = long, y = lat, fill = value, group = group)) + 
+         geom_polygon() + 
+         geom_path(colour = "white", lwd = 0.3) + 
+         coord_equal() + 
+        |\colorbox{green}{facet\_wrap}|(~variable)
+\end{rcode}
+\end{onlyenv}
+
+\begin{onlyenv}<6>
+\begin{figure}[ht] \vspace{-20pt}
+  \centering 
+  \includegraphics[width=0.8\columnwidth]{spggplot3.pdf}
+\end{figure}
+\end{onlyenv}
+\end{overlayarea}
+\end{frame}
+
+\begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
+\begin{itemize} 
+\item<1-> 除了间接转换的方法，ggplot2包在正在开发的新版本中提供了\emphText{gemo\_sf}函数可以直接绘制从
+\emphText{sf包}读取的空间数据对象
+\end{itemize}
+
+\begin{overlayarea}{\textwidth}{\textheight}
+\begin{onlyenv}<2>
+\begin{rcode}
+# 因为geom_sf函数还未正式发布，因此用install_github函数直接获取开发版源代码
+> \|colorbox{green}{devtools::install\_github}|("tidyverse/ggplot2")
+> require(ggplot2) # 重新加载开发版的ggplot2
+# 用sf包读取空间矢量数据
+> nc <- sf::st_read(system.file("shape/nc.shp", package = "sf"), quiet = TRUE)
+> nc_3857 <- sf::st_transform(nc, "+init=epsg:3857") # 坐标系转换
+> nc_3857$mid <- sf::st_centroid(nc_3857$geometry)  # 抽取面状要素的中心点
+# 先绘制面层，再绘制点层
+> ggplot(nc_3857) + 
++     |\colorbox{green}{geom\_sf}|(aes(fill = AREA), colour = "white", lwd = 0.5) +
++     |\colorbox{green}{geom\_sf}|(aes(geometry = mid, size = BIR74), show.legend = "point") 
+\end{rcode}
+\begin{figure}[ht] 
+  \centering 
+  \includegraphics[width=\columnwidth]{spggplot4.pdf}
+\end{figure}
+\end{onlyenv}
+\end{overlayarea}
+\end{frame}
+
+\subsubsection{绘制栅格空间数据}
+\begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
+\begin{itemize} 
+\item<1-> 栅格空间数据可以用ggplot2包的\emphText{geom\_raster}或\emphText{geom\_tile}函数直接绘制；\emphText{建议在栅格数据较大时采用geom\_raster函数}
+\end{itemize}
+
+\begin{overlayarea}{\textwidth}{\textheight}
+\begin{onlyenv}<1>
+\begin{rcode}
+> library(viridis) # 这个包可以让输出的地图配色更专业 
+> library(raster); library(reshape2)
+# 从外部文件读取栅格数据,包括三个波段
+> carmel_bay <- brick("data/carmel_bay_bathy.tif")
+# 将RasterBrick对象转换成data.frame
+> bay_spdf <- as(carmel_bay, "SpatialPixelsDataFrame")
+> bay_df <- as.data.frame(bay_spdf)
+> bay_df <- melt(bay_df, id=c("x","y")) # 将不同波段数据融合到data.frame的一列variable
+# geom_tile函数不对栅格数据做任何压缩，建议对较大栅格数据用geom_raster函数,其对数据做了压缩优化
+> ggplot() +
++     |\colorbox{green}{geom\_raster}|(data=bay_df, aes(x=x, y=y, fill=value), alpha=0.8) + 
++     scale_fill_viridis() + coord_equal() + facet_wrap(~variable) +
++     theme(panel.spacing = unit(0.2, "in"))
+\end{rcode}
+\begin{figure}[ht] \vspace{-10pt}
+  \centering 
+  \includegraphics[width=\columnwidth]{spraster1.pdf}
+\end{figure}
+\end{onlyenv}
+\end{overlayarea}
+\end{frame}
+
+\begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
+\begin{itemize} 
+\item<1-> rasterVis包提供了\emphText{gplot}函数可以直接对raster包的Raster*对象进行绘制，
+从而省去了数据转换的步骤
+\end{itemize}
+
+\begin{overlayarea}{\textwidth}{\textheight}
+\begin{onlyenv}<1>
+\begin{rcode}
+> library(rasterVis); library(raster); library(viridis)
+> r <- raster(system.file("external/test.grd", package="raster"))
+> s <- stack(r, r*2)
+> names(s) <- c('meuse', 'meuse x 2')
+> |\colorbox{green}{gplot(s)}| + geom_tile(aes(fill = value)) +
+>     scale_fill_gradientn(colours = viridis(256, option = "C")) +
+>     coord_equal() + facet_wrap(~ variable)
+\end{rcode}
+\begin{figure}[ht] \vspace{-10pt}
+  \centering 
+  \includegraphics[width=0.8\columnwidth]{spraster2.pdf}
+\end{figure}
+\end{onlyenv}
+\end{overlayarea}
+\end{frame}
+
+\subsubsection{绘制地图要素}
+\begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
+\begin{itemize} 
+\item<1-> \emphText{ggsn}包提供\emphText{north}和\emphText{scalebar}函数扩展了ggplot2包指北针和比例尺地图要素的绘制功能
+\end{itemize}
+
+\begin{overlayarea}{\textwidth}{\textheight}
+\begin{onlyenv}<1>
+\begin{figure}[ht]
+  \centering 
+  \includegraphics[width=0.75\columnwidth]{northSymbols.png}
+  \caption{ggsn提供的指北针样式及编号，原样式来自QGIS}
+\end{figure}
+\end{onlyenv}
+
+\begin{onlyenv}<2>
+\begin{columns} 
+\begin{column}{.4\textwidth}
+\begin{figure}[ht] 
+  \centering 
+  \includegraphics[width=\columnwidth]{ggsn1.pdf}
+\end{figure}
+\end{column}
+
+\begin{column}{.6\textwidth}
+\centering
+\begin{rcode}
+> library(ggsn);library(sf)
+> dsn <- system.file('extdata', package = 'ggsn')
+> map <- st_read(dsn, 'sp', quiet = TRUE)
+> ggplot(map, aes(fill = nots)) + geom_sf() +
+> +    scale_fill_brewer(name = 'Animal abuse\nnotifications', palette = 8) +
+> +    |\colorbox{green}{north}|(map) + # 添加指北针
+> +     # 在GCS下添加比例尺
+> +    |\colorbox{green}{scalebar}|(map, dist = 5, dd2km = TRUE, model = 'WGS84') 
+\end{rcode}
+\end{column}
+\end{columns}
+\end{onlyenv}
+
+\begin{onlyenv}<3>
+\begin{columns} 
+\begin{column}{.4\textwidth}
+\begin{figure}[ht] 
+  \centering 
+  \includegraphics[width=\columnwidth]{ggsn2.pdf}
+\end{figure}
+\end{column}
+
+\begin{column}{.6\textwidth}
+\centering
+\begin{rcode}
+> # GCS转换到PCS
+> map2 <- st_transform(map, 31983)
+> ggplot(map2) +
++     geom_sf(aes(fill = nots)) +
++     |\colorbox{green}{north}|(map2, symbol = 16, scale = 0.15) +
++     scale_fill_brewer(name = 'Animal abuse\nnotifications', palette = 8) +
++     |\colorbox{green}{scalebar}|(map2, dist = 5, dd2km=FALSE) +
++     # 坐标轴按照PCS进行转换
++     |\colorbox{green}{coord\_sf}|(datum = st_crs(31983)) + 
++     xlab('Meters') +
++     ylab('Meters')
+\end{rcode}
+\end{column}
+\end{columns}
+\end{onlyenv}
+\end{overlayarea}
+\end{frame}
+
+\subsubsection{叠加瓦片地图图层}
+\begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
+\begin{itemize} 
+\item<1-> \emphText{ggspatial}包是近年来开发比较活跃的一个基于ggplot2的空间数据扩展包，其重写了
+所有sp对象的绘图函数，并且还提供叠加OpenStreetMap（OSM）瓦片地图的功能
+\end{itemize}
+
+\begin{overlayarea}{\textwidth}{\textheight}
+\begin{onlyenv}<2>
+\begin{columns} 
+\begin{column}{.4\textwidth}
+\begin{figure}[ht] 
+  \centering 
+  \includegraphics[width=\columnwidth]{ggspatial1.pdf}
+\end{figure}
+\end{column}
+
+\begin{column}{.6\textwidth}
+\centering
+\begin{rcode}
+> library(ggspatial)
+> data(longlake_waterdf)
+> class(longlake_waterdf)
+[1] "SpatialPolygonsDataFrame"
+attr(,"package")
+[1] "sp"
+# ggspatial函数直接绘制sp对象
+# 其是ggplot()+geom\_spatial()+coord\_map()的组合
+> |\colorbox{green}{ggspatial}|(longlake_waterdf, fill = "lightblue")
+Converting coordinates to lat/lon (epsg:4326)
+\end{rcode}
+\end{column}
+\end{columns}
+\end{onlyenv}
+
+\begin{onlyenv}<3>
+\begin{columns} 
+\begin{column}{.4\textwidth}
+\begin{figure}[ht] 
+  \centering 
+  \includegraphics[width=\columnwidth]{ggspatial2.pdf}
+\end{figure}
+\end{column}
+
+\begin{column}{.6\textwidth}
+\centering
+\begin{rcode}
+# ggosm根据数据范围自动下载osm瓦片地图
+# 其是ggplot()+geom\_osm()+coord\_map()的组合
+> |\colorbox{green}{ggosm}|() + 
++     geom_spatial(longlake_waterdf, fill="lightblue")
+Converting coordinates to lat/lon (epsg:4326)
+Zoom: 15
+\end{rcode}
+\end{column}
+\end{columns}
+\end{onlyenv}
+\end{overlayarea}
+\end{frame}
+
+\begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
+\begin{itemize} 
+\item<1-> \emphText{ggmap}是另一个常用的在ggplot2中叠加瓦片地图图层的包；而且除了osm之外，还可以
+加载Google Maps和Stamen Maps
+\end{itemize}
+
+\begin{overlayarea}{\textwidth}{\textheight}
+\begin{onlyenv}<2>
+\begin{columns} 
+\begin{column}{.4\textwidth}
+\begin{figure}[ht] 
+  \centering 
+  \includegraphics[width=\columnwidth]{ggmap.pdf}
+\end{figure}
+\end{column}
+
+\begin{column}{.6\textwidth}
+\centering
+\begin{rcode}
+> library(ggmap)
+> sp <- |\colorbox{green}{get\_googlemap}|("圣保罗")
+> bb <- c(st_bbox(map) * matrix(rep(c(1.001, 0.999), e = 2), ncol = 2))
+> nms <- names(attr(sp, "bb"))
+# 给瓦片地图设置bbox
+> attr(sp, "bb")[1, ] <- bb[c(2, 1, 4, 3)]
+# ggmap和geom\_sf不兼容,这里采用sp对象转换的方案
+> map_sp <- readOGR(dsn, "sp")
+> map_sp@data$id <- 0:(nrow(map_sp@data) - 1)
+> map_sp <- merge(tidy(map_sp), map_sp, by = 'id') 
+# 如果要将ggmap获取的瓦片地图和sf包兼容,
+# 可以使用sf包重写的plot函数,
+# 其提供bgMap参数将ggmap对象作为底图叠加
+> |\colorbox{green}{ggmap}|(sp) +
+>     geom_polygon(data = map_sp, aes(long, lat, group = group, fill = nots), alpha = .7) +
+>     coord_equal() + blank() +
+>     geom_path(data = map_sp, aes(long, lat, group = group)) +     
+>     scalebar(map_sp, dist = 5, dd2km = T, model = 'WGS84') +
+>     north(map) +
+>     scale_fill_brewer(name = 'Animal abuse\nnotifications', palette = 8) +
+>     theme(legend.position = c(0.9, 0.35))
+\end{rcode}
+\end{column}
+\end{columns}
+\end{onlyenv}
+\end{overlayarea}
+\end{frame}
+%而栅格空间数据可以直接用ggplot2包的\emphText{geom\_raster}或\emphText{geom\_tile}函数来绘制
+%\item<2-> 基于ggplot2包绘制地图要素可以借助\emphText{ggsn}包

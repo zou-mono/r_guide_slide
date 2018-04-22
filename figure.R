@@ -1,5 +1,6 @@
 setwd("~/Documents/tex_projects/r_guide_slide")
 library(ggplot2)
+library(reshape2)
 library(lattice)
 library(Cairo)
 library(maptools)
@@ -9,8 +10,11 @@ library(ggplot2movies)
 library(plyr)
 library(maps)
 library(raster)
-#library(trelliscope)
+library(rasterVis)
+library(ggsn)
+library(sf)
 library(RColorBrewer)
+library(viridis)
 
 png("expression-example.png",width=1000,height=1000,res=300,pointsize=6)
 par(mar=c(2,2,0,0)+0.1)
@@ -1429,3 +1433,137 @@ names(cok.maps)
 pal = function(n = 9) brewer.pal(n, "BrBG")
 print(spplot.vcov(cok.maps, cuts=6, col.regions=pal(7)))
 dev.off()
+
+CairoPDF("spggplot1.pdf",6,7.5)
+data(meuse)
+coordinates(meuse) <- ~x+y
+m <- as(meuse,"data.frame")
+ggplot(m, aes(x, y)) + geom_point() + coord_equal()
+dev.off()
+
+CairoPDF("spggplot2.pdf",6,4)
+sport <- readOGR(dsn = "./data/", "london_sport")
+sport.f <- fortify(sport, region = "ons_label")
+sport.f <- merge(sport.f, sport@data, by.x = "id", by.y = "ons_label")
+Map <- ggplot(sport.f, aes(long, lat, group = group, fill = Partic_Per)) +
+    geom_polygon() + geom_path(colour="white",lwd=0.3) +
+    coord_equal() + labs(x = "Easting (m)", y = "Northing (m)", fill = "% Sport Partic.") + 
+    ggtitle("London Sports Participation")
+Map + scale_fill_gradient(low = "green", high = "red") +
+    theme(plot.margin=grid::unit(c(0,0,0,0), "mm"))
+#ggsave("spggplot2.pdf")
+dev.off()
+
+CairoPDF("spggplot3.pdf",10,7)
+library(reshape2)
+london.data <- read.csv("data/census-historic-population-borough.csv")
+london.data <- subset(london.data, select=-c(Pop_1801))
+london.data.melt <- melt(london.data, id = c("Area.Code", "Area.Name"))
+plot.data <- merge(sport.f, london.data.melt, by.x = "id", by.y = "Area.Code")
+ggplot(data = plot.data, aes(x = long, y = lat, fill = value, group = group)) + 
+    geom_polygon() + geom_path(colour = "white", lwd = 0.3) + coord_equal() + 
+    facet_wrap(~variable)
+dev.off()
+
+CairoPDF("spggplot4.pdf",10,3.5)
+devtools::install_github("tidyverse/ggplot2")
+require(ggplot2)
+nc <- sf::st_read(system.file("shape/nc.shp", package = "sf"), quiet = TRUE)
+                                        #ggplot(nc) + geom_sf(aes(fill = AREA))
+nc_3857 <- sf::st_transform(nc, "+init=epsg:3857")
+nc_3857$mid <- sf::st_centroid(nc_3857$geometry)
+ggplot(nc_3857) +
+    geom_sf(aes(fill = AREA), colour = "white", lwd = 0.5) +
+    geom_sf(aes(geometry = mid, size = BIR74), show.legend = "point") +
+    theme(plot.margin=grid::unit(c(0,0,0,0), "mm"))
+dev.off()
+
+CairoPDF("spraster1.pdf",10,3.5)
+library(rasterVis)
+library(raster)
+carmel_bay <- brick("data/carmel_bay_bathy.tif")
+bay_spdf <- as(carmel_bay, "SpatialPixelsDataFrame")
+bay_df <- as.data.frame(bay_spdf)
+bay_df <- melt(bay_df, id=c("x","y"))
+ggplot() +
+    geom_raster(data=bay_df, aes(x=x, y=y, fill=value), alpha=0.8) + 
+    scale_fill_viridis() +
+    coord_equal() +
+    facet_wrap(~variable) +
+    theme(panel.spacing = unit(0.2, "in"))
+dev.off()
+
+CairoPDF("spraster2.pdf",8,5)
+r <- raster(system.file("external/test.grd", package="raster"))
+s <- stack(r, r*2)
+names(s) <- c('meuse', 'meuse x 2')
+theme_set(theme_bw())
+gplot(s) + geom_tile(aes(fill = value)) +
+    scale_fill_gradientn(colours = viridis(256, option = "C")) + 
+    coord_equal() + facet_wrap(~ variable)
+dev.off()
+
+devtools::install_github('oswaldosantos/ggsn')
+CairoPDF("ggsn1.pdf",8,10)
+library(ggsn);library(sf)
+dsn <- system.file('extdata', package = 'ggsn')
+map <- st_read(dsn, 'sp', quiet = TRUE)
+ggplot(map, aes(fill = nots)) +
+    geom_sf() +
+    scale_fill_brewer(name = 'Animal abuse\nnotifications', palette = 8) +
+    north(map) +
+    scalebar(map, dist = 5, dd2km = TRUE, model = 'WGS84')
+dev.off()
+
+CairoPDF("ggsn2.pdf",8,10)
+# GCS转换到PCS
+map2 <- st_transform(map, 31983)
+ggplot(map2) +
+    geom_sf(aes(fill = nots)) +
+    north(map2, symbol = 16, scale = 0.15) +
+    scale_fill_brewer(name = 'Animal abuse\nnotifications', palette = 8) +
+    scalebar(map2, dist = 5, dd2km=FALSE) +
+    coord_sf(datum = st_crs(31983)) +
+    xlab('Meters') +
+    ylab('Meters')
+dev.off()
+
+CairoPDF("ggspatial1.pdf",8,10)
+library(ggspatial)
+data(longlake_waterdf)
+ggspatial(longlake_waterdf, fill = "lightblue")
+dev.off()
+
+CairoPDF("ggspatial2.pdf",8,10)
+#
+ggosm() + 
+    geom_spatial(longlake_waterdf, fill = "lightblue", alpha=1)
+dev.off()
+
+CairoPDF("ggmap.pdf",8,10)
+library(ggmap)
+library(sp)
+library(rgdal)
+library(broom)
+sp <- get_googlemap("圣保罗")
+bb <- c(st_bbox(map) * matrix(rep(c(1.001, 0.999), e = 2), ncol = 2))
+nms <- names(attr(sp, "bb"))
+attr(sp, "bb")[1, ] <- bb[c(2, 1, 4, 3)]
+
+map_sp <- readOGR(dsn, "sp")
+map_sp@data$id <- 0:(nrow(map_sp@data) - 1)
+map_sp <- merge(tidy(map_sp), map_sp, by = 'id')
+
+ggmap(sp) +
+    geom_polygon(data = map_sp, aes(long, lat, group = group, fill = nots),
+                 alpha = .7) +
+    coord_equal() +
+    geom_path(data = map_sp, aes(long, lat, group = group)) +
+    blank() +
+    scalebar(map_sp, dist = 5, dd2km = T, model = 'WGS84') +
+    north(map) +
+    scale_fill_brewer(name = 'Animal abuse\nnotifications', palette = 8) +
+    theme(legend.position = c(0.9, 0.35))
+dev.off()
+
+
