@@ -763,6 +763,7 @@ xyplot(Murder ~ Population | state.region, data = states,
 
 \only<2>{
 \begin{table} \centering \scriptsize
+  \renewcommand\arraystretch{0.9}
   \begin{tabular}{|m{0.15\columnwidth}|m{0.75\columnwidth}|}
     \toprule
     \rowcolor{LightCyan}
@@ -790,7 +791,7 @@ $X[,1]+X[,2]+...+X[,ncol(X)]$; 还可以通过索引向量
 \subsection{面向对象编程}
 \begin{frame}[t]{\subsecname}{}
 \begin{itemize}
-\item \emphText{R语言中支持面向对象(Object-Oriented, OO)编程来提高代码的使用率}，从而实现具体功能的扩展和模块化
+\item \emphText{R语言中支持面向对象(Object-Oriented, OO)编程来提高代码的使用率}，从而高效实现功能扩展和模块化
   \item R语言作为一种统计编程语言，需要用到OO的场景主要有以下两类：
   \begin{itemize}
      \item[\PencilLeftDown] 当需要用一种新的类型来表示数据，该类型与
@@ -804,7 +805,7 @@ $X[,1]+X[,2]+...+X[,ncol(X)]$; 还可以通过索引向量
 
 \begin{frame}[t,fragile]{\subsecname}{S3系统}
   \begin{itemize}
-  \item S3是R语言的第一种也是最简单的一种OO系统，也是\emphText{CRAN程序包中最常用的一种OO系统}
+  \item S3是R语言最简单的一种OO系统，也是\emphText{最早使用的一种OO系统，在base包中非常常见}
   \item S3系统中方法(method)是属于函数而不是属于类，这种函数称为\emphText{泛型函数}(generic function)
   \item 泛型函数的形式是\emphText{generic.class()}，其实质是根据传入函数的第一个参数的类去调用相应的“子函数”
   \end{itemize}  
