@@ -12,7 +12,7 @@
   \begin{columns}
     \begin{column}{.5\textwidth}
       \begin{figure}
-        \centering \includegraphics[width=\columnwidth]{屠龙宝刀.jpg}
+        \centering \includegraphics[width=0.95\columnwidth]{屠龙宝刀.jpg}
       \end{figure}
     \end{column}
 
@@ -101,8 +101,8 @@
       \caption{表示二维变量关系的散点图}
     \end{figure}}
    
-  \only<5->{
-    \begin{alertblock}{excel作为统计绘图工具的缺点}
+  \only<5->{\vspace{5pt}
+    \begin{badbox}{excel作为统计绘图工具的缺点}
       \begin{itemize} \small
         \item<6-> [\PencilLeftDown] excel并非专业统计软件，只擅长对原始数据的展示，统
         计分析和建模功能十分有限。因此，著名统计学家Leland
@@ -111,7 +111,7 @@
                  不具备大规模数据管理功能
         \item<8->[\PencilLeftDown] 绘图功能十分有限，只提供部分基本统计图形 
       \end{itemize}
-    \end{alertblock}
+    \end{badbox}
 ~} %使footnote看上去在“最下面”
 \only<6->{
 \footnotetext[1]{统计学经典书籍《The Grammar of Graphics》一书的作者，任职SPSS公司十年，而且一直领导其可视化小组}}
@@ -123,29 +123,29 @@
 \end{frame}
 
 \subsubsection{SPSS}
-\begin{frame}[t]{\subsecname}{\subsubsecname}
+\begin{frame}{\subsecname}{\subsubsecname}
   \begin{itemize}
-    \item<1-> 易学易用
-    \item<2-> 功能全面
-    \item<3-> 界面友好
+    \item 易学易用
+    \item 功能全面
+    \item 界面友好
   \end{itemize}
 
-\begin{overlayarea}  {\textwidth}{\textheight}
+\begin{overlayarea}{\textwidth}{\textheight}
   \only<1-3>{
     \begin{figure}[ht]
       \centering \includegraphics[width=0.9\textwidth]{SPSS.png}
       \caption{SPSS用户操作界面}
     \end{figure}}
    
-  \only<4->{
-    \begin{alertblock}{SPSS及其他所见即所得工具的缺陷}
+  \only<4->{\vspace{10pt}
+    \begin{badbox}{SPSS的缺点}
       \begin{itemize} \small
-        \item<4->[\PencilLeftDown] 按钮数量是有限的，而需求是无限的
-        \item<5->[\PencilLeftDown] 图形要素控制缺乏灵活性和精准性
-        \item<6->[\PencilLeftDown] 生成一张图易，生成N张图难
-        \item<7->[\PencilLeftDown] 贫穷限制了想象力
+        \item<5->[\PencilLeftDown] 按钮数量是有限的，而需求是无限的
+        \item<6->[\PencilLeftDown] 图形要素控制缺乏灵活性和精准性
+        \item<7->[\PencilLeftDown] 生成一张图易，生成N张图难
+        \item<8->[\PencilLeftDown] 贫穷限制了想象力
       \end{itemize}
-    \end{alertblock}}
+    \end{badbox}}
 \end{overlayarea}
 \end{frame}
 
@@ -246,7 +246,7 @@ RUN;
     \begin{itemize}
       \item S-Plus是基于S语言开发的商业化统计软件，1993年由MathSoft公司开发，
             2008年起由TIBCO负责运维
-      \item 与SPSS和SAS并称世界三大统计软件，具有专业的统计功能
+      \item 与SPSS、SAS并称世界三大商业统计软件
     \end{itemize}
 
     \begin{figure}
@@ -263,6 +263,15 @@ RUN;
   %   \end{itemize}
   % \end{variableblock}
 \onslide<1->{
+  \begin{badbox}{所想即所得工具的劣势}
+     \begin{itemize}
+     \item[\PencilLeftDown] 人机交互全靠指令输入，需要具备编程基础
+     \item[\PencilLeftDown] 需要扎实的统计学基础，学习曲线陡峭
+     \item[\PencilLeftDown] 绘制简单统计图形不如“所见即所得工具”直观和快捷    
+     \end{itemize}
+  \end{badbox}}
+
+\onslide<2->{
   \begin{goodbox}{所想即所得工具的优势}
      \begin{itemize}
      \item[\PencilLeftDown] 想象力有多大，世界就有多精彩
@@ -270,14 +279,4 @@ RUN;
      \item[\PencilLeftDown] 深入算法内核，由术至道 
      \end{itemize}
   \end{goodbox}}
-
-\onslide<2->{
-  \begin{badbox}{所想即所得工具的劣势}
-     \begin{itemize}
-     \item[\PencilLeftDown] 人机交互全靠指令输入，需要具备编程基础
-     \item[\PencilLeftDown] 需要扎实的统计学基础，学习曲线陡峭
-     \item[\PencilLeftDown] 实现简单的统计功能时不如“所见即所得工具”快捷    
-     \end{itemize}
-  \end{badbox}}
-
 \end{frame} 

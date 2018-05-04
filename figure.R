@@ -16,6 +16,20 @@ library(sf)
 library(RColorBrewer)
 library(viridis)
 
+fun1<-function(x){
+  df<-data.frame()
+  for(i in 1:nrow(x)){
+    row<-x[i,]
+    df<-rbind(df,mean(row))
+  }
+}
+fun2 <-function(x){
+  apply(x,1,mean)
+}
+x <- cbind(x1=3, x2=1:100,x3=c(5:55,1:50))
+system.time(fun1(x))
+system.time(fun2(x))
+
 png("expression-example.png",width=1000,height=1000,res=300,pointsize=6)
 par(mar=c(2,2,0,0)+0.1)
 plot(1:10, 1:10)

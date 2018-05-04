@@ -146,7 +146,7 @@
                  和mac三大主流平台
 \item 安装后的程序界面是一个交互式命令行终端，默认由一个“>”符号表示命令输入和结果
                  输出指示符
-\item 在windows有一个简陋的GUI，linux和mac下默认只有CLI终端 
+\item 在Windows系统有一个简陋的GUI，Unix/Linux系统和Mac系统默认只在CLI终端运行 
 \end{itemize} 
 
 \begin{overlayarea}{\textwidth}{\textheight}
@@ -176,7 +176,7 @@
 \subsubsection{基本操作}
 \begin{frame}[t, fragile]{\subsecname}{\subsubsecname}
 \begin{itemize}
-  \item R的第一种操作就是\emphText{“输入命令$\rightarrow$回车$\rightarrow$输出结果”}这种
+  \item R的第一种操作遵循\emphText{“输入命令$\rightarrow$回车$\rightarrow$输出结果”}这种
              标准的交互式命令行方式  
 \end{itemize} 
 
@@ -209,7 +209,10 @@ F-statistic: 31.77 on 1 and 98 DF,  p-value: 1.671e-07
 
 \begin{onlyenv}<2>
 \begin{rcode}
-plot(x, y); abline(fit)
+# 绘制散点图
+> plot(x, y)
+# 添加回归直线
+> abline(fit)
 \end{rcode}
 \begin{figure}
     \centering
@@ -693,31 +696,13 @@ read.table(file, header = FALSE, sep = "", quote = "\"’", dec = ".", row.names
 write.table(x, file = "", append = FALSE, quote = TRUE, sep = " ", eol = "\n", na = "NA", dec = ".", row.names = TRUE, col.names = TRUE, qmethod = c("escape", "double"))
 \end{rcode}
 \end{onlyenv}
-
 \end{overlayarea}
-\end{frame}
-
-\subsection{程序控制}
-\begin{frame}{\subsecname}{}
-  \begin{itemize}
-  \item<1-> if (条件) {表达式}
-  \item<1-> if (条件) {表达式} else {表达式}
-  \item<1-> if...else if...else if... else...
-  \item<1-> ifelse (条件, yes, no)
-  \item<2-> for (变量 in 向量) {表达式}
-  \item<2-> while (条件) {表达式} 
-  \end{itemize}
-
-\onslide<3>{
-\begin{badbox}{}
-循环的编程模式在R语言中效率很低，尽量避免使用，应该尽量使用基于列表的操作模式！
-\end{badbox}} 
 \end{frame}
 
 \subsection{函数}
 \begin{frame}[t,fragile]{\subsecname}{}
 \begin{itemize}
-  \item R语言中可以定义函数，以便编程中可以以不同的参数值重复使用同一段代码
+  \item R语言中可以定义函数，以便程序可以设置不同的参数值来重复使用同一段代码
   \item 定义函数：\emphText{function(arglist) expr return(value)}；
 其中arglist是参数列表，expr是函数的主体，return()用来返回函数值
   \item \emphText{函数是R中用于黑箱操作的重要实体}
@@ -750,6 +735,50 @@ xyplot(Murder ~ Population | state.region, data = states,
        })
 \end{rcode}  
 \end{onlyenv}
+\end{frame}
+
+\subsection{程序控制}
+\begin{frame}[t,fragile]{\subsecname}{}
+  \begin{itemize}
+  \item<1-> if (条件) {表达式}
+  \item<1-> if (条件) {表达式} else {表达式}
+  \item<1-> if...else if...else if... else...
+  \item<1-> ifelse (条件, yes, no)
+  \item<2-> for (变量 in 向量) {表达式}
+  \item<2-> while (条件) {表达式} 
+  \end{itemize}
+
+\begin{overlayarea}{\textwidth}{\textheight}
+\only<3>{
+\begin{badbox}{}
+循环的编程模式在R语言中效率很低，尽量避免使用，应该尽可能使用基于向量的apply函数族来实现循环！
+\end{badbox}} 
+
+\begin{onlyenv}<4>
+\begin{rcode}
+# 用for循环封装一个函数,用于计算每行的平均值
+> fun1<-function(x){
++   df<-data.frame()
++   for(i in 1:nrow(x)){
++     row<-x[i,]
++     df<-rbind(df,mean(row))
++   }
++ }
+# 直接用apply函数封装一个函数,用于计算每行的平均值
+> fun2 <-function(x){ |\colorbox{green}{apply}|(x,1,mean) }
+
+# 设置测试数据集
+> x <- cbind(x1=3, x2=1:100,x3=c(5:54,1:50))
+# 测试结果基于向量的计算比直接for循环快得多！
+> system.time(fun1(x))
+   user  system elapsed 
+  0.056   0.004   0.060 
+> system.time(fun2(x))
+   user  system elapsed 
+  0.001   0.000   0.001
+\end{rcode}
+\end{onlyenv}
+\end{overlayarea}
 \end{frame}
 
 \subsection{公式}

@@ -5,7 +5,7 @@
 %%% End:
 
 \section{基础绘图系统}
-\begin{frame}[c]{\subsecname}
+\begin{frame}[c]{庞大而有组织的系统}
   %\vspace{40pt}
   \begin{columns}
     \begin{column}{.5\textwidth}
@@ -31,7 +31,8 @@
   \item<1-> 绘图设备用于管理R的图形输出，分为\emphText{窗口设备和图形设备}
   \item<2-> 窗口设备通过一个依赖于\emphTextStep{2-}{操作系统底层窗口来输出图形}，在Unix/Linux系统中称为X11，在
         Windows系统中称为windows
-  \item<2-> 图形设备用于将\emphTextStep{2-}{R对象输出到文件}，例如jpeg、pdf、png、bmp、metafile等
+  \item<2-> 图形设备用于将\emphTextStep{2-}{R对象输出到文件}，包括所有主流栅格文件格式
+(jpeg、pdf、png、bmp、metafile等)
   \item<3-> \emphTextStep{3-}{layout()}函数用于将绘图设备进行分割，
             图形将一次显示在不同的部分中；不再使用的绘图设备用\emphTextStep{3-}{dev.off()}函数关闭 
   \end{itemize} 
@@ -192,9 +193,7 @@ X11cairo      pdf     jpeg
 > opar <- par()
 # 通过par()函数定制图形
 > par(|\colorbox{green}{bg}|="lightyellow", |\colorbox{green}{col.axis}|="blue", |\colorbox{green}{mar}|=c(4, 4, 2.5, 0.25))
-> plot(x, y, xlab="Ten random values", ylab="Ten other values",
-+ xlim=c(-2, 2), ylim=c(-2, 2), pch=22, col="red", bg="yellow",
-+ bty="l", tcl=-.25, las=1, cex=1.5)
+> plot(x, y, xlab="Ten random values", ylab="Ten other values", xlim=c(-2, 2), ylim=c(-2, 2), pch=22, col="red", bg="yellow", bty="l", tcl=-.25, las=1, cex=1.5)
 # 通过低级绘图函数title为上图添加定制标题
 > title("通过par参数来定制散点图", font.main=3, adj=1)
 # 恢复缺省绘图参数
@@ -318,7 +317,7 @@ X11cairo      pdf     jpeg
 \begin{frame}[t]{\subsecname}{\subsubsecname}
 \begin{itemize}
 \item<1-> 颜色元素由\emphText{grDevices包}支持，其内部编写了大量颜色函数
-\item<1-> 颜色函数分为\emphTextStep{2}{固定颜色选择函数、颜色生成函数和特定颜色主题调色板}
+\item<1-> 颜色函数分为\emphText{固定颜色选择函数、颜色生成函数和特定颜色主题调色板}
 \end{itemize}
 
 \begin{figure}

@@ -5,7 +5,7 @@
 %%% End:
 
 \section{grid绘图系统}
-\subsection{另辟蹊径}
+\subsection{标新立异}
 \begin{frame}{\subsecname}{}
   % % \begin{minipage}{\textwidth}
   % %     \begin{ornamentblock}
@@ -25,7 +25,7 @@
 
     \begin{column}{.5\textwidth}
       \begin{ornamentblock}
-        {支道林在白马寺中；将冯太常共语；因及《逍遥》；支卓然标新埋于二家之表；立异于众贤之外\\
+        {支道林在白马寺中，将冯太常共语，因及《逍遥》。支卓然标新埋于二家之表，立异于众贤之外\\
           \rightline{\textemdash《刘义庆·世说新语》}}
       \end{ornamentblock}
       % \curlyframe{工欲善其事,必先利其器\\
@@ -442,7 +442,6 @@ xyplot(y ~ x |\textbar| gl(1, length(types)),
 \end{overlayarea}
 \end{frame}
 
-\subsubsection{主题和图形参数设置}
 \begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
 \begin{itemize}
 \item 除了设置theme参数之外，还可以通过\emphText{par.settings参数}仅对当前图形进行图形参数调整，
@@ -646,8 +645,8 @@ xyplot(y ~ x |\textbar| gl(1, length(types)),
 \end{overlayarea}
 \end{frame}
 
-\subsubsection{数据(data)}
-\begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
+\subsubsection{数据}
+\begin{frame}[t,fragile]{\subsecname}{数据(data)}
 \begin{itemize}
 \item ggplot2对数据的要求是\emphText{必须是data.frame类型}
 \item ggplot2从给定的data.frame中提取绘图所需变量\emphText{生成新的数据集}，而不是直接在原数据上进行变换
@@ -669,8 +668,8 @@ xyplot(y ~ x |\textbar| gl(1, length(types)),
 \end{onlyenv}
 \end{frame}
 
-\subsubsection{映射(mapping)}
-\begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
+\subsubsection{映射}
+\begin{frame}[t,fragile]{\subsecname}{映射(mapping)}
 \begin{itemize}
 \item<1-> \emphText{aes()}函数用来将数据变量映射到图形中，使变量成为可以被感知的图形属性
 \item<1-> \emphText{最好不要使用指定数据集之外的变量}，这不利于将绘图所需数据都封装到一个对象中
@@ -725,8 +724,8 @@ xyplot(y ~ x |\textbar| gl(1, length(types)),
 \end{overlayarea}
 \end{frame}
 
-\subsubsection{标度(scales)}
-\begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
+\subsubsection{标度}
+\begin{frame}[t,fragile]{\subsecname}{标度(scales)}
 \begin{itemize}
 \item 标度是\emphText{从数据空间的定义域到图形属性空间值域的映射}，
 将数据转化为视觉上可以感知的颜色、大小、位置和形状
@@ -775,8 +774,8 @@ xyplot(y ~ x |\textbar| gl(1, length(types)),
 \end{overlayarea}
 \end{frame}
 
-\subsubsection{几何对象(geometric object)}
-\begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
+\subsubsection{几何对象}
+\begin{frame}[t,fragile]{\subsecname}{几何对象(geometric object)}
 \begin{itemize}
 \item 几何对象简称geom，负责执行图形的实际渲染，控制生成的图形类型，
 几何对象函数的命名规则是\emphText{geom\_加上几何对象名字}
@@ -809,8 +808,8 @@ xyplot(y ~ x |\textbar| gl(1, length(types)),
 \end{table}
 \end{frame}
 
-\subsubsection{统计变换(statistical transformations)}
-\begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
+\subsubsection{统计变换}
+\begin{frame}[t,fragile]{\subsecname}{统计变换(statistical transformations)}
 \begin{itemize}
 \item 统计变换简称stat，负责通过某种方式对数据进行统计汇总，统计变换函数的命名规则是\emphText{stat\_加上统计变换名字}
 \end{itemize}
@@ -839,8 +838,8 @@ xyplot(y ~ x |\textbar| gl(1, length(types)),
 \end{table}
 \end{frame}
 
-\subsubsection{分面(faceting)}
-\begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
+\subsubsection{分面}
+\begin{frame}[t,fragile]{\subsecname}{分面(faceting)}
 \begin{itemize}
 \item<1-> 分面即在同一图幅上自动摆放多个图形的绘图概念(同lattice)
 \item<1-> 提供两种分面类型：\emphText{网格型}(facet\_grid)和\emphText{封装型}(facet\_wrap)
@@ -959,8 +958,8 @@ xyplot(y ~ x |\textbar| gl(1, length(types)),
 \end{overlayarea}
 \end{frame}
 
-\subsubsection{位置调整(position adjustments)}
-\begin{frame}[t]{\subsecname}{\subsubsecname}
+\subsubsection{位置调整}
+\begin{frame}[t]{\subsecname}{位置调整(position adjustments)}
 \begin{itemize}
 \item 位置调整指的是对图层中\emphText{元素的位置}进行调整
 \item 位置调整\emphText{通常用于离散型数据}，通过对位置的微调来比较数据
@@ -999,8 +998,8 @@ xyplot(y ~ x |\textbar| gl(1, length(types)),
 \end{overlayarea}
 \end{frame}
 
-\subsubsection{坐标系(coordinate system)}
-\begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
+\subsubsection{坐标系}
+\begin{frame}[t,fragile]{\subsecname}{坐标系(coordinate system)}
 \begin{itemize}
 \item 坐标系是将两种位置标度结合在一起组成的二维定位系统，坐标系函数命名规则是\emphText{coord\_加上坐标系名字}
 \item \emphText{ggplot2包仅支持二维坐标系}，要实现三维绘图必须依赖其他第三方包，例如plotly和rgl
@@ -1105,7 +1104,7 @@ ggplot(diamonds,aes(x=carat)) + |\colorbox{green}{stat\_bin}|(fill="steelblue",|
 \begin{minipage}{\textwidth}
 \begin{rcode}
 # 第一步：初始化,载入数据并进行图形属性映射
-> ggplot(mpg, aes(x=cty, y=hwy))
+> ggplot(|\colorbox{green}{mpg}|, |\colorbox{green}{aes}|(x=cty, y=hwy))
 \end{rcode}
 \end{minipage}
 \begin{minipage}{\textwidth}
@@ -1119,7 +1118,7 @@ ggplot(diamonds,aes(x=carat)) + |\colorbox{green}{stat\_bin}|(fill="steelblue",|
 \begin{rcode}
 # 第二步：分面,按年份
 > ggplot(mpg, aes(x=cty, y=hwy))+
-      facet_wrap(~ year,ncol=2)
+      |\colorbox{green}{facet\_wrap}|(~ year,ncol=2)
 \end{rcode}
 \end{minipage}
 \begin{minipage}{\textwidth}
@@ -1134,8 +1133,8 @@ ggplot(diamonds,aes(x=carat)) + |\colorbox{green}{stat\_bin}|(fill="steelblue",|
 # 第三步：绘制图层,包括几何对象图层、经过统计变换后的图层和位置调整
 > ggplot(mpg, aes(x=cty, y=hwy))+
       facet_wrap(~ year,ncol=2)+
-      geom_point(aes(colour=class,size=displ),alpha=0.6,position = "jitter")+  
-      stat_smooth()
+      |\colorbox{green}{geom\_point}|(aes(colour=class,size=displ),alpha=0.6,|\colorbox{green}{position}|="jitter")+  
+      |\colorbox{green}{stat\_smooth}|()
 \end{rcode}
 \end{minipage}
 \begin{minipage}{\textwidth}
@@ -1152,7 +1151,7 @@ ggplot(diamonds,aes(x=carat)) + |\colorbox{green}{stat\_bin}|(fill="steelblue",|
       facet_wrap(~ year,ncol=2)+
       geom_point(aes(colour=class,size=displ),alpha=0.6,position = "jitter")+  
       stat_smooth()+  
-      scale_size(range = c(5, 10))
+      |\colorbox{green}{scale\_size}|(range = c(5, 10))
 \end{rcode}
 \end{minipage}
 \begin{minipage}{\textwidth}
@@ -1166,14 +1165,13 @@ ggplot(diamonds,aes(x=carat)) + |\colorbox{green}{stat\_bin}|(fill="steelblue",|
 \begin{rcode}
 # 第五步：图形微调,调整与图形无关要素,例如添加标题、坐标轴标签、图例标签、注释等
 > ggplot(mpg, aes(x=cty, y=hwy))+
+     facet_wrap(~ year,ncol=2)+     
      geom_point(aes(colour=class,size=displ),alpha=0.6,position = "jitter")+  
      stat_smooth()+  
      scale_size(range = c(5, 10))+
-     facet_wrap(~ year,ncol=2)+
-     ggtitle("汽车油耗与型号")+  
-     labs(y='每加仑高速公路行驶距离',x='每加仑城市公路行驶距离')+  
-     guides(size=guide_legend(title='排量'),colour=guide_legend(title='车型',override.aes=
-            list(size=5)))
+     |\colorbox{green}{ggtitle}|("汽车油耗与型号")+  
+     |\colorbox{green}{labs}|(y='每加仑高速公路行驶距离',x='每加仑城市公路行驶距离')+  
+     |\colorbox{green}{guides}|(size=guide_legend(title='排量'),colour=guide_legend(title='车型',override.aes=list(size=5)))
 \end{rcode}
 \end{minipage}
 \begin{minipage}{\textwidth}
