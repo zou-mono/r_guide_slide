@@ -11,7 +11,7 @@
     width=1.5cm,           % width of the sidebar (default is 2 cm)
     hideothersubsections,% hide all subsections but the subsections in the current section
 %    hideallsubsections,  % hide all subsections
-   left                % right of left position of sidebar (default is right)
+    left                % right of left position of sidebar (default is right)
 ]{Aalborg}
 
 \usecolortheme{orchid} 

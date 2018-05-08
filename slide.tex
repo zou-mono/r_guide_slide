@@ -7,11 +7,12 @@
 
 % specify some optional logos
 \graphicspath{{figures/}}
-\pgfdeclareimage[height=1.45cm]{mainlogo}{figures/logo}
-\logo{\pgfuseimage{mainlogo}}
+%\pgfdeclareimage[height=1.45cm]{mainlogo}{figures/logo}
+\pgfdeclareimage[height=1.4cm]{mainlogo}{figures/Rlogo.png}
 % placed in the lower left/right corner if the \pgfuseimage{minilogo}
 % command is uncommented in the \institute command below.
-\pgfdeclareimage[height=0.3cm]{minilogo}{figures/logo}
+\pgfdeclareimage[height=1cm]{minilogo}{figures/Rlogo.png}
+\logo{\pgfuseimage{minilogo}}
 
 \AtBeginSection[] {
   \begin{frame}
@@ -47,11 +48,12 @@
 \begin{document}
 
 \title[现代统计图形及在R中的实现]% optional, use only with long paper titles
-{\erhao 现代统计图形及在R中的实现\\[2ex]}
+{\heiti \xiaoerhao 现代统计图形及在R中的实现}
+
 
 \author[邹海翔] % optional, use only with lots of authors
-{邹海翔}
-
+{\xiaosihao 邹海翔}
+\date{\xiaosihao 2018年 5 月}
  % - Give the names in the same order as they appear in the paper.  -
  % Use the \inst{?} command only if the authors have different
  % affiliation. See the beamer manual for an example
@@ -59,15 +61,14 @@
 
 \institute[深圳市规划国土发展研究中心] % optional - is placed in the bottom of the sidebar on every slide
 {%
-   \wuhao 深圳市规划国土发展研究中心
+   \xiaosihao 深圳市规划国土发展研究中心
    % there must be an empty line above this line - otherwise some
    % unwanted space is added
    % between the university and the country (I do not know why)
 }
 
  % \date{\today}
-\date{2018年 4 月}
- \titlegraphic{\pgfuseimage{mainlogo}} %insert a company or department logo
+\titlegraphic{\pgfuseimage{mainlogo}} %insert a company or department logo
 
 
  % the titlepage the plain option removes the sidebar and header from
@@ -82,12 +83,12 @@
    {\tableofcontents[hideallsubsections]}
  \end{frame}
 
-%\include{body/section01}
+\include{body/section01}
 %\include{body/section02}
 %\include{body/section03}
 %\include{body/section04}
 %\include{body/section05}
-\include{body/section06}
+%\include{body/section06}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 

@@ -48,17 +48,19 @@
     \begin{minipage}[c][\textheight][c]{\beamer@plainpagewidth}
       \vfill
       \centering
-      {\usebeamerfont{title}\usebeamercolor[fg]{title}\inserttitle}
+       \begin{beamercolorbox}[wd=\beamer@plainpagewidth,rounded=true,shadow=true,center,sep=\baselineskip]{titlepagecolorbox}%
+          {\usebeamerfont{title}\usebeamercolor[white]{title}\inserttitle}
 
-      {\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubtitle}\vspace*{\baselineskip}
-      
-      \begin{beamercolorbox}[wd=\beamer@plainpagewidth,center,sep=\baselineskip]{titlepagecolorbox}%
-        {\usebeamerfont{date}\insertdate}\vspace*{\baselineskip}
-        
-        {\usebeamerfont{author}\insertauthor}\vspace*{\baselineskip}
-        
-        {\usebeamerfont{institute}\insertinstitute}
+          {\usebeamerfont{subtitle}\usebeamercolor[white]{subtitle}\insertsubtitle}
       \end{beamercolorbox}\vspace*{\baselineskip}
+      
+      %\begin{beamercolorbox}[wd=\beamer@plainpagewidth,center,sep=\baselineskip]{titlepagecolorbox}%
+      {\usebeamerfont{institute}\insertinstitute} \vspace*{\baselineskip}        
+
+      {\usebeamerfont{author}\insertauthor} \vspace*{\baselineskip}
+        
+      {\usebeamerfont{date}\insertdate} \vspace*{\baselineskip}
+      %\end{beamercolorbox}\vspace*{\baselineskip}
       
       {\inserttitlegraphic}\vspace*{\baselineskip}
     \end{minipage}
