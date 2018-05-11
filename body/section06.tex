@@ -5,7 +5,7 @@
 %%% End:
 \section{空间数据绘图系统}
 
-\begin{frame}[c]{\subsecname}{}
+\begin{frame}[c]{空间的哲学阐述}{}
       \begin{ornamentblock}%\hspace*{\parindent}
 \hspace*{2em}我们借助于外感官（我们意识的一种性质）表象给我们自己外面的对象，这些对
 象毫无例外的在空间里面。这些对象的形状、大小、以及它们相互间的关系是在
@@ -2138,7 +2138,7 @@ Formal class 'SpatialPolygonsDataFrame' [package "sp"] with 5 slots
 # 将人口数据全部融合到data.frame的一列variable
 > london.data.melt <- melt(london.data, id = c("Area.Code", "Area.Name"))
 > plot.data <- merge(sport.f, london.data.melt, by.x = "id", by.y = "Area.Code")
-# 用分面函数facet_wrap根据变量variable的不同类别绘图
+# 用分面函数facet\_wrap根据变量variable的不同类别绘图
 > ggplot(data = plot.data, aes(x = long, y = lat, fill = value, group = group)) + 
          geom_polygon() + 
          geom_path(colour = "white", lwd = 0.3) + 
@@ -2165,7 +2165,7 @@ Formal class 'SpatialPolygonsDataFrame' [package "sp"] with 5 slots
 \begin{overlayarea}{\textwidth}{\textheight}
 \begin{onlyenv}<2>
 \begin{rcode}
-# 因为geom_sf函数还未正式发布，因此用install_github函数直接获取开发版源代码
+# 因为geom\_sf函数还未正式发布，因此用install\_github函数直接获取开发版源代码
 > \|colorbox{green}{devtools::install\_github}|("tidyverse/ggplot2")
 > require(ggplot2) # 重新加载开发版的ggplot2
 # 用sf包读取空间矢量数据
@@ -2202,7 +2202,7 @@ Formal class 'SpatialPolygonsDataFrame' [package "sp"] with 5 slots
 > bay_spdf <- as(carmel_bay, "SpatialPixelsDataFrame")
 > bay_df <- as.data.frame(bay_spdf)
 > bay_df <- melt(bay_df, id=c("x","y")) # 将不同波段数据融合到data.frame的一列variable
-# geom_tile函数不对栅格数据做任何压缩，建议对较大栅格数据用geom_raster函数,其对数据做了压缩优化
+# geom\_tile函数不对栅格数据做任何压缩，建议对较大栅格数据用geom\_raster函数,其对数据做了压缩优化
 > ggplot() +
 +     |\colorbox{green}{geom\_raster}|(data=bay_df, aes(x=x, y=y, fill=value), alpha=0.8) + 
 +     scale_fill_viridis() + coord_equal() + facet_wrap(~variable) +

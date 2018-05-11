@@ -42,6 +42,7 @@
 \RequirePackage{wasysym}
 \RequirePackage{amsmath,amssymb,bm}
 \RequirePackage[style=numeric-comp,citetracker=true,sorting=none]{biblatex}
+%\bibliographystyle{plainnat}
 
 \beamertemplatetransparentcovereddynamic
 \beamertemplatetransparentcovereddynamicmedium

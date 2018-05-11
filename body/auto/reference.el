@@ -1,0 +1,29 @@
+(TeX-add-style-hook
+ "reference"
+ (lambda ()
+   (LaTeX-add-bibitems
+    "R_for_beginners"
+    "R_intro"
+    "art_of_R"
+    "learning_R"
+    "R_in_action"
+    "the_book_of_R"
+    "Software_R"
+    "R_nutshell"
+    "the_R_book"
+    "R_geek1"
+    "R_geek2"
+    "applied_stat_R"
+    "handbook_R"
+    "R_spatial_data"
+    "stat_intro_R"
+    "ML_R"
+    "DM_R"
+    "R_data_science"
+    "grammar_graphics"
+    "R_lattice"
+    "R_graphics"
+    "R_ggplot2"
+    "R_graphics_cookbook"))
+ :latex)
+
