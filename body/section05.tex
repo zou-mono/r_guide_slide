@@ -336,7 +336,7 @@ xyplot(y ~ x |\textbar| gl(1, length(types)),
  }
 
 # 将xyplot函数传递给一个trellis对象p,这里传入的x参数其实并没有参与绘图
-> p <- xyplot(x=c(-1, 1) ~ c(-1, 1), aspect = 1, cycles = 15, scales = list(draw = FALSE), xlab = "", ylab = "", panel = |\colorbox{green}{panel.hypotrochoid}|)
+> p <- xyplot(x = 1 ~ 1, aspect = 1, cycles = 15, scales = list(draw = FALSE), xlab = "", ylab = "", |\colorbox{green}{prepanel}| = prepanel.hypocycloid, |\colorbox{green}{panel}| = panel.hypotrochoid)
 # 对象p循环绘图
 > p[rep(1, 9)]
 \end{rcode}
@@ -573,7 +573,7 @@ xyplot(y ~ x |\textbar| gl(1, length(types)),
 \end{overlayarea}
 \end{frame}
 
-\subsubsection{数据无关的图形要素}
+\subsubsection{数据无关图形要素}
 \begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
 \begin{itemize}
 \item 数据无关的图形要素\emphText{负责实现图形的结构化外观}
@@ -585,7 +585,7 @@ xyplot(y ~ x |\textbar| gl(1, length(types)),
 \begin{figure}[ht]
   \centering
   \includegraphics[width=0.9\columnwidth]{ggplot_theme.png}
-  \caption{数据无关的图形要素}
+  \caption{数据无关图形要素}
 \end{figure}}
 
 \only<2>{
@@ -617,9 +617,10 @@ xyplot(y ~ x |\textbar| gl(1, length(types)),
 \end{overlayarea}
 \end{frame}
 
+\subsubsection{数据相关语法要素}
 \begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
 \begin{itemize}
-\item 数据相关的图形要素\emphText{负责构造统计数据的绘制图形}，大致可以分为数据层、几何图形层和美学层三类
+\item 数据相关语法要素\emphText{负责构造统计数据的绘制图形}，大致可以分为数据层、几何图形层和美学层三类
 \end{itemize}
 
 \begin{overlayarea}{\textwidth}{\textheight}
@@ -640,12 +641,12 @@ xyplot(y ~ x |\textbar| gl(1, length(types)),
       分面(faceting) & 在不同网格中绘制图形，类似lattice & facet\_XXX()\\
       \bottomrule
     \end{tabular}
-    %\caption{ggplot2中的语法要素}
+    \caption{数据相关语法要素}
 \end{table}}
 \end{overlayarea}
 \end{frame}
 
-\subsubsection{数据}
+%\subsubsection{数据}
 \begin{frame}[t,fragile]{\subsecname}{数据(data)}
 \begin{itemize}
 \item ggplot2对数据的要求是\emphText{必须是data.frame类型}
@@ -668,7 +669,7 @@ xyplot(y ~ x |\textbar| gl(1, length(types)),
 \end{onlyenv}
 \end{frame}
 
-\subsubsection{映射}
+%\subsubsection{映射}
 \begin{frame}[t,fragile]{\subsecname}{映射(mapping)}
 \begin{itemize}
 \item<1-> \emphText{aes()}函数用来将数据变量映射到图形中，使变量成为可以被感知的图形属性
@@ -724,7 +725,7 @@ xyplot(y ~ x |\textbar| gl(1, length(types)),
 \end{overlayarea}
 \end{frame}
 
-\subsubsection{标度}
+%\subsubsection{标度}
 \begin{frame}[t,fragile]{\subsecname}{标度(scales)}
 \begin{itemize}
 \item 标度是\emphText{从数据空间的定义域到图形属性空间值域的映射}，
@@ -774,7 +775,7 @@ xyplot(y ~ x |\textbar| gl(1, length(types)),
 \end{overlayarea}
 \end{frame}
 
-\subsubsection{几何对象}
+%\subsubsection{几何对象}
 \begin{frame}[t,fragile]{\subsecname}{几何对象(geometric object)}
 \begin{itemize}
 \item 几何对象简称geom，负责执行图形的实际渲染，控制生成的图形类型，
@@ -808,7 +809,7 @@ xyplot(y ~ x |\textbar| gl(1, length(types)),
 \end{table}
 \end{frame}
 
-\subsubsection{统计变换}
+%\subsubsection{统计变换}
 \begin{frame}[t,fragile]{\subsecname}{统计变换(statistical transformations)}
 \begin{itemize}
 \item 统计变换简称stat，负责通过某种方式对数据进行统计汇总，统计变换函数的命名规则是\emphText{stat\_加上统计变换名字}
@@ -838,7 +839,7 @@ xyplot(y ~ x |\textbar| gl(1, length(types)),
 \end{table}
 \end{frame}
 
-\subsubsection{分面}
+%\subsubsection{分面}
 \begin{frame}[t,fragile]{\subsecname}{分面(faceting)}
 \begin{itemize}
 \item<1-> 分面即在同一图幅上自动摆放多个图形的绘图概念(同lattice)
@@ -958,7 +959,7 @@ xyplot(y ~ x |\textbar| gl(1, length(types)),
 \end{overlayarea}
 \end{frame}
 
-\subsubsection{位置调整}
+%\subsubsection{位置调整}
 \begin{frame}[t]{\subsecname}{位置调整(position adjustments)}
 \begin{itemize}
 \item 位置调整指的是对图层中\emphText{元素的位置}进行调整
@@ -998,7 +999,7 @@ xyplot(y ~ x |\textbar| gl(1, length(types)),
 \end{overlayarea}
 \end{frame}
 
-\subsubsection{坐标系}
+%\subsubsection{坐标系}
 \begin{frame}[t,fragile]{\subsecname}{坐标系(coordinate system)}
 \begin{itemize}
 \item 坐标系是将两种位置标度结合在一起组成的二维定位系统，坐标系函数命名规则是\emphText{coord\_加上坐标系名字}

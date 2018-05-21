@@ -643,7 +643,7 @@ panel.hypotrochoid <- function(r, d, cycles = 10, density = 30)
 prepanel.hypocycloid <- function(x, y) {
     list(xlim = c(-1, 1), ylim = c(-1, 1))
 }
-p <- xyplot(c(-1, 1) ~ c(-1, 1), aspect = 1, cycles = 15, scales = list(draw = FALSE), xlab = "", ylab = "", panel = panel.hypotrochoid)
+p <- xyplot(x=1~1, aspect = 1, cycles = 15, scales = list(draw = FALSE), xlab = "", ylab = "", prepanel = prepanel.hypocycloid, panel = panel.hypotrochoid)
 p[rep(1, 9)]
 dev.off()
 

@@ -396,8 +396,8 @@ Type '?PKG::FOO' to inspect entries 'PKG::FOO', or 'TYPE?PKG::FOO' for entries l
 \end{frame}
 
 \subsection{数据操作}
-\subsubsection{对象(object)}
-\begin{frame}[t]{\subsecname}{\subsubsecname}
+\subsubsection{对象}
+\begin{frame}[t]{\subsecname}{对象(object)}
   \begin{itemize}
   \item R语言中操作的实体在技术上来说就是对象(object) 
   \item 语言中使用对象的好处是可以复用，提升自动化程度
@@ -420,8 +420,8 @@ Type '?PKG::FOO' to inspect entries 'PKG::FOO', or 'TYPE?PKG::FOO' for entries l
   \end{columns}
 \end{frame}
 
-\subsubsection{数据类型(mode)}
-\begin{frame}[t, fragile]{\subsecname}{\subsubsecname}
+\subsubsection{数据类型}
+\begin{frame}[t, fragile]{\subsecname}{数据类型(mode)}
   \begin{itemize}
   \item 实数型(real):整数(integer)、单精度(single)、双精度(double)
   \item 虚数型(complex):如10+21i
@@ -619,8 +619,8 @@ Error in data.frame(x, y) :
 \end{rcode}  
 \end{frame}
 
-\subsubsection{表达式(expression)}
-\begin{frame}[t,fragile]{\subsecname}{\subsubsecname}
+\subsubsection{表达式}
+\begin{frame}[t,fragile]{\subsecname}{表达式(expression)}
   \begin{itemize}
   \item 表达式类型对象在R中有着很基础的地位，是R能够解释的字符序列
   \item \emphText{所有有效的R命令都是表达式}，表达式分为\emphText{求值表达式和非求值表达式}
@@ -790,6 +790,7 @@ xyplot(Murder ~ Population | state.region, data = states,
 \item<2-> 元素项通过一些有特殊涵义的运算符连接
 \end{itemize} 
 
+\begin{overlayarea}{\textwidth}{\textheight}
 \only<2>{
 \begin{table} \centering \scriptsize
   \renewcommand\arraystretch{0.9}
@@ -815,6 +816,7 @@ $X[,1]+X[,2]+...+X[,ncol(X)]$; 还可以通过索引向量
     \bottomrule
   \end{tabular}
 \end{table}}
+\end{overlayarea}
 \end{frame}
 
 \subsection{面向对象编程}
