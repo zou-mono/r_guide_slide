@@ -54,7 +54,7 @@ r <- do.call("rbind",lst.res)
 r <- data.frame(r)
 r <- do.call("rbind",r$coefficients)
 
-
+https://www.rforexcelusers.com/vlookup-in-r/
 
 ### -------------------------------------------------------------------
 ### 示例2：数据透视表
@@ -80,3 +80,22 @@ monmean <- dcast(mdata, Month ~type ,mean)
 
 #对每类变量的不重复值进行计算
 count(mdata,vars="type")
+
+
+### -------------------------------------------------------------------
+### 示例3：多变量相关性分析
+### -------------------------------------------------------------------
+ozone.pollution<-read.table("data/ozone.data.txt",header=T)
+pairs(ozone.pollution,panel=panel.smooth)
+
+
+### -------------------------------------------------------------------
+### 示例4：GIS属性数据统计分析
+### -------------------------------------------------------------------
+library(rgdal)
+library(broom)
+map_sp <- readOGR(dsn = "./data/", "sp")
+str(map_sp@data)
+
+map_sp@data$id <- 0:(nrow(map_sp@data) - 1)
+map_sp <- merge(tidy(map_sp), map_sp, by = 'id')

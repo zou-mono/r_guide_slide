@@ -15,7 +15,9 @@ library(ggsn)
 library(sf)
 library(RColorBrewer)
 library(viridis)
-
+library(broom)
+library(ggmap)
+library(ggspatial)
 
 ###  -------------------------------------------------------------------
 ###  chp3:程序控制
@@ -1875,5 +1877,19 @@ ggmap(sp) +
     scale_fill_brewer(name = 'Animal abuse\nnotifications', palette = 8) +
     theme(legend.position = c(0.9, 0.35))
 dev.off()
+
+library(ggmap)
+ 
+# load the data
+tartu_housing <- read.csv("data/tartu_housing_xy_wgs84_a.csv", sep = ";")
+ 
+# Download the base map
+tartu_map_g_str <- get_map(location = "tartu", zoom = 13)
+# Draw the heat map
+ggmap(tartu_map_g_str, extent = "device") + geom_density2d(data = tartu_housing, aes(x = lon, y = lat), size = 0.3) + 
+  stat_density2d(data = tartu_housing, 
+                 aes(x = lon, y = lat, fill = ..level.., alpha = ..level..), size = 0.01, 
+                 bins = 16, geom = "polygon") + scale_fill_gradient(low = "green", high = "red") + 
+  scale_alpha(range = c(0, 0.3), guide = FALSE)
 
 
